@@ -68,6 +68,16 @@
 
 \alnote{From my dissertation}
 
+The lineup protocol also allows for an assessment of the power of a lineup \citep{mahbub:2013}. 
+%as the probability that in $N$ independent evaluations observers 
+In $N$ independent evaluations, the probability that observers
+choose the true plot more than $x_\alpha$ times is
+\begin{equation}\label{eqn:power}
+\widehat{\text{Power}} = \text{Power}_{N} = 1 - F_{X} (x_{\alpha}),
+\end{equation}
+where $F_X$ is the distribution of $X$ and $x_\alpha$ is the critical value for a given significance level of $\alpha$, i.e. $P(X >  x_{\alpha}) \le \alpha$. $X$ is composed of the sum of $N$ observers' (binary) decisions $X_i \sim B_{1, p_i}$, where  $p_i$ is the probability that individual $i$ chooses the data plot. This probability  depends both on the strength of the signal in the data plot and an individual's visual ability.
+Assessing this ability requires that each individual evaluates multiple lineups. If that is not possible, we have to assume that all participants share the same ability, and the power calculation in Equation~\ref{eqn:power} simplifies to $1 - B_{N, \hat{p}}(x_\alpha)$, where $\widehat{p}$ is an estimate for the probability of choosing the data plot for a specific lineup. Similar to classical inference, we can make use of power to assess sensitivity of tests. This allows us to make decisions about designs for particular tasks by evaluating lineups displaying \hh{  the same data in different types of displays} \citep{Hofmann:2012ts}. 
+
 %------------------------------------------------------------------------------------
 \subsubsection{Investigating Q-Q plots visually}\label{sec:qqplot}
 %------------------------------------------------------------------------------------
