@@ -8,3 +8,7 @@
 qqplot_design.pdf
 
 *.gz
+
+qqplot_design.blg
+
+qqplot_design.bbl

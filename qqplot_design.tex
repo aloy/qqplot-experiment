@@ -66,7 +66,11 @@
 \begin{document}
 \maketitle
 
-\alnote{From my dissertation}
+%------------------------------------------------------------------------------------
+\section{Introduction}
+%------------------------------------------------------------------------------------
+
+\alnote{Setting up the Q-Q plot, visual perception motivation of the study, and visual inference.}
 
 The lineup protocol also allows for an assessment of the power of a lineup \citep{mahbub:2013}. 
 %as the probability that in $N$ independent evaluations observers 
@@ -79,7 +83,11 @@ where $F_X$ is the distribution of $X$ and $x_\alpha$ is the critical value for 
 Assessing this ability requires that each individual evaluates multiple lineups. If that is not possible, we have to assume that all participants share the same ability, and the power calculation in Equation~\ref{eqn:power} simplifies to $1 - B_{N, \hat{p}}(x_\alpha)$, where $\widehat{p}$ is an estimate for the probability of choosing the data plot for a specific lineup. Similar to classical inference, we can make use of power to assess sensitivity of tests. This allows us to make decisions about designs for particular tasks by evaluating lineups displaying \hh{  the same data in different types of displays} \citep{Hofmann:2012ts}. 
 
 %------------------------------------------------------------------------------------
-\subsubsection{Investigating Q-Q plots visually}\label{sec:qqplot}
+\section{Investigating Q-Q plots visually}\label{sec:qqplot}
+%------------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------------
+\subsection{Method}
 %------------------------------------------------------------------------------------
 
 To further \al{develop} the assessment of normality using lineups, we conducted a study comparing three different versions of the Q-Q plot.
@@ -87,6 +95,11 @@ To further \al{develop} the assessment of normality using lineups, we conducted 
 Examples of the three versions are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution,
  and a \emph{rotated} (i.e., detrended) Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. To explore the results of this study we must first define some additional notation.
 
+\alnote{We can give a description of the MTurk study here.}
+
+%------------------------------------------------------------------------------------
+\subsection{Results}
+%------------------------------------------------------------------------------------
 \begin{figure}
 %<<qqplots, fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=FALSE>>=
 %dframe <- read.csv("data/data-1-1-1-20-2-14-5.csv")
@@ -195,6 +208,18 @@ Result & Visual & AD & SW & CVM & KS \\
    \hline
 \end{tabular}
 \end{table}
+
+%------------------------------------------------------------------------------------
+\section{Discussion}
+%------------------------------------------------------------------------------------
+
+\alnote{We can recap and discuss how we can extend the study (aspect ratio for the rotated plots, etc.)}
+
+%------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------
+
+\bibliographystyle{apalike}
+\bibliography{qqplots}
 
 
 \end{document}
