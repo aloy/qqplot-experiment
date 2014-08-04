@@ -221,11 +221,19 @@ turkw$df <- factor(turkw$df, levels=c("10", "5", "2"))
 m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address) + (1|difficulty), family=binomial(), data=turkw, weight=weight, control=glmerControl(optimizer="bobyqa")))
 @
 
-<<abilities, dependson='model', echo=FALSE>>=
-qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$ip_address, binwidth=0.05) + xlab("Individuals' ability u")
-qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$difficulty, binwidth=0.5) + xlab("data difficulty level d")
-
+\begin{figure}
+\begin{subfigure}[b]{0.5\textwidth}
+<<abilities, dependson='model', echo=FALSE, fig.height=2.5>>=
+qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$ip_address, binwidth=0.05) + xlab("Individuals' ability u") + theme_bw()
 @
+\end{subfigure}
+\begin{subfigure}[b]{0.5\textwidth}
+<<abilities2, dependson='model', echo=FALSE, fig.height=2.5>>=
+qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$difficulty, binwidth=0.5) + xlab("data difficulty level d") + theme_bw()
+@
+\end{subfigure}
+\caption{\label{fig:ranef}Histograms of random effects of individuals' abilities (left) and difficulty level of the data (right). }
+\end{figure}
 
 % latex table generated in R 3.1.0 by xtable 1.7-3 package
 % Sun Aug  3 11:20:58 2014
@@ -252,7 +260,7 @@ qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$difficulty, binwidth=0.5) 
   50  & 3.26 & 0.837 & 3.90 & 0.0001 & ***\\ 
   75 & 2.20 & 0.838 & 2.63 & 0.0086  & **\\ 
    \hline
-\multicolumn{5}{l}{Signif. codes:  0 $\le$ *** $\le$ 0.001 $\le$ ** $\le$ 0.01 $\le$ * $\le$ 0.05 $\le$ . $\le$ 0.1 $\le$ $\le$ 1}
+\multicolumn{5}{l}{Signif. codes:  0 $\le$ *** $\le$ 0.001 $\le$ ** $\le$ 0.01 $\le$ * $\le$ 0.05 $\le$ . $\le$ 0.1 $\le$ ' ' $\le$ 1}
 \end{tabular}
 \end{table}
 
@@ -279,7 +287,7 @@ Result & Visual & AD & SW & CVM & KS \\
 \end{tabular}
 \end{table}
 
-<<rejects, dependson='data', echo=FALSE>>=
+<<rejects, dependson='data', echo=FALSE, message=FALSE>>=
 lps <- ddply(turkw, .(data_name, treatment), summarise,
              correct=sum(correct*weight),
              num=sum(weight)
@@ -293,9 +301,16 @@ parse_filename <- function(fname) {
 
 exps <- ldply(as.character(lps$data_name), parse_filename)
 lps<-data.frame(lps, exps)
+require(vinference)
+lps$pvals <- unlist(llply(1:nrow(lps), function(i) {
+  correct <- floor(lps$correct[i])
+  n <- lps$num[i]
+  vinference:::hdistribution(correct, n, m=20)
+}))
+lps$signif <- lps$pvals < 0.05
 @
 
-<<triples, echo=FALSE>>=
+<<triples, echo=FALSE, warning=FALSE, message=FALSE, results='hide'>>=
 library(reshape2)
 lps$prop <- with(lps, correct/num)
 dt <- dcast(lps, data_name~treatment, value.var="prop")
@@ -303,23 +318,32 @@ exps <- ldply(as.character(dt$data_name), parse_filename)
 dt <- data.frame(dt, exps)
 dt$df <- as.factor(dt$df)
 dt$df <- factor(dt$df, levels=c(2,5,10))
+
+
+pvals <- dcast(lps, data_name~treatment, value.var="signif")
+names(pvals) <- gsub("^", "sg.",names(pvals))
+names(pvals)[1] <- "data_name"
+
+dt <- merge(dt, pvals, by="data_name")
+dt$sg.Standard <- factor(dt$sg.Standard)
+dt$sg.Standard <- factor(dt$sg.Standard, levels=c("TRUE", "FALSE"))
+dt$df <- factor(dt$df, levels=c("10", "5", "2"))
 @
 \begin{figure}
 \centering
 \begin{subfigure}[b]{.3\textwidth}
 <<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Standard, colour=df, shape=df),size=3, data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none")
+ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))
 @
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 <<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Control, colour=df, shape=df),size=3, data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none")
+ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Control, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))
 @
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 <<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Control, y=Standard, colour=df, shape=df),size=3, data=dt) + theme_bw() +scale_colour_brewer("degrees of\nfreedom",palette="Set2") + theme(legend.position=c(0.85, 0.20), # c(0,0) bottom left, c(1,1) top-right.
-  legend.background = element_rect(fill = "white", colour = NA)) + scale_shape("degrees of\nfreedom")
+ggplot() + geom_abline(colour="grey50") + geom_point(aes(x=Control, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw()  + scale_size_manual(values=c(3,4), guide="none") +scale_colour_brewer("degrees of\nfreedom",palette="Set2", guide="none") + theme(legend.position=c(0.75, 0.20),legend.background = element_rect(fill = "white", colour = NA)) + scale_shape_manual("degrees of freedom\n(significance)", values=c(  15,16,17, 22,21), labels=c("10 ","5 ","2 ","10 (n.s.)", "5 (n.s.)")) + guides(shape=guide_legend(ncol=2, override.aes = list(size = c(3,3,3,4,4), colour=c("#66C2A5", "#FC8D62", "#8DA0CB", "#66C2A5", "#FC8D62"))))
 @
 \end{subfigure}
 \caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. Rotated Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field.  }
