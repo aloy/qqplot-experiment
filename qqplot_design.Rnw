@@ -1,53 +1,4 @@
-\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
-%% maxwidth is the original width if it is less than linewidth
-%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
-\makeatletter
-\def\maxwidth{ %
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
-\makeatother
-
-\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
-\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
-\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
-\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
-\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
-\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
-\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
-\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
-\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
-
-\usepackage{framed}
-\makeatletter
-\newenvironment{kframe}{%
- \def\at@end@of@kframe{}%
- \ifinner\ifhmode%
-  \def\at@end@of@kframe{\end{minipage}}%
-  \begin{minipage}{\columnwidth}%
- \fi\fi%
- \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
- \colorbox{shadecolor}{##1}\hskip-\fboxsep
-     % There is no \\@totalrightmargin, so:
-     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
- \MakeFramed {\advance\hsize-\width
-   \@totalleftmargin\z@ \linewidth\hsize
-   \@setminipage}}%
- {\par\unskip\endMakeFramed%
- \at@end@of@kframe}
-\makeatother
-
-\definecolor{shadecolor}{rgb}{.97, .97, .97}
-\definecolor{messagecolor}{rgb}{0, 0, 0}
-\definecolor{warningcolor}{rgb}{1, 0, 1}
-\definecolor{errorcolor}{rgb}{1, 0, 0}
-\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
-
-\usepackage{alltt} % JASA requires 12 pt font for manuscripts
+\documentclass{article} % JASA requires 12 pt font for manuscripts
 %\usepackage{JASA_manu}        % For JASA manuscript formatting
 
 %\usepackage{endfloat} % just for while I am writing
@@ -115,18 +66,55 @@
 \title{Testing Variations of Q-Q Plots}
 
 \author{Adam Loy, Lendie Follett, Heike Hofmann}
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 \maketitle
 \begin{abstract}
 summary
 \end{abstract}
 
+<<setup, echo=FALSE, results='hide'>>=
+suppressWarnings(library(ggplot2))
+
+opts_chunk$set(cache=TRUE, fig.width=4, fig.height=4)
+@
+
+<<data, echo=FALSE, results='hide'>>=
+turk <- read.csv("data/turk-10-13.csv")
+suppressMessages(require(plyr))
+params <- ldply(strsplit(split="-", as.character(turk$test_param)), function(x) x)
+turk$treatment <- params$V2
+turk$placement <- params$V3
+turk$choice <- params$V4
+turk$replicate <- params$V5
+turk$df <- as.numeric(llply(strsplit(split="-", as.character(turk$param_value)), function(x) x[2]))
+
+library(lubridate)
+turk$start_time <- ymd_hms(turk$start_time)
+turk <- ddply(turk, .(ip_address), transform, 
+              attempt=rank(start_time, ties.method="random"),
+              numeval=length(start_time))
+
+turk$weight <- ldply(strsplit(as.character(turk$response_no), split=","), length)$V1
+# kick out responses without an answer:
+turk <- subset(turk, weight!=0)
+# take out participants with fewer than 10 responses:
+turk <- subset(turk, numeval >= 10)
 
 
+res <- llply(turk, function(x) rep(x, turk$weight))
+turkw <- as.data.frame(res)
+turkw$weight <- 1/turkw$weight
+turkw$response <- unlist(strsplit(as.character(turk$response_no), split=","))
+
+turkw$correct <- turkw$response == turkw$plot_location
+turkw <- subset(turkw, df != 0) # exclude Adam's data
 
 
+turkw$sample_size <- factor(turkw$sample_size)
+turkw$df <- factor(turkw$df)
 
+
+@
 
 
 %------------------------------------------------------------------------------------
@@ -212,7 +200,7 @@ $u$ & the users' subjective abilities.
 \end{center}
 %
 The combination of different levels of sample size and degrees of freedom of the $t$ distribution result in 12 parameter settings. Under each setting, we sampled data twice; additionally, we sampled two sets of null data for each sample, yielding 48 different sets of data, which we render in each of the variations, yielding 144 different lineups. 
-Using  Amazon MTurk \citep{amazon}, 674 participants were each asked to evaluate ten different lineups each. 
+Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} participants were each asked to evaluate ten different lineups each. 
 \hh{weights? We dealt with multiple answers to lineups that offered this choice by using a weighting variabe with reciprocal values of the number of answers given by a participant.}
 We model the probability of selecting the data plot from the lineup, $\pi$, with the help of model $M_1$:
 \[
@@ -223,17 +211,21 @@ where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ a
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$.
 
 
+<<model, echo=FALSE, dependson='data'>>=
+library(lme4)
+# takes quite a bit of time to fit
+lm0 <- glm(correct~treatment+placement+choice+ df + sample_size, family=quasibinomial(), data=turkw, weight=weight)
 
+# after making sure that this actually converges, we can suppress Warnings (this is about the non-integer response, which can't be helped)
+turkw$df <- factor(turkw$df, levels=c("10", "5", "2"))
+m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address) + (1|difficulty), family=binomial(), data=turkw, weight=weight, control=glmerControl(optimizer="bobyqa")))
+@
 
+<<abilities, dependson='model', echo=FALSE>>=
+qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$ip_address, binwidth=0.05) + xlab("Individuals' ability u")
+qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$difficulty, binwidth=0.5) + xlab("data difficulty level d")
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/abilities1} 
-
-\includegraphics[width=\maxwidth]{figure/abilities2} 
-
-\end{knitrout}
-
+@
 
 % latex table generated in R 3.1.0 by xtable 1.7-3 package
 % Sun Aug  3 11:20:58 2014
@@ -265,7 +257,7 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 \end{table}
 
 The estimated model coefficients for model $M_1$ are shown in Table~\ref{tab:model}. 
-Estimates of the variance components are $\widehat{\sigma}_u = 0.44$, $\widehat{\sigma}_d=0.44$, and $\widehat{\sigma} = 0.31$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
+Estimates of the variance components are $\widehat{\sigma}_u = \Sexpr{round(m0@theta[1],2)}$, $\widehat{\sigma}_d=\Sexpr{round(m0@theta[1],2)}$, and $\widehat{\sigma} = \Sexpr{round(sqrt(sum((fitted(m0)-turkw$correct)^2)/(nrow(turkw)-8)),2)}$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
 %
 As expected, the task of identifying non-normality is easier with increased sample size and more pronounced deviations from normality, as is the case with lower degrees of freedom. The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot. Interestingly, the rotated version of the Q-Q plot is significantly less suitable for the task of assessing normality compared to the control. Additionally, adding confidence bands helps with evaluation, but not significantly. 
 
@@ -287,36 +279,48 @@ Result & Visual & AD & SW & CVM & KS \\
 \end{tabular}
 \end{table}
 
+<<rejects, dependson='data', echo=FALSE>>=
+lps <- ddply(turkw, .(data_name, treatment), summarise,
+             correct=sum(correct*weight),
+             num=sum(weight)
+             )
 
+parse_filename <- function(fname) {
+  pars <- strsplit(fname, "-")[[1]]
+	names(pars) <- c("data", "null", "rep",  "i", "n", "df", "innerPos", "outerPos")
+	pars
+}
 
+exps <- ldply(as.character(lps$data_name), parse_filename)
+lps<-data.frame(lps, exps)
+@
 
-
-
+<<triples, echo=FALSE>>=
+library(reshape2)
+lps$prop <- with(lps, correct/num)
+dt <- dcast(lps, data_name~treatment, value.var="prop")
+exps <- ldply(as.character(dt$data_name), parse_filename)
+dt <- data.frame(dt, exps)
+dt$df <- as.factor(dt$df)
+dt$df <- factor(dt$df, levels=c(2,5,10))
+@
 \begin{figure}
 \centering
 \begin{subfigure}[b]{.3\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-1} 
-
-\end{knitrout}
-
+<<dependson='triples', echo=FALSE>>=
+ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Standard, colour=df, shape=df),size=3, data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none")
+@
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2} 
-
-\end{knitrout}
-
+<<dependson='triples', echo=FALSE>>=
+ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Control, colour=df, shape=df),size=3, data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none")
+@
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3} 
-
-\end{knitrout}
-
+<<dependson='triples', echo=FALSE>>=
+ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Control, y=Standard, colour=df, shape=df),size=3, data=dt) + theme_bw() +scale_colour_brewer("degrees of\nfreedom",palette="Set2") + theme(legend.position=c(0.85, 0.20), # c(0,0) bottom left, c(1,1) top-right.
+  legend.background = element_rect(fill = "white", colour = NA)) + scale_shape("degrees of\nfreedom")
+@
 \end{subfigure}
 \caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. Rotated Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field.  }
 \end{figure}
@@ -330,27 +334,37 @@ Result & Visual & AD & SW & CVM & KS \\
 %------------------------------------------------------------------------------------
 \section{Other material}
 %------------------------------------------------------------------------------------
+<<attempts, echo=FALSE, dependson='data'>>=
+suppressMessages(require(Hmisc))
+attempts <- ddply(turkw, .(attempt), summarise, 
+                  cmean=wtd.mean(correct, weights=weight, na.rm=TRUE),
+                  csd=sqrt(wtd.var(correct, weights=weight, na.rm=TRUE)),
+                  tt=wtd.mean(time_taken, weights=weight, na.rm=TRUE),        
+                  sdtt=sqrt(wtd.var(time_taken, weights=weight, na.rm=TRUE)),
+                  nevals=sum(weight)
+                  )
+@
 
-
-
-Similar to observations made in other lineup experiments (XXX cite Mahbub's socio paper), there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of an inherent ability. The overall proportion of correct responses is very stable, fluctuating around 0.41. However, the variability observed is close to 0.5. What does change, is the time taken by participants to answer a lineup. From initially 53.6 seconds in the first answer, the response time drops to 33 seconds at the tenth evaluation.
+Similar to observations made in other lineup experiments (XXX cite Mahbub's socio paper), there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of an inherent ability. The overall proportion of correct responses is very stable, fluctuating around \Sexpr{round(with(turkw, Hmisc::wtd.mean(correct, weights=weight)),2)}. However, the variability observed is close to 0.5. What does change, is the time taken by participants to answer a lineup. From initially \Sexpr{round(attempts$tt[1],1)} seconds in the first answer, the response time drops to \Sexpr{round(attempts$tt[10],1)} seconds at the tenth evaluation.
 \begin{figure}
 \centering
 \begin{subfigure}[b]{.5\linewidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/fig1} 
-
-\end{knitrout}
-
+<<fig1, echo=FALSE, dependson='attempts', fig.width=4, fig.height=4>>=
+qplot(attempt, cmean, data=subset(attempts, attempt <= 10)) + 
+  ylim(c(0,1)) + 
+  scale_x_discrete(breaks=1:10) + 
+#  geom_segment(aes(x=attempt, xend=attempt, y=cmean+1.96*csd, yend=cmean-1.96*csd, group=attempt)) +
+  ylab("Proportion of correct responses") + theme_bw()
+@
 \end{subfigure}
 \begin{subfigure}[b]{.5\linewidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/fig2} 
-
-\end{knitrout}
-
+<<fig2, echo=FALSE, dependson='attempts', fig.width=4, fig.height=4>>=
+qplot(attempt, tt, data=subset(attempts, attempt <= 10)) + 
+  ylim(c(0,60)) + 
+  scale_x_discrete(breaks=1:10) + 
+#  geom_segment(aes(x=attempt, xend=attempt, y=tt+1.96*sdtt, yend=tt-1.96*sdtt, group=attempt)) +
+  ylab("Response time in seconds") + theme_bw()
+@
 \end{subfigure}
 \caption{\label{fig:attempts}Proportion of correct answers by attempt (left) and time taken in each of the first ten attempts (right). The proportion of correct responses stays constantfor successive attempts, while the time to answer decreases significantly over the same number of attempts.}
 \end{figure}
