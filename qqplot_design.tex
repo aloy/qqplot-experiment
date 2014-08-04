@@ -65,7 +65,7 @@
 
 
 %\definecolor{Blue}{rgb}{0,0,0.5}
-\newcommand{\hh}[1]{{\color{orange} #1}}
+\newcommand{\hh}[1]{{\color{magenta} #1}}
 \newcommand{\al}[1]{{\color{red} #1}}
 
 % fonts
@@ -83,6 +83,7 @@
 % help with editing and coauthoring
 \usepackage{todonotes}
 \newcommand{\alnote}[1]{\todo[inline,color=green!40]{#1}}
+\newcommand{\hhnote}[1]{\todo[inline,color=magenta!40]{#1}}
 
 % title formatting
 \usepackage[compact,small]{titlesec}
@@ -112,14 +113,17 @@
 \newcommand{\cov}{\ensuremath{\mathrm{Cov}}}
 
 
-\title{Testing Variations of Q-Q Plots}
+\title{Variations of Q-Q Plots -- the eyes have it!}
 
 \author{Adam Loy, Lendie Follett, Heike Hofmann}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 \maketitle
 \begin{abstract}
-summary
+this paper holds two messages: 
+a) our eyes, and in particular, lineup plots are well suited to assess distributional assumptions. At the example of normal distributions we can show that Q-Q plots are better at identifying non-normality than some prominent tests of normality, such as  Anderson-Darling,  Kolmogorov-Smirnov, or  Cramer-von-Mises.
+
+b) Out of the variations discussed, rotated Q-Q plots perform significantly worse than the other two variants. This is surprising, because cognitive theory tells us, that rotated plots should be better suited in assessing the difference between the ECDF and the hypothesized distribution.
 \end{abstract}
 
 
@@ -211,9 +215,62 @@ $u$ & the users' subjective abilities.
  \end{tabular}
 \end{center}
 %
+
+%
 The combination of different levels of sample size and degrees of freedom of the $t$ distribution result in 12 parameter settings. Under each setting, we sampled data twice; additionally, we sampled two sets of null data for each sample, yielding 48 different sets of data, which we render in each of the variations, yielding 144 different lineups. 
 Using  Amazon MTurk \citep{amazon}, 674 participants were each asked to evaluate ten different lineups each. 
 \hh{weights? We dealt with multiple answers to lineups that offered this choice by using a weighting variabe with reciprocal values of the number of answers given by a participant.}
+
+
+
+
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/nortests} 
+
+\end{knitrout}
+
+\begin{figure}
+\centering
+\begin{subfigure}[b]{.3\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-1} 
+
+\end{knitrout}
+
+\end{subfigure}
+\begin{subfigure}[b]{.3\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2} 
+
+\end{knitrout}
+
+\end{subfigure}
+\begin{subfigure}[b]{.3\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3} 
+
+\end{knitrout}
+
+\end{subfigure}
+\caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. Rotated Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=.3\textwidth]{figures/fig:visnorm.pdf}
+\includegraphics[width=.6\textwidth]{figures/filebab632311351-multiple-svg.pdf}
+\caption{\label{fig:visnorm} Scatterplot of $p$-values from Shapiro-Wilks and lineups of Standard Q-Q plots (left). The lineup plot of Standard Q-Q plots (right) corresponds to the observation circled on the left, which is highly significant under the lineup test, but not significant under Shapiro Wilks.  \hh{This is potentially problematic - the lineup flares up so strongly, because the lineup is testing against standard normal, while the normal tests are testing for the family - the KS test discussed here is the Lilliefors extension. The actual Ks test is significant for this dataset, but then only rejects 3 other.}}
+\end{figure}
+Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range rotated Q-Q plots perform significantly worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. 
+
+\hh{XXX lead into the model}
+
 We model the probability of selecting the data plot from the lineup, $\pi$, with the help of model $M_1$:
 \[
 g(\pi_i) = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)}
@@ -271,7 +328,7 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
   50  & 3.26 & 0.837 & 3.90 & 0.0001 & ***\\ 
   75 & 2.20 & 0.838 & 2.63 & 0.0086  & **\\ 
    \hline
-\multicolumn{5}{l}{Signif. codes:  0 $\le$ *** $\le$ 0.001 $\le$ ** $\le$ 0.01 $\le$ * $\le$ 0.05 $\le$ . $\le$ 0.1 $\le$ ' ' $\le$ 1}
+\multicolumn{6}{l}{Signif. codes:  0 $\le$ *** $\le$ 0.001 $\le$ ** $\le$ 0.01 $\le$ * $\le$ 0.05 $\le$ . $\le$ 0.1 $\le$ ' ' $\le$ 1}
 \end{tabular}
 \end{table}
 
@@ -287,50 +344,17 @@ Note that none of the data plots in the lineups were actually created using data
 \begin{table}[ht]
 \centering
 \caption{\label{tab:reject} 
-Out of the 48 non-normal samples, 24 get rejected at the 5\% significance level based on evaluation by observers. None of the classical tests come close to that rejection rate. From left to right, we see the number of rejections from visual inference as well as the Anderson-Darling, Shapiro-Wilk, Cram\'er-von Mises and Kolmogorov-Smirnov tests for normality.}
-\begin{tabular}{rrrrrr}
+Out of the 48 non-normal samples, at least 26 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. The power we observe here, matches with the power discussion by \citet{razali:2011} for the SW, AD, and the KS test.}
+\begin{tabular}{rrrrrrrr}
   \hline
-Result & Visual & AD & SW & CVM & KS \\ 
+Result & Standard & Control & Rotated & SW & AD & KS   & CVM \\ 
   \hline
-  reject & 24 & 10 & 16 &  8 & 10 \\ 
-  not reject & 24 & 38 & 32 & 40 & 38 \\ 
+  reject & 29 & 28 & 26  &  16 & 10 &  10 & 8\\ 
+  not reject & 19 & 20 & 22 & 32 & 38  & 38 &  40 \\ 
    \hline
 \end{tabular}
 \end{table}
 
-
-
-
-
-
-\begin{figure}
-\centering
-\begin{subfigure}[b]{.3\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-1} 
-
-\end{knitrout}
-
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2} 
-
-\end{knitrout}
-
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3} 
-
-\end{knitrout}
-
-\end{subfigure}
-\caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. Rotated Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field.  }
-\end{figure}
 
 %------------------------------------------------------------------------------------
 \section{Discussion}
@@ -347,7 +371,7 @@ Result & Visual & AD & SW & CVM & KS \\
 Similar to observations made in other lineup experiments (XXX cite Mahbub's socio paper), there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of an inherent ability. The overall proportion of correct responses is very stable, fluctuating around 0.41. However, the variability observed is close to 0.5. What does change, is the time taken by participants to answer a lineup. From initially 53.6 seconds in the first answer, the response time drops to 33 seconds at the tenth evaluation.
 \begin{figure}
 \centering
-\begin{subfigure}[b]{.5\linewidth}
+\begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/fig1} 
@@ -355,7 +379,7 @@ Similar to observations made in other lineup experiments (XXX cite Mahbub's soci
 \end{knitrout}
 
 \end{subfigure}
-\begin{subfigure}[b]{.5\linewidth}
+\begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/fig2} 
@@ -365,6 +389,7 @@ Similar to observations made in other lineup experiments (XXX cite Mahbub's soci
 \end{subfigure}
 \caption{\label{fig:attempts}Proportion of correct answers by attempt (left) and time taken in each of the first ten attempts (right). The proportion of correct responses stays constantfor successive attempts, while the time to answer decreases significantly over the same number of attempts.}
 \end{figure}
+
 \bibliographystyle{apalike}
 \bibliography{qqplots}
 

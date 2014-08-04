@@ -16,7 +16,7 @@
 
 
 %\definecolor{Blue}{rgb}{0,0,0.5}
-\newcommand{\hh}[1]{{\color{orange} #1}}
+\newcommand{\hh}[1]{{\color{magenta} #1}}
 \newcommand{\al}[1]{{\color{red} #1}}
 
 % fonts
@@ -34,6 +34,7 @@
 % help with editing and coauthoring
 \usepackage{todonotes}
 \newcommand{\alnote}[1]{\todo[inline,color=green!40]{#1}}
+\newcommand{\hhnote}[1]{\todo[inline,color=magenta!40]{#1}}
 
 % title formatting
 \usepackage[compact,small]{titlesec}
@@ -63,13 +64,16 @@
 \newcommand{\cov}{\ensuremath{\mathrm{Cov}}}
 
 
-\title{Testing Variations of Q-Q Plots}
+\title{Variations of Q-Q Plots -- the eyes have it!}
 
 \author{Adam Loy, Lendie Follett, Heike Hofmann}
 \begin{document}
 \maketitle
 \begin{abstract}
-summary
+this paper holds two messages: 
+a) our eyes, and in particular, lineup plots are well suited to assess distributional assumptions. At the example of normal distributions we can show that Q-Q plots are better at identifying non-normality than some prominent tests of normality, such as  Anderson-Darling,  Kolmogorov-Smirnov, or  Cramer-von-Mises.
+
+b) Out of the variations discussed, rotated Q-Q plots perform significantly worse than the other two variants. This is surprising, because cognitive theory tells us, that rotated plots should be better suited in assessing the difference between the ECDF and the hypothesized distribution.
 \end{abstract}
 
 <<setup, echo=FALSE, results='hide'>>=
@@ -199,9 +203,106 @@ $u$ & the users' subjective abilities.
  \end{tabular}
 \end{center}
 %
+
+%
 The combination of different levels of sample size and degrees of freedom of the $t$ distribution result in 12 parameter settings. Under each setting, we sampled data twice; additionally, we sampled two sets of null data for each sample, yielding 48 different sets of data, which we render in each of the variations, yielding 144 different lineups. 
 Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} participants were each asked to evaluate ten different lineups each. 
 \hh{weights? We dealt with multiple answers to lineups that offered this choice by using a weighting variabe with reciprocal values of the number of answers given by a participant.}
+
+<<rejects, dependson='data', echo=FALSE, message=FALSE>>=
+lps <- ddply(turkw, .(data_name, treatment), summarise,
+             correct=sum(correct*weight),
+             num=sum(weight)
+             )
+
+parse_filename <- function(fname) {
+  pars <- strsplit(fname, "-")[[1]]
+  names(pars) <- c("data", "null", "rep",  "i", "n", "df", "innerPos", "outerPos")
+	pars
+}
+
+exps <- ldply(as.character(lps$data_name), parse_filename)
+lps<-data.frame(lps, exps)
+require(vinference)
+lps$pvals <- unlist(llply(1:nrow(lps), function(i) {
+  correct <- floor(lps$correct[i])
+  n <- lps$num[i]
+  vinference:::hdistribution(correct, n, m=20)
+}))
+lps$signif <- lps$pvals < 0.05
+@
+
+<<triples, echo=FALSE, warning=FALSE, message=FALSE, results='hide'>>=
+library(reshape2)
+lps$prop <- with(lps, correct/num)
+dt <- dcast(lps, data_name~treatment, value.var="prop")
+exps <- ldply(as.character(dt$data_name), parse_filename)
+exps$data_name <- as.character(dt$data_name)
+dt <- data.frame(dt, exps)
+dt$df <- as.factor(dt$df)
+dt$df <- factor(dt$df, levels=c(2,5,10))
+
+
+pvals <- dcast(lps, data_name~treatment, value.var="signif")
+names(pvals) <- gsub("^", "sg.",names(pvals))
+names(pvals)[1] <- "data_name"
+
+dt <- merge(dt, pvals, by="data_name")
+dt$sg.Standard <- factor(dt$sg.Standard)
+dt$sg.Standard <- factor(dt$sg.Standard, levels=c("TRUE", "FALSE"))
+dt$df <- factor(dt$df, levels=c("10", "5", "2"))
+@
+<<nortests, echo=FALSE>>=
+pvals <- read.csv("data/pvalues.csv")
+lppvals <- dcast(lps, data_name~treatment, value.var="pvals")
+
+lppvals <- merge(lppvals, pvals, by="data_name")
+lppvals <- merge(lppvals, exps, by="data_name")
+
+#cor(lppvals[,c("Standard", "Control", "Rotated", "cvm", "ad", "ks", "sw", "lf")])
+#ggpairs(lppvals[,c("Standard", "Control", "Rotated", "cvm", "ad", "ks", "sw")])
+lppvals$df <- factor(lppvals$df)
+lppvals$df <- factor(lppvals$df, levels=c("10", "5", "2"))
+
+p <- ggplot() + 
+  geom_abline(colour="grey50") + 
+  geom_point(aes(x=Standard, y=sw, colour=df, shape=df), size=3, data=lppvals) + 
+  scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(0,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvals, Standard < 0.05 & sw > 0.5)) + theme(legend.position="bottom") + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (p-values)")
+p
+#ggsave(plot=p, filename="figures/fig:visnorm.pdf", width=4, height=4.5)
+# data-1-2-15-50-2-13-6.csv
+# data-2-2-15-50-2-8-11.csv
+@
+\begin{figure}
+\centering
+\begin{subfigure}[b]{.3\textwidth}
+<<dependson='triples', echo=FALSE>>=
+ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))
+@
+\end{subfigure}
+\begin{subfigure}[b]{.3\textwidth}
+<<dependson='triples', echo=FALSE>>=
+ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Control, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))
+@
+\end{subfigure}
+\begin{subfigure}[b]{.3\textwidth}
+<<dependson='triples', echo=FALSE>>=
+ggplot() + geom_abline(colour="grey50") + geom_point(aes(x=Control, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw()  + scale_size_manual(values=c(3,4), guide="none") +scale_colour_brewer("degrees of\nfreedom",palette="Set2", guide="none") + theme(legend.position=c(0.75, 0.20),legend.background = element_rect(fill = "white", colour = NA)) + scale_shape_manual("degrees of freedom\n(significance)", values=c(  15,16,17, 22,21), labels=c("10 ","5 ","2 ","10 (n.s.)", "5 (n.s.)")) + guides(shape=guide_legend(ncol=2, override.aes = list(size = c(3,3,3,4,4), colour=c("#66C2A5", "#FC8D62", "#8DA0CB", "#66C2A5", "#FC8D62"))))
+@
+\end{subfigure}
+\caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. Rotated Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=.3\textwidth]{figures/fig:visnorm.pdf}
+\includegraphics[width=.6\textwidth]{figures/filebab632311351-multiple-svg.pdf}
+\caption{\label{fig:visnorm} Scatterplot of $p$-values from Shapiro-Wilks and lineups of Standard Q-Q plots (left). The lineup plot of Standard Q-Q plots (right) corresponds to the observation circled on the left, which is highly significant under the lineup test, but not significant under Shapiro Wilks.  \hh{This is potentially problematic - the lineup flares up so strongly, because the lineup is testing against standard normal, while the normal tests are testing for the family - the KS test discussed here is the Lilliefors extension. The actual Ks test is significant for this dataset, but then only rejects 3 other.}}
+\end{figure}
+Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range rotated Q-Q plots perform significantly worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. 
+
+\hh{XXX lead into the model}
+
 We model the probability of selecting the data plot from the lineup, $\pi$, with the help of model $M_1$:
 \[
 g(\pi_i) = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)}
@@ -224,12 +325,12 @@ m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address)
 \begin{figure}
 \begin{subfigure}[b]{0.5\textwidth}
 <<abilities, dependson='model', echo=FALSE, fig.height=2.5>>=
-qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$ip_address, binwidth=0.05) + xlab("Individuals' ability u") + theme_bw()
+qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$ip_address, binwidth=0.05, fill=I("grey35")) + xlab("Individuals' ability u") + theme_bw()
 @
 \end{subfigure}
 \begin{subfigure}[b]{0.5\textwidth}
 <<abilities2, dependson='model', echo=FALSE, fig.height=2.5>>=
-qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$difficulty, binwidth=0.5) + xlab("data difficulty level d") + theme_bw()
+qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$difficulty, fill=I("grey35"), binwidth=0.5) + xlab("data difficulty level d") + theme_bw()
 @
 \end{subfigure}
 \caption{\label{fig:ranef}Histograms of random effects of individuals' abilities (left) and difficulty level of the data (right). }
@@ -260,7 +361,7 @@ qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$difficulty, binwidth=0.5) 
   50  & 3.26 & 0.837 & 3.90 & 0.0001 & ***\\ 
   75 & 2.20 & 0.838 & 2.63 & 0.0086  & **\\ 
    \hline
-\multicolumn{5}{l}{Signif. codes:  0 $\le$ *** $\le$ 0.001 $\le$ ** $\le$ 0.01 $\le$ * $\le$ 0.05 $\le$ . $\le$ 0.1 $\le$ ' ' $\le$ 1}
+\multicolumn{6}{l}{Signif. codes:  0 $\le$ *** $\le$ 0.001 $\le$ ** $\le$ 0.01 $\le$ * $\le$ 0.05 $\le$ . $\le$ 0.1 $\le$ ' ' $\le$ 1}
 \end{tabular}
 \end{table}
 
@@ -276,78 +377,17 @@ Note that none of the data plots in the lineups were actually created using data
 \begin{table}[ht]
 \centering
 \caption{\label{tab:reject} 
-Out of the 48 non-normal samples, 24 get rejected at the 5\% significance level based on evaluation by observers. None of the classical tests come close to that rejection rate. From left to right, we see the number of rejections from visual inference as well as the Anderson-Darling, Shapiro-Wilk, Cram\'er-von Mises and Kolmogorov-Smirnov tests for normality.}
-\begin{tabular}{rrrrrr}
+Out of the 48 non-normal samples, at least 26 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. The power we observe here, matches with the power discussion by \citet{razali:2011} for the SW, AD, and the KS test.}
+\begin{tabular}{rrrrrrrr}
   \hline
-Result & Visual & AD & SW & CVM & KS \\ 
+Result & Standard & Control & Rotated & SW & AD & KS   & CVM \\ 
   \hline
-  reject & 24 & 10 & 16 &  8 & 10 \\ 
-  not reject & 24 & 38 & 32 & 40 & 38 \\ 
+  reject & 29 & 28 & 26  &  16 & 10 &  10 & 8\\ 
+  not reject & 19 & 20 & 22 & 32 & 38  & 38 &  40 \\ 
    \hline
 \end{tabular}
 \end{table}
 
-<<rejects, dependson='data', echo=FALSE, message=FALSE>>=
-lps <- ddply(turkw, .(data_name, treatment), summarise,
-             correct=sum(correct*weight),
-             num=sum(weight)
-             )
-
-parse_filename <- function(fname) {
-  pars <- strsplit(fname, "-")[[1]]
-	names(pars) <- c("data", "null", "rep",  "i", "n", "df", "innerPos", "outerPos")
-	pars
-}
-
-exps <- ldply(as.character(lps$data_name), parse_filename)
-lps<-data.frame(lps, exps)
-require(vinference)
-lps$pvals <- unlist(llply(1:nrow(lps), function(i) {
-  correct <- floor(lps$correct[i])
-  n <- lps$num[i]
-  vinference:::hdistribution(correct, n, m=20)
-}))
-lps$signif <- lps$pvals < 0.05
-@
-
-<<triples, echo=FALSE, warning=FALSE, message=FALSE, results='hide'>>=
-library(reshape2)
-lps$prop <- with(lps, correct/num)
-dt <- dcast(lps, data_name~treatment, value.var="prop")
-exps <- ldply(as.character(dt$data_name), parse_filename)
-dt <- data.frame(dt, exps)
-dt$df <- as.factor(dt$df)
-dt$df <- factor(dt$df, levels=c(2,5,10))
-
-
-pvals <- dcast(lps, data_name~treatment, value.var="signif")
-names(pvals) <- gsub("^", "sg.",names(pvals))
-names(pvals)[1] <- "data_name"
-
-dt <- merge(dt, pvals, by="data_name")
-dt$sg.Standard <- factor(dt$sg.Standard)
-dt$sg.Standard <- factor(dt$sg.Standard, levels=c("TRUE", "FALSE"))
-dt$df <- factor(dt$df, levels=c("10", "5", "2"))
-@
-\begin{figure}
-\centering
-\begin{subfigure}[b]{.3\textwidth}
-<<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))
-@
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-<<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Control, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))
-@
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-<<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") + geom_point(aes(x=Control, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw()  + scale_size_manual(values=c(3,4), guide="none") +scale_colour_brewer("degrees of\nfreedom",palette="Set2", guide="none") + theme(legend.position=c(0.75, 0.20),legend.background = element_rect(fill = "white", colour = NA)) + scale_shape_manual("degrees of freedom\n(significance)", values=c(  15,16,17, 22,21), labels=c("10 ","5 ","2 ","10 (n.s.)", "5 (n.s.)")) + guides(shape=guide_legend(ncol=2, override.aes = list(size = c(3,3,3,4,4), colour=c("#66C2A5", "#FC8D62", "#8DA0CB", "#66C2A5", "#FC8D62"))))
-@
-\end{subfigure}
-\caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. Rotated Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field.  }
-\end{figure}
 
 %------------------------------------------------------------------------------------
 \section{Discussion}
@@ -372,7 +412,7 @@ attempts <- ddply(turkw, .(attempt), summarise,
 Similar to observations made in other lineup experiments (XXX cite Mahbub's socio paper), there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of an inherent ability. The overall proportion of correct responses is very stable, fluctuating around \Sexpr{round(with(turkw, Hmisc::wtd.mean(correct, weights=weight)),2)}. However, the variability observed is close to 0.5. What does change, is the time taken by participants to answer a lineup. From initially \Sexpr{round(attempts$tt[1],1)} seconds in the first answer, the response time drops to \Sexpr{round(attempts$tt[10],1)} seconds at the tenth evaluation.
 \begin{figure}
 \centering
-\begin{subfigure}[b]{.5\linewidth}
+\begin{subfigure}[b]{.3\textwidth}
 <<fig1, echo=FALSE, dependson='attempts', fig.width=4, fig.height=4>>=
 qplot(attempt, cmean, data=subset(attempts, attempt <= 10)) + 
   ylim(c(0,1)) + 
@@ -381,7 +421,7 @@ qplot(attempt, cmean, data=subset(attempts, attempt <= 10)) +
   ylab("Proportion of correct responses") + theme_bw()
 @
 \end{subfigure}
-\begin{subfigure}[b]{.5\linewidth}
+\begin{subfigure}[b]{.3\textwidth}
 <<fig2, echo=FALSE, dependson='attempts', fig.width=4, fig.height=4>>=
 qplot(attempt, tt, data=subset(attempts, attempt <= 10)) + 
   ylim(c(0,60)) + 
@@ -392,6 +432,7 @@ qplot(attempt, tt, data=subset(attempts, attempt <= 10)) +
 \end{subfigure}
 \caption{\label{fig:attempts}Proportion of correct answers by attempt (left) and time taken in each of the first ten attempts (right). The proportion of correct responses stays constantfor successive attempts, while the time to answer decreases significantly over the same number of attempts.}
 \end{figure}
+
 \bibliographystyle{apalike}
 \bibliography{qqplots}
 
