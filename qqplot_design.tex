@@ -182,9 +182,32 @@ If that is not possible, we have to assume that all participants share the same 
 To further \al{develop} the assessment of normality using lineups, we conducted a study comparing three different versions of the Q-Q plot.
 %We are testing three different versions of a Q-Q plot, 
 Examples of the three versions are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \hh{cite Meeker} based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{rotated} (i.e., detrended) Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
- 
+
+\begin{figure}
+\centering
+% <<qqplots, dependson='functions', fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=TRUE>>=
+% dframe <- read.csv("lineup-data/data-1-1-1-20-2-14-5.csv")
+% library(ggplot2)
+% dframe$.sample <- "Control"
+% ctrl_lineup(subset(dframe, .sample_outer==5))
+% dframe$.sample <- "Standard"
+% std_lineup(subset(dframe, .sample_outer==5))
+% dframe$.sample <- "Rotated"
+% rot_lineup(subset(dframe, .sample_outer==5))
+% @
+\includegraphics[width=0.3\textwidth]{qqplots1}
+\includegraphics[width=0.3\textwidth]{qqplots2}
+\includegraphics[width=0.3\textwidth]{qqplots3}
+\caption{ \label{qqplots} Three versions of Q-Q plots: control, standard, and rotated.}
+\end{figure}
+
 To investigate the power of the three different Q-Q plot versions, we sample data from a $t$ distribution with varying degrees of freedom and sample sizes, and include a Q-Q plot of this data in a lineup of null charts drawn from standard normal samples of the same size.
-For lineup tests it is of extreme importance to consider the generation of the null sets and the construction of the plots in the lineup. Here, we have the choice for the lineup to use the same scale for all charts, or scale plots individually. This distinction effectively determines the reference distribution $F^\ast$ against which we compare (see figure~\ref{fig:lps}).
+For lineup tests it is of extreme importance to consider the generation of the null sets and the construction of the plots in the lineup. Here, we have the choice for the lineup to use the same scale for all charts, or scale plots individually. This distinction effectively determines the standard deviation of the reference distribution $F^\ast$ against which we compare (see figure~\ref{fig:lps}).
+
+\begin{tabular}{lp{4in}}
+$F^\ast = N(0,1)$ & reference line and envelope are identical across all panels, i.e.~panels all have the same scale \\
+$F^\ast = N(\bar{X}_i,S_i^2)$ & reference line and envelope are drawn based on sample mean and variance; panels are scaled individually
+\end{tabular}
 
 \begin{figure}[hbt]
 
@@ -205,7 +228,8 @@ For lineup tests it is of extreme importance to consider the generation of the n
 \end{knitrout}
 
 \end{subfigure}
-\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The panels on the left lineup share a common scale, while the panels on the right are scaled individually. This difference reflects a change of the reference distribution from a standard normal $N(0,1)$ distribution on the left to a normal distribution with parameters based on the samples. The data underlying both lineups is the same, with the observed data sampled from a $t_2$ distribution, displayed in panel \#$(3^2 - 3)$.}
+\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The underlying data is identical, but on the left reference lines and envelopes are based on a standard normal distribution. The panels on the right are individually scaled and reference lines and envelopes are based on a normal distribution $N(\bar{X}_i, S_i^2)$, $i$=1, ..., 20, where $\bar{X}_i$ and $S_i^2$ are sample mean and variance.
+The observed data in both lineups is displayed in panel \#$(3^2 - 3)$.}
 \end{figure}
 
 
@@ -216,23 +240,6 @@ To explore the results of this study we must first define some additional notati
 %------------------------------------------------------------------------------------
 \subsection{Results}
 %------------------------------------------------------------------------------------
-\begin{figure}
-\centering
-% <<qqplots, dependson='functions', fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=TRUE>>=
-% dframe <- read.csv("lineup-data/data-1-1-1-20-2-14-5.csv")
-% library(ggplot2)
-% dframe$.sample <- "Control"
-% ctrl_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "Standard"
-% std_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "Rotated"
-% rot_lineup(subset(dframe, .sample_outer==5))
-% @
-\includegraphics[width=0.3\textwidth]{qqplots1}
-\includegraphics[width=0.3\textwidth]{qqplots2}
-\includegraphics[width=0.3\textwidth]{qqplots3}
-\caption{ \label{qqplots} Three versions of Q-Q plots: control, standard, and rotated.}
-\end{figure}
 
 
 Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision on the $i$th evaluation and $\pi_i$ is the probability with which the observer chooses the data plot. This probability is influenced by a number of factors:
@@ -300,7 +307,7 @@ Using  Amazon MTurk \citep{amazon}, 674 participants were each asked to evaluate
 %\includegraphics[width=\textwidth]{figures/filebab632311351-multiple-svg.pdf}
 %\end{subfigure}
 \caption{\label{fig:visnorm} Scatterplot of $p$-values from Shapiro-Wilks and lineups of Standard Q-Q plots. The circled observation on the left corresponds to a sample that shows highly significant deviations from normality under the lineup test, but is not significant under Shapiro Wilks. The lineup for the testing is shown on the left hand side of figure~\ref{fig:lps}.
-\hh{This is potentially problematic - the lineup flares up so strongly, because the lineup is testing against standard normal, while the normal tests are testing for the family - the KS test discussed here is the Lilliefors extension. The actual KS test is significant for this dataset, but then only rejects 3 others. Looking at the two side by side lineups the problem is smaller than it initially seemed. Should we re-run a subset of the data with the scale free lineups?}}
+\hh{XXX This is potentially problematic - the lineup flares up so strongly, because the lineup is testing against standard normal, while the normal tests are testing for the family - the KS test discussed here is the Lilliefors extension. The actual KS test is significant for this dataset, but then only rejects 3 others. Looking at the two side by side lineups the problem is smaller than it initially seemed. Should we re-run a subset of the data with the scale free lineups?}}
 \end{figure}
 Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range rotated Q-Q plots perform significantly worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. 
 

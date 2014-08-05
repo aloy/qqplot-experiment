@@ -119,6 +119,26 @@ turkw$df <- factor(turkw$df)
 @
 
 <<functions, echo=FALSE>>=
+sim_env <- function(x, conf = .95, line=FALSE){
+  n <- length(x)
+  P <- ppoints(x)[rank(x)]
+  z <- qnorm(P)
+  if (line) {
+    require(HLMdiag)
+    a <- as.numeric(HLMdiag:::qqlineInfo(x)[1])
+    b <- as.numeric(HLMdiag:::qqlineInfo(x)[2])
+  } else {
+    a <- 0  # we know that the line should be the identity
+    b <- 1
+  }
+  zz <- qnorm(1 - (1 - conf)/2)
+  SE <- (b/dnorm(z)) * sqrt(P * (1 - P)/n)
+  fit.value <- (a + b * z)
+  upper <- (fit.value + zz * SE)
+  lower <- (fit.value - zz * SE)
+  return(data.frame(lower, upper, fit.value, idx=1:length(x)))
+  
+}
 
 std_lineup <- function(dframe) {
   require(ggplot2)
@@ -220,36 +240,7 @@ If that is not possible, we have to assume that all participants share the same 
 To further \al{develop} the assessment of normality using lineups, we conducted a study comparing three different versions of the Q-Q plot.
 %We are testing three different versions of a Q-Q plot, 
 Examples of the three versions are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \hh{cite Meeker} based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{rotated} (i.e., detrended) Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
- 
-To investigate the power of the three different Q-Q plot versions, we sample data from a $t$ distribution with varying degrees of freedom and sample sizes, and include a Q-Q plot of this data in a lineup of null charts drawn from standard normal samples of the same size.
-For lineup tests it is of extreme importance to consider the generation of the null sets and the construction of the plots in the lineup. Here, we have the choice for the lineup to use the same scale for all charts, or scale plots individually. This distinction effectively determines the reference distribution $F^\ast$ against which we compare (see figure~\ref{fig:lps}).
 
-\begin{figure}[hbt]
-<<lps-dsn, dependson='functions', echo=FALSE>>=
-dframe <- read.csv("lineup-data/data-1-2-15-50-2-13-6.csv")
-dframe$.sample <- dframe$.sample_outer
-@
-\begin{subfigure}{0.5\textwidth}
-<<echo=FALSE, fig.width=7, fig.height=7>>=
-std_lineup(dframe)
-@
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-<<echo=FALSE, fig.width=7, fig.height=7>>=
-std_lineup_free(dframe)
-@
-\end{subfigure}
-\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The panels on the left lineup share a common scale, while the panels on the right are scaled individually. This difference reflects a change of the reference distribution from a standard normal $N(0,1)$ distribution on the left to a normal distribution with parameters based on the samples. The data underlying both lineups is the same, with the observed data sampled from a $t_2$ distribution, displayed in panel \#$(3^2 - 3)$.}
-\end{figure}
-
-
-To explore the results of this study we must first define some additional notation.
-
-\alnote{We can give a description of the MTurk study here.}
-
-%------------------------------------------------------------------------------------
-\subsection{Results}
-%------------------------------------------------------------------------------------
 \begin{figure}
 \centering
 % <<qqplots, dependson='functions', fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=TRUE>>=
@@ -267,6 +258,44 @@ To explore the results of this study we must first define some additional notati
 \includegraphics[width=0.3\textwidth]{qqplots3}
 \caption{ \label{qqplots} Three versions of Q-Q plots: control, standard, and rotated.}
 \end{figure}
+
+To investigate the power of the three different Q-Q plot versions, we sample data from a $t$ distribution with varying degrees of freedom and sample sizes, and include a Q-Q plot of this data in a lineup of null charts drawn from standard normal samples of the same size.
+For lineup tests it is of extreme importance to consider the generation of the null sets and the construction of the plots in the lineup. Here, we have the choice for the lineup to use the same scale for all charts, or scale plots individually. This distinction effectively determines the standard deviation of the reference distribution $F^\ast$ against which we compare (see figure~\ref{fig:lps}).
+
+\begin{tabular}{lp{4in}}
+$F^\ast = N(0,1)$ & reference line and envelope are identical across all panels, i.e.~panels all have the same scale \\
+$F^\ast = N(\bar{X}_i,S_i^2)$ & reference line and envelope are drawn based on sample mean and variance; panels are scaled individually
+\end{tabular}
+
+\begin{figure}[hbt]
+<<lps-dsn, dependson='functions', echo=FALSE, message=FALSE>>=
+dframe <- read.csv("lineup-data/data-1-2-15-50-2-13-6.csv")
+dframe$.sample <- dframe$.sample_outer
+fit2 <- ddply(dframe[,-(11:13)], .(.n), transform, naive1.env=sim_env(x, line=TRUE))
+fit2$.sample <- fit2$.sample_outer
+@
+\begin{subfigure}{0.5\textwidth}
+<<echo=FALSE, fig.width=7, fig.height=7>>=
+std_lineup(dframe)
+@
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+<<echo=FALSE, fig.width=7, fig.height=7>>=
+std_lineup_free(fit2)
+@
+\end{subfigure}
+\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The underlying data is identical, but on the left reference lines and envelopes are based on a standard normal distribution. The panels on the right are individually scaled and reference lines and envelopes are based on a normal distribution $N(\bar{X}_i, S_i^2)$, $i$=1, ..., 20, where $\bar{X}_i$ and $S_i^2$ are sample mean and variance.
+The observed data in both lineups is displayed in panel \#$(3^2 - 3)$.}
+\end{figure}
+
+
+To explore the results of this study we must first define some additional notation.
+
+\alnote{We can give a description of the MTurk study here.}
+
+%------------------------------------------------------------------------------------
+\subsection{Results}
+%------------------------------------------------------------------------------------
 
 
 Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision on the $i$th evaluation and $\pi_i$ is the probability with which the observer chooses the data plot. This probability is influenced by a number of factors:
