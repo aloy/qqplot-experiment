@@ -116,8 +116,61 @@ turkw <- subset(turkw, df != 0) # exclude Adam's data
 
 turkw$sample_size <- factor(turkw$sample_size)
 turkw$df <- factor(turkw$df)
+@
 
+<<functions, echo=FALSE>>=
 
+std_lineup <- function(dframe) {
+  require(ggplot2)
+  print(ggplot(aes(x=naive1.qq.x, y=naive1.qq.y), data = dframe) + 
+          geom_smooth(aes(naive1.qq.x, naive1.env.fit.value), colour="grey50", se=FALSE, method="loess") +
+          facet_wrap(~.sample, ncol=5) +
+          geom_point() + 
+          geom_ribbon(aes(x = naive1.qq.x, ymin = naive1.env.lower, ymax = naive1.env.upper),alpha = .2)+
+          labs(x = "", y = "") +
+          theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
+                axis.ticks = element_blank())
+  )  
+}
+
+std_lineup_free <- function(dframe) {
+  require(ggplot2)
+  require(grid)
+  print(ggplot(aes(x=naive1.qq.x, y=naive1.qq.y), data = dframe) + 
+          geom_smooth(aes(naive1.qq.x, naive1.env.fit.value), colour="grey50", se=FALSE, method="loess") +
+          facet_wrap(~.sample, ncol=5, scales="free") +
+          geom_point() + 
+          geom_ribbon(aes(x = naive1.qq.x, ymin = naive1.env.lower, ymax = naive1.env.upper),alpha = .2)+
+          labs(x = "", y = "") +
+          theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
+                axis.ticks = element_blank(), panel.margin=unit(0 , "lines"))
+  )  
+}
+
+rot_lineup <- function(dframe) {
+  require(ggplot2)
+  print(  ggplot(aes(x=naive1.qq.x, y=naive1.qq.y-naive1.env.fit.value), data = dframe) + 
+            facet_wrap(~.sample, ncol=5) + 
+            geom_hline(yintercept=0, colour="grey30")+
+            geom_point() + 
+            geom_ribbon(aes(x = naive1.qq.x, 
+                            ymin = naive1.env.lower-naive1.env.fit.value, ymax = naive1.env.upper-naive1.env.fit.value),alpha = .2)+
+            labs(x = "", y = "") +
+            theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
+                  axis.ticks = element_blank()))
+}
+
+ctrl_lineup <- function(dframe) {
+  require(ggplot2)
+  print(ggplot(aes(x=naive1.qq.x, y=naive1.qq.y), data = dframe) + 
+          geom_smooth(aes(naive1.qq.x, naive1.env.fit.value), colour="grey50", se=FALSE, method="loess") +
+          geom_point() + 
+          facet_wrap(~.sample, ncol=5) +
+          labs(x = "", y = "") +
+          theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
+                axis.ticks = element_blank())
+  )
+}
 @
 
 
@@ -129,6 +182,7 @@ Standard quantile-quantile (Q-Q) plots \citep{Wilk:1968} are an essential tool f
 
 The KS test uses the maximal  difference, which is displayed as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample, i.e. a difference $D$ observed at either tail of the distribution carries the same weight and is interpreted in the same way as a difference $D$ in the center of the distribution.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling upregulates the tail effect again due to its additional weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
 \begin{table}
+\centering
 \begin{tabular}{lrl}\hline
 Test && Statistic\\\hline\hline
 Kolmogorov-Smirnov & $D =$ & $ \sup_{1 \le i \le n} \left | F_n(x_i) - F(x_i)\right|$ \\
@@ -142,6 +196,8 @@ We will be making use of these three tests to assess the effectiveness of differ
 
 \alnote{Setting up the Q-Q plot, visual perception motivation of the study, and visual inference.}
 
+Lineup tests have been introduced by \citet{buja:2009hp} to evaluate and quantify the significance of graphical findings. The idea behind a lineup test is that of a police lineup: the chart of the observed data is placed randomly among a set of so called null charts, which show data created consistently with the null hypothesis. 
+If the `suspect' -- i.e. the plot of the observed data -- can be identified from the null charts, this is evidence against the null hypothesis. Multiple identifications of the data by independent observers then lead to a rejection of the null hypothesis.
 The lineup protocol also allows for an assessment of the power of a lineup \citep{mahbub:2013}. 
 %as the probability that in $N$ independent evaluations observers 
 In $N$ independent evaluations, the probability that observers
@@ -163,8 +219,31 @@ If that is not possible, we have to assume that all participants share the same 
 
 To further \al{develop} the assessment of normality using lineups, we conducted a study comparing three different versions of the Q-Q plot.
 %We are testing three different versions of a Q-Q plot, 
-Examples of the three versions are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \hh{cite Meeker} based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution,
- and a \emph{rotated} (i.e., detrended) Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. To explore the results of this study we must first define some additional notation.
+Examples of the three versions are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \hh{cite Meeker} based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{rotated} (i.e., detrended) Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
+ 
+To investigate the power of the three different Q-Q plot versions, we sample data from a $t$ distribution with varying degrees of freedom and sample sizes, and include a Q-Q plot of this data in a lineup of null charts drawn from standard normal samples of the same size.
+For lineup tests it is of extreme importance to consider the generation of the null sets and the construction of the plots in the lineup. Here, we have the choice for the lineup to use the same scale for all charts, or scale plots individually. This distinction effectively determines the reference distribution $F^\ast$ against which we compare (see figure~\ref{fig:lps}).
+
+\begin{figure}[hbt]
+<<lps-dsn, dependson='functions', echo=FALSE>>=
+dframe <- read.csv("lineup-data/data-1-2-15-50-2-13-6.csv")
+dframe$.sample <- dframe$.sample_outer
+@
+\begin{subfigure}{0.5\textwidth}
+<<echo=FALSE, fig.width=7, fig.height=7>>=
+std_lineup(dframe)
+@
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+<<echo=FALSE, fig.width=7, fig.height=7>>=
+std_lineup_free(dframe)
+@
+\end{subfigure}
+\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The panels on the left lineup share a common scale, while the panels on the right are scaled individually. This difference reflects a change of the reference distribution from a standard normal $N(0,1)$ distribution on the left to a normal distribution with parameters based on the samples. The data underlying both lineups is the same, with the observed data sampled from a $t_2$ distribution, displayed in panel \#$(3^2 - 3)$.}
+\end{figure}
+
+
+To explore the results of this study we must first define some additional notation.
 
 \alnote{We can give a description of the MTurk study here.}
 
@@ -172,17 +251,17 @@ Examples of the three versions are displayed in Figure~\ref{qqplots} and include
 \subsection{Results}
 %------------------------------------------------------------------------------------
 \begin{figure}
-%<<qqplots, fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=FALSE>>=
-%dframe <- read.csv("data/data-1-1-1-20-2-14-5.csv")
-%library(ggplot2)
-%dframe$.sample <- "Control"
-%ctrl_lineup(subset(dframe, .sample_outer==5))
-%dframe$.sample <- "Standard"
-%std_lineup(subset(dframe, .sample_outer==5))
-%dframe$.sample <- "Rotated"
-%rot_lineup(subset(dframe, .sample_outer==5))
-%@
 \centering
+% <<qqplots, dependson='functions', fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=TRUE>>=
+% dframe <- read.csv("lineup-data/data-1-1-1-20-2-14-5.csv")
+% library(ggplot2)
+% dframe$.sample <- "Control"
+% ctrl_lineup(subset(dframe, .sample_outer==5))
+% dframe$.sample <- "Standard"
+% std_lineup(subset(dframe, .sample_outer==5))
+% dframe$.sample <- "Rotated"
+% rot_lineup(subset(dframe, .sample_outer==5))
+% @
 \includegraphics[width=0.3\textwidth]{qqplots1}
 \includegraphics[width=0.3\textwidth]{qqplots2}
 \includegraphics[width=0.3\textwidth]{qqplots3}
@@ -218,7 +297,7 @@ lps <- ddply(turkw, .(data_name, treatment), summarise,
 parse_filename <- function(fname) {
   pars <- strsplit(fname, "-")[[1]]
   names(pars) <- c("data", "null", "rep",  "i", "n", "df", "innerPos", "outerPos")
-	pars
+  pars
 }
 
 exps <- ldply(as.character(lps$data_name), parse_filename)
@@ -267,7 +346,8 @@ lppvals$df <- factor(lppvals$df, levels=c("10", "5", "2"))
 p <- ggplot() + 
   geom_abline(colour="grey50") + 
   geom_point(aes(x=Standard, y=sw, colour=df, shape=df), size=3, data=lppvals) + 
-  scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(0,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvals, Standard < 0.05 & sw > 0.5)) + theme(legend.position="bottom") + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (p-values)")
+  scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(0,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvals, Standard < 0.05 & sw > 0.5)) + theme(legend.position="bottom") + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (p-values)"
+                                                                                                                                                                                                                                                                                                          )
 
 #ggsave(plot=p, filename="figures/fig:visnorm.pdf", width=4, height=4.5)
 # data-1-2-15-50-2-13-6.csv
@@ -295,14 +375,15 @@ ggplot() + geom_abline(colour="grey50") + geom_point(aes(x=Control, y=Standard, 
 
 \begin{figure}
 \centering
-\begin{subfigure}[t]{.3\textwidth}
-\includegraphics[width=\textwidth]{figures/fig:visnorm.pdf} 
-\vfill
-\end{subfigure}
-\begin{subfigure}[t]{.6\textwidth}
-\includegraphics[width=\textwidth]{figures/filebab632311351-multiple-svg.pdf}
-\end{subfigure}
-\caption{\label{fig:visnorm} Scatterplot of $p$-values from Shapiro-Wilks and lineups of Standard Q-Q plots (left). The lineup plot of Standard Q-Q plots (right) corresponds to the observation circled on the left, which is highly significant under the lineup test, but not significant under Shapiro Wilks.  \hh{This is potentially problematic - the lineup flares up so strongly, because the lineup is testing against standard normal, while the normal tests are testing for the family - the KS test discussed here is the Lilliefors extension. The actual Ks test is significant for this dataset, but then only rejects 3 others.}}
+%\begin{subfigure}[t]{.3\textwidth}
+\includegraphics[width=.5\textwidth]{figures/fig:visnorm.pdf} 
+%\vfill
+%\end{subfigure}
+%\begin{subfigure}[t]{.6\textwidth}
+%\includegraphics[width=\textwidth]{figures/filebab632311351-multiple-svg.pdf}
+%\end{subfigure}
+\caption{\label{fig:visnorm} Scatterplot of $p$-values from Shapiro-Wilks and lineups of Standard Q-Q plots. The circled observation on the left corresponds to a sample that shows highly significant deviations from normality under the lineup test, but is not significant under Shapiro Wilks. The lineup for the testing is shown on the left hand side of figure~\ref{fig:lps}.
+\hh{XXX This is potentially problematic - the lineup flares up so strongly, because the lineup is testing against standard normal, while the normal tests are testing for the family - the KS test discussed here is the Lilliefors extension. The actual KS test is significant for this dataset, but then only rejects 3 others. Looking at the two side by side lineups the problem is smaller than it initially seemed. Should we re-run a subset of the data with the scale free lineups?}}
 \end{figure}
 Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range rotated Q-Q plots perform significantly worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. 
 
