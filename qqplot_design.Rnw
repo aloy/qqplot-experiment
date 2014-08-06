@@ -272,8 +272,13 @@ $F^\ast = N(\bar{X},S^2)$ & reference line and envelope are drawn based on sampl
 <<lps-dsn, dependson='functions', echo=FALSE, message=FALSE>>=
 dframe <- read.csv("lineup-data/data-1-2-15-50-2-13-6.csv")
 dframe$.sample <- dframe$.sample_outer
-fit2 <- ddply(dframe[,-(11:13)], .(.n), transform, naive1.env=sim_env(x, line=TRUE))
-fit2$.sample <- fit2$.sample_outer
+
+fit2 <- dframe
+fit2$x[fit2$.n==20] <- dframe$x[dframe$.n==20]/sd(fit2$x[fit2$.n==20]) # change variance to 1, compare then
+idx <- grep("naive1.qq", names(fit2))
+fit2 <- ddply(fit2[,-idx], .(.n), transform, naive1.qq=qqnorm(x, plot.it=FALSE))
+idx <- grep("naive1.env", names(fit2))
+fit2 <- ddply(fit2[,-idx], .(.n), transform, naive1.env=sim_env(x))
 @
 \begin{subfigure}{0.5\textwidth}
 <<echo=FALSE, fig.width=7, fig.height=7>>=
@@ -282,11 +287,11 @@ std_lineup(dframe)
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 <<echo=FALSE, fig.width=7, fig.height=7>>=
-std_lineup_free(fit2)
+std_lineup(fit2) 
 @
 \end{subfigure}
 \caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The underlying data is identical, but on the left reference lines and envelopes are based on a standard normal distribution. Reference lines and envelopes for the lineup on the right are based on a normal distribution $N(\bar{X}, S^2)$, the estimates of the data.
-The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. \hhnote{Adam, the plot on the right is not the correct one, but I have still trouble creating the correct plot. I hope it's clear from the description what we need: the nulls should be drawn from $N(\bar{X}, S^2)$ and the reference line and envelope should be based on those estimates as well. This will make the comparison to AD, SW, CVM and LF fairer.}}
+The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. }
 \end{figure}
 
 
