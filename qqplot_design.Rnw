@@ -144,6 +144,7 @@ std_lineup <- function(dframe) {
   require(ggplot2)
   print(ggplot(aes(x=naive1.qq.x, y=naive1.qq.y), data = dframe) + 
           geom_smooth(aes(naive1.qq.x, naive1.env.fit.value), colour="grey50", se=FALSE, method="loess") +
+        #  geom_abline(colour="grey50") +
           facet_wrap(~.sample, ncol=5) +
           geom_point() + 
           geom_ribbon(aes(x = naive1.qq.x, ymin = naive1.env.lower, ymax = naive1.env.upper),alpha = .2)+
@@ -260,11 +261,11 @@ Examples of the three versions are displayed in Figure~\ref{qqplots} and include
 \end{figure}
 
 To investigate the power of the three different Q-Q plot versions, we sample data from a $t$ distribution with varying degrees of freedom and sample sizes, and include a Q-Q plot of this data in a lineup of null charts drawn from standard normal samples of the same size.
-For lineup tests it is of extreme importance to consider the generation of the null sets and the construction of the plots in the lineup. Here, we have the choice for the lineup to use the same scale for all charts, or scale plots individually. This distinction effectively determines the standard deviation of the reference distribution $F^\ast$ against which we compare (see figure~\ref{fig:lps}).
+For lineup tests it is of extreme importance to consider the generation of the null sets and the construction of the plots in the lineup. %Here, we have the choice for the lineup to use the same scale for all charts, or scale plots individually. This distinction effectively determines the standard deviation of the reference distribution $F^\ast$ against which we compare (see figure~\ref{fig:lps}).
 
 \begin{tabular}{lp{4in}}
 $F^\ast = N(0,1)$ & reference line and envelope are identical across all panels, i.e.~panels all have the same scale \\
-$F^\ast = N(\bar{X}_i,S_i^2)$ & reference line and envelope are drawn based on sample mean and variance; panels are scaled individually
+$F^\ast = N(\bar{X},S^2)$ & reference line and envelope are drawn based on sample mean and variance of the data sample; all panels have the same scale
 \end{tabular}
 
 \begin{figure}[hbt]
@@ -284,8 +285,8 @@ std_lineup(dframe)
 std_lineup_free(fit2)
 @
 \end{subfigure}
-\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The underlying data is identical, but on the left reference lines and envelopes are based on a standard normal distribution. The panels on the right are individually scaled and reference lines and envelopes are based on a normal distribution $N(\bar{X}_i, S_i^2)$, $i$=1, ..., 20, where $\bar{X}_i$ and $S_i^2$ are sample mean and variance.
-The observed data in both lineups is displayed in panel \#$(3^2 - 3)$.}
+\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The underlying data is identical, but on the left reference lines and envelopes are based on a standard normal distribution. Reference lines and envelopes for the lineup on the right are based on a normal distribution $N(\bar{X}, S^2)$, the estimates of the data.
+The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. \hhnote{Adam, the plot on the right is not the correct one, but I have still trouble creating the correct plot. I hope it's clear from the description what we need: the nulls should be drawn from $N(\bar{X}, S^2)$ and the reference line and envelope should be based on those estimates as well. This will make the comparison to AD, SW, CVM and LF fairer.}}
 \end{figure}
 
 
