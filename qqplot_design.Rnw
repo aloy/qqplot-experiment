@@ -530,10 +530,10 @@ Result & Standard & Control & Rotated & SW & AD & LF   & CVM & KS\\
   \hline
   \hline
   reject $N(0,1)$ & 29 & 28 & 26  &   &  &   &  & 4\\ 
-  not reject & 19 & 20 & 22 & 32 &   &  &   & 44\\ 
+  not reject & 19 & 20 & 22 &  &   &  &   & 44\\ 
    \hline
   reject $N(0,S^2)$ &  &  &   &  16 & 10 &  10 & 8 & \\ 
-  not reject &  &  &  &  & 38  & 38 &  40 & \\ 
+  not reject &  &  &  & 32 & 38  & 38 &  40 & \\ 
 \end{tabular}
 \end{table}
 
@@ -588,6 +588,7 @@ qplot(attempt, tt, data=subset(attempts, attempt <= 10)) +
 \begin{enumerate}
 \item{All versions of Q-Q plots investigated in this paper are significantly better at detecting deviations from normality than classical normality test. A contributing factor to this superior power might be  that in  Q-Q plots the whole sample is assessed rather than being reduced to the single value of the sufficient statistics for the normality tests. XXX this needs cleaning up
 Another reason might be that a robust estimation approach is used in drawing Q-Q plots, while most normality tests are based on the outlier sensitive sample variance $S^2 = \sum_i(x_i - \bar{X})^2/(n-1)$.  }
+\item {Different estimators, such as MAD or adjusted MAD \citep{rousseeuw}, for variance might (will) change power of lineups. The results of the study is also posing the question of whether normality tests might not be improved by using robust estimates of the sample when assessing normality. }
 
 \item{De-trended Q-Q plots have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design.}
 \end{enumerate}
