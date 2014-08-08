@@ -129,10 +129,12 @@ b) Out of the variations discussed, rotated Q-Q plots perform significantly wors
 
 
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
-
-
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# \\\#\# Attaching package: 'lubridate'\\\#\# \\\#\# The following object is masked from 'package:plyr':\\\#\# \\\#\#\ \ \ \  here}}\end{kframe}
+\end{knitrout}
 
 
 
@@ -232,14 +234,12 @@ $F = N(\bar{X},S^2)$ & reference line and envelope are drawn based on sample mea
 
 \begin{figure}[hbt]
 
-
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-1} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
@@ -247,7 +247,6 @@ $F = N(\bar{X},S^2)$ & reference line and envelope are drawn based on sample mea
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-2} 
 
 \end{knitrout}
-
 \end{subfigure}
 \caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The underlying data is identical, but on the left reference lines and envelopes are based on a standard normal distribution. Reference lines and envelopes for the lineup on the right are based on a normal distribution $N(\bar{X}, S^2)$, the estimates of the data.
 The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. }
@@ -282,13 +281,25 @@ The combination of different levels of sample size and degrees of freedom of the
 Using  Amazon MTurk \citep{amazon}, 674 participants were each asked to evaluate ten different lineups each. 
 \hh{weights? We dealt with multiple answers to lineups that offered this choice by using a weighting variabe with reciprocal values of the number of answers given by a participant.}
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+## Loading C code of R package 'Rmpfr': GMP using 64 bits per limb
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: cannot open file 'data/pvalues.csv': No such file or directory}}
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: cannot open the connection}}
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'sw' not found}}\end{kframe}
+\end{knitrout}
 \begin{figure}
 \centering
 \begin{subfigure}[b]{.3\textwidth}
@@ -297,7 +308,6 @@ Using  Amazon MTurk \citep{amazon}, 674 participants were each asked to evaluate
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -305,7 +315,6 @@ Using  Amazon MTurk \citep{amazon}, 674 participants were each asked to evaluate
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-4} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -313,7 +322,6 @@ Using  Amazon MTurk \citep{amazon}, 674 participants were each asked to evaluate
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-5} 
 
 \end{knitrout}
-
 \end{subfigure}
 \caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. Rotated Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
 \end{figure}
@@ -345,8 +353,12 @@ where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ a
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$.
 
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: Matrix\\\#\# Loading required package: Rcpp}}\end{kframe}
+\end{knitrout}
 
 \begin{figure}
 \begin{subfigure}[b]{0.5\textwidth}
@@ -355,7 +367,6 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 \includegraphics[width=\maxwidth]{figure/abilities} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}[b]{0.5\textwidth}
 \begin{knitrout}
@@ -363,7 +374,6 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 \includegraphics[width=\maxwidth]{figure/abilities2} 
 
 \end{knitrout}
-
 \end{subfigure}
 \caption{\label{fig:ranef}Histograms of random effects of individuals' abilities (left) and difficulty level of the data (right). }
 \end{figure}
@@ -433,8 +443,12 @@ Result & Standard & Control & Rotated & SW & AD & LF   & CVM & KS\\
 %------------------------------------------------------------------------------------
 \section{Other material}
 %------------------------------------------------------------------------------------
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: package 'Formula' was built under R version 3.1.1}}\end{kframe}
+\end{knitrout}
 
 Similar to observations made in other lineup experiments (XXX cite Mahbub's socio paper), there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of an inherent ability. The overall proportion of correct responses is very stable, fluctuating around 0.41. However, the variability observed is close to 0.5. What does change, is the time taken by participants to answer a lineup. From initially 53.6 seconds in the first answer, the response time drops to 33 seconds at the tenth evaluation.
 \begin{figure}
@@ -445,7 +459,6 @@ Similar to observations made in other lineup experiments (XXX cite Mahbub's soci
 \includegraphics[width=\maxwidth]{figure/fig1} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -453,7 +466,6 @@ Similar to observations made in other lineup experiments (XXX cite Mahbub's soci
 \includegraphics[width=\maxwidth]{figure/fig2} 
 
 \end{knitrout}
-
 \end{subfigure}
 \caption{\label{fig:attempts}Proportion of correct answers by attempt (left) and time taken in each of the first ten attempts (right). The proportion of correct responses stays constantfor successive attempts, while the time to answer decreases significantly over the same number of attempts.}
 \end{figure}
