@@ -160,7 +160,6 @@ Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)
 We will be making use of these tests to assess the effectiveness of different variations of standard Q-Q plots.
 
 
- \hhnote{How are Q-Q plots constructed? - We need to introduce this with a bit more formality.}
  \hh{A Q-Q plot of sample $x$ is constructed by plotting theoretical quantiles $F^{-1}(F_n(x_i))$ against empirical quantiles $x_{(i)}$. In the case that the empirical distribution $F_n$ is consistent with distribution $F$, the points in the Q-Q plot falls on the line of identity. 
  For a normally distributed sample $x \sim N(\mu, \sigma^2)$, the empirical quantiles still fall on a line when plotted against theoretical quantiles of a standard normal distribution $N(0,1)$. The slope of the line is an estimate for $\sigma$, and the intercept is an estimate for $\mu$. Visually the Q-Q plot does not change except for a change in the scale of the $y$-axis. We can therefore employ Q-Q plot in the more general framework of testing the distribution of a sample $x$ for normality similar to standard normality tests, such as the AD, LF, CVM, and SW test. We do have to make a decision with respect to the exact parameters of the normal distribution we test againts, when we plot a line alongside the points in the Q-Q plot for additional comparison purposes, i.e.~parameters $\mu$ and $\sigma$ have to be estimated from the sample. In Q-Q plots, these estimates are based on robust estimates; for $\widehat{\sigma}$ the ratio of the inter-quartile ranges of empirical and theoretical distributions: $\left(F^{-1}_n(0.75) - F^{-1}_n(0.25)\right) / \left(F^{-1}(0.75) - F^{-1}(0.25)\right)$. XXX citation?
  }
@@ -168,11 +167,19 @@ We will be making use of these tests to assess the effectiveness of different va
 
 \hh{A sample $x$ is considered as being consistent with a normal distribution, if empirical and theoretical quantiles fall close to  a straight line.  Closeness can  be assessed visually based on whether the points fall inside the envelope of 95\%  pointwise confidence intervals. XXX citation!  }
 
-\hhnote{XXX lead into the three different designs}
+\hh{
+In assessing differences between points and lines, onlookers have a tendency to evaluate shortest, i.e.~orthogonal, distance, even when asked to evaluate differences based on vertical distance \citep{sineillusion, robbins:2005, cleveland:1984}. 
 
-For all of the variations of Q-Q plots considered in this paper, a line representing the theoretical distribution is drawn explicitly.
+In so-called {\it de-trended Q-Q plots} the $y$ axis is changed to show the difference between theoretical and empirical quantiles. The line of the theoretical distribution therefore coincides with the $x$ axis. Vertical differences between empirical and theoretical distribution therefore  coincide with orthogonal distance. 
 
-Examples of the three versions are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \hh{cite Meeker} based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{rotated} (i.e., detrended) Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
+De-trending should therefore aid the visual assessment between empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show rather than asking audiences to derive it \citep{wainer:2000}.
+}
+
+
+\hh{Part of this paper serves to investigate the effectiveness and the power of the modifications made to Q-Q plots.
+}
+
+Examples of the three versions of Q-Q plots under considerations are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \hh{cite Meeker} based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{rotated} (i.e., detrended) Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
 
 \begin{figure}
 \centering
@@ -193,13 +200,7 @@ Examples of the three versions are displayed in Figure~\ref{qqplots} and include
 \end{figure}
 \alnote{Setting up the Q-Q plot, visual perception motivation of the study, and visual inference.}
 
-\hhnote{Cognitive perception:}
-\hh{In de-trended Q-Q plots $x$-values are given by the quantiles of the empirical distribution as in regular Q-Q plots. $y$-values are given by the difference between empirical and theoretical distributiom. The line of the theoretical distribution therefore coincides with the $x$ axis. 
 
-In assessing differences between points and lines, onlookers have a tendency to evaluate shortest, i.e.~orthogonal, distances, even if asked to evaluate differences based on vertical distances \citep{sineillusion, robbins:2005, cleveland:1984}. 
-In de-trended Q-Q plots vertical difference between empirical and theoretical distribution coincides with orthogonal distance. 
-De-trending should therefore aid the visual assessment between empirical CDF and theoretical CDF. It is also in line with the standard graphical recommendation to directly plot the aspect of the data we want to show rather than asking audiences to derive it \citep{wainer:2000}.
-}
 
 \hh{In order to objectively evaluate  the three designs and quantify their effectiveness we make use of {\it lineup tests}.}
 
@@ -430,14 +431,9 @@ Result & Standard & Control & Rotated & SW & AD & LF   & CVM & KS\\
 \end{table}
 
 
-%------------------------------------------------------------------------------------
-\section{Discussion}
-%------------------------------------------------------------------------------------
-
-\alnote{We can recap and discuss how we can extend the study (aspect ratio for the rotated plots, etc.)}
 
 %------------------------------------------------------------------------------------
-\section{Other material}
+\section{Other study results}
 %------------------------------------------------------------------------------------
 
 
@@ -464,7 +460,12 @@ Similar to observations made in other lineup experiments (XXX cite Mahbub's soci
 \caption{\label{fig:attempts}Proportion of correct answers by attempt (left) and time taken in each of the first ten attempts (right). The proportion of correct responses stays constantfor successive attempts, while the time to answer decreases significantly over the same number of attempts.}
 \end{figure}
 
-\section{Conclusion}
+%------------------------------------------------------------------------------------
+\section{Discussion and Conclusion}
+%------------------------------------------------------------------------------------
+
+\alnote{We can recap and discuss how we can extend the study (, etc.)}
+
 \hhnote{Just notes at the moment:}
 \hh{
 \begin{enumerate}
@@ -472,7 +473,7 @@ Similar to observations made in other lineup experiments (XXX cite Mahbub's soci
 Another reason might be that a robust estimation approach is used in drawing Q-Q plots, while most normality tests are based on the outlier sensitive sample variance $S^2 = \sum_i(x_i - \bar{X})^2/(n-1)$.  }
 \item {Different estimators, such as MAD or adjusted MAD \citep{rousseeuw}, for variance might (will) change power of lineups. The results of the study is also posing the question of whether normality tests might not be improved by using robust estimates of the sample when assessing normality. }
 
-\item{De-trended Q-Q plots have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design.}
+\item{De-trended Q-Q plots have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design. \al{aspect ratio for the rotated plots?}}
 \end{enumerate}
 }
 \bibliographystyle{apalike}
