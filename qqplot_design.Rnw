@@ -227,6 +227,7 @@ We will be making use of these tests to assess the effectiveness of different va
 
 \hh{A sample $x$ is considered as being consistent with a normal distribution, if empirical and theoretical quantiles fall close to  a straight line.  Closeness can  be assessed visually based on whether the points fall inside the envelope of 95\%  pointwise confidence intervals. XXX citation!  }
 
+\hhnote{XXX lead into the three different designs}
 
 For all of the variations of Q-Q plots considered in this paper, a line representing the theoretical distribution is drawn explicitly.
 
