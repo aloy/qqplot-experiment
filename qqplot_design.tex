@@ -124,7 +124,7 @@ this paper holds two messages:
 a) our eyes are well suited to assess distributional assumptions. We  objectively measure  power and sensitivity of Q-Q plots using lineup tests. 
 At the example of normal distributions we can show that Q-Q plots are better at identifying non-normality than some prominent tests of normality, such as Shapiro-Wilks,  Anderson-Darling,  Kolmogorov-Smirnov, Lilliefors, or  Cramer-von-Mises.
 
-b) Out of the variations discussed, rotated Q-Q plots perform significantly worse than the other two variants. This is surprising, because cognitive theory tells us, that rotated plots should be better suited in assessing the difference between empirical and hypothesized  distribution.
+b) Out of the variations discussed, de-trended Q-Q plots perform significantly worse than the other two variants. This is surprising, because cognitive theory tells us, that de-trended plots should be better suited in assessing the difference between empirical and hypothesized  distribution.
 \end{abstract}
 
 
@@ -179,7 +179,7 @@ De-trending should therefore aid the visual assessment between empirical CDF and
 \hh{Part of this paper serves to investigate the effectiveness and the power of the modifications made to Q-Q plots.
 }
 
-Examples of the three versions of Q-Q plots under considerations are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \hh{cite Meeker} based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{rotated} (i.e., detrended) Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
+Examples of the three versions of Q-Q plots under considerations are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \hh{cite Meeker} based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{de-trended} Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
 
 \begin{figure}
 \centering
@@ -190,13 +190,13 @@ Examples of the three versions of Q-Q plots under considerations are displayed i
 % ctrl_lineup(subset(dframe, .sample_outer==5))
 % dframe$.sample <- "Standard"
 % std_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "Rotated"
+% dframe$.sample <- "De-trended"
 % rot_lineup(subset(dframe, .sample_outer==5))
 % @
 \includegraphics[width=0.3\textwidth]{qqplots1}
 \includegraphics[width=0.3\textwidth]{qqplots2}
 \includegraphics[width=0.3\textwidth]{qqplots3}
-\caption{ \label{qqplots} Three versions of Q-Q plots: control, standard, and rotated.}
+\caption{ \label{qqplots} Three versions of Q-Q plots: control, standard, and de-trended.}
 \end{figure}
 \alnote{Setting up the Q-Q plot, visual perception motivation of the study, and visual inference.}
 
@@ -204,18 +204,30 @@ Examples of the three versions of Q-Q plots under considerations are displayed i
 
 \hh{In order to objectively evaluate  the three designs and quantify their effectiveness we make use of {\it lineup tests}.}
 
-Lineup tests have been introduced by \citet{buja:2009hp} to evaluate and quantify the significance of graphical findings. The idea behind a lineup test is that of a police lineup: the chart of the observed data is placed randomly among a set of so called null charts, which show data created consistently with the null hypothesis. \hhnote{null hypothesis here is either that F is standard normal or F is normal with parameters based on sample mean and variance.}
-If the `suspect' -- i.e. the plot of the observed data -- can be identified from the null charts, this is evidence against the null hypothesis. Multiple identifications of the data by independent observers then lead to a rejection of the null hypothesis.
-The lineup protocol also allows for an assessment of the power of a lineup \citep{mahbub:2013}. 
+Lineup tests have been introduced by \citet{buja:2009hp} to evaluate and quantify the significance of graphical findings. The idea behind a lineup test is that of a police lineup: the chart of the observed data is placed randomly among a set of so called null charts, showing data created consistently with the null hypothesis. \hh{In the setting of a lineup of Q-Q plots, the null hypothesis  is either that F is standard normal or F is normal with parameters based on sample mean and variance.}
+If the `suspect' -- i.e. the plot of the observed data -- can be identified from the null charts, this counts as evidence against the null hypothesis. Multiple identifications of the data by independent observers then lead to a rejection of the null hypothesis. 
+The lineup protocol also allows for an assessment of the power of a lineup \citep{mahbub:2013},  
 %as the probability that in $N$ independent evaluations observers 
-In $N$ independent evaluations, the probability that observers
-choose the true plot more than $x_\alpha$ times is
+
+\hh{and by showing different renderings of the exact same data in lineups we can evaluate the power  of different designs.}
+\hh{In considering the power of a lineup, we need to estimate the probability $p_i$ that observer $i$ identifies the data from the lineup. If the observer is just guessing, this probability is $1/m$, where $m$ is the number of plots in the lineup.}
+The power of a lineups is then given as the probability to reject the null hypothesis. Let $X$ be the number of identifications of the data plot in $N$ independent evaluations. Let $X \sim F_N$. The power of the lineup is then given as the probability that more than $x_\alpha$ out of $N$ observers
+choose the true plot, i.e.:
 \begin{equation}\label{eqn:power}
 \widehat{\text{Power}} = \text{Power}_{N} = 1 - F_{X} (x_{\alpha}),
 \end{equation}
-where $F_X$ is the distribution of $X$ and $x_\alpha$ is the critical value for a given significance level of $\alpha$, i.e. $P(X >  x_{\alpha}) \le \alpha$. $X$ is composed of the sum of $N$ observers' (binary) decisions $X_i \sim B_{1, p_i}$, where  $p_i$ is the probability that individual $i$ chooses the data plot. This probability  depends both on the strength of the signal in the data plot and an individual's visual ability.
+where $x_\alpha$ is the critical value for a given significance level of $\alpha$, i.e.~$P(X >  x_{\alpha}) \le \alpha$. $X$ is composed of the sum of $N$ observers' (binary) decisions $X_i \sim B_{1, p_i}$, where  $p_i$ is the probability that individual $i$ chooses the data plot. This probability  depends both on the strength of the signal in the data plot and an individual's visual ability.
 Assessing this ability requires that each individual evaluates multiple lineups. 
-If that is not possible, we have to assume that all participants share the same ability, and the power calculation in Equation~\ref{eqn:power} simplifies to $1 - B_{N, \hat{p}}(x_\alpha)$, where $\widehat{p}$ is an estimate for the probability of choosing the data plot for a specific lineup. Similar to classical inference, we can make use of power to assess sensitivity of tests. This allows us to make decisions about designs for particular tasks by evaluating lineups displaying  the same data in different types of displays \citep{Hofmann:2012ts}. 
+If that is not possible, we have to assume that all participants share the same ability $p$.%, and the power calculation in Equation~\ref{eqn:power} simplifies to $1 - B_{N, \hat{p}}(x_\alpha)$, where $\widehat{p}$ is an estimate for the probability of choosing the data plot for a specific lineup.
+Similar to classical inference, we can make use of power to assess sensitivity of tests. This allows us to make decisions about designs for particular tasks by evaluating lineups displaying  the same data in different types of displays \citep{Hofmann:2012ts}. 
+
+\hhnote{Outline of the paper:}
+\hh{
+\begin{itemize}
+\item We model power of different lineups in a simulation setting: based on 48 samples from $t$ distributions with different degrees of freedom and varying sample size, we draw lineups for all three designs of Q-Q pots and evaluate power.
+\item We make use of visual $p$-values to assess sensitivity of lineups of Q-Q plots with respect to other tests of normality.
+\end{itemize}}
+
 
 %------------------------------------------------------------------------------------
 \section{Investigating Q-Q plots visually}\label{sec:qqplot}
@@ -274,7 +286,7 @@ Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision o
 
 \begin{center}
 \begin{tabular}{lp{5in}}
-$\tau$ & the design used in the lineup (Control, Standard, Rotated), \\
+$\tau$ & the design used in the lineup (Control, Standard, De-trended), \\
 &  the specific parameters under which the data for the lineup were created: \\
 &  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
 &  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
@@ -322,7 +334,7 @@ Using  Amazon MTurk \citep{amazon}, 674 participants were each asked to evaluate
 \end{knitrout}
 
 \end{subfigure}
-\caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. Rotated Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
+\caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. De-trended Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
 \end{figure}
 
 \begin{figure}
@@ -339,7 +351,7 @@ Using  Amazon MTurk \citep{amazon}, 674 participants were each asked to evaluate
 %\hh{XXX This is potentially problematic - the lineup flares up so strongly, because the lineup is testing against standard normal, while the normal tests are testing for the family - the KS test discussed here is the Lilliefors extension. The actual KS test is significant for this dataset, but then only rejects 3 others. Looking at the two side by side lineups the problem is smaller than it initially seemed. Should we re-run a subset of the data with the scale free lineups?}
 }
 \end{figure}
-Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range rotated Q-Q plots perform significantly worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. 
+Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform significantly worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. 
 
 \hh{XXX lead into the model}
 
@@ -347,7 +359,7 @@ We model the probability of selecting the data plot from the lineup, $\pi$, with
 \[
 g(\pi_i) = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)}
 \]
-where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are all indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard, Rotated$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation and $d(i)$ identifies the particular data sample used for it. 
+where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are all indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard, De-trended$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation and $d(i)$ identifies the particular data sample used for it. 
 
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$.
 
@@ -380,7 +392,7 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 % xtable(summary(m0)$coefficients, digits=c(0,2,3,2,4))
 \begin{table}[ht]
 \centering
-\caption{\label{tab:model} Coefficients and significances corresponding to  model $M_1$. The type of design is important for the power of a lineup. Rotated Q-Q plots lose a significant amount of power compared to both the regular and the standard version of Q-Q plots. }
+\caption{\label{tab:model} Coefficients and significances corresponding to  model $M_1$. The type of design is important for the power of a lineup. De-trended Q-Q plots lose a significant amount of power compared to both the regular and the standard version of Q-Q plots. }
 \begin{tabular}{rrrrrl}
   \hline
  &\bf Estimate &\bf Std. Error &\bf z value &\bf Pr($>$$|$z$|$) & \\ 
@@ -389,7 +401,7 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 \multicolumn{3}{l}{\bf design} \\
    Control & 0.00 & ----- & ----- & ----- \\ 
    Standard & 0.06 & 0.103 & 0.62 & 0.5371 \\
-   Rotated & -0.50 & 0.104 & -4.77 & 0.0000 & ***\\  [3pt]
+   De-trended & -0.50 & 0.104 & -4.77 & 0.0000 & ***\\  [3pt]
 \multicolumn{4}{l}{\bf degrees of freedom} \\
   2 & 6.63 & 0.752 & 8.82 & 0.0000 & ***\\ 
   5 & 2.65 & 0.732 & 3.61 & 0.0003 & **\\ 
@@ -407,7 +419,7 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 The estimated model coefficients for model $M_1$ are shown in Table~\ref{tab:model}. 
 Estimates of the variance components are $\widehat{\sigma}_u = 0.44$, $\widehat{\sigma}_d=0.44$, and $\widehat{\sigma} = 0.31$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
 %
-As expected, the task of identifying non-normality is easier with increased sample size and more pronounced deviations from normality, as is the case with lower degrees of freedom. The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot. Interestingly, the rotated version of the Q-Q plot is significantly less suitable for the task of assessing normality compared to the control. Additionally, adding confidence bands helps with evaluation, but not significantly. 
+As expected, the task of identifying non-normality is easier with increased sample size and more pronounced deviations from normality, as is the case with lower degrees of freedom. The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot. Interestingly, the de-trended version of the Q-Q plot is significantly less suitable for the task of assessing normality compared to the control. Additionally, adding confidence bands helps with evaluation, but not significantly. 
 
 Note that none of the data plots in the lineups were actually created using data from a normal distribution. This should lead to rejection of the null hypothesis in every single instance. This is not quite true, as can be seen in Table~\ref{tab:reject}, but what also becomes evident is the high power  of visual inference. Based on lineups we are able to reject non-normality much more often than with any of the classical tests.
 
@@ -416,17 +428,17 @@ Note that none of the data plots in the lineups were actually created using data
 \begin{table}[ht]
 \centering
 \caption{\label{tab:reject} 
-Out of the 48 non-normal samples, at least 26 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. The power we observe here, matches with the power discussion by \citet{razali:2011} for the SW, AD, LF and the KS test.}
+ From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 48 non-normal samples, at least 26 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. The power we observe here, matches with the power discussion by \citet{razali:2011} for the SW, AD, LF and the KS test.}
 \begin{tabular}{rrrrrrrrr}
   \hline
-Result & Standard & Control & Rotated & SW & AD & LF   & CVM & KS\\ 
+Result & Standard & Control & De-trended & SW & AD & LF   & CVM & KS\\ 
   \hline
   \hline
   reject $N(0,1)$ & 29 & 28 & 26  &   &  &   &  & 4\\ 
-  not reject & 19 & 20 & 22 &  &   &  &   & 44\\ 
+%  not reject & 19 & 20 & 22 &  &   &  &   & 44\\ 
    \hline
   reject $N(0,S^2)$ &  &  &   &  16 & 10 &  10 & 8 & \\ 
-  not reject &  &  &  & 32 & 38  & 38 &  40 & \\ 
+%  not reject &  &  &  & 32 & 38  & 38 &  40 & \\ 
 \end{tabular}
 \end{table}
 
@@ -473,7 +485,8 @@ Similar to observations made in other lineup experiments (XXX cite Mahbub's soci
 Another reason might be that a robust estimation approach is used in drawing Q-Q plots, while most normality tests are based on the outlier sensitive sample variance $S^2 = \sum_i(x_i - \bar{X})^2/(n-1)$.  }
 \item {Different estimators, such as MAD or adjusted MAD \citep{rousseeuw}, for variance might (will) change power of lineups. The results of the study is also posing the question of whether normality tests might not be improved by using robust estimates of the sample when assessing normality. }
 
-\item{De-trended Q-Q plots have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design. \al{aspect ratio for the rotated plots?}}
+\item{De-trended Q-Q plots have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design. \al{aspect ratio for the de-trended plots?}}
+\item{Distributions other than normals?}
 \end{enumerate}
 }
 \bibliographystyle{apalike}

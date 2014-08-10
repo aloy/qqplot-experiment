@@ -249,7 +249,7 @@ Examples of the three versions of Q-Q plots under considerations are displayed i
 % ctrl_lineup(subset(dframe, .sample_outer==5))
 % dframe$.sample <- "Standard"
 % std_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "Rotated"
+% dframe$.sample <- "De-trended"
 % rot_lineup(subset(dframe, .sample_outer==5))
 % @
 \includegraphics[width=0.3\textwidth]{qqplots1}
@@ -263,18 +263,30 @@ Examples of the three versions of Q-Q plots under considerations are displayed i
 
 \hh{In order to objectively evaluate  the three designs and quantify their effectiveness we make use of {\it lineup tests}.}
 
-Lineup tests have been introduced by \citet{buja:2009hp} to evaluate and quantify the significance of graphical findings. The idea behind a lineup test is that of a police lineup: the chart of the observed data is placed randomly among a set of so called null charts, which show data created consistently with the null hypothesis. \hhnote{null hypothesis here is either that F is standard normal or F is normal with parameters based on sample mean and variance.}
-If the `suspect' -- i.e. the plot of the observed data -- can be identified from the null charts, this is evidence against the null hypothesis. Multiple identifications of the data by independent observers then lead to a rejection of the null hypothesis.
-The lineup protocol also allows for an assessment of the power of a lineup \citep{mahbub:2013}. 
+Lineup tests have been introduced by \citet{buja:2009hp} to evaluate and quantify the significance of graphical findings. The idea behind a lineup test is that of a police lineup: the chart of the observed data is placed randomly among a set of so called null charts, showing data created consistently with the null hypothesis. \hh{In the setting of a lineup of Q-Q plots, the null hypothesis  is either that F is standard normal or F is normal with parameters based on sample mean and variance.}
+If the `suspect' -- i.e. the plot of the observed data -- can be identified from the null charts, this counts as evidence against the null hypothesis. Multiple identifications of the data by independent observers then lead to a rejection of the null hypothesis. 
+The lineup protocol also allows for an assessment of the power of a lineup \citep{mahbub:2013},  
 %as the probability that in $N$ independent evaluations observers 
-In $N$ independent evaluations, the probability that observers
-choose the true plot more than $x_\alpha$ times is
+
+\hh{and by showing different renderings of the exact same data in lineups we can evaluate the power  of different designs.}
+\hh{In considering the power of a lineup, we need to estimate the probability $p_i$ that observer $i$ identifies the data from the lineup. If the observer is just guessing, this probability is $1/m$, where $m$ is the number of plots in the lineup.}
+The power of a lineups is then given as the probability to reject the null hypothesis. Let $X$ be the number of identifications of the data plot in $N$ independent evaluations. Let $X \sim F_N$. The power of the lineup is then given as the probability that more than $x_\alpha$ out of $N$ observers
+choose the true plot, i.e.:
 \begin{equation}\label{eqn:power}
 \widehat{\text{Power}} = \text{Power}_{N} = 1 - F_{X} (x_{\alpha}),
 \end{equation}
-where $F_X$ is the distribution of $X$ and $x_\alpha$ is the critical value for a given significance level of $\alpha$, i.e. $P(X >  x_{\alpha}) \le \alpha$. $X$ is composed of the sum of $N$ observers' (binary) decisions $X_i \sim B_{1, p_i}$, where  $p_i$ is the probability that individual $i$ chooses the data plot. This probability  depends both on the strength of the signal in the data plot and an individual's visual ability.
+where $x_\alpha$ is the critical value for a given significance level of $\alpha$, i.e.~$P(X >  x_{\alpha}) \le \alpha$. $X$ is composed of the sum of $N$ observers' (binary) decisions $X_i \sim B_{1, p_i}$, where  $p_i$ is the probability that individual $i$ chooses the data plot. This probability  depends both on the strength of the signal in the data plot and an individual's visual ability.
 Assessing this ability requires that each individual evaluates multiple lineups. 
-If that is not possible, we have to assume that all participants share the same ability, and the power calculation in Equation~\ref{eqn:power} simplifies to $1 - B_{N, \hat{p}}(x_\alpha)$, where $\widehat{p}$ is an estimate for the probability of choosing the data plot for a specific lineup. Similar to classical inference, we can make use of power to assess sensitivity of tests. This allows us to make decisions about designs for particular tasks by evaluating lineups displaying  the same data in different types of displays \citep{Hofmann:2012ts}. 
+If that is not possible, we have to assume that all participants share the same ability $p$.%, and the power calculation in Equation~\ref{eqn:power} simplifies to $1 - B_{N, \hat{p}}(x_\alpha)$, where $\widehat{p}$ is an estimate for the probability of choosing the data plot for a specific lineup.
+Similar to classical inference, we can make use of power to assess sensitivity of tests. This allows us to make decisions about designs for particular tasks by evaluating lineups displaying  the same data in different types of displays \citep{Hofmann:2012ts}. 
+
+\hhnote{Outline of the paper:}
+\hh{
+\begin{itemize}
+\item We model power of different lineups in a simulation setting: based on 48 samples from $t$ distributions with different degrees of freedom and varying sample size, we draw lineups for all three designs of Q-Q pots and evaluate power.
+\item We make use of visual $p$-values to assess sensitivity of lineups of Q-Q plots with respect to other tests of normality.
+\end{itemize}}
+
 
 %------------------------------------------------------------------------------------
 \section{Investigating Q-Q plots visually}\label{sec:qqplot}
@@ -598,6 +610,7 @@ Another reason might be that a robust estimation approach is used in drawing Q-Q
 \item {Different estimators, such as MAD or adjusted MAD \citep{rousseeuw}, for variance might (will) change power of lineups. The results of the study is also posing the question of whether normality tests might not be improved by using robust estimates of the sample when assessing normality. }
 
 \item{De-trended Q-Q plots have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design. \al{aspect ratio for the de-trended plots?}}
+\item{Distributions other than normals?}
 \end{enumerate}
 }
 \bibliographystyle{apalike}
