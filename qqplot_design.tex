@@ -243,11 +243,21 @@ To further \al{develop} the assessment of normality using lineups, we conducted 
 
 To investigate the power of the three different Q-Q plot versions, we sample data from a $t$ distribution with varying degrees of freedom and sample sizes, and include a Q-Q plot of this data in a lineup of null charts drawn from standard normal samples of the same size.
 For lineup tests it is of extreme importance to consider the generation of the null sets and the construction of the plots in the lineup. 
+Null data is created conistently with the null hypothesis. Here, we have two different null hypotheses to consider:
 
 \begin{tabular}{lp{5.25in}}
-$F = N(0,1)$ & reference line and envelope are identical across all panels, i.e.~panels all have the same scale. \\
-$F = N(\bar{X},S^2)$ & reference line and envelope are drawn based on sample mean and variance of the data sample; all panels have the same scale. Note that we employ robust estimators in estimating $\bar{X}$ and $S^2$.  $S$ is based on the interquartile range of the sample, as is common in the construction of Q-Q plots.
+\multicolumn{2}{l}{\bf Situation I:}\\
+$H_0: F_n = N(0,1)$ & null samples are drawn from a standard normal distribution \\
+& reference line is the identity. Lines and envelopes are the same across all panels, in particular, all panels have the same scale. \\[3pt]
+\multicolumn{2}{l}{\bf Situation II:}\\
+$H_0: F = N(0,S^2)$ & $S$ is based on the interquartile range of the data; \\
+& null samples are drawn from $N(0, S^2)$. \\
+& The reference line has a slope of $S$ (and an intercept of 0).  All panels have the same scale. 
 \end{tabular}
+Examples for both hypotheses are shown in figure~\ref{fig:lps}. Both lineups show the same dataset (in panel \#$(3^2-3)$). On the left the data stands out, i.e.~we reject the null hypothesis of a standard normal distribution (XXX back up with data). On the right, the data does not stand out -- we do not reject the hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{\sigma}=$XXX. 
+
+Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in Q-Q plots corresponds to a  hypothesis test against that distribution. 
+IQR is used here in estimating $S$ as is the standard for Q-Q plot. A robust estimation of variance is preferred for better assessment of tails and outliers of the empirical distribution. We could use different estimators, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, for variance, but this will likely change the power of the corresponding lineup.
 
 \begin{figure}[hbt]
 
@@ -268,17 +278,17 @@ $F = N(\bar{X},S^2)$ & reference line and envelope are drawn based on sample mea
 \end{knitrout}
 
 \end{subfigure}
-\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The underlying data is identical, but on the left reference lines and envelopes are based on a standard normal distribution. Reference lines and envelopes for the lineup on the right are based on a normal distribution $N(\bar{X}, S^2)$, the estimates of the data.
+\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
 The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. }
 \end{figure}
 
+Next, we model the aforementioned probability $p_i$ with which observer $i$ picks the true data from a lineup. 
+%To explore the results of this study we must first define some additional notation.
 
-To explore the results of this study we must first define some additional notation.
-
-\alnote{We can give a description of the MTurk study here.}
+%\alnote{We can give a description of the MTurk study here.}
 
 %------------------------------------------------------------------------------------
-\subsection{Results}
+\subsection{Model Setup}
 %------------------------------------------------------------------------------------
 
 
@@ -298,8 +308,15 @@ $u$ & the users' subjective abilities.
 
 %
 The combination of different levels of sample size and degrees of freedom of the $t$ distribution result in 12 parameter settings. Under each setting, we sampled data twice; additionally, we sampled two sets of null data for each sample, yielding 48 different sets of data, which we render in each of the variations, yielding 144 different lineups. 
-Using  Amazon MTurk \citep{amazon}, 674 participants were each asked to evaluate ten different lineups each. 
-\hh{weights? We dealt with multiple answers to lineups that offered this choice by using a weighting variabe with reciprocal values of the number of answers given by a participant.}
+
+%------------------------------------------------------------------------------------
+\subsection{Results}
+%------------------------------------------------------------------------------------
+
+Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and asked to evaluate ten lineups each. 
+
+\hh{Half of the lineups that observers were shown allowed multiple choices of plots from a lineup for the final answer. While most participants still chose only a single plot, in the analysis} 
+\hh{we dealt with multiple answers to a lineup by using a weighting variable with reciprocal values of the number of answers given by a participant.}
 
 
 
@@ -337,6 +354,7 @@ Using  Amazon MTurk \citep{amazon}, 674 participants were each asked to evaluate
 \caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. De-trended Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
 \end{figure}
 
+
 \begin{figure}
 \centering
 %\begin{subfigure}[t]{.3\textwidth}
@@ -351,7 +369,8 @@ Using  Amazon MTurk \citep{amazon}, 674 participants were each asked to evaluate
 %\hh{XXX This is potentially problematic - the lineup flares up so strongly, because the lineup is testing against standard normal, while the normal tests are testing for the family - the KS test discussed here is the Lilliefors extension. The actual KS test is significant for this dataset, but then only rejects 3 others. Looking at the two side by side lineups the problem is smaller than it initially seemed. Should we re-run a subset of the data with the scale free lineups?}
 }
 \end{figure}
-Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform significantly worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. 
+Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform significantly worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. Lineups showing a sample from a $t_5$ distribution cover the whole range.
+
 
 \hh{XXX lead into the model}
 
@@ -360,6 +379,8 @@ We model the probability of selecting the data plot from the lineup, $\pi$, with
 g(\pi_i) = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)}
 \]
 where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are all indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard, De-trended$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation and $d(i)$ identifies the particular data sample used for it. 
+
+\hhnote{define the other parameters}
 
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$.
 
@@ -417,7 +438,12 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 \end{table}
 
 The estimated model coefficients for model $M_1$ are shown in Table~\ref{tab:model}. 
-Estimates of the variance components are $\widehat{\sigma}_u = 0.44$, $\widehat{\sigma}_d=0.44$, and $\widehat{\sigma} = 0.31$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
+Estimates of the variance components are $\widehat{\sigma}_u = 0.44$, $\widehat{\sigma}_d=1.95$, and $\widehat{\sigma} = 0.31$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
+%
+Figure~\ref{fig:ranef} shows histograms of the predicted random effects for participants' abilities (left) and difficulty level of lineups (right). Compared to difficulty level of lineups, participants' abilities only vary little. The difference between best and worst performance by participants has an effect of at most an estimated 
+1.9-
+fold probability of detecting the data plot from a lineup. 
+
 %
 As expected, the task of identifying non-normality is easier with increased sample size and more pronounced deviations from normality, as is the case with lower degrees of freedom. The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot. Interestingly, the de-trended version of the Q-Q plot is significantly less suitable for the task of assessing normality compared to the control. Additionally, adding confidence bands helps with evaluation, but not significantly. 
 
@@ -483,7 +509,7 @@ Similar to observations made in other lineup experiments (XXX cite Mahbub's soci
 \begin{enumerate}
 \item{All versions of Q-Q plots investigated in this paper are significantly better at detecting deviations from normality than classical normality test. A contributing factor to this superior power might be  that in  Q-Q plots the whole sample is assessed rather than being reduced to the single value of the sufficient statistics for the normality tests. XXX this needs cleaning up
 Another reason might be that a robust estimation approach is used in drawing Q-Q plots, while most normality tests are based on the outlier sensitive sample variance $S^2 = \sum_i(x_i - \bar{X})^2/(n-1)$.  }
-\item {Different estimators, such as MAD or adjusted MAD \citep{rousseeuw}, for variance might (will) change power of lineups. The results of the study is also posing the question of whether normality tests might not be improved by using robust estimates of the sample when assessing normality. }
+\item { The results of the study is also posing the question of whether normality tests might not be improved by using robust estimates of the sample when assessing normality. }
 
 \item{De-trended Q-Q plots have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design. \al{aspect ratio for the de-trended plots?}}
 \item{Distributions other than normals?}
