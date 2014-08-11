@@ -231,11 +231,11 @@ In assessing differences between points and lines, onlookers have a tendency to 
 
 In so-called {\it de-trended Q-Q plots} the $y$ axis is changed to show the difference between theoretical and empirical quantiles. The line of the theoretical distribution therefore coincides with the $x$ axis. Vertical differences between empirical and theoretical distribution therefore  coincide with orthogonal distance. 
 
-De-trending should therefore aid the visual assessment between empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show rather than asking audiences to derive it \citep{wainer:2000}.
+De-trending should therefore aid the visual assessment between empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show rather than asking audiences to derive it \citep{wainer:2000}.  Another point in favor of this design is that it makes better use of the available space.
 }
 
 
-\hh{Part of this paper serves to investigate the effectiveness and the power of the modifications made to Q-Q plots.
+\hh{In this paper we want to investigate the effectiveness and the power of the modifications made to Q-Q plots.
 }
 
 Examples of the three versions of Q-Q plots under considerations are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \hh{cite Meeker} based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{de-trended} Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
@@ -558,7 +558,8 @@ Figure~\ref{fig:ranef} shows histograms of the predicted random effects for part
 \Sexpr{require(lme4); eff <- range(ranef(m0)[["ip_address"]][,1]); probs <- exp(eff)/(1+exp(eff)); round(probs[2]/probs[1],1)}-fold probability of detecting the data plot from a lineup. 
 
 %
-As expected, the task of identifying non-normality is easier with increased sample size and more pronounced deviations from normality, as is the case with lower degrees of freedom. The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot. Interestingly, the de-trended version of the Q-Q plot is significantly less suitable for the task of assessing normality compared to the control. Additionally, adding confidence bands helps with evaluation, but not significantly. 
+As expected, the task of identifying non-normality becomes easier with increased sample size and more pronounced deviations from normality due to lower degrees of freedom. The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot. Surprisingly, the de-trended version of the Q-Q plot is significantly less suitable for the task of assessing normality than either of the other designs. \hhnote{should we discuss this more? pull out a chart that is significant in stndard, not in rotated and `see'?}
+Additionally, adding confidence bands helps with evaluation, but not significantly. 
 
 Note that none of the data plots in the lineups were actually created using data from a normal distribution. This should lead to rejection of the null hypothesis in every single instance. This is not quite true, as can be seen in Table~\ref{tab:reject}, but what also becomes evident is the high power  of visual inference. Based on lineups we are able to reject non-normality much more often than with any of the classical tests.
 
