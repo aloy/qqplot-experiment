@@ -485,12 +485,15 @@ lppvals <- merge(lppvals, exps, by="data_name")
 lppvals$df <- factor(lppvals$df)
 lppvals$df <- factor(lppvals$df, levels=c("10", "5", "2"))
 
+library(reshape2)
+lppvalscb <- dcast(lppvals, ad+cvm+ks+lf+sw+n+df+rep~null, value.var="Standard")
+lppvalscb$Standard <- with(lppvalscb, (`1`+`2`)/2)
 p <- ggplot() + 
   geom_abline(colour="grey70") + 
   geom_rect(aes(xmin=-0.02, xmax=1, ymin=-0.02, ymax=0.05), fill="grey70", alpha=0.5) + 
   geom_rect(aes(xmin=-0.02, xmax=0.05, ymin=-0.02, ymax=1), fill="grey70", alpha=0.5) + 
-  geom_point(aes(x=Standard, y=sw, colour=df, shape=df), size=3, data=lppvals) + 
-  scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(-0.02,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvals, Standard < 0.05 & sw > 0.5)) + theme(legend.position="bottom") + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (p-values)") 
+  geom_point(aes(x=Standard, y=sw, colour=df, shape=df), size=3, data=lppvalscb, alpha=0.9) + 
+  scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(-0.02,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvalscb, (Standard < 0.02 & sw > 0.2) | (Standard > 0.1 & sw < 0.05))) + theme(legend.position="bottom") + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (estimated p-values)") 
                                                                                                                                                                                                                                                                                                         
 #suppressWarnings(p)
 ggsave(plot=p, filename="figures/figvisnorm.pdf", width=4, height=4.5)
@@ -624,10 +627,10 @@ Note that none of the data plots in the lineups were actually created using data
 Result & Standard & Control & De-trended & SW & AD & LF   & CVM & KS\\ 
   \hline
   \hline
-  reject $N(0,1)$ & 29 & 28 & 26  &   &  &   &  & 4\\ 
+  reject $N(0,1)$ & 29 & 28 & 26  &   &  &   &  & 2\\ 
 %  not reject & 19 & 20 & 22 &  &   &  &   & 44\\ 
    \hline
-  reject $N(0,S^2)$ &  &  &   &  16 & 10 &  10 & 8 & \\ 
+  reject $N(0,S^2)$ 12 &  &  &   &  8 & 5 &  5 & 4 & \\ 
 %  not reject &  &  &  & 32 & 38  & 38 &  40 & \\ 
 \end{tabular}
 \end{table}
