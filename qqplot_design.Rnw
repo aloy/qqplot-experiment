@@ -83,7 +83,7 @@ suppressWarnings(library(ggplot2))
 opts_chunk$set(cache=TRUE, fig.width=4, fig.height=4)
 @
 
-<<data, echo=FALSE, results='hide'>>=
+<<data, echo=FALSE, results='hide', message=FALSE>>=
 turk <- read.csv("data/turk-10-13.csv")
 suppressMessages(require(plyr))
 params <- ldply(strsplit(split="-", as.character(turk$test_param)), function(x) x)
@@ -548,7 +548,7 @@ where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ a
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$.
 
 
-<<model, echo=FALSE, dependson='data'>>=
+<<model, echo=FALSE, dependson='data', message=FALSE>>=
 library(lme4)
 # takes quite a bit of time to fit
 lm0 <- glm(correct~treatment+placement+choice+ df + sample_size, family=quasibinomial(), data=turkw, weight=weight)
