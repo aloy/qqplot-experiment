@@ -222,7 +222,7 @@ Similar to classical inference, we can make use of power to assess sensitivity o
 \hhnote{Outline of the paper:}
 \hh{
 \begin{itemize}
-\item We model power of different lineups in a simulation setting: based on 48 samples from $t$ distributions with different degrees of freedom and varying sample size, we draw lineups for all three designs of Q-Q pots and evaluate power.
+\item We model power of different lineups in a simulation setting: based on 24 samples from $t$ distributions with different degrees of freedom and varying sample size, we draw lineups for all three designs of Q-Q pots and evaluate power.
 \item We make use of visual $p$-values to assess sensitivity of lineups of Q-Q plots with respect to other tests of normality.
 \end{itemize}}
 
@@ -305,7 +305,7 @@ $u$ & the users' subjective abilities.
 %
 
 %
-The combination of different levels of sample size and degrees of freedom of the $t$ distribution result in 12 parameter settings. Under each setting, we sampled data twice; additionally, we sampled two sets of null data for each sample, yielding 48 different sets of data, which we render in each of the variations, yielding 144 different lineups. 
+The combination of different levels of sample size and degrees of freedom of the $t$ distribution result in 12 parameter settings. Under each setting, we sample data twice; additionally, we make use of two different sets of null data for each sample, yielding 48 different sets of data, which we render in each of the variations, resulting in 144 different lineups. 
 
 %------------------------------------------------------------------------------------
 \subsection{Results}
@@ -359,9 +359,7 @@ Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and
 %\begin{subfigure}[t]{.6\textwidth}
 %\includegraphics[width=\textwidth]{figures/filebab632311351-multiple-svg.pdf}
 %\end{subfigure}
-\caption{\label{fig:visnorm} Scatterplot of $p$-values from Shapiro-Wilks and estimated $p$-values from lineups of Standard Q-Q plots. The circled observation on the left corresponds to a sample that shows highly significant deviations from normality under the lineup test, but is not significant under Shapiro Wilks (nor any of the normality tests except for KS). The lineup for the testing is shown on the left hand side of figure~\ref{fig:lps}.
-\hhnote{We probably need to exchange this plot by the visual $p$-values based on the lineups adjusted by the standard deviation.}
-%\hh{XXX This is potentially problematic - the lineup flares up so strongly, because the lineup is testing against standard normal, while the normal tests are testing for the family - the KS test discussed here is the Lilliefors extension. The actual KS test is significant for this dataset, but then only rejects 3 others. Looking at the two side by side lineups the problem is smaller than it initially seemed. Should we re-run a subset of the data with the scale free lineups?}
+\caption{\label{fig:visnorm}  Scatterplot of $p$-values from Shapiro-Wilks and estimated $p$-values from lineups of Standard Q-Q plots. The circled observations correspond to samples that lead to decidedly different decisions under the two tests. \hhnote{look at lineups for reason.}
 }
 \end{figure}
 Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform significantly worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. Lineups showing a sample from a $t_5$ distribution cover the whole range.
@@ -445,8 +443,8 @@ Note that none of the data plots in the lineups were actually created using data
 % Mon May 27 20:57:50 2013
 \begin{table}[ht]
 \centering
-\caption{\label{tab:reject} 
- From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 48 non-normal samples, at least 26 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. The power we observe here, matches with the power discussion by \citet{razali:2011} for the SW, AD, LF and the KS test.}
+\caption{\label{tab:reject} \hhnote{needs updating}
+ From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 24 non-normal samples, at least 26 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. The power we observe here, matches with the power discussion by \citet{razali:2011} for the SW, AD, LF and the KS test.}
 \begin{tabular}{rrrrrrrrr}
   \hline
 Result & Standard & Control & De-trended & SW & AD & LF   & CVM & KS\\ 
