@@ -135,6 +135,10 @@ b) Out of the variations discussed, de-trended Q-Q plots perform significantly w
 
 
 
+
+
+
+
 %------------------------------------------------------------------------------------
 \section{Introduction}
 %------------------------------------------------------------------------------------
@@ -259,12 +263,14 @@ IQR is used here in estimating $S$ as is the standard for Q-Q plot. A robust est
 
 \begin{figure}[hbt]
 
+
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-1} 
 
 \end{knitrout}
+
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
@@ -272,6 +278,7 @@ IQR is used here in estimating $S$ as is the standard for Q-Q plot. A robust est
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-2} 
 
 \end{knitrout}
+
 \end{subfigure}
 \caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
 The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. }
@@ -319,18 +326,11 @@ Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and
 
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: cannot open file 'data/pvalues.csv': No such file or directory}}
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: cannot open the connection}}
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'sw' not found}}
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: object 'p' not found}}\end{kframe}
-\end{knitrout}
 \begin{figure}
 \centering
 \begin{subfigure}[b]{.3\textwidth}
@@ -339,6 +339,7 @@ Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3} 
 
 \end{knitrout}
+
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -346,6 +347,7 @@ Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-4} 
 
 \end{knitrout}
+
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -353,6 +355,7 @@ Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-5} 
 
 \end{knitrout}
+
 \end{subfigure}
 \caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. De-trended Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
 \end{figure}
@@ -367,9 +370,7 @@ Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and
 %\begin{subfigure}[t]{.6\textwidth}
 %\includegraphics[width=\textwidth]{figures/filebab632311351-multiple-svg.pdf}
 %\end{subfigure}
-\caption{\label{fig:visnorm} Scatterplot of $p$-values from Shapiro-Wilks and estimated $p$-values from lineups of Standard Q-Q plots. The circled observation on the left corresponds to a sample that shows highly significant deviations from normality under the lineup test, but is not significant under Shapiro Wilks (nor any of the normality tests except for KS). The lineup for the testing is shown on the left hand side of figure~\ref{fig:lps}.
-\hhnote{We probably need to exchange this plot by the visual $p$-values based on the lineups adjusted by the standard deviation.}
-%\hh{XXX This is potentially problematic - the lineup flares up so strongly, because the lineup is testing against standard normal, while the normal tests are testing for the family - the KS test discussed here is the Lilliefors extension. The actual KS test is significant for this dataset, but then only rejects 3 others. Looking at the two side by side lineups the problem is smaller than it initially seemed. Should we re-run a subset of the data with the scale free lineups?}
+\caption{\label{fig:visnorm}  Scatterplot of $p$-values from Shapiro-Wilks and estimated $p$-values from lineups of Standard Q-Q plots. The circled observations correspond to samples that lead to decidedly different decisions under the two tests. \hhnote{look at lineups for reason.}
 }
 \end{figure}
 Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform significantly worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. Lineups showing a sample from a $t_5$ distribution cover the whole range.
@@ -390,6 +391,7 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 
 
 
+
 \begin{figure}
 \begin{subfigure}[b]{0.5\textwidth}
 \begin{knitrout}
@@ -397,6 +399,7 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 \includegraphics[width=\maxwidth]{figure/abilities} 
 
 \end{knitrout}
+
 \end{subfigure}
 \begin{subfigure}[b]{0.5\textwidth}
 \begin{knitrout}
@@ -404,6 +407,7 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 \includegraphics[width=\maxwidth]{figure/abilities2} 
 
 \end{knitrout}
+
 \end{subfigure}
 \caption{\label{fig:ranef}Histograms of random effects of individuals' abilities (left) and difficulty level of the data (right). }
 \end{figure}
@@ -453,8 +457,8 @@ Note that none of the data plots in the lineups were actually created using data
 % Mon May 27 20:57:50 2013
 \begin{table}[ht]
 \centering
-\caption{\label{tab:reject} 
- From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 48 non-normal samples, at least 26 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. The power we observe here, matches with the power discussion by \citet{razali:2011} for the SW, AD, LF and the KS test.}
+\caption{\label{tab:reject} \hhnote{needs updating}
+ From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 24 non-normal samples, at least 26 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. The power we observe here, matches with the power discussion by \citet{razali:2011} for the SW, AD, LF and the KS test.}
 \begin{tabular}{rrrrrrrrr}
   \hline
 Result & Standard & Control & De-trended & SW & AD & LF   & CVM & KS\\ 
@@ -475,6 +479,7 @@ Result & Standard & Control & De-trended & SW & AD & LF   & CVM & KS\\
 %------------------------------------------------------------------------------------
 
 
+
 Similar to observations made in other lineup experiments (XXX cite Mahbub's socio paper), there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of a user inherent ability rather than a learned skill. The overall proportion of correct responses is very stable, fluctuating around 0.41 with a standard deviation of about 0.14.  What does change with the number of attempts, is the time taken by participants to answer a lineup. From initially 53.6 seconds in the first answer, the response time drops to 33 seconds at the tenth evaluation.
 \begin{figure}
 \centering
@@ -484,6 +489,7 @@ Similar to observations made in other lineup experiments (XXX cite Mahbub's soci
 \includegraphics[width=\maxwidth]{figure/fig1} 
 
 \end{knitrout}
+
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -491,6 +497,7 @@ Similar to observations made in other lineup experiments (XXX cite Mahbub's soci
 \includegraphics[width=\maxwidth]{figure/fig2} 
 
 \end{knitrout}
+
 \end{subfigure}
 \caption{\label{fig:attempts}Proportion of correct answers by attempt (left) and time taken in each of the first ten attempts (right). The proportion of correct responses stays constantfor successive attempts, while the time to answer decreases significantly over the same number of attempts.}
 \end{figure}
