@@ -118,6 +118,35 @@ turkw <- subset(turkw, df != 0) # exclude Adam's data
 turkw$sample_size <- factor(turkw$sample_size)
 turkw$df <- factor(turkw$df)
 @
+<<data15, echo=FALSE, results='hide'>>=
+t15<- read.csv("data/turk15.csv") #turk-10-13
+params <- ldply(strsplit(split="-", as.character(t15$test_param)), function(x) x)
+t15$treatment <- params$V2
+t15$placement <- params$V3
+t15$choice <- params$V4
+t15$replicate <- params$V5
+t15$df <- as.numeric(llply(strsplit(split="-", as.character(t15$param_value)), function(x) x[2]))
+
+library(lubridate)
+t15$start_time <- ymd_hms(t15$start_time)
+t15 <- ddply(t15, .(ip_address), transform, 
+              attempt=rank(start_time, ties.method="random"),
+              num_attempt=length(start_time))
+
+t15$weight <- ldply(strsplit(as.character(t15$response_no), split=","), length)$V1
+# kick out responses without an answer:
+t15 <- subset(t15, weight!=0)
+
+res <- llply(t15, function(x) rep(x, t15$weight))
+t15w <- as.data.frame(res)
+t15w$weight <- 1/t15w$weight
+t15w$response <- unlist(strsplit(as.character(t15$response_no), split=","))
+
+t15w$correct <- t15w$response == t15w$obs_plot_location
+
+t15w$sample_size <- factor(t15w$sample_size)
+t15w$df <- factor(t15w$df)
+@
 
 <<functions, echo=FALSE>>=
 sim_env <- function(x, conf = .95, line=FALSE){
@@ -403,7 +432,25 @@ lps$pvals <- unlist(llply(1:nrow(lps), function(i) {
   vinference:::hdistribution(correct, n, m=20)
 }))
 lps$signif <- lps$pvals < 0.05
+
 @
+
+<<rejects15, dependson='rejects', echo=FALSE, message=FALSE>>=
+lps15 <- ddply(subset(t15w, num_attempt>=10), .(data_name, treatment), summarise,
+             correct=sum(correct*weight),
+             num=sum(weight),
+             avg=sum(weight)/length(weight)
+             )
+
+lps15$pvals.adj <- unlist(llply(1:nrow(lps15), function(i) {
+  correct <- floor(lps15$correct[i])
+  n <- lps15$num[i]
+  vinference:::hdistribution(correct, n, m=20)
+}))
+
+lps <- merge(lps, lps15[, c("data_name", "treatment", "pvals.adj")], by=c("data_name", "treatment"), all=TRUE)
+@
+
 
 <<triples, echo=FALSE, warning=FALSE, message=FALSE, results='hide'>>=
 library(reshape2)
@@ -411,7 +458,7 @@ lps$prop <- with(lps, correct/num)
 dt <- dcast(lps, data_name~treatment, value.var="prop")
 exps <- ldply(as.character(dt$data_name), parse_filename)
 exps$data_name <- as.character(dt$data_name)
-dt <- data.frame(dt, exps)
+dt <- merge(dt, exps, by="data_name")
 dt$df <- as.factor(dt$df)
 dt$df <- factor(dt$df, levels=c(2,5,10))
 
@@ -427,7 +474,8 @@ dt$df <- factor(dt$df, levels=c("10", "5", "2"))
 @
 <<nortests, echo=FALSE>>=
 pvals <- read.csv("data/pvalues.csv")
-lppvals <- dcast(lps, data_name~treatment, value.var="pvals")
+lps$pvals.adj[is.na(lps$pvals.adj)] <- lps$pvals[is.na(lps$pvals.adj)]
+lppvals <- dcast(lps, data_name~treatment, value.var="pvals.adj")
 
 lppvals <- merge(lppvals, pvals, by="data_name")
 lppvals <- merge(lppvals, exps, by="data_name")
@@ -438,12 +486,14 @@ lppvals$df <- factor(lppvals$df)
 lppvals$df <- factor(lppvals$df, levels=c("10", "5", "2"))
 
 p <- ggplot() + 
-  geom_abline(colour="grey50") + 
+  geom_abline(colour="grey70") + 
+  geom_rect(aes(xmin=-0.02, xmax=1, ymin=-0.02, ymax=0.05), fill="grey70", alpha=0.5) + 
+  geom_rect(aes(xmin=-0.02, xmax=0.05, ymin=-0.02, ymax=1), fill="grey70", alpha=0.5) + 
   geom_point(aes(x=Standard, y=sw, colour=df, shape=df), size=3, data=lppvals) + 
-  scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(0,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvals, Standard < 0.05 & sw > 0.5)) + theme(legend.position="bottom") + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (p-values)"
-                                                                                                                                                                                                                                                                                                          )
-
-#ggsave(plot=p, filename="figures/fig:visnorm.pdf", width=4, height=4.5)
+  scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(-0.02,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvals, Standard < 0.05 & sw > 0.5)) + theme(legend.position="bottom") + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (p-values)") 
+                                                                                                                                                                                                                                                                                                        
+#suppressWarnings(p)
+ggsave(plot=p, filename="figures/figvisnorm.pdf", width=4, height=4.5)
 # data-1-2-15-50-2-13-6.csv
 # data-2-2-15-50-2-8-11.csv
 @
@@ -471,7 +521,7 @@ ggplot() + geom_abline(colour="grey50") + geom_point(aes(x=Control, y=Standard, 
 \begin{figure}
 \centering
 %\begin{subfigure}[t]{.3\textwidth}
-\includegraphics[width=.5\textwidth]{figures/fig:visnorm.pdf} 
+\includegraphics[width=.5\textwidth]{figures/figvisnorm.pdf} 
 %\vfill
 %\end{subfigure}
 %\begin{subfigure}[t]{.6\textwidth}
