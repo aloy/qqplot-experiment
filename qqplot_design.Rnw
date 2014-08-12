@@ -267,7 +267,7 @@ De-trending should therefore aid the visual assessment between empirical CDF and
 \hh{In this paper we want to investigate the effectiveness and the power of the modifications made to Q-Q plots.
 }
 
-Examples of the three versions of Q-Q plots under considerations are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \hh{cite Meeker} based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{de-trended} Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
+Examples of the three versions of Q-Q plots under considerations are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \hh{cite Meeker} \alnote{I think pointwise bands are described in Atkinson (1985). Meeker uses simultaneous confidence bands for P-P plots. The motivation to use pointwise in the lineups seems to be that it is what people do (i.e., JMP (I think). qqPlot in the car package in R, etc.)} based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{de-trended} Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
 
 \begin{figure}
 \centering
@@ -335,13 +335,16 @@ Null data is created conistently with the null hypothesis. Here, we have two dif
 
 \begin{tabular}{lp{5.25in}}
 \multicolumn{2}{l}{\bf Situation I:}\\
-$H_0: F_n = N(0,1)$ & null samples are drawn from a standard normal distribution \\
+$H_0: F_n = N(0,1)$ &  null samples are drawn from a standard normal distribution \\
 & reference line is the identity. Lines and envelopes are the same across all panels, in particular, all panels have the same scale. \\[3pt]
 \multicolumn{2}{l}{\bf Situation II:}\\
 $H_0: F = N(0,S^2)$ & $S$ is based on the interquartile range of the data; \\
 & null samples are drawn from $N(0, S^2)$. \\
 & The reference line has a slope of $S$ (and an intercept of 0).  All panels have the same scale. 
 \end{tabular}
+
+\alnote{The generation of the null data makes sense to me, but is there a way to use bullet points on the right side of the table? That would help me read it...}
+
 Examples for both hypotheses are shown in figure~\ref{fig:lps}. Both lineups show the same dataset (in panel \#$(3^2-3)$). On the left the data stands out, i.e.~we reject the null hypothesis of a standard normal distribution (XXX back up with data). On the right, the data does not stand out -- we do not reject the hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{\sigma}=$XXX. 
 
 Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in Q-Q plots corresponds to a  hypothesis test against that distribution. 
@@ -485,15 +488,12 @@ lppvals <- merge(lppvals, exps, by="data_name")
 lppvals$df <- factor(lppvals$df)
 lppvals$df <- factor(lppvals$df, levels=c("10", "5", "2"))
 
-library(reshape2)
-lppvalscb <- dcast(lppvals, ad+cvm+ks+lf+sw+n+df+rep~null, value.var="Standard")
-lppvalscb$Standard <- with(lppvalscb, (`1`+`2`)/2)
 p <- ggplot() + 
   geom_abline(colour="grey70") + 
   geom_rect(aes(xmin=-0.02, xmax=1, ymin=-0.02, ymax=0.05), fill="grey70", alpha=0.5) + 
   geom_rect(aes(xmin=-0.02, xmax=0.05, ymin=-0.02, ymax=1), fill="grey70", alpha=0.5) + 
-  geom_point(aes(x=Standard, y=sw, colour=df, shape=df), size=3, data=lppvalscb, alpha=0.9) + 
-  scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(-0.02,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvalscb, (Standard < 0.02 & sw > 0.2) | (Standard > 0.1 & sw < 0.05))) + theme(legend.position="bottom") + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (estimated p-values)") 
+  geom_point(aes(x=Standard, y=sw, colour=df, shape=df), size=3, data=lppvals) + 
+  scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(-0.02,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvals, Standard < 0.05 & sw > 0.5)) + theme(legend.position="bottom") + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (p-values)") 
                                                                                                                                                                                                                                                                                                         
 #suppressWarnings(p)
 ggsave(plot=p, filename="figures/figvisnorm.pdf", width=4, height=4.5)
@@ -627,10 +627,10 @@ Note that none of the data plots in the lineups were actually created using data
 Result & Standard & Control & De-trended & SW & AD & LF   & CVM & KS\\ 
   \hline
   \hline
-  reject $N(0,1)$ & 29 & 28 & 26  &   &  &   &  & 2\\ 
+  reject $N(0,1)$ & 29 & 28 & 26  &   &  &   &  & 4\\ 
 %  not reject & 19 & 20 & 22 &  &   &  &   & 44\\ 
    \hline
-  reject $N(0,S^2)$ 12 &  &  &   &  8 & 5 &  5 & 4 & \\ 
+  reject $N(0,S^2)$ &  &  &   &  16 & 10 &  10 & 8 & \\ 
 %  not reject &  &  &  & 32 & 38  & 38 &  40 & \\ 
 \end{tabular}
 \end{table}
@@ -690,6 +690,7 @@ Another reason might be that a robust estimation approach is used in drawing Q-Q
 
 \item{De-trended Q-Q plots have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design. \al{aspect ratio for the de-trended plots?}}
 \item{Distributions other than normals?}
+\item \al{Extension to P-P plots? Gan, Koehler, and Thompson (1991) comment on how P-P are more sensitive to disrepencies in the middle of the distribution (i.e., multiple modes) and Q-Q plots are more sensitive ot discrepencies in the tails. I would imagine the results of the lineups would be similar to P-P plots and are a natural next question.} 
 \end{enumerate}
 }
 \bibliographystyle{apalike}
