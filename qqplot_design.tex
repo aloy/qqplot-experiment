@@ -375,65 +375,7 @@ Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and
 \end{figure}
 
 
-\begin{figure}
-\centering
-\begin{subfigure}[t]{.4\textwidth}
-\includegraphics[width=\textwidth]{figures/figvisnorm.pdf} 
-\vfill
-\end{subfigure}
-\caption{\label{fig:visnorm}  Scatterplot of $p$-values from Shapiro-Wilks and estimated $p$-values from lineups of Standard Q-Q plots. The grey shaded areas represent areas of rejection under at least one of the tests. The circled observations correspond to samples that lead to decidedly different decisions under the two tests. The lineups corresponding to these observations are shown in figure~\ref{fig:lpnorm}.}
-\end{figure}
 
-\begin{figure}
-\begin{subfigure}[t]{.5\textwidth}
-
-\includegraphics[width=\maxwidth]{figure/plot} 
-
-
-\hfill
-%
-\begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
-% latex table generated in R 3.1.0 by xtable 1.7-3 package
-% Tue Aug 12 21:44:10 2014
-   &   & 1 & 1 & 2 \\ 
-   \hline
-1.7 & 2 & 9.3 & 1 &   \\ 
-   \hline
-0.33 &   & 1.3 & 7 & \bf \it 1.5 \\ 
-   \hline
-  & 2 & 4 & 0.5 & 3.3 \\ 
-  
-
-\end{tabular}
-\hfill
-
-\end{subfigure}
-\begin{subfigure}[t]{.5\textwidth}
-
-\includegraphics[width=\maxwidth]{figure/plot2} 
-
-
-\hfill
-%
-\begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
-% latex table generated in R 3.1.0 by xtable 1.7-3 package
-% Wed Aug 13 01:59:38 2014
-   &   &   &   &   \\ 
-   \hline
-1 &   & \bf \it 23 &   &   \\ 
-   \hline
-0.5 &   &   &   &   \\ 
-   \hline
-  &   &   & 1 & 0.5 \\ 
-  
-
-\end{tabular}
-\hfill
-
-\end{subfigure}
-\caption{\label{fig:lpnorm}  On the left, results are not significant, on the right they are highly significant. These two lineups correspond to the results circled in~fig~\ref{fig:visnorm}. The tables below the lineups show the number of times each of the panels was picked as the most different. Non-integer numbers result from multiple choice plots. The italicized numbers refer to the panel that contains the actual sample.
-}
-\end{figure}
 Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform significantly worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. Lineups showing a sample from a $t_5$ distribution cover the whole range.
 
 
@@ -516,15 +458,16 @@ Additionally, adding confidence bands helps with evaluation, but not significant
 
 Note that none of the data plots in the lineups were actually created using data from a normal distribution. This should lead to rejection of the null hypothesis in every single instance. This is not quite true, as can be seen in Table~\ref{tab:reject}, but what also becomes evident is the high power  of visual inference. Based on lineups we are able to reject non-normality much more often than with any of the classical tests.
 
+
 % latex table generated in R 3.0.1 by xtable 1.7-1 package
 % Mon May 27 20:57:50 2013
 \begin{table}[ht]
 \centering
-\caption{\label{tab:reject} \hhnote{needs updating}
+\caption{\label{tab:reject}
 \alnote{For some reason I find this table confusing. Why don't we have anything for the lineups for $N(0,\ S^2)$? Am I overthinking this?}
 \hhnote{You're not overthinking things - we only ran the lineups for $N(0,\ S^2)$ in the Standard Q-Q plots - - if we split this table into two it might work better: one table compares visual tests, the other compares standard to normality tests}
 %
- From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 24 non-normal samples, at least 26 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. The power we observe here, matches with the power discussion by \citet{razali:2011} for the SW, AD, LF and the KS test.}
+ From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 24 non-normal samples, 12 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. The power we observe here, matches with the power discussion by \citet{razali:2011} for the SW, AD, LF and the KS test. The number in parentheses are the number of situations in which the Standard Q-Q plot agrees with the normal test.}
 
 \begin{tabular}{rrrrrrrrr}
   \hline
@@ -534,17 +477,72 @@ Result & Standard & Control & De-trended & SW & AD & LF   & CVM & KS\\
   reject $N(0,1)$ & 15 & 14 & 12  &   &  &   &  & 2\\ 
 %  not reject & 19 & 20 & 22 &  &   &  &   & 44\\ 
    \hline
-<<<<<<< HEAD
-  reject $N(0,S^2)$ &  &  &   &  16 & 10 &  10 & 8 & \\ 
-=======
   reject $N(0,S^2)$  & 12 &  &   &  8 (7) & 5 (5) &  5 (5) & 4 (4) & \\ 
->>>>>>> tables in figure lpnorm
 %  not reject &  &  &  & 32 & 38  & 38 &  40 & \\ 
 \end{tabular}
 \end{table}
 
+\hhnote{figure~\ref{fig:visnorm} and \ref{fig:lpnorm} belong here}
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{.4\textwidth}
+\includegraphics[width=\textwidth]{figures/figvisnorm.pdf} 
+\vfill
+\end{subfigure}
+\caption{\label{fig:visnorm}  Scatterplot of $p$-values from Shapiro-Wilks and estimated $p$-values from lineups of Standard Q-Q plots. The grey shaded areas represent areas of rejection under at least one of the tests. The circled observations correspond to samples that lead to decidedly different decisions under the two tests. The lineups corresponding to these observations are shown in figure~\ref{fig:lpnorm}.}
+\end{figure}
+
+\begin{figure}
+\begin{subfigure}[t]{.5\textwidth}
+
+\includegraphics[width=\maxwidth]{figure/plot} 
 
 
+\hfill
+%
+\begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
+% latex table generated in R 3.1.0 by xtable 1.7-3 package
+% Tue Aug 12 21:44:10 2014
+   &   & 1 & 1 & 2 \\ 
+   \hline
+1.7 & 2 & 9.3 & 1 &   \\ 
+   \hline
+0.33 &   & 1.3 & 7 & \bf \it 1.5 \\ 
+   \hline
+  & 2 & 4 & 0.5 & 3.3 \\ 
+  
+
+\end{tabular}
+\hfill
+
+\end{subfigure}
+\begin{subfigure}[t]{.5\textwidth}
+
+\includegraphics[width=\maxwidth]{figure/plot2} 
+
+
+\hfill
+%
+\begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
+% latex table generated in R 3.1.0 by xtable 1.7-3 package
+% Wed Aug 13 01:59:38 2014
+   &   &   &   &   \\ 
+   \hline
+1 &   & \bf \it 23 &   &   \\ 
+   \hline
+0.5 &   &   &   &   \\ 
+   \hline
+  &   &   & 1 & 0.5 \\ 
+  
+
+\end{tabular}
+\hfill
+
+\end{subfigure}
+\caption{\label{fig:lpnorm}  On the left, results are not significant, on the right they are highly significant. These two lineups correspond to the results circled in~fig~\ref{fig:visnorm}. The tables below the lineups show the number of times each of the panels was picked as the most different. Non-integer numbers result from multiple choice plots. The italicized numbers refer to the panel that contains the actual sample.
+}
+\end{figure}
 %------------------------------------------------------------------------------------
 \section{Other study results}
 %------------------------------------------------------------------------------------
