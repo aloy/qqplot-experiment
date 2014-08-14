@@ -474,20 +474,9 @@ As expected, the task of identifying non-normality becomes easier with increased
 \end{figure}
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Standard"))
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Rotated"))
-\hh{A reason for this difference is hard to come by -- two of the observers picking the `wrong' plot from the de-trended lineup gave as a reason for their choice that this panel was the one with `most dots outside the shaded area', i.e.~they focussed on the middle of plot \#7. }
+\hh{A reason for this difference is hard to come by -- two of the observers picking the `wrong' plot from the de-trended lineup gave as a reason for their choice that this panel was the one with `most dots outside the shaded area', i.e.~they focussed on the middle of plot \#7. This is not a singular occurrence -- looking at overall reasoning we can look more closely at the effect of the  words `area' and `outside' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area). It seems to help for making a decision in the standard design, but it severly  increases the chance of not identifying the data plot in the de-trended design.}
 
 
-
-\begin{figure}[hbt]
-\centering
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=0.8\textwidth]{figure/trtplot} 
-
-\end{knitrout}
-
-\caption{\label{fig:choices}Overview of reasons participants gave for  their answer. `Outliers' sa a reason drastically improves the chance of a correct answer (i.e.~identifying the data plot). All the other reasons either have no effect or decrease the chance of answering correctly. It is curious to see so many more observers responsinding `left side' different over `right'; the samples all came from a (symmetric) $t$ distribution.}
-\end{figure}
 
 \begin{figure}[hbt]
 \centering
@@ -499,6 +488,19 @@ As expected, the task of identifying non-normality becomes easier with increased
 
 \caption{\label{fig:rotfalse}Mentioning `outside' or `area' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. \hhnote{is there something wrong with the confidence bands in the middle of the plot?}}
 \end{figure}
+
+\begin{figure}[hbt]
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=0.8\textwidth]{figure/trtplot} 
+
+\end{knitrout}
+
+\caption{\label{fig:choices}Overview of reasons participants gave for  their answer. `Outliers' sa a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious to see that so many more observers respond `left side different' over `right';  all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
+\end{figure}
+
+\hh{Figure~\ref{fig:choices} summarizes the reasons participants gave for the choice of plot they selected. Bars on the left show  identifications of the data plot, bars on the right represent selections of a null plot. XXX}
 
 \hhnote{another idea: go through reasons for choices. For standard design the line was often interpreted as a line of fit (how often for the de-trended design?), ie. we are tapping into what general population knows about regression. While this is not completely appropriate, the knowledge transfer might be the reason for the better performance.}
 Additionally, adding confidence bands helps with evaluation, but not significantly. 
