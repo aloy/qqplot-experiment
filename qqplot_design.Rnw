@@ -244,9 +244,11 @@ We will be making use of these tests to assess the effectiveness of different va
 
 
  A Q-Q plot of sample $x$ is constructed by plotting theoretical quantiles $F^{-1}(F_n(x_i))$ against empirical quantiles $x_{(i)}$. In the case that the empirical distribution $F_n$ is consistent with distribution $F$, the points in the Q-Q plot falls on the line of identity. 
- For a normally distributed sample $x \sim N(\mu, \sigma^2)$, the empirical quantiles still fall on a line when plotted against theoretical quantiles of a standard normal distribution $N(0,1)$. The slope of the line is an estimate for $\sigma$, and the intercept is an estimate for $\mu$. Visually the Q-Q plot does not change except for a change in the scale of the $y$-axis. We can therefore employ Q-Q plot in the more general framework of testing the distribution of a sample $x$ for normality similar to standard normality tests, such as the AD, LF, CVM, and SW test. We do have to make a decision with respect to the exact parameters of the normal distribution we test against, when we plot a line alongside the points in the Q-Q plot for additional comparison purposes, i.e.~parameters $\mu$ and $\sigma$ have to be estimated from the sample. In Q-Q plots, these estimates are based on robust estimates; for $\widehat{\sigma}$ the ratio of the inter-quartile ranges of empirical and theoretical distributions: $\left(F^{-1}_n(0.75) - F^{-1}_n(0.25)\right) / \left(F^{-1}(0.75) - F^{-1}(0.25)\right)$. \hhnote{XXX citation?}
+For any sample tested against a distribution within a location-scale family, such as e.g.~normal, log normal, or exponential, the empirical quantiles still fall on a line when plotted against the theoretical quantiles of any of the family's member distributions. Plotting the empiricial quantiles of a normally distributed sample $x \sim N(\mu, \sigma^2)$ against the quantiles of a standard normal will result in a line, where  the slope is an estimate of $\sigma$, and the intercept estimates $\mu$. Visually  the only change in the Q-Q plot is a  change in the scale of the $y$-axis. We can therefore employ Q-Q plot in the more general framework of testing the distribution of a sample $x$ for normality similar to standard normality tests, such as the AD, LF, CVM, and SW test. We do have to make a decision with respect to the exact parameters of the normal distribution we test against, when we plot a line alongside the points in the Q-Q plot for additional comparison purposes, i.e.~parameters $\mu$ and $\sigma$ have to be estimated from the sample. In Q-Q plots, variability is based on a robust measure of spread given as the ratio of the inter-quartile ranges of empirical and theoretical distributions: $\left(F^{-1}_n(0.75) - F^{-1}_n(0.25)\right) / \left(F^{-1}(0.75) - F^{-1}(0.25)\right)$. \hhnote{XXX citation?}
  
 %\hhnote{How are Q-Q plots interpreted?}
+
+%\hhnote{slope is standard deviation of theoretical distribution, $y$ offset its location. For any distribution within a location-scale family (such as normal, log normal, exponential, ...), we can interpret shifts in $y$ direction as a change/deviation in location, and a change in slope as a change in scale.}
 
 A sample $x$ is considered as being consistent with a normal distribution, if empirical and theoretical quantiles fall close to  a straight line.  Closeness can  be assessed visually based on whether the points fall inside the envelope of 95\%  pointwise confidence intervals. \hh{XXX citation!  }
 \alnote{We need to be careful here. Since we are using pointwise CIs, we would expect a certain \% of points to fall outside the CIs. I think in the first review of the JCGS paper a reviewer was concerned about this as well.}
@@ -264,8 +266,8 @@ De-trending should therefore aid the visual assessment between empirical CDF and
 In this paper we want to investigate the effectiveness and the power of the modifications made to Q-Q plots.
 
 
-Examples of the three versions of Q-Q plots under considerations are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \hh{cite Atkinson} \alnote{I think pointwise bands are described in Atkinson (1985). Meeker uses simultaneous confidence bands for P-P plots. The motivation to use pointwise in the lineups seems to be that it is what people do (i.e., JMP (I think). qqPlot in the car package in R, etc.)}
-\hhnote{could you add the Atkinson reference?}
+Examples of the three versions of Q-Q plots under considerations are displayed in Figure~\ref{qqplots} and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \citep{atkinson}
+%\alnote{I think pointwise bands are described in Atkinson (1985). Meeker uses simultaneous confidence bands for P-P plots. The motivation to use pointwise in the lineups seems to be that it is what people do (i.e., JMP (I think). qqPlot in the car package in R, etc.)}
 based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{de-trended} Q-Q plot. All Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
 
 \begin{figure}
@@ -346,7 +348,7 @@ Examples for both hypotheses are shown in figure~\ref{fig:lps}. Both lineups sho
 \alnote{Based on our last JCGS submission I could see a reviewer asking why this is. Of course, I believe that a seasoned data analyst would agree with us, so I am unsure how much detail we need.}
 
 Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in Q-Q plots corresponds to a  hypothesis test against that distribution. \hhnote{this statement needs more emphasis}
-IQR is used here in estimating $S$ as is the standard for Q-Q plot. A robust estimation of variance is preferred for better assessment of tails and outliers of the empirical distribution. We could use different estimators, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, for variance, but this will likely change the power of the corresponding lineup.
+IQR is used here in estimating scale - this is standard for Q-Q plot. A robust estimation of variance is preferred for better assessment of tails and outliers of the empirical distribution. We could use alternative estimators, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, for variance, but this will likely also change the power of the corresponding lineup.
 
 \begin{figure}[hbt]
 <<lps-dsn, dependson='functions', echo=FALSE, message=FALSE>>=
@@ -602,8 +604,9 @@ Figure~\ref{fig:ranef} shows histograms of the predicted random effects for part
 \Sexpr{require(lme4); eff <- range(ranef(m0)[["ip_address"]][,1]); probs <- exp(eff)/(1+exp(eff)); round(probs[2]/probs[1],1)}-fold probability of detecting the data plot from a lineup. 
 
 %
-As expected, the task of identifying non-normality becomes easier with increased sample size and more pronounced deviations from normality due to lower degrees of freedom. The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot. Surprisingly, the de-trended version of the Q-Q plot is significantly less suitable for the task of assessing normality than either of the other designs. \hhnote{should we discuss this more? pull out a chart that is significant in standard, not in rotated and `see'?}
-\hh{Figure \ref{fig:rotstd} shows an example of a sample, which is rejected based on a  lineup in the standard design, but not from a lineup of de-trended Q-Q plots. Instead of the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked out as most different 9 out of 27 times in standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$. }
+As expected, the task of identifying non-normality becomes easier with increased sample size and more pronounced deviations from normality due to lower degrees of freedom. The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands helps with evaluation in the standard design, but the difference is not significant.  Surprisingly, the de-trended version of the Q-Q plot is significantly less powerful in detecting non-normality than either of the other designs. 
+
+\hh{To investigate this further, consider figure \ref{fig:rotstd}. Here, we have an example of a sample, which is rejected based on a  lineup in the standard design, but not from a lineup of de-trended Q-Q plots. Instead of the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked out as most different 9 out of 27 times in the standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$ from the standard design. }
 \begin{figure}[hbt]
 \begin{subfigure}{0.5\textwidth}
 <<notrotated, dependson='data', echo=FALSE, fig.width=6, fig.height=6>>=
@@ -622,8 +625,8 @@ rot_lineup(dframe)
 \end{figure}
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Standard"))
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Rotated"))
-\hh{A reason for this difference is hard to come by -- two of the observers picking the `wrong' plot from the de-trended lineup gave as a reason for their choice that this panel was the one with `most dots outside the shaded area', i.e.~they focussed on the middle of plot \#7. This is not a singular occurrence -- looking at overall reasoning we look more closely at the effect of the  words `area' and `outside' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area). It seems to help for making a decision in the standard design, but it severely  increases the chance of not identifying the data plot in the de-trended design. As the de-trended version is making better use of the space in the plot, it highlights deviations of points from the $x$-axis, i.e.~the theoretical distribution. It also emphasizes the fact whether individual points are inside or outside the shaded areas indicating the (pointwise) 95\% confidence intervals. The responses suggest that participants take the shading very seriously and make their choice dependent on it. It also seems that the confidence bands mislead people -- this suggest, that for the de-trended Q-Q plot design we might have to re-think how to display confidence intervals: we might have to  either switch to a more conservative  confidence level or change the approach altogether from the use of pointwise confidence intervals to simultaneous confidence bands as e.g.~suggested by XXX Meeker XXX for probability plots. 
-XXX Tukey citation: every distribution is normal in the middle. }
+\hh{Two of the observers picking the `wrong' plot from the de-trended lineup gave as a reason for their choice that this panel was the one with `most dots outside the shaded area', i.e.~they focussed on the middle of plot \#7. This is not a singular occurrence -- when investigating  overall reasoning we take a closer look at the effect of the  words `area' and `outside' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area). It seems to help for identifying the data plot in the standard design, but it severely  increases the chance of picking a null plot in the de-trended design. Why is that? -- The de-trended version is making better use of the space in the plot, it therefore  emphasizes deviations of points from the $x$-axis, i.e.~the theoretical distribution, and with it  the fact whether individual points are inside or outside the shaded areas corresponding to the (pointwise) 95\% confidence intervals. The responses suggest that participants take the shading very seriously and make their choice dependent on it. It also seems that the confidence bands mislead people -- this suggests, that for the de-trended Q-Q plot design we might have to re-think how to display confidence intervals: it might be better to  either use  a more conservative  confidence level or change the approach altogether from pointwise confidence intervals to simultaneous confidence bands as e.g.~suggested by \citet{meeker} for probability plots. 
+XXX Tukey citation: `the middle half of any distribution is approximately normal.' }
 
 <<choice, echo=FALSE>>=
 parse_choice <- function(x) {
@@ -673,7 +676,7 @@ trt$outside <- unlist(llply(gregexpr("outside",trt$other), length))
 trtm2 <- melt(trt,id.var=c("treatment", "n","choice"), measure.var=c("area", "outside"))
 qplot(treatment, fill=choice, weight=value, data=trtm2, position="dodge") + scale_fill_brewer(palette="Set2") + facet_wrap(~variable) + theme_bw()
 @
-\caption{\label{fig:rotfalse}Mentioning `outside' or `area' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. \hhnote{is there something wrong with the confidence bands in the middle of the plot?}}
+\caption{\label{fig:rotfalse}Mentioning `outside' or `area' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. }
 \end{figure}
 
 \begin{figure}[hbt]
@@ -688,10 +691,9 @@ qplot(treatment,fill=choice, weight=pct, geom="bar", position="dodge",data=trtm)
 \caption{\label{fig:choices}Overview of reasons participants gave for  their answer. `Outliers' sa a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious to see that so many more observers respond `left side different' over `right';  all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
 \end{figure}
 
-\hh{Figure~\ref{fig:choices} summarizes the reasons participants gave for the choice of plot they selected. Bars on the left show  identifications of the data plot, bars on the right represent selections of a null plot. XXX}
+\hh{Figure~\ref{fig:choices} summarizes the reasons participants gave for the choice of plot they selected. Bars on the left show  identifications of the data plot, bars on the right represent selections of a null plot. The reasons represent the four reasons offered  to participants for check marking. Notably the reasons do not seem to differentiate between the three designs. Stating `outliers' as a reason for choosing a plot is helpful across all designs in picking the data out of the lineup. Stating `left side different' or `points curve'  as the reason for choosing a plot decreases the chance for this plot to be the data plot. `Right side different' does not seem to have any effect. Interestingly, there is a big difference in the percentages of `right' and `left'. Participants favored to give `left side different' as a reason over `right' side, even though all distributions involved were symmetric and therefore deviations from normality should also manifest themselves in a symmetric fashion.}
 
-\hhnote{another idea: go through reasons for choices. For standard design the line was often interpreted as a line of fit (how often for the de-trended design?), ie. we are tapping into what general population knows about regression. While this is not completely appropriate, the knowledge transfer might be the reason for the better performance.}
-Additionally, adding confidence bands helps with evaluation, but not significantly. 
+%\hhnote{another idea: go through reasons for choices. For standard design the line was often interpreted as a line of fit (how often for the de-trended design?), ie. we are tapping into what general population knows about regression. While this is not completely appropriate, the knowledge transfer might be the reason for the better performance.}
 
 Note that none of the data plots in the lineups were actually created using data from a normal distribution. This should lead to rejection of the null hypothesis in every single instance. This is not quite true, as can be seen in Table~\ref{tab:reject}, but what also becomes evident is the high power  of visual inference. Based on lineups we are able to reject non-normality much more often than with any of the classical tests.
 
@@ -719,10 +721,11 @@ Result & Standard & Control & De-trended & SW & AD & LF   & CVM & KS\\
 \end{tabular}
 \end{table}
 \hh{
-Figure~\ref{fig:visnorm} shows a scatterplot of $p$-values from Shapiro Wilks and estimated $p$ values from the lineup of Q-Q plots in the Standard design. Out of the 24 samples, the tests agree on 18, of which seven are rejections. Of the remaining six, five get rejected only by the visual test, and one is rejected by Shapiro Wilks, but not by the visual test. Two samples on which the tests disagree are circled in figure~\ref{fig:visnorm}, and followed up in more detail. Two lineups corresponding to these observations are shown in figure~\ref{fig:lpnorm}. The lineup on the left corresponds to a sample that is rejected by Shapiro Wilks, but is not rejected by the visual test: only 1.5 decisions (at least one observer picked two panels in his/her response) out of 38 identified the data panel as the most different, which is not enough to reject the null hypothesis of $N(0, S^2)$. The data plot in the  lineup on the right is picked by 23 out of 26 independent observers, leading to a very clear rejection. 
+Figure~\ref{fig:visnorm} shows a scatterplot of $p$-values from Shapiro Wilks and estimated $p$ values from the lineup of Q-Q plots in the Standard design. Out of the 24 samples, the tests agree on 18, of which seven are rejections. Of the remaining six, five get rejected only by the visual test, and one is rejected by Shapiro Wilks, but not by the visual test. Two samples on which the tests disagree are circled in figure~\ref{fig:visnorm}, and followed up in more detail. Two lineups corresponding to these observations are shown in figure~\ref{fig:lpnorm}. The lineup on the left corresponds to a sample that is rejected by Shapiro Wilks, but is not rejected by the visual test: only 1.5 decisions (at least one observer picked two panels in his/her response) out of 38 identified the data panel as the most different, which is not enough to reject the null hypothesis of $N(0, S^2)$. 
+The data plot in the  lineup on the right is picked by 23 out of 26 independent observers, leading to a very clear rejection. 
 The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689) the test with the lowest $p$-value on this data sample out of all the normality tests.
 }
-\hhnote{show lineup wit non-robust adjustment?}
+\hh{The difference in significance between normality tests and the visual test might be the way the theoretical distribution is chocen against which the sample is compared. The normality tests are based on sample mean and sample variance. Both of these estimates are affected by outliers. Compared to a normal distribution, the samples from a $t$ distribution exhibits heavier tails. In a finite sample, the heavier tails might look like outliers. By taking these outliers into account, the normality tests lose a lot of power. The Q-Q plots are based on a robust estimation of scale based on the middle half of the empirical distribution. Q-Q plot are therefore less affected by outliers and tails of a $t$ distribution are more easily distinguishable from tails of a normal distribution as can be seen in the lineup on the right of figure~\ref{fig:lpnorm}. Compare this to the lineup of figure~\ref{fig:lp3}, which is based on the same data, but the nulls are sampled from a normal distribution with a variance estimated as the sample variance. The data plot does not stand out, and we would not reject the null hypothesis based on this lineup. }
 
 \begin{figure}
 \centering
@@ -783,6 +786,15 @@ fit2 <- ddply(fit2[,-idx], .(.n), transform, naive1.qq=qqnorm(x, plot.it=FALSE))
 idx <- grep("naive1.env", names(fit2))
 fit2 <- ddply(fit2[,-idx], .(.n), transform, naive1.env=sim_env(x))
 std_lineup(fit2)
+fit3 <- dframe
+b <- sd(dframe$x[dframe$.n==20]) # get robust estimate for sigma
+#sd(fit2$x[fit2$.n==20])
+fit3$x[fit3$.n==20] <- dframe$x[dframe$.n==20]/b # change variance to 1, compare then
+idx <- grep("naive1.qq", names(fit3))
+fit3 <- ddply(fit3[,-idx], .(.n), transform, naive1.qq=qqnorm(x, plot.it=FALSE))
+idx <- grep("naive1.env", names(fit3))
+fit3 <- ddply(fit3[,-idx], .(.n), transform, naive1.env=sim_env(x))
+lp3 <- std_lineup(fit3)
 dx <- matrix(0, ncol=4, nrow=5)
 dt <- as.data.frame(xtabs(weight~response, data=t15w, data_name=="data-2-2-17-20-5-8-15.csv" & obs_plot_location==8))
 dt$response <- as.numeric(as.character(dt$response))
@@ -805,6 +817,14 @@ print(xtable(t(dx2)), floating=FALSE, only.contents=TRUE, include.rownames=FALSE
 \end{subfigure}
 \caption{\label{fig:lpnorm}  On the left, results are not significant, on the right they are highly significant. These two lineups correspond to the results circled in~fig~\ref{fig:visnorm}. The tables below the lineups show the number of times each of the panels was picked as the most different. Non-integer numbers result from multiple choice plots. The italicized numbers refer to the panel that contains the actual sample.
 }
+\end{figure}
+
+\begin{figure}
+\centering
+<<lp3, echo=FALSE, fig.width=6, fig.height=6, out.width='0.5\\textwidth'>>=
+lp3
+@
+\caption{\label{fig:lp3} Lineup in standard design showing the data of the lineup on the right in figure~\ref{fig:lpnorm}. The hypothesized distribution is $N(0, \widehat{\sigma}^2)$, where $\widehat{\sigma}^2$ is estimated as the regular (i.e.~non-robust) sample variance, and nulls are drawn from that distribution. While not actually user tested, we do not think that the data stands out from the lineup.}
 \end{figure}
 %------------------------------------------------------------------------------------
 \section{Other study results}
@@ -858,10 +878,14 @@ Another reason might be that a robust estimation approach is used in drawing Q-Q
 \item { The results of the study is also posing the question of whether normality tests might not be improved by using robust estimates of the sample when assessing normality. }
 
 \item{De-trended Q-Q plots have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design. \al{aspect ratio for the de-trended plots?}}
-\item{Distributions other than normals?}
+\item{Distributions other than normals? In particular, samples from `approximate' normal or asymptotic normal distributions. As long as we have a way to generate data under the null, we can use this as a framework against which to test.}
 \item \al{Extension to P-P plots? \citet{koehler91} comment on how P-P are more sensitive to disrepencies in the middle of the distribution (i.e., multiple modes) and Q-Q plots are more sensitive ot discrepencies in the tails. I would imagine the results of the lineups would be similar to P-P plots and are a natural next question.} 
+\item Con: user studies have price tag, take some time.
 \end{enumerate}
+
 }
+All data  in the study was collected  with approval by IRB 10-347.
+
 \bibliographystyle{apalike}
 \bibliography{qqplots}
 
