@@ -45,3 +45,5 @@ figure/fig2.pdf
 *.pdf
 
 data/turk15.csv
+
+*.gz(busy)
