@@ -136,6 +136,10 @@ b) Out of the variations discussed, de-trended Q-Q plots perform significantly w
 
 
 
+
+
+
+
 %------------------------------------------------------------------------------------
 \section{Introduction}
 %------------------------------------------------------------------------------------
@@ -275,12 +279,14 @@ IQR is used here in estimating scale - this is standard for Q-Q plot. A robust e
 
 \begin{figure}[hbt]
 
+
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-1} 
 
 \end{knitrout}
+
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
@@ -288,6 +294,7 @@ IQR is used here in estimating scale - this is standard for Q-Q plot. A robust e
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-2} 
 
 \end{knitrout}
+
 \end{subfigure}
 \caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
 The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. }
@@ -328,13 +335,11 @@ Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and
 
 Half of the lineups that observers were shown allowed multiple choices of plots from a lineup for the final answer. While most participants still chose only a single plot, in the analysis we dealt with multiple answers to a lineup by using a weighting variable with reciprocal values of the number of answers given by a participant.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-## Loading C code of R package 'Rmpfr': GMP using 64 bits per limb
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+
+
+
+
+
 
 
 
@@ -349,6 +354,7 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3} 
 
 \end{knitrout}
+
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -356,6 +362,7 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-4} 
 
 \end{knitrout}
+
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -363,6 +370,7 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-5} 
 
 \end{knitrout}
+
 \end{subfigure}
 \caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. De-trended Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
 \end{figure}
@@ -388,6 +396,7 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 
 
 
+<<<<<<< HEAD
 % \begin{figure}
 % \begin{subfigure}[b]{0.5\textwidth}
 % <<abilities, dependson='model', echo=FALSE, fig.height=2.5>>=
@@ -401,6 +410,28 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 % \end{subfigure}
 % \caption{\label{fig:ranef}Histograms of random effects of individuals' abilities (left) and difficulty level of the data (right). }
 % \end{figure}
+=======
+
+\begin{figure}
+\begin{subfigure}[b]{0.5\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/abilities} 
+
+\end{knitrout}
+
+\end{subfigure}
+\begin{subfigure}[b]{0.5\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/abilities2} 
+
+\end{knitrout}
+
+\end{subfigure}
+\caption{\label{fig:ranef}Histograms of random effects of individuals' abilities (left) and difficulty level of the data (right). }
+\end{figure}
+>>>>>>> empirical quantiles to sample quantiles
 
 % latex table generated in R 3.1.0 by xtable 1.7-3 package
 % Sun Aug  3 11:20:58 2014
@@ -448,6 +479,7 @@ As expected, the task of identifying non-normality becomes easier with increased
 \includegraphics[width=\maxwidth]{figure/notrotated} 
 
 \end{knitrout}
+
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
@@ -455,6 +487,7 @@ As expected, the task of identifying non-normality becomes easier with increased
 \includegraphics[width=\maxwidth]{figure/notrotated2} 
 
 \end{knitrout}
+
 \end{subfigure}
 \caption{\label{fig:rotstd}Lineups of the same data in two different designs. In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. The same data set is only identified once out of 21 times in the lineup showing the de-trended design. Observers instead pick panel \#$(3^2-2)$ 18 times. }
 \end{figure}
@@ -465,6 +498,7 @@ As expected, the task of identifying non-normality becomes easier with increased
 XXX Tukey citation: `the middle half of any distribution is approximately normal.' }
 
 
+
 \begin{figure}[hbt]
 \centering
 \begin{knitrout}
@@ -472,6 +506,7 @@ XXX Tukey citation: `the middle half of any distribution is approximately normal
 \includegraphics[width=.65\textwidth]{figure/rotfalse} 
 
 \end{knitrout}
+
 \caption{\label{fig:rotfalse}Mentioning `outside' or `area' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. }
 \end{figure}
 
@@ -482,6 +517,7 @@ XXX Tukey citation: `the middle half of any distribution is approximately normal
 \includegraphics[width=0.8\textwidth]{figure/trtplot} 
 
 \end{knitrout}
+
 \caption{\label{fig:choices}Overview of reasons participants gave for  their answer. `Outliers' sa a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious to see that so many more observers respond `left side different' over `right';  all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
 \end{figure}
 
@@ -534,14 +570,13 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 \begin{subfigure}[t]{.5\textwidth}
 
 \includegraphics[width=\maxwidth]{figure/plot} 
-\begin{kframe}
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: xtable}}\end{kframe}
+
 \hfill
 %
 \begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
-% latex table generated in R 3.1.1 by xtable 1.7-3 package
-% Tue Aug 19 15:34:52 2014
+% latex table generated in R 3.1.0 by xtable 1.7-3 package
+% Tue Aug 12 21:44:10 2014
    &   & 1 & 1 & 2 \\ 
    \hline
 1.7 & 2 & 9.3 & 1 &   \\ 
@@ -550,6 +585,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
    \hline
   & 2 & 4 & 0.5 & 3.3 \\ 
   
+
 \end{tabular}
 \hfill
 
@@ -558,11 +594,12 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 
 \includegraphics[width=\maxwidth]{figure/plot2} 
 
+
 \hfill
 %
 \begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
-% latex table generated in R 3.1.1 by xtable 1.7-3 package
-% Tue Aug 19 15:34:54 2014
+% latex table generated in R 3.1.0 by xtable 1.7-3 package
+% Thu Aug 14 15:15:01 2014
    &   &   &   &   \\ 
    \hline
 1 &   & \bf \it 23 &   &   \\ 
@@ -571,6 +608,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
    \hline
   &   &   & 1 & 0.5 \\ 
   
+
 \end{tabular}
 \hfill
 
@@ -586,6 +624,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 \includegraphics[width=0.5\textwidth]{figure/lp3} 
 
 \end{knitrout}
+
 \caption{\label{fig:lp3} Lineup in standard design showing the data of the lineup on the right in figure~\ref{fig:lpnorm}. The hypothesized distribution is $N(0, \widehat{\sigma}^2)$, where $\widehat{\sigma}^2$ is estimated as the regular (i.e.~non-robust) sample variance, and nulls are drawn from that distribution. While not actually user tested, we do not think that the data stands out from the lineup.}
 \end{figure}
 %------------------------------------------------------------------------------------
@@ -593,7 +632,12 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 %------------------------------------------------------------------------------------
 
 
+<<<<<<< HEAD
  Similar to observations made in other lineup experiments \citep{Majumder:2014up}, there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of a user inherent ability rather than a learned skill. The overall proportion of correct responses is very stable, fluctuating around 0.41 with a standard deviation of about 0.14.  What does change with the number of attempts, is the time taken by participants to answer a lineup. From initially 53.6 seconds in the first answer, the response time drops to 33 seconds at the tenth evaluation.
+=======
+
+ Similar to observations made in other lineup experiments (XXX cite Mahbub's socio paper), there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of a user inherent ability rather than a learned skill. The overall proportion of correct responses is very stable, fluctuating around 0.41 with a standard deviation of about 0.14.  What does change with the number of attempts, is the time taken by participants to answer a lineup. From initially 53.6 seconds in the first answer, the response time drops to 33 seconds at the tenth evaluation.
+>>>>>>> empirical quantiles to sample quantiles
 \begin{figure}
 \centering
 \begin{subfigure}[b]{.3\textwidth}
@@ -602,6 +646,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 \includegraphics[width=\maxwidth]{figure/fig1} 
 
 \end{knitrout}
+
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -609,6 +654,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 \includegraphics[width=\maxwidth]{figure/fig2} 
 
 \end{knitrout}
+
 \end{subfigure}
 \caption{\label{fig:attempts}Proportion of correct answers by attempt (left) and time taken in each of the first ten attempts (right). The proportion of correct responses stays constantfor successive attempts, while the time to answer decreases significantly over the same number of attempts.}
 \end{figure}
