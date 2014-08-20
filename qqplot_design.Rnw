@@ -554,19 +554,19 @@ turkw$df <- factor(turkw$df, levels=c("10", "5", "2"))
 m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address) + (1|difficulty), family=binomial(), data=turkw, weight=weight, control=glmerControl(optimizer="bobyqa")))
 @
 
-\begin{figure}
-\begin{subfigure}[b]{0.5\textwidth}
-<<abilities, dependson='model', echo=FALSE, fig.height=2.5>>=
-qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$ip_address, binwidth=0.05, fill=I("grey35")) + xlab("Individuals' ability u") + theme_bw()
-@
-\end{subfigure}
-\begin{subfigure}[b]{0.5\textwidth}
-<<abilities2, dependson='model', echo=FALSE, fig.height=2.5>>=
-qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$difficulty, fill=I("grey35"), binwidth=0.5) + xlab("data difficulty level d") + theme_bw()
-@
-\end{subfigure}
-\caption{\label{fig:ranef}Histograms of random effects of individuals' abilities (left) and difficulty level of the data (right). }
-\end{figure}
+% \begin{figure}
+% \begin{subfigure}[b]{0.5\textwidth}
+% <<abilities, dependson='model', echo=FALSE, fig.height=2.5>>=
+% qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$ip_address, binwidth=0.05, fill=I("grey35")) + xlab("Individuals' ability u") + theme_bw()
+% @
+% \end{subfigure}
+% \begin{subfigure}[b]{0.5\textwidth}
+% <<abilities2, dependson='model', echo=FALSE, fig.height=2.5>>=
+% qplot(`(Intercept)`, geom="histogram", data=ranef(m0)$difficulty, fill=I("grey35"), binwidth=0.5) + xlab("data difficulty level d") + theme_bw()
+% @
+% \end{subfigure}
+% \caption{\label{fig:ranef}Histograms of random effects of individuals' abilities (left) and difficulty level of the data (right). }
+% \end{figure}
 
 % latex table generated in R 3.1.0 by xtable 1.7-3 package
 % Sun Aug  3 11:20:58 2014
