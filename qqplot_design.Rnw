@@ -841,7 +841,7 @@ attempts <- ddply(turkw, .(attempt), summarise,
                   )
 @
 
- Similar to observations made in other lineup experiments (XXX cite Mahbub's socio paper), there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of a user inherent ability rather than a learned skill. The overall proportion of correct responses is very stable, fluctuating around \Sexpr{round(with(turkw, Hmisc::wtd.mean(correct, weights=weight)),2)} with a standard deviation of about \Sexpr{round(mean(attempts$csd),2)}.  What does change with the number of attempts, is the time taken by participants to answer a lineup. From initially \Sexpr{round(attempts$tt[1],1)} seconds in the first answer, the response time drops to \Sexpr{round(attempts$tt[10],1)} seconds at the tenth evaluation.
+ Similar to observations made in other lineup experiments \citep{Majumder:2014up}, there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of a user inherent ability rather than a learned skill. The overall proportion of correct responses is very stable, fluctuating around \Sexpr{round(with(turkw, Hmisc::wtd.mean(correct, weights=weight)),2)} with a standard deviation of about \Sexpr{round(mean(attempts$csd),2)}.  What does change with the number of attempts, is the time taken by participants to answer a lineup. From initially \Sexpr{round(attempts$tt[1],1)} seconds in the first answer, the response time drops to \Sexpr{round(attempts$tt[10],1)} seconds at the tenth evaluation.
 \begin{figure}
 \centering
 \begin{subfigure}[b]{.3\textwidth}
