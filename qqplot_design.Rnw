@@ -605,8 +605,24 @@ Figure~\ref{fig:ranef} shows histograms of the predicted random effects for part
 
 %
 As expected, the task of identifying non-normality becomes easier with increased sample size and more pronounced deviations from normality due to lower degrees of freedom. The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands helps with evaluation in the standard design, but the difference is not significant.  Surprisingly, the de-trended version of the Q-Q plot is significantly less powerful in detecting non-normality than either of the other designs. 
+\hh{In terms of rejections of the null hypothesis, this means that normality is rejected in 24 out of the 48 lineups of the de-trended Q-Q plot. All of these cases are being rejected in all of the other designs as well. Under the control design another four lineups are rejecting normality, and the standard design rejects yet another lineup.}
 
-\hh{To investigate this further, consider figure \ref{fig:rotstd}. Here, we have an example of a sample, which is rejected based on a  lineup in the standard design, but not from a lineup of de-trended Q-Q plots. Instead of the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked out as most different 9 out of 27 times in the standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$ from the standard design. }
+% \begin{table}[ht]
+% \centering
+% \caption{\label{tab:reject1}
+% %
+%  From left to right, we see the number of rejections from different lineup designs.
+%   Out of the 24 non-normal samples, 12 get rejected at the 5\% significance level based on evaluation of the de-trended design. Besides these 12 normality is rejected for another two samples by lineups in the control design. The standard design detects non-normality in yet another design. }
+% 
+% \begin{tabular}{rrrr}
+%   \hline
+%  & Standard & Control & De-trended  \\ 
+%   \hline
+%   \hline
+%   reject $N(0,1)$ & 15 & 14 & 12    \\ 
+% \end{tabular}
+% \end{table}
+\hh{To investigate the difference between the standard and the de-trended design  further, consider figure \ref{fig:rotstd}. Here, we have an example of a sample, which is rejected based on a  lineup in the standard design, but not from a lineup of de-trended Q-Q plots. Instead of the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked out as most different 9 out of 27 times in the standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$ from the standard design. }
 \begin{figure}[hbt]
 \begin{subfigure}{0.5\textwidth}
 <<notrotated, dependson='data', echo=FALSE, fig.width=6, fig.height=6>>=
@@ -704,20 +720,17 @@ Note that none of the data plots in the lineups were actually created using data
 \begin{table}[ht]
 \centering
 \caption{\label{tab:reject}
-\alnote{For some reason I find this table confusing. Why don't we have anything for the lineups for $N(0,\ S^2)$? Am I overthinking this?}
-\hhnote{You're not overthinking things - we only ran the lineups for $N(0,\ S^2)$ in the Standard Q-Q plots - - if we split this table into two it might work better: one table compares visual tests, the other compares standard to normality tests}
-%
- From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 24 non-normal samples, 12 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. The power we observe here, matches with the power discussion by \citet{razali:2011} for the SW, AD, LF and the KS test. The number in parentheses are the number of situations in which the Standard Q-Q plot agrees with the normal test.}
+ From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 24 non-normal samples, 12 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. The power we observe here, matches with the power discussion by \citet{razali:2011} for the SW, AD, and the LF  test. The number in parentheses are the number of situations in which the Standard Q-Q plot agrees with the normal test in rejecting the sample.}
 
 \begin{tabular}{rrrrrrrrr}
   \hline
-Result & Standard & Control & De-trended & SW & AD & LF   & CVM & KS\\ 
+ & Standard  & SW & AD & LF   & CVM & \\ 
   \hline
   \hline
-  reject $N(0,1)$ & 15 & 14 & 12  &   &  &   &  & 2\\ 
+%  reject $N(0,1)$ & 15 & 14 & 12  &   &  &   &  & 2\\ 
 %  not reject & 19 & 20 & 22 &  &   &  &   & 44\\ 
-   \hline
-  reject $N(0,S^2)$  & 12 &  &   &  8 (7) & 5 (5) &  5 (5) & 4 (4) & \\ 
+%   \hline
+  reject $N(0,S^2)$  & 12  &  8 (7) & 5 (5) &  5 (5) & 4 (4) & \\ 
 %  not reject &  &  &  & 32 & 38  & 38 &  40 & \\ 
 \end{tabular}
 \end{table}
@@ -885,7 +898,8 @@ Another reason might be that a robust estimation approach is used in drawing Q-Q
 \end{enumerate}
 
 }
-All data  in the study was collected  with approval by IRB 10-347.
+This work was funded in part by National Science Foundation grant DMS 1007697. 
+All data  in the study was collected  with approval from the internal review board IRB 10-347.
 
 \bibliographystyle{apalike}
 \bibliography{qqplots}
