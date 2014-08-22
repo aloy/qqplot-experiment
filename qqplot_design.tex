@@ -49,6 +49,7 @@
 
 \usepackage{alltt} % JASA requires 12 pt font for manuscripts
 %\usepackage{JASA_manu}        % For JASA manuscript formatting
+\usepackage{times, asa}
 
 %\usepackage{endfloat} % just for while I am writing
 
@@ -87,11 +88,11 @@
 \newcommand{\hhnote}[1]{\todo[inline,color=magenta!40]{#1}}
 
 % title formatting
-\usepackage[compact,small]{titlesec}
+% \usepackage[compact,small]{titlesec}
 
 % page formatting
 \usepackage[margin = 1in]{geometry}
-\usepackage[parfill]{parskip}
+% \usepackage[parfill]{parskip}
 
 % line spacing
 \usepackage{setspace}
@@ -116,9 +117,11 @@
 
 \title{Variations of Q-Q Plots -- the eyes have it!}
 
-\author{Adam Loy, Lendie Follett, Heike Hofmann}
+\author{Adam Loy, Lendie Follett, Heike Hofmann
+\thanks{Adam Loy is an Assistant Professor in the Department of Mathematics, Lawrence University, Appleton, WI, 54911 (e-mail: adam.m.loy@lawrence.edu);  Lendie Follett is a Ph.D. student in the Department of Statistics and Statistical Laboratory, Iowa State University, Ames, IA 50011-1210.; Heike Hofmann is a Professor in the Department of Statistics and Statistical Laboratory, Iowa State University, Ames, IA 50011-1210. This work was funded in part by National Science Foundation grant DMS 1007697. All data  in the study was collected  with approval from the internal review board IRB 10-347.}}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
+
 \maketitle
 \begin{abstract}
 this paper holds two messages: 
@@ -127,6 +130,8 @@ At the example of normal distributions we can show that Q-Q plots are better at 
 
 b) Out of the variations discussed, de-trended Q-Q plots perform significantly worse than the other two variants. This is surprising, because cognitive theory tells us, that de-trended plots should be better suited in assessing the difference between empirical and hypothesized  distribution.
 \end{abstract}
+{\bf Keywords:} Quantile-Quantile plot, Normality test, Statistical graphics, Lineup, Visual inference
+\alnote{Just initial thoughts on keywords}
 
 
 
@@ -625,10 +630,8 @@ Another reason might be that a robust estimation approach is used in drawing Q-Q
 \end{enumerate}
 
 }
-This work was funded in part by National Science Foundation grant DMS 1007697. 
-All data  in the study was collected  with approval from the internal review board IRB 10-347.
 
-\bibliographystyle{apalike}
+\bibliographystyle{asa}
 \bibliography{qqplots}
 
 \newpage
