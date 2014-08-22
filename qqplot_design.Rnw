@@ -862,6 +862,7 @@ Another reason might be that a robust estimation approach is used in drawing Q-Q
 \item{Distributions other than normals? In particular, samples from `approximate' normal or asymptotic normal distributions. As long as we have a way to generate data under the null, we can use this as a framework against which to test.}
 \item \al{Extension to P-P plots? \citet{koehler91} comment on how P-P are more sensitive to disrepencies in the middle of the distribution (i.e., multiple modes) and Q-Q plots are more sensitive ot discrepencies in the tails. I would imagine the results of the lineups would be similar to P-P plots and are a natural next question.} 
 \item Con: user studies have price tag, take some time.
+\item Extension: skew distribution versus normal distribution? TS test, normality tests with robust parameters: problem with coding this ourselves: algorithm might use properties of ML estimators
 \end{enumerate}
 
 }
