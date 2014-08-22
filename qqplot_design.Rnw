@@ -224,10 +224,7 @@ The line of identity therefore represents the theoretical distribution and point
 
 Deviations from the theoretical distribution then manifest themselves as vertical differences between points and the line of identity. This difference is featured in a series of distributional tests. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample size of $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is then the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Lilliefors \cite[LF-test, ][]{lilliefors}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises test \citep[CVM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
 
-The KS test uses the maximal  difference, which is displayed as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample, i.e. a difference $D$ observed at either tail of the distribution carries the same weight and is interpreted in the same way as a difference $D$ in the center of the distribution. While the KS test allows for adjusting parameters of the normal distribution to sample mean and variance, it is more appropriate to use LF for this purpose. LF and KS share the same test statistic, but the test distribution \al{XXX sampling distribution?} in the LF test is adjusted for the two additional parameters.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling upregulates the tail effect using a weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
-The Shapiro-Wilk test does not fit this scheme, but has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}.
-\alnote{Should we should elaborate on the SW test here?}
-\hhnote{good point, yes.}
+The KS test uses the maximal  difference, which is displayed as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample, i.e. a difference $D$ observed at either tail of the distribution carries the same weight and is interpreted in the same way as a difference $D$ in the center of the distribution. While the KS test allows for adjusting parameters of the normal distribution to sample mean and variance, it is more appropriate to use LF for this purpose. LF and KS share the same test statistic, but the \al{sampling distribution} in the LF test \al{statistic} is adjusted for the two additional parameters.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling upregulates the tail effect using a weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
 \begin{table}
 \centering
 \begin{tabular}{lrl}\hline
@@ -240,6 +237,15 @@ Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)
 \caption{\label{tab:tests} Four prominent tests for normality based on the difference between empirical and hypothesized distribution function. An overview of the performance and power of these tests can be found in \citet{stephens:1974}.}
 \end{table}
 %
+
+% The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not fit this scheme, but has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}. 
+\al{The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not utilize deviations from the theoretical distribution function, rather it focuses on the linearity of a normal Q-Q plot. Under normality, a set of observations, $x_1, \ldots, x_n$, can expressed as $x_i = \mu + \sigma z_i$, where $z_i$ is a quantile from the standard normal distribution. The Shapiro-Wilk test compares (up to a constant of proportionality, $c$) two estimates for $\sigma$: the best linear unbiased estimate obtained from a generalized least squares regression of the sample order statistics on their expected values, denoted $\widehat{\sigma}$, and the sample standard deviation, $s$.
+\[
+  W = \frac{(c \widehat{\sigma})^2}{s^2} = \frac{b^2}{s^2}
+\]
+For a sample drawn from a normal distribution, $b^2$ and $s^2$ are, up to a constant, estimating the same quantity, whereas the two estimators will generally not be estimating the same quantity under nonnormality. The SW test has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}. }
+
+
 We will be making use of these tests to assess the effectiveness of different variations of standard Q-Q plots.
 
 

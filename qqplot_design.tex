@@ -136,10 +136,6 @@ b) Out of the variations discussed, de-trended Q-Q plots perform significantly w
 
 
 
-
-
-
-
 %------------------------------------------------------------------------------------
 \section{Introduction}
 %------------------------------------------------------------------------------------
@@ -151,10 +147,7 @@ The line of identity therefore represents the theoretical distribution and point
 
 Deviations from the theoretical distribution then manifest themselves as vertical differences between points and the line of identity. This difference is featured in a series of distributional tests. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample size of $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is then the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Lilliefors \cite[LF-test, ][]{lilliefors}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises test \citep[CVM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
 
-The KS test uses the maximal  difference, which is displayed as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample, i.e. a difference $D$ observed at either tail of the distribution carries the same weight and is interpreted in the same way as a difference $D$ in the center of the distribution. While the KS test allows for adjusting parameters of the normal distribution to sample mean and variance, it is more appropriate to use LF for this purpose. LF and KS share the same test statistic, but the test distribution \al{XXX sampling distribution?} in the LF test is adjusted for the two additional parameters.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling upregulates the tail effect using a weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
-The Shapiro-Wilk test does not fit this scheme, but has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}.
-\alnote{Should we should elaborate on the SW test here?}
-\hhnote{good point, yes.}
+The KS test uses the maximal  difference, which is displayed as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample, i.e. a difference $D$ observed at either tail of the distribution carries the same weight and is interpreted in the same way as a difference $D$ in the center of the distribution. While the KS test allows for adjusting parameters of the normal distribution to sample mean and variance, it is more appropriate to use LF for this purpose. LF and KS share the same test statistic, but the \al{sampling distribution} in the LF test \al{statistic} is adjusted for the two additional parameters.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling upregulates the tail effect using a weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
 \begin{table}
 \centering
 \begin{tabular}{lrl}\hline
@@ -167,6 +160,15 @@ Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)
 \caption{\label{tab:tests} Four prominent tests for normality based on the difference between empirical and hypothesized distribution function. An overview of the performance and power of these tests can be found in \citet{stephens:1974}.}
 \end{table}
 %
+
+% The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not fit this scheme, but has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}. 
+\al{The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not utilize deviations from the theoretical distribution function, rather it focuses on the linearity of a normal Q-Q plot. Under normality, a set of observations, $x_1, \ldots, x_n$, can expressed as $x_i = \mu + \sigma z_i$, where $z_i$ is a quantile from the standard normal distribution. The Shapiro-Wilk test compares (up to a constant of proportionality, $c$) two estimates for $\sigma$: the best linear unbiased estimate obtained from a generalized least squares regression of the sample order statistics on their expected values, denoted $\widehat{\sigma}$, and the sample standard deviation, $s$.
+\[
+  W = \frac{(c \widehat{\sigma})^2}{s^2} = \frac{b^2}{s^2}
+\]
+For a sample drawn from a normal distribution, $b^2$ and $s^2$ are, up to a constant, estimating the same quantity, whereas the two estimators will generally not be estimating the same quantity under nonnormality. The SW test has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}. }
+
+
 We will be making use of these tests to assess the effectiveness of different variations of standard Q-Q plots.
 
 
@@ -279,14 +281,12 @@ IQR is used here in estimating scale - this is standard for Q-Q plot. A robust e
 
 \begin{figure}[hbt]
 
-
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-1} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
@@ -294,7 +294,6 @@ IQR is used here in estimating scale - this is standard for Q-Q plot. A robust e
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-2} 
 
 \end{knitrout}
-
 \end{subfigure}
 \caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
 The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. }
@@ -335,11 +334,13 @@ Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and
 
 Half of the lineups that observers were shown allowed multiple choices of plots from a lineup for the final answer. While most participants still chose only a single plot, in the analysis we dealt with multiple answers to a lineup by using a weighting variable with reciprocal values of the number of answers given by a participant.
 
-
-
-
-
-
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+## Loading C code of R package 'Rmpfr': GMP using 64 bits per limb
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 
 
@@ -354,7 +355,6 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -362,7 +362,6 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-4} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -370,7 +369,6 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-5} 
 
 \end{knitrout}
-
 \end{subfigure}
 \caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. De-trended Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
 \end{figure}
@@ -392,7 +390,6 @@ where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ a
 \hhnote{define the other parameters}
 
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$.
-
 
 
 
@@ -474,7 +471,6 @@ As expected, the task of identifying non-normality becomes easier with increased
 \includegraphics[width=\maxwidth]{figure/notrotated} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
@@ -482,7 +478,6 @@ As expected, the task of identifying non-normality becomes easier with increased
 \includegraphics[width=\maxwidth]{figure/notrotated2} 
 
 \end{knitrout}
-
 \end{subfigure}
 \caption{\label{fig:rotstd}Lineups of the same data in two different designs. In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. The same data set is only identified once out of 21 times in the lineup showing the de-trended design. Observers instead pick panel \#$(3^2-2)$ 18 times. }
 \end{figure}
@@ -496,7 +491,6 @@ As expected, the task of identifying non-normality becomes easier with increased
 }
 
 
-
 \begin{figure}[hbt]
 \centering
 \begin{knitrout}
@@ -504,7 +498,6 @@ As expected, the task of identifying non-normality becomes easier with increased
 \includegraphics[width=.65\textwidth]{figure/rotfalse} 
 
 \end{knitrout}
-
 \caption{\label{fig:rotfalse}Mentioning `outside' or `area' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. }
 \end{figure}
 
@@ -515,7 +508,6 @@ As expected, the task of identifying non-normality becomes easier with increased
 \includegraphics[width=0.8\textwidth]{figure/trtplot} 
 
 \end{knitrout}
-
 \caption{\label{fig:choices}Overview of reasons participants gave for  their answer. `Outliers' as a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious to see that so many more observers respond `left side different' over `right';  all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
 \end{figure}
 
@@ -565,13 +557,14 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 \begin{subfigure}[t]{.5\textwidth}
 
 \includegraphics[width=\maxwidth]{figure/plot} 
+\begin{kframe}
 
-
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: xtable}}\end{kframe}
 \hfill
 %
 \begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
-% latex table generated in R 3.1.0 by xtable 1.7-3 package
-% Tue Aug 12 21:44:10 2014
+% latex table generated in R 3.1.1 by xtable 1.7-3 package
+% Tue Aug 19 15:34:52 2014
    &   & 1 & 1 & 2 \\ 
    \hline
 1.7 & 2 & 9.3 & 1 &   \\ 
@@ -580,7 +573,6 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
    \hline
   & 2 & 4 & 0.5 & 3.3 \\ 
   
-
 \end{tabular}
 \hfill
 
@@ -589,12 +581,11 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 
 \includegraphics[width=\maxwidth]{figure/plot2} 
 
-
 \hfill
 %
 \begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
-% latex table generated in R 3.1.0 by xtable 1.7-3 package
-% Thu Aug 14 15:15:01 2014
+% latex table generated in R 3.1.1 by xtable 1.7-3 package
+% Tue Aug 19 15:34:54 2014
    &   &   &   &   \\ 
    \hline
 1 &   & \bf \it 23 &   &   \\ 
@@ -603,7 +594,6 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
    \hline
   &   &   & 1 & 0.5 \\ 
   
-
 \end{tabular}
 \hfill
 
@@ -619,7 +609,6 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 \includegraphics[width=0.5\textwidth]{figure/lp3} 
 
 \end{knitrout}
-
 \caption{\label{fig:lp3} Lineup in standard design showing the data of the lineup on the right in figure~\ref{fig:lpnorm}. The hypothesized distribution is $N(0, \widehat{\sigma}^2)$, where $\widehat{\sigma}^2$ is estimated as the regular (i.e.~non-robust) sample variance, and nulls are drawn from that distribution. While not actually user tested, we do not think that the data stands out from the lineup.}
 \end{figure}
 %-----------------------------------------------------------------------------------
@@ -640,6 +629,7 @@ Another reason might be that a robust estimation approach is used in drawing Q-Q
 \item{Distributions other than normals? In particular, samples from `approximate' normal or asymptotic normal distributions. As long as we have a way to generate data under the null, we can use this as a framework against which to test.}
 \item \al{Extension to P-P plots? \citet{koehler91} comment on how P-P are more sensitive to disrepencies in the middle of the distribution (i.e., multiple modes) and Q-Q plots are more sensitive ot discrepencies in the tails. I would imagine the results of the lineups would be similar to P-P plots and are a natural next question.} 
 \item Con: user studies have price tag, take some time.
+\item Extension: skew distribution versus normal distribution? TS test, normality tests with robust parameters: problem with coding this ourselves: algorithm might use properties of ML estimators
 \end{enumerate}
 
 }
@@ -657,7 +647,6 @@ All data  in the study was collected  with approval from the internal review boa
 
 
 
-
  Similar to observations made in other lineup experiments \citep{Majumder:2014up}, there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of a user inherent ability rather than a learned skill. The overall proportion of correct responses is very stable, fluctuating around 0.41 with a standard deviation of about 0.14.  What does change with the number of attempts, is the time taken by participants to answer a lineup. From initially 53.6 seconds in the first answer, the response time drops to 33 seconds at the tenth evaluation.
 \begin{figure}
 \centering
@@ -667,7 +656,6 @@ All data  in the study was collected  with approval from the internal review boa
 \includegraphics[width=\maxwidth]{figure/fig1} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}[b]{.35\textwidth}
 \begin{knitrout}
@@ -675,7 +663,6 @@ All data  in the study was collected  with approval from the internal review boa
 \includegraphics[width=\maxwidth]{figure/fig2} 
 
 \end{knitrout}
-
 \end{subfigure}
 \caption{\label{fig:attempts}Proportion of correct answers by attempt (left) and time taken in each of the first ten attempts (right). The proportion of correct responses stays constantfor successive attempts, while the time to answer decreases significantly over the same number of attempts.}
 \end{figure}
