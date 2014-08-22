@@ -81,8 +81,7 @@ At the example of normal distributions we can show that Q-Q plots are better at 
 
 b) Out of the variations discussed, de-trended Q-Q plots perform significantly worse than the other two variants. This is surprising, because cognitive theory tells us, that de-trended plots should be better suited in assessing the difference between empirical and hypothesized  distribution.
 \end{abstract}
-{\bf Keywords:} Quantile-Quantile plot, Normality test, Statistical graphics, Lineup, Visual inference
-\alnote{Just initial thoughts on keywords}
+\keywords{Quantile-Quantile plot, Normality test, Statistical graphics, Lineup protocol, Visual inference}
 
 <<setup, echo=FALSE, results='hide'>>=
 suppressWarnings(library(ggplot2))
