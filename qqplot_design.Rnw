@@ -762,7 +762,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 
 \begin{figure}
 \begin{subfigure}[t]{.5\textwidth}
-<<plot, echo=FALSE, results='asis', fig.width=6, fig.height=6>>=
+<<plot, echo=FALSE, results='asis', fig.width=6, fig.height=6, message=FALSE>>=
 dframe <- read.csv("lineup-data/data-2-1-6-30-5-14-15.csv")
 dframe$.sample <- dframe$.sample_outer
 
