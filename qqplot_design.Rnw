@@ -86,7 +86,7 @@ b) Out of the variations discussed, de-trended Q-Q plots perform significantly w
 
 <<setup, echo=FALSE, results='hide'>>=
 suppressWarnings(library(ggplot2))
-
+library(knitr)
 opts_chunk$set(cache=TRUE, fig.width=4, fig.height=4)
 @
 
@@ -231,6 +231,8 @@ The line of identity therefore represents the theoretical distribution and point
 Deviations from the theoretical distribution then manifest themselves as vertical differences between points and the line of identity. This difference is featured in a series of distributional tests. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample size of $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is then the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Lilliefors \cite[LF-test, ][]{lilliefors}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises test \citep[CVM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
 
 The KS test uses the maximal  difference, which is displayed as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample, i.e. a difference $D$ observed at either tail of the distribution carries the same weight and is interpreted in the same way as a difference $D$ in the center of the distribution. While the KS test allows for adjusting parameters of the normal distribution to sample mean and variance, it is more appropriate to use LF for this purpose. LF and KS share the same test statistic, but the \al{sampling distribution} in the LF test \al{statistic} is adjusted for the two additional parameters.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling upregulates the tail effect using a weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
+
+
 \begin{table}
 \centering
 \begin{tabular}{lrl}\hline
@@ -256,13 +258,13 @@ We will be making use of these tests to assess the effectiveness of different va
 
 
  A Q-Q plot of sample $x$ is constructed by plotting theoretical quantiles $F^{-1}(F_n(x_i))$ against sample quantiles $x_{(i)}$. In the case that the empirical distribution $F_n$ is consistent with distribution $F$, the points in the Q-Q plot falls on the line of identity. 
-For any sample tested against a distribution within a location-scale family, such as e.g.~normal, log normal, or exponential, the sample quantiles still fall on a line when plotted against the theoretical quantiles of any of the family's member distributions. Plotting the empiricial quantiles of a normally distributed sample $x \sim N(\mu, \sigma^2)$ against the quantiles of a standard normal will result in a line, where  the slope is an estimate of $\sigma$, and the intercept estimates $\mu$. Visually  the only change in the Q-Q plot is a  change in the scale of the $y$-axis. We can therefore employ Q-Q plot in the more general framework of testing the distribution of a sample $x$ for normality similar to standard normality tests, such as the AD, LF, CVM, and SW test. We do have to make a decision with respect to the exact parameters of the normal distribution we test against, when we plot a line alongside the points in the Q-Q plot for additional comparison purposes, i.e.~parameters $\mu$ and $\sigma$ have to be estimated from the sample. In Q-Q plots, variability is based on a robust measure of spread given as the ratio of the inter-quartile ranges of empirical and theoretical distributions: $\left(F^{-1}_n(0.75) - F^{-1}_n(0.25)\right) / \left(F^{-1}(0.75) - F^{-1}(0.25)\right)$. \hhnote{XXX citation?}
+For any sample tested against a distribution within a location-scale family, such as e.g.~normal, log normal, or exponential, the sample quantiles still fall on a line when plotted against the theoretical quantiles of any of the family's member distributions. Plotting the empiricial quantiles of a normally distributed sample $x \sim N(\mu, \sigma^2)$ against the quantiles of a standard normal will result in a line, where  the slope is an estimate of $\sigma$, and the intercept estimates $\mu$. Visually  the only change in the Q-Q plot is a  change in the scale of the $y$-axis. We can therefore employ Q-Q plot in the more general framework of testing the distribution of a sample $x$ for normality similar to standard normality tests, such as the AD, LF, CVM, and SW test. We do have to make a decision with respect to the exact parameters of the normal distribution we test against, when we plot a line alongside the points in the Q-Q plot for additional comparison purposes, i.e.~parameters $\mu$ and $\sigma$ have to be estimated from the sample. In Q-Q plots, variability is based on a robust measure of spread given as the ratio of the inter-quartile ranges of empirical and theoretical distributions: $\left(F^{-1}_n(0.75) - F^{-1}_n(0.25)\right) / \left(F^{-1}(0.75) - F^{-1}(0.25)\right)$ \citep[see e.g.~][\hh{p.XXX}]{tukey:eda}. 
  
 %\hhnote{How are Q-Q plots interpreted?}
 
 %\hhnote{slope is standard deviation of theoretical distribution, $y$ offset its location. For any distribution within a location-scale family (such as normal, log normal, exponential, ...), we can interpret shifts in $y$ direction as a change/deviation in location, and a change in slope as a change in scale.}
 
-A sample $x$ is considered as being consistent with a normal distribution, if empirical and theoretical quantiles fall close to  a straight line.  Closeness can  be assessed visually based on whether the points fall inside the envelope of 95\%  pointwise confidence intervals \al{\citep{Davison:1997}}.
+A sample $x$ is considered as being consistent with a normal distribution, if empirical and theoretical quantiles fall close to  a straight line.  Closeness can  be assessed visually based on whether the points fall inside the envelope of 95\%  pointwise confidence intervals \citep[][\al{p.~XXX}]{Davison:1997}.
 \alnote{We need to be careful here. Since we are using pointwise CIs, we would expect a certain \% of points to fall outside the CIs. I think in the first review of the JCGS paper a reviewer was concerned about this as well.}
 \hhnote{Well, yes, point taken,  but it is also important  how far outside the points are ... }
 \alnote{I think the Davison and Hinkley reference takes care of this. I will reread that section and add a page number soon.}
@@ -323,20 +325,20 @@ Similar to classical inference, we can make use of power to assess sensitivity o
 \hhnote{Outline of the paper:}
 \hh{
 \begin{itemize}
-\item We model power of different lineups in a simulation setting: based on 24 samples from $t$ distributions with different degrees of freedom and varying sample size, we draw lineups for all three designs of Q-Q pots and evaluate power.
-\item We make use of visual $p$-values to assess sensitivity of lineups of Q-Q plots with respect to other tests of normality.
+
+\item We model power of different lineups in a simulation setting: based on 24 samples from $t$ distributions with different degrees of freedom and varying sample size (section~\label{sec:simu}), we draw lineups for all three designs of Q-Q plots and evaluate their respective power in section~\ref{sec:power1}. 
+\item A further power comparison follows in section~\ref{sec:power2}: using   visual $p$-values to assess sensitivity of lineups of Q-Q plots we can make direct comparisons to other tests of normality, such as KS, LF, ...
 \end{itemize}}
 
 
 %------------------------------------------------------------------------------------
-\section{Investigating Q-Q plots visually}\label{sec:qqplot}
 %------------------------------------------------------------------------------------
 
 %------------------------------------------------------------------------------------
-\subsection{Method}
+\section{Simulation Setup and Model}\label{sec:simu}
 %------------------------------------------------------------------------------------
 
-To further \al{develop} the assessment of normality using lineups, we conducted a study comparing the three different versions of the Q-Q plot.
+To further develop the assessment of normality using lineups, we conducted a study comparing the three different versions of the Q-Q plot.
 %We are testing three different versions of a Q-Q plot, 
 
 
@@ -396,7 +398,6 @@ Next, we model the aforementioned probability $p_i$ with which observer $i$ pick
 %\alnote{We can give a description of the MTurk study here.}
 
 %------------------------------------------------------------------------------------
-\subsection{Model Setup}
 %------------------------------------------------------------------------------------
 
 
@@ -417,9 +418,7 @@ $u$ & the users' subjective abilities.
 %
 The combination of different levels of sample size and degrees of freedom of the $t$ distribution result in 12 parameter settings. Under each setting, we sample \al{XXX generated?} data twice; additionally, we make use of two different sets of null data for each sample, yielding 48 different sets of data, which we render in each of the variations, resulting in 144 different lineups. 
 
-%------------------------------------------------------------------------------------
-\subsection{Results}
-%------------------------------------------------------------------------------------
+-
 
 Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} independent observers were recruited and asked to evaluate ten lineups each. 
 
@@ -616,6 +615,10 @@ Estimates of the variance components are $\widehat{\sigma}_u = \Sexpr{round(m0@t
 Compared to difficulty level of lineups, participants' abilities only vary little. The difference between best and worst performance by participants has an effect of at most an estimated 
 \Sexpr{require(lme4); eff <- range(ranef(m0)[["ip_address"]][,1]); probs <- exp(eff)/(1+exp(eff)); round(probs[2]/probs[1],1)}-fold probability of detecting the data plot from a lineup. 
 
+%------------------------------------------------------------------------------------
+\section{Comparison of three designs}\label{sec:power1}
+%-----------------------------------------------------------------------------------
+
 %
 As expected, the task of identifying non-normality becomes easier with increased sample size and more pronounced deviations from normality due to lower degrees of freedom. The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands helps with evaluation in the standard design, but the difference is not significant.  Surprisingly, the de-trended version of the Q-Q plot is significantly less powerful in detecting non-normality than either of the other designs. 
 \hh{In terms of rejections of the null hypothesis, this means that normality is rejected in 24 out of the 48 lineups of the de-trended Q-Q plot. All of these cases are being rejected in all of the other designs as well. Under the control design another four lineups are rejecting normality, and the standard design rejects yet another lineup.}
@@ -727,6 +730,10 @@ qplot(treatment,fill=choice, weight=pct, geom="bar", position="dodge",data=trtm)
 \hh{Figure~\ref{fig:choices} summarizes the reasons participants gave for the choice of plot they selected. Bars on the left show  identifications of the data plot, bars on the right represent selections of a null plot. The reasons represent the four reasons offered  to participants for check marking. Notably the reasons do not seem to differentiate between the three designs. Stating `outliers' as a reason for choosing a plot is helpful across all designs in picking the data out of the lineup. Stating `left side different' or `points curve'  as the reason for choosing a plot decreases the chance for this plot to be the data plot. `Right side different' does not seem to have any effect. Interestingly, there is a big difference in the percentages of `right' and `left'. Participants favored to give `left side different' as a reason over `right' side, even though all distributions involved were symmetric and therefore deviations from normality should also manifest themselves in a symmetric fashion.}
 
 %\hhnote{another idea: go through reasons for choices. For standard design the line was often interpreted as a line of fit (how often for the de-trended design?), ie. we are tapping into what general population knows about regression. While this is not completely appropriate, the knowledge transfer might be the reason for the better performance.}
+
+%------------------------------------------------------------------------------------
+\section{Power: visual and classical}\label{sec:power2}
+%-----------------------------------------------------------------------------------
 
 Note that none of the data plots in the lineups were actually created using data from a normal distribution. This should lead to rejection of the null hypothesis in every single instance. This is not quite true, as can be seen in Table~\ref{tab:reject}, but what also becomes evident is the high power  of visual inference. Based on lineups we are able to reject non-normality much more often than with any of the classical tests.
 
