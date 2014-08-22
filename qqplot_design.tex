@@ -443,7 +443,8 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 The estimated model coefficients for model $M_1$ are shown in Table~\ref{tab:model}. 
 Estimates of the variance components are $\widehat{\sigma}_u = 0.44$, $\widehat{\sigma}_d=1.95$, and $\widehat{\sigma} = 0.31$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
 %
-Figure~\ref{fig:ranef} shows histograms of the predicted random effects for participants' abilities (left) and difficulty level of lineups (right). Compared to difficulty level of lineups, participants' abilities only vary little. The difference between best and worst performance by participants has an effect of at most an estimated 
+%Figure~\ref{fig:ranef} shows histograms of the predicted random effects for participants' abilities (left) and difficulty level of lineups (right). 
+Compared to difficulty level of lineups, participants' abilities only vary little. The difference between best and worst performance by participants has an effect of at most an estimated 
 1.9-fold probability of detecting the data plot from a lineup. 
 
 %
@@ -487,9 +488,9 @@ As expected, the task of identifying non-normality becomes easier with increased
 \end{figure}
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Standard"))
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Rotated"))
-\hh{Two of the observers picking the `wrong' plot from the de-trended lineup gave as a reason for their choice that this panel was the one with `most dots outside the shaded area', i.e.~they focussed on the middle of plot \#7. This is not a singular occurrence -- when investigating  overall reasoning we take a closer look at the effect of the  words `area' and `outside' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area). It seems to help for identifying the data plot in the standard design, but it severely  increases the chance of picking a null plot in the de-trended design. Why is that? -- The de-trended version is making better use of the space in the plot, it therefore  emphasizes deviations of points from the $x$-axis, i.e.~the theoretical distribution, and with it  the fact whether individual points are inside or outside the shaded areas corresponding to the (pointwise) 95\% confidence intervals. The responses suggest that participants take the shading very seriously and make their choice dependent on it. It also seems that the confidence bands mislead people -- this suggests, that for the de-trended Q-Q plot design we might have to re-think how to display confidence intervals: it might be better to  either use  a more conservative  confidence level or change the approach altogether from pointwise confidence intervals to simultaneous confidence bands as e.g.~suggested by \citet{meeker} for probability plots.
+\hh{Two of the observers picking the `wrong' plot from the de-trended lineup gave as a reason for their choice that this panel was the one with `most dots outside the shaded area', i.e.~they focussed on the middle of plot \#7. This is not a singular occurrence -- when investigating  overall reasoning we take a closer look at the effect of the  words `area' and `outside' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area). It seems to help for identifying the data plot in the standard design, but it severely  increases the chance of picking a null plot in the de-trended design. Why is that? -- The de-trended version is making better use of the space in the plot, it therefore  emphasizes deviations of points from the $x$-axis, i.e.~the theoretical distribution, and with it  the fact whether individual points are inside or outside the shaded areas corresponding to the (pointwise) 95\% confidence intervals. The responses suggest that participants take the shading very seriously and make their choice dependent on it. It also seems that the confidence bands mislead people -- this suggests, that for the de-trended Q-Q plot design we might have to re-think how to display confidence intervals: it might be better to  either use  a more conservative  confidence level or change the approach altogether from pointwise confidence intervals to simultaneous confidence bands as e.g.~suggested by \citet{meeker} for probability plots.}
 \alnote{This would be a very natural place to put in TAS citations: Aldor-Noiman et al (2013) and Rosenkrantz (2000). the TAS 2013 reference also fits in here}
-XXX Tukey citation: `the middle half of any distribution is approximately normal.' }
+\hhnote{XXX Tukey citation: `the middle half of any distribution is approximately normal.' }
 
 \hh{Another promising approach might be to base confidence bands on the TS test \citep{buja:2013}. These bands define a test of normality and are narrower in the tails than those associated with the Kolmogorov-Smirnov test, while slightly more conservative in the middle of the distribution. These findings coincide with our observation, that points  outside the confidence intervals were misleading participants, if this occurred in the middle of the plot.
 }
@@ -515,7 +516,7 @@ XXX Tukey citation: `the middle half of any distribution is approximately normal
 
 \end{knitrout}
 
-\caption{\label{fig:choices}Overview of reasons participants gave for  their answer. `Outliers' sa a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious to see that so many more observers respond `left side different' over `right';  all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
+\caption{\label{fig:choices}Overview of reasons participants gave for  their answer. `Outliers' as a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious to see that so many more observers respond `left side different' over `right';  all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
 \end{figure}
 
 \hh{Figure~\ref{fig:choices} summarizes the reasons participants gave for the choice of plot they selected. Bars on the left show  identifications of the data plot, bars on the right represent selections of a null plot. The reasons represent the four reasons offered  to participants for check marking. Notably the reasons do not seem to differentiate between the three designs. Stating `outliers' as a reason for choosing a plot is helpful across all designs in picking the data out of the lineup. Stating `left side different' or `points curve'  as the reason for choosing a plot decreases the chance for this plot to be the data plot. `Right side different' does not seem to have any effect. Interestingly, there is a big difference in the percentages of `right' and `left'. Participants favored to give `left side different' as a reason over `right' side, even though all distributions involved were symmetric and therefore deviations from normality should also manifest themselves in a symmetric fashion.}
@@ -621,34 +622,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 
 \caption{\label{fig:lp3} Lineup in standard design showing the data of the lineup on the right in figure~\ref{fig:lpnorm}. The hypothesized distribution is $N(0, \widehat{\sigma}^2)$, where $\widehat{\sigma}^2$ is estimated as the regular (i.e.~non-robust) sample variance, and nulls are drawn from that distribution. While not actually user tested, we do not think that the data stands out from the lineup.}
 \end{figure}
-%------------------------------------------------------------------------------------
-\section{Other study results}
-%------------------------------------------------------------------------------------
-
-
-
- Similar to observations made in other lineup experiments \citep{Majumder:2014up}, there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of a user inherent ability rather than a learned skill. The overall proportion of correct responses is very stable, fluctuating around 0.41 with a standard deviation of about 0.14.  What does change with the number of attempts, is the time taken by participants to answer a lineup. From initially 53.6 seconds in the first answer, the response time drops to 33 seconds at the tenth evaluation.
-\begin{figure}
-\centering
-\begin{subfigure}[b]{.3\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/fig1} 
-
-\end{knitrout}
-
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/fig2} 
-
-\end{knitrout}
-
-\end{subfigure}
-\caption{\label{fig:attempts}Proportion of correct answers by attempt (left) and time taken in each of the first ten attempts (right). The proportion of correct responses stays constantfor successive attempts, while the time to answer decreases significantly over the same number of attempts.}
-\end{figure}
-
+%-----------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------
 \section{Discussion and Conclusion}
 %------------------------------------------------------------------------------------
@@ -675,5 +649,38 @@ All data  in the study was collected  with approval from the internal review boa
 \bibliographystyle{apalike}
 \bibliography{qqplots}
 
+\newpage
+\begin{appendix}
+-
+\section{Demographics and other study results}
+%-----------------------------------------------------------------------------------
+
+
+
+
+ Similar to observations made in other lineup experiments \citep{Majumder:2014up}, there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of a user inherent ability rather than a learned skill. The overall proportion of correct responses is very stable, fluctuating around 0.41 with a standard deviation of about 0.14.  What does change with the number of attempts, is the time taken by participants to answer a lineup. From initially 53.6 seconds in the first answer, the response time drops to 33 seconds at the tenth evaluation.
+\begin{figure}
+\centering
+\begin{subfigure}[b]{.35\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/fig1} 
+
+\end{knitrout}
+
+\end{subfigure}
+\begin{subfigure}[b]{.35\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/fig2} 
+
+\end{knitrout}
+
+\end{subfigure}
+\caption{\label{fig:attempts}Proportion of correct answers by attempt (left) and time taken in each of the first ten attempts (right). The proportion of correct responses stays constantfor successive attempts, while the time to answer decreases significantly over the same number of attempts.}
+\end{figure}
+
+\hhnote{gender, education, geographic location?}
+\end{appendix}
 
 \end{document}
