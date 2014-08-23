@@ -311,12 +311,12 @@ The lineup protocol also allows for an assessment of the power of a lineup \cite
 %as the probability that in $N$ independent evaluations observers 
 and by showing different renderings of the exact same data in lineups we can evaluate the power  of different designs.
 In considering the power of a lineup, we need to estimate the probability $p_i$ that observer $i$ identifies the data from the lineup. If the observer is just guessing, this probability is $1/m$, where $m$ is the number of plots in the lineup.
-The power of a lineups is then given as the probability to reject the null hypothesis. Let $X$ be the number of identifications of the data plot in $N$ independent evaluations. Let $X \sim F_N$. The power of the lineup is then given as the probability that more than $x_\alpha$ out of $N$ observers
+The power of a lineups is then given as the probability to reject the null hypothesis. Let $Y$ be the number of identifications of the data plot in $N$ independent evaluations. Let $Y \sim F_N$. The power of the lineup is then given as the probability that more than $y_\alpha$ out of $N$ observers
 choose the true plot, i.e.:
 \begin{equation}\label{eqn:power}
-\widehat{\text{Power}} = \text{Power}_{N} = 1 - F_{X} (x_{\alpha}),
+\widehat{\text{Power}} = \text{Power}_{N} = 1 - F_{Y} (y_{\alpha}),
 \end{equation}
-where $x_\alpha$ is the critical value for a given significance level of $\alpha$, i.e.~$P(X >  x_{\alpha}) \le \alpha$. $X$ is composed of the sum of $N$ observers' (binary) decisions $X_i \sim B_{1, p_i}$, where  $p_i$ is the probability that individual $i$ chooses the data plot. This probability  depends both on the strength of the signal in the data plot and an individual's visual ability.
+where $y_\alpha$ is the critical value for a given significance level of $\alpha$, i.e.~$P(Y >  y_{\alpha}) \le \alpha$. $Y$ is composed of the sum of $N$ observers' (binary) decisions $Y_i \sim B_{1, p_i}$, where  $p_i$ is the probability that individual $i$ chooses the data plot. This probability  depends both on the strength of the signal in the data plot and an individual's visual ability.
 Assessing this ability requires that each individual evaluates multiple lineups. 
 If that is not possible, we have to assume that all participants share the same ability $p$. %, and the power calculation in Equation~\ref{eqn:power} simplifies to $1 - B_{N, \hat{p}}(x_\alpha)$, where $\widehat{p}$ is an estimate for the probability of choosing the data plot for a specific lineup.
 Similar to classical inference, we can make use of power to assess sensitivity of tests. This allows us to make decisions about designs for particular tasks by evaluating lineups displaying  the same data in different types of displays \citep{Hofmann:2012ts}. 
@@ -536,17 +536,20 @@ ggplot() + geom_abline(colour="grey50") + geom_point(aes(x=Control, y=Standard, 
 
 
 
-Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform significantly worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. Lineups showing a sample from a $t_5$ distribution cover the whole range.
+Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely coincide for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform  worse than either standard or control Q-Q plots. Lineups including data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. Lineups showing a sample from a $t_5$ distribution cover the whole range.
+\hh{We base an evaluation of the three different Q-Q plot designs on the premise that if participants find it easier to identify the data plot under one lineup over another lineup (given identical data underlying the lineups), the first lineup uses the better design.}
 
+\hh{Let therefore $Y_i$ be the outcome of the $i$th evaluation. Then $Y_i$ is a Bernoulli variable, where $\pi_i$ denotes the probablity of identifying the data plot from the lineup; i.e.~$P(Y_i = 1) = \pi_i = E[Y_i]$.   }
 
-\hh{XXX lead into the model}
-
-We model the probability of selecting the data plot from the lineup, $\pi$, with the help of model $M_1$:
-\begin{eqnarray}\label{M1}
-g(\pi_i) =\eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},
-\end{eqnarray}
+\hh{The probability of identifying the lineup is affected by several factors: (a) the strength of the signal, i.e.~degrees of freedom of the $t$ distribution, and the sample size, (b) a human factor, i.e~the visual ability of the observer, and (c)  the `lineup factor': depending on which $m-1$ representatives of the test distribution the null plots show, lineups of the same data plot can have different difficulty. We capture all of this in a logistic regression with fixed effects for signal strength and mixed effects for lineup difficulty $d$ and user ability $u$: }
+\begin{eqnarray*}
+g(\pi_i) =\eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},\\
+Y = g^{-1}(\eta) + \varepsilon
+\end{eqnarray*}
 \alnote{We haven't introduced $\sigma$, but we include it below, so we need to add to this model. Simply adding: $y_i = g^{-1}(\eta) + \varepsilon$ (after defining $eta$) and including $\varepsilon\sim \mathcal{N}(0, \sigma^2)$ would fix this. Does this make it too unreadable?}
-where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are all indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard, De-trended$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation and $d(i)$ identifies the particular data sample used for it. 
+\hhnote{how about that? - I'm fairly certain that lmer is not making a normal assumption when it fits a Binomial, but of course I don;t know the inner workings ...}
+where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard, De-trended$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation and $d(i)$ identifies the particular data sample used for it. 
+\hh{We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.}
 
 \hhnote{define the other parameters}
 
