@@ -393,17 +393,15 @@ Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups
 
 \hh{The probability of identifying the lineup is affected by several factors: (a) the strength of the signal, i.e.~degrees of freedom of the $t$ distribution, and the sample size, (b) a human factor, i.e~the visual ability of the observer, and (c)  the `lineup factor': depending on which $m-1$ representatives of the test distribution the null plots show, lineups of the same data plot can have different difficulty. We capture all of this in a logistic regression with fixed effects for signal strength and mixed effects for lineup difficulty $d$ and user ability $u$: }
 \begin{eqnarray*}
-g(\pi_i) =\eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},\\
-Y = g^{-1}(\eta) + \varepsilon
+g(\pi_i) &=& \eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},\\
+Y &=& g^{-1}(\eta) + \varepsilon
 \end{eqnarray*}
 \alnote{We haven't introduced $\sigma$, but we include it below, so we need to add to this model. Simply adding: $y_i = g^{-1}(\eta) + \varepsilon$ (after defining $eta$) and including $\varepsilon\sim \mathcal{N}(0, \sigma^2)$ would fix this. Does this make it too unreadable?}
-\hhnote{how about that? - I'm fairly certain that lmer is not making a normal assumption when it fits a Binomial, but of course I don;t know the inner workings ...}
+\hhnote{how about that? - I'm fairly certain that lmer is not making a normal assumption when it fits a Binomial, but of course I don't know the inner workings ...}
 where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard, De-trended$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation and $d(i)$ identifies the particular data sample used for it. 
-\hh{We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.}
-
-\hhnote{define the other parameters}
-
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$.
+
+\hh{We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.}
 
 
 
@@ -460,7 +458,7 @@ Compared to difficulty level of lineups, participants' abilities only vary littl
 1.9-fold probability of detecting the data plot from a lineup. 
 
 %------------------------------------------------------------------------------------
-\section{Comparison of three designs}\label{sec:power1}
+\section{Power: three different designs of Q-Q plots}\label{sec:power1}
 %-----------------------------------------------------------------------------------
 
 %
@@ -505,9 +503,7 @@ As expected, the task of identifying non-normality becomes easier with increased
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Standard"))
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Rotated"))
 \hh{Two of the observers picking the `wrong' plot from the de-trended lineup gave as a reason for their choice that this panel was the one with `most dots outside the shaded area', i.e.~they focussed on the middle of plot \#7. This is not a singular occurrence -- when investigating  overall reasoning we take a closer look at the effect of the  words `area' and `outside' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area). It seems to help for identifying the data plot in the standard design, but it severely  increases the chance of picking a null plot in the de-trended design. Why is that? -- The de-trended version is making better use of the space in the plot, it therefore  emphasizes deviations of points from the $x$-axis, i.e.~the theoretical distribution, and with it  the fact whether individual points are inside or outside the shaded areas corresponding to the (pointwise) 95\% confidence intervals. The responses suggest that participants take the shading very seriously and make their choice dependent on it. It also seems that the confidence bands mislead people -- this suggests, that for the de-trended Q-Q plot design we might have to re-think how to display confidence intervals: it might be better to  either use  a more conservative  confidence level or change the approach altogether from pointwise confidence intervals to simultaneous confidence bands as e.g.~suggested by \citet{meeker} for probability plots.}
-\alnote{This would be a very natural place to put in TAS citations: Aldor-Noiman et al (2013) and Rosenkrantz (2000). the TAS 2013 reference also fits in here}
-\hhnote{XXX Tukey citation: `the middle half of any distribution is approximately normal.' }
-
+\alnote{This would be a very natural place to put in TAS citations: Aldor-Noiman et al (2013) and Rosenkrantz (2000). }
 \hh{Another promising approach might be to base confidence bands on the TS test \citep{buja:2013}. These bands define a test of normality and are narrower in the tails than those associated with the Kolmogorov-Smirnov test, while slightly more conservative in the middle of the distribution. These findings coincide with our observation, that points  outside the confidence intervals were misleading participants, if this occurred in the middle of the plot.
 }
 
@@ -528,7 +524,7 @@ As expected, the task of identifying non-normality becomes easier with increased
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=0.8\textwidth]{figure/trtplot} 
+\includegraphics[width=\textwidth]{figure/trtplot} 
 
 \end{knitrout}
 
@@ -574,10 +570,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 \hh{An inferior performance of normality tests based on sample mean and variance is also observed by \citep{buja:2013} in the discussion of the TS test. }
 \begin{figure}
 \centering
-\begin{subfigure}[t]{.4\textwidth}
-\includegraphics[width=\textwidth]{figures/figvisnorm.pdf} 
-\vfill
-\end{subfigure}
+\includegraphics[width=0.5\textwidth]{figures/figvisnorm.pdf} 
 \caption{\label{fig:visnorm}  Scatterplot of $p$-values from Shapiro-Wilks and estimated $p$-values from lineups of Standard Q-Q plots. The grey shaded areas represent areas of rejection under at least one of the tests. The circled observations correspond to samples that lead to decidedly different decisions under the two tests. The lineups corresponding to these observations are shown in figure~\ref{fig:lpnorm}.}
 \end{figure}
 
