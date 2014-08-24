@@ -638,22 +638,27 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 %-----------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------
 \section{Discussion and Conclusion}
-%------------------------------------------------------------------------------------
+%-----------------------------------------------------------------------------------
 
+\hh{All versions of Q-Q plots under consideration here are significantly better at detecting deviations from normality than classical normality test. A contributing factor to this superior power might be  that in  Q-Q plots the whole sample is assessed rather than being reduced to the single value considered for the test statistic of the normality tests. 
+Contributing to the power is also the robust approach in estimating the parameters for the normal distribution drawn as a line of fit in  Q-Q plots, while most normality tests are based on the outlier sensitive sample variance. %$S^2 = \sum_i(x_i - \bar{X})^2/(n-1)$ 
+This is consistent with findings in \citet{buja:2013} and  also poses the question of whether power of classical normality tests might  be improved by using robust estimates of the sample.
+
+Q-Q plots are not restricted to assessing normality. In fact, they provide a general framework for testing distributional assumptions. Used in the setting of lineups, they in particular allow an assessment of 
+ samples from `approximate' normal or asymptotic normal distributions, as long as there exists a method  to generate data under the null hypothesis, which can then be used to provide null plots in the lineup.
+}
 \alnote{We can recap and discuss how we can extend the study (, etc.)}
 
 \hhnote{Just notes at the moment:}
 \hh{
 \begin{enumerate}
-\item{All versions of Q-Q plots investigated in this paper are significantly better at detecting deviations from normality than classical normality test. A contributing factor to this superior power might be  that in  Q-Q plots the whole sample is assessed rather than being reduced to the single value of the sufficient statistics for the normality tests. XXX this needs cleaning up
-Another reason might be that a robust estimation approach is used in drawing Q-Q plots, while most normality tests are based on the outlier sensitive sample variance $S^2 = \sum_i(x_i - \bar{X})^2/(n-1)$.  }
-\item { The results of the study is also posing the question of whether normality tests might not be improved by using robust estimates of the sample when assessing normality. }
-
 \item{De-trended Q-Q plots have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design. \al{aspect ratio for the de-trended plots?}}
-\item{Distributions other than normals? In particular, samples from `approximate' normal or asymptotic normal distributions. As long as we have a way to generate data under the null, we can use this as a framework against which to test.}
 \item \al{Extension to P-P plots? \citet{koehler91} comment on how P-P are more sensitive to disrepencies in the middle of the distribution (i.e., multiple modes) and Q-Q plots are more sensitive ot discrepencies in the tails. I would imagine the results of the lineups would be similar to P-P plots and are a natural next question.} 
 \item Con: user studies have price tag, take some time.
-\item Extension: skew distribution versus normal distribution? TS test, normality tests with robust parameters: problem with coding this ourselves: algorithm might use properties of ML estimators
+\item
+The simulation study here is only concerned with deviations from normality as given by the $t$-distribution. We could have considered other types of deviations such as skewness or mixed distributions. We don't think that the results would have changed much. 
+
+Extension: skew distribution versus normal distribution? TS test, normality tests with robust parameters: problem with coding this ourselves: algorithm might use properties of ML estimators
 \end{enumerate}
 
 }
@@ -670,7 +675,7 @@ Another reason might be that a robust estimation approach is used in drawing Q-Q
 
 
 
- Similar to observations made in other lineup experiments \citep{Majumder:2014up}, there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of a user inherent ability rather than a learned skill. The overall proportion of correct responses is very stable, fluctuating around 0.41 with a standard deviation of about 0.14.  What does change with the number of attempts, is the time taken by participants to answer a lineup. From initially 53.6 seconds in the first answer, the response time drops to 33 seconds at the tenth evaluation.
+ Similar to observations made in other lineup experiments \citep{Majumder:2014up}, there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of an observer's inherent ability rather than a learned skill. The overall proportion of correct responses is very stable, fluctuating around 0.41 with a standard deviation of about 0.14.  What does change with the number of attempts, is the time taken by participants to answer a lineup. From initially 53.6 seconds in the first answer, the response time drops to 33 seconds at the tenth evaluation.
 \begin{figure}
 \centering
 \begin{subfigure}[b]{.35\textwidth}
