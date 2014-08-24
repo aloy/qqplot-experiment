@@ -287,8 +287,8 @@ $H_0: F = N(0,S^2)$ & $S$ is based on the interquartile range of the data; \\
 Examples for both hypotheses are shown in figure~\ref{fig:lps}. Both lineups show the same dataset (in panel \#$(3^2-3)$). On the left the data stands out (all 33 observers picked the data plot), i.e.~we reject the null hypothesis of a standard normal distribution. On the right, the data does not stand out (only 3 out of 27 observers picked the data) -- we do not reject the hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{\sigma}=1.578$. 
 \alnote{Based on our last JCGS submission I could see a reviewer asking why this is. Of course, I believe that a seasoned data analyst would agree with us, so I am unsure how much detail we need.}
 
-Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in Q-Q plots corresponds to a  hypothesis test against that distribution. \hhnote{this statement needs more emphasis}
-IQR is used here in estimating scale - this is standard for Q-Q plot. A robust estimation of variance is preferred for better assessment of tails and outliers of the empirical distribution. We could use alternative estimators, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, for variance, but this will likely also change the power of the corresponding lineup.
+Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in Q-Q plots corresponds to a  hypothesis test against that distribution. \hh{As long as there is a method to generate samples under the null hypothesis, we do not even need to know the exact distribution. This allows us in particular to assess situations in which we only have approximate or asymptotic results, which are hard if not impossible to investigate with the (small) finite samples we typically deal with in practice.}
+Note that IQR is used here in estimating scale - this is standard for Q-Q plot. A robust estimation of variance is preferred for better assessment of tails and outliers of the empirical distribution. We could use alternative estimators, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, for variance, but this will likely also change the power of the corresponding lineup.
 
 \begin{figure}[hbt]
 
@@ -504,6 +504,7 @@ As expected, the task of identifying non-normality becomes easier with increased
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Rotated"))
 \hh{Two of the observers picking the `wrong' plot from the de-trended lineup gave as a reason for their choice that this panel was the one with `most dots outside the shaded area', i.e.~they focussed on the middle of plot \#7. This is not a singular occurrence -- when investigating  overall reasoning we take a closer look at the effect of the  words `area' and `outside' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area). It seems to help for identifying the data plot in the standard design, but it severely  increases the chance of picking a null plot in the de-trended design. Why is that? -- The de-trended version is making better use of the space in the plot, it therefore  emphasizes deviations of points from the $x$-axis, i.e.~the theoretical distribution, and with it  the fact whether individual points are inside or outside the shaded areas corresponding to the (pointwise) 95\% confidence intervals. The responses suggest that participants take the shading very seriously and make their choice dependent on it. It also seems that the confidence bands mislead people -- this suggests, that for the de-trended Q-Q plot design we might have to re-think how to display confidence intervals: it might be better to  either use  a more conservative  confidence level or change the approach altogether from pointwise confidence intervals to simultaneous confidence bands as e.g.~suggested by \citet{meeker} for probability plots.}
 \alnote{This would be a very natural place to put in TAS citations: Aldor-Noiman et al (2013) and Rosenkrantz (2000). }
+\hhnote{comment on Rosenkrantz is missing still}
 \hh{Another promising approach might be to base confidence bands on the TS test \citep{buja:2013}. These bands define a test of normality and are narrower in the tails than those associated with the Kolmogorov-Smirnov test, while slightly more conservative in the middle of the distribution. These findings coincide with our observation, that points  outside the confidence intervals were misleading participants, if this occurred in the middle of the plot.
 }
 
@@ -639,7 +640,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 %------------------------------------------------------------------------------------
 \section{Discussion and Conclusion}
 %-----------------------------------------------------------------------------------
-
+\hh{In the comparison of the three designs of Q-Q plots, de-trended Q-Q plots turn out to have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design. This comes as a surprise, as results from cognitive psychology suggest that the de-trended version has superior qualities. From the additional reasoning provided by participants regarding their choice of plot, it becomes obvious that this choice is mainly driven by points outside the shaded area depicting 95\% confidence intervals. This happens primarily in the middle of the distribution, confirming results by \citet{buja:2013} and reopens the question of whether the design or the choice of confidence calculation is the reason for the inferiority. It would also make sense to fix the aspect ratio of plots in the de-trended design to make comparisons between the range of points in both axis directions possible.}
 \hh{All versions of Q-Q plots under consideration here are significantly better at detecting deviations from normality than classical normality test. A contributing factor to this superior power might be  that in  Q-Q plots the whole sample is assessed rather than being reduced to the single value considered for the test statistic of the normality tests. 
 Contributing to the power is also the robust approach in estimating the parameters for the normal distribution drawn as a line of fit in  Q-Q plots, while most normality tests are based on the outlier sensitive sample variance. %$S^2 = \sum_i(x_i - \bar{X})^2/(n-1)$ 
 This is consistent with findings in \citet{buja:2013} and  also poses the question of whether power of classical normality tests might  be improved by using robust estimates of the sample.
@@ -647,21 +648,13 @@ This is consistent with findings in \citet{buja:2013} and  also poses the questi
 Q-Q plots are not restricted to assessing normality. In fact, they provide a general framework for testing distributional assumptions. Used in the setting of lineups, they in particular allow an assessment of 
  samples from `approximate' normal or asymptotic normal distributions, as long as there exists a method  to generate data under the null hypothesis, which can then be used to provide null plots in the lineup.
 }
-\alnote{We can recap and discuss how we can extend the study (, etc.)}
+\hh{One of the problems with lineups is that they come at a cost, both monetary and in time, that is higher than that of classical testing.
+But developments such as {\tt nullabor} \citep{nullabor} or {\tt vistest} \citep{vistest} allow us to be, at least to a degree, our own testers. For tests that are of a more sensitive nature, the cost of a test using a crowd-sourcing service is certainly a small enough item in the overall project budget that it is a feasible 
+option. It also discourages the analyst from multiple testing!}
 
-\hhnote{Just notes at the moment:}
-\hh{
-\begin{enumerate}
-\item{De-trended Q-Q plots have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design. \al{aspect ratio for the de-trended plots?}}
-\item \al{Extension to P-P plots? \citet{koehler91} comment on how P-P are more sensitive to disrepencies in the middle of the distribution (i.e., multiple modes) and Q-Q plots are more sensitive ot discrepencies in the tails. I would imagine the results of the lineups would be similar to P-P plots and are a natural next question.} 
-\item Con: user studies have price tag, take some time.
-\item
-The simulation study here is only concerned with deviations from normality as given by the $t$-distribution. We could have considered other types of deviations such as skewness or mixed distributions. We don't think that the results would have changed much. 
+\hh{Several possibilities for immediate extensions are obvious: the simulation study here is only concerned with deviations from normality as given by the $t$-distribution. Other types of deviations, such as given by skew distributions or mixed distributions, would be interesting to consider as well. We doubt that the overall results would change dramatically, but it might give us more insight into what observers of plots consider in making their assessments. }
+\hh{The application of the lineup framework based on the related P-P plots poses a natural next question: \citet{koehler91} comment on the higher sensitivity of  P-P  to discrepancies in the middle of the distribution, such as caused by multiple modes. We can verify this and other statements for large samples and based on distributions. Lineups allow us to quantify the extent to which these statements hold for small sample sizes.}
 
-Extension: skew distribution versus normal distribution? TS test, normality tests with robust parameters: problem with coding this ourselves: algorithm might use properties of ML estimators
-\end{enumerate}
-
-}
 
 \bibliographystyle{asa}
 \bibliography{qqplots}
