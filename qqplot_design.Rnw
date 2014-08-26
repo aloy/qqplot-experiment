@@ -759,6 +759,7 @@ Note that none of the data plots in the lineups were actually created using data
 %   \hline
   reject $N(0,S^2)$  & 12  &  8 (7) & 5 (5) &  5 (5) & 4 (4) & \\ 
 %  not reject &  &  &  & 32 & 38  & 38 &  40 & \\ 
+\hline
 \end{tabular}
 \end{table}
 \hh{
