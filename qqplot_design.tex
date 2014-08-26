@@ -120,7 +120,6 @@
 \author{Adam Loy, Lendie Follett, Heike Hofmann
 \thanks{Adam Loy is an Assistant Professor in the Department of Mathematics, Lawrence University, Appleton, WI, 54911 (e-mail: adam.m.loy@lawrence.edu);  Lendie Follett is a Ph.D. student in the Department of Statistics and Statistical Laboratory, Iowa State University, Ames, IA 50011-1210.; Heike Hofmann is a Professor in the Department of Statistics and Statistical Laboratory, Iowa State University, Ames, IA 50011-1210. This work was funded in part by National Science Foundation grant DMS 1007697. All data  in the study was collected  with approval from the internal review board IRB 10-347.}}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-
 \begin{document}
 
 \maketitle
@@ -141,13 +140,13 @@ b) Out of the variations discussed, de-trended Q-Q plots perform significantly w
 
 
 
-
-
-
-
 %------------------------------------------------------------------------------------
 \section{Introduction}
 %------------------------------------------------------------------------------------
+\hhnote{Why do we need to assess distributional assumptions in the first place?
+Verify that distributional assumptions hold, check model results (such as residuals), ... XXX ...
+Impact of violation? wrong or overly confident predictions, XXX
+}
 
 Standard quantile-quantile (Q-Q) plots \citep{Wilk:1968} are an essential tool for  visually evaluating a specific distributional assumption. In a Q-Q plot we plot quantiles of the empirical distribution against the expected quantiles from the assumed distribution. 
 The line of identity therefore represents the theoretical distribution and points show the empirical distribution. 
@@ -292,14 +291,12 @@ Note that IQR is used here in estimating scale - this is standard for Q-Q plot. 
 
 \begin{figure}[hbt]
 
-
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-1} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
@@ -307,7 +304,6 @@ Note that IQR is used here in estimating scale - this is standard for Q-Q plot. 
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-2} 
 
 \end{knitrout}
-
 \end{subfigure}
 \caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
 The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. }
@@ -351,10 +347,6 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 
 
 
-
-
-
-
 \begin{figure}
 \centering
 \begin{subfigure}[b]{.3\textwidth}
@@ -363,7 +355,6 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -371,7 +362,6 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-4} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
@@ -379,7 +369,6 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-5} 
 
 \end{knitrout}
-
 \end{subfigure}
 \caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. De-trended Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
 \end{figure}
@@ -402,7 +391,6 @@ where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ a
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$.
 
 \hh{We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.}
-
 
 
 
@@ -488,7 +476,6 @@ As expected, the task of identifying non-normality becomes easier with increased
 \includegraphics[width=\maxwidth]{figure/notrotated} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
@@ -496,7 +483,6 @@ As expected, the task of identifying non-normality becomes easier with increased
 \includegraphics[width=\maxwidth]{figure/notrotated2} 
 
 \end{knitrout}
-
 \end{subfigure}
 \caption{\label{fig:rotstd}Lineups of the same data in two different designs. In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. The same data set is only identified once out of 21 times in the lineup showing the de-trended design. Observers instead pick panel \#$(3^2-2)$ 18 times. }
 \end{figure}
@@ -509,7 +495,6 @@ As expected, the task of identifying non-normality becomes easier with increased
 }
 
 
-
 \begin{figure}[hbt]
 \centering
 \begin{knitrout}
@@ -517,7 +502,6 @@ As expected, the task of identifying non-normality becomes easier with increased
 \includegraphics[width=.65\textwidth]{figure/rotfalse} 
 
 \end{knitrout}
-
 \caption{\label{fig:rotfalse}Mentioning `outside' or `area' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. }
 \end{figure}
 
@@ -528,7 +512,6 @@ As expected, the task of identifying non-normality becomes easier with increased
 \includegraphics[width=\textwidth]{figure/trtplot} 
 
 \end{knitrout}
-
 \caption{\label{fig:choices}Overview of reasons participants gave for  their answer. `Outliers' as a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious to see that so many more observers respond `left side different' over `right';  all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
 \end{figure}
 
@@ -580,12 +563,11 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 
 \includegraphics[width=\maxwidth]{figure/plot} 
 
-
 \hfill
 %
 \begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
-% latex table generated in R 3.1.0 by xtable 1.7-3 package
-% Tue Aug 12 21:44:10 2014
+% latex table generated in R 3.1.1 by xtable 1.7-3 package
+% Tue Aug 19 15:34:52 2014
    &   & 1 & 1 & 2 \\ 
    \hline
 1.7 & 2 & 9.3 & 1 &   \\ 
@@ -594,7 +576,6 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
    \hline
   & 2 & 4 & 0.5 & 3.3 \\ 
   
-
 \end{tabular}
 \hfill
 
@@ -603,12 +584,11 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 
 \includegraphics[width=\maxwidth]{figure/plot2} 
 
-
 \hfill
 %
 \begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
-% latex table generated in R 3.1.0 by xtable 1.7-3 package
-% Thu Aug 14 15:15:01 2014
+% latex table generated in R 3.1.1 by xtable 1.7-3 package
+% Tue Aug 19 15:34:54 2014
    &   &   &   &   \\ 
    \hline
 1 &   & \bf \it 23 &   &   \\ 
@@ -617,7 +597,6 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
    \hline
   &   &   & 1 & 0.5 \\ 
   
-
 \end{tabular}
 \hfill
 
@@ -633,7 +612,6 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 \includegraphics[width=0.5\textwidth]{figure/lp3} 
 
 \end{knitrout}
-
 \caption{\label{fig:lp3} Lineup in standard design showing the data of the lineup on the right in figure~\ref{fig:lpnorm}. The hypothesized distribution is $N(0, \widehat{\sigma}^2)$, where $\widehat{\sigma}^2$ is estimated as the regular (i.e.~non-robust) sample variance, and nulls are drawn from that distribution. While not actually user tested, we do not think that the data stands out from the lineup.}
 \end{figure}
 %-----------------------------------------------------------------------------------
@@ -667,7 +645,6 @@ option. It also discourages the analyst from multiple testing!}
 
 
 
-
  Similar to observations made in other lineup experiments \citep{Majumder:2014up}, there is no indication of a `learning' effect within a participant's first ten answers (see figure~\ref{fig:attempts}), indicating that lineups make use of an observer's inherent ability rather than a learned skill. The overall proportion of correct responses is very stable, fluctuating around 0.41 with a standard deviation of about 0.14.  What does change with the number of attempts, is the time taken by participants to answer a lineup. From initially 53.6 seconds in the first answer, the response time drops to 33 seconds at the tenth evaluation.
 \begin{figure}
 \centering
@@ -677,7 +654,6 @@ option. It also discourages the analyst from multiple testing!}
 \includegraphics[width=\maxwidth]{figure/fig1} 
 
 \end{knitrout}
-
 \end{subfigure}
 \begin{subfigure}[b]{.35\textwidth}
 \begin{knitrout}
@@ -685,7 +661,6 @@ option. It also discourages the analyst from multiple testing!}
 \includegraphics[width=\maxwidth]{figure/fig2} 
 
 \end{knitrout}
-
 \end{subfigure}
 \caption{\label{fig:attempts}Proportion of correct answers by attempt (left) and time taken in each of the first ten attempts (right). The proportion of correct responses stays constantfor successive attempts, while the time to answer decreases significantly over the same number of attempts.}
 \end{figure}
