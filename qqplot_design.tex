@@ -172,11 +172,11 @@ Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)
 %
 
 % The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not fit this scheme, but has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}. 
-\al{The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not utilize deviations from the theoretical distribution function, rather it focuses on the linearity of a normal Q-Q plot. Under normality, a set of observations, $x_1, \ldots, x_n$, can expressed as $x_i = \mu + \sigma z_i$, where $z_i$ is a quantile from the standard normal distribution. The Shapiro-Wilk test compares (up to a constant of proportionality, $c$) two estimates for $\sigma$: the best linear unbiased estimate obtained from a generalized least squares regression of the sample order statistics on their expected values, denoted $\widehat{\sigma}$, and the sample standard deviation, $s$.
+The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not utilize deviations from the theoretical distribution function, rather it focuses on the linearity of a normal Q-Q plot. Under normality, a set of observations, $x_1, \ldots, x_n$, can expressed as $x_i = \mu + \sigma z_i$, where $z_i$ is a quantile from the standard normal distribution. The Shapiro-Wilk test compares (up to a constant of proportionality, $c$) two estimates for $\sigma$: the best linear unbiased estimate obtained from a generalized least squares regression of the sample order statistics on their expected values, denoted $\widehat{\sigma}$, and the sample standard deviation, $s$.
 \[
   W = \frac{(c \widehat{\sigma})^2}{s^2} = \frac{b^2}{s^2}
 \]
-For a sample drawn from a normal distribution, $b^2$ and $s^2$ are, up to a constant, estimating the same quantity, whereas the two estimators will generally not be estimating the same quantity under nonnormality. The SW test has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}. }
+For a sample drawn from a normal distribution, $b^2$ and $s^2$ are, up to a constant, estimating the same quantity, whereas the two estimators will generally not be estimating the same quantity under nonnormality. The SW test has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}.
 
 
 We will be making use of these tests to assess the effectiveness of different variations of standard Q-Q plots.
@@ -386,12 +386,8 @@ Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups
 g(\pi_i) &=& \eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},\\
 Y &=& g^{-1}(\eta) + \varepsilon
 \end{eqnarray*}
-\alnote{We haven't introduced $\sigma$, but we include it below, so we need to add to this model. Simply adding: $y_i = g^{-1}(\eta) + \varepsilon$ (after defining $eta$) and including $\varepsilon\sim \mathcal{N}(0, \sigma^2)$ would fix this. Does this make it too unreadable?}
-\hhnote{how about that? - I'm fairly certain that lmer is not making a normal assumption when it fits a Binomial, but of course I don't know the inner workings ...}
 where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard, De-trended$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation and $d(i)$ identifies the particular data sample used for it. 
-Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$.
-
-\hh{We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.}
+Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$. \hh{We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.}
 
 
 
@@ -624,7 +620,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 \hh{In the comparison of the three designs of Q-Q plots, de-trended Q-Q plots turn out to have significantly less power in detecting non-normality than Q-Q plots in the standard and the control design. This comes as a surprise, as results from cognitive psychology suggest that the de-trended version has superior qualities. From the additional reasoning provided by participants regarding their choice of plot, it becomes obvious that this choice is mainly driven by points outside the shaded area depicting 95\% confidence intervals. This happens primarily in the middle of the distribution, confirming results by \citet{buja:2013} and reopens the question of whether the design or the choice of confidence calculation is the reason for the inferiority. It would also make sense to fix the aspect ratio of plots in the de-trended design to make comparisons between the range of points in both axis directions possible.}
 \hh{All versions of Q-Q plots under consideration here are significantly better at detecting deviations from normality than classical normality test. A contributing factor to this superior power might be  that in  Q-Q plots the whole sample is assessed rather than being reduced to the single value considered for the test statistic of the normality tests. 
 Contributing to the power is also the robust approach in estimating the parameters for the normal distribution drawn as a line of fit in  Q-Q plots, while most normality tests are based on the outlier sensitive sample variance. %$S^2 = \sum_i(x_i - \bar{X})^2/(n-1)$ 
-This is consistent with findings in \citet{buja:2013} and  also poses the question of whether power of classical normality tests might  be improved by using robust estimates of the sample.
+This is consistent with findings in \citet{buja:2013} and  also poses the question of whether power of classical normality tests might  be improved by using robust estimates for mean and variance of the sample.
 
 Q-Q plots are not restricted to assessing normality. In fact, they provide a general framework for testing distributional assumptions. Used in the setting of lineups, they in particular allow an assessment of 
  samples from `approximate' normal or asymptotic normal distributions, as long as there exists a method  to generate data under the null hypothesis, which can then be used to provide null plots in the lineup.
