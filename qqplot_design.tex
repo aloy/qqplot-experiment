@@ -155,7 +155,7 @@ The line of identity therefore represents the theoretical distribution and point
 
 Deviations from the theoretical distribution then manifest themselves as vertical differences between points and the line of identity. This difference is featured in a series of distributional tests. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample size of $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is then the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Lilliefors \cite[LF-test, ][]{lilliefors}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises test \citep[CVM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
 
-The KS test uses the maximal  difference, which is displayed as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample, i.e. a difference $D$ observed at either tail of the distribution carries the same weight and is interpreted in the same way as a difference $D$ in the center of the distribution. While the KS test allows for adjusting parameters of the normal distribution to sample mean and variance, it is more appropriate to use LF for this purpose. LF and KS share the same test statistic, but the \al{sampling distribution} in the LF test \al{statistic} is adjusted for the two additional parameters.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling upregulates the tail effect using a weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
+The KS test uses the maximal  difference, which is displayed as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample, i.e. a difference $D$ observed at either tail of the distribution carries the same weight and is interpreted in the same way as a difference $D$ in the center of the distribution. While the KS test allows for adjusting parameters of the normal distribution to sample mean and variance, it is more appropriate to use LF for this purpose. LF and KS share the same test statistic, but the sampling distribution in the LF test statistic is adjusted for the two additional parameters.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling upregulates the tail effect using a weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
 
 
 \begin{table}
@@ -190,9 +190,9 @@ For any sample tested against a distribution within a location-scale family, suc
 %\hhnote{slope is standard deviation of theoretical distribution, $y$ offset its location. For any distribution within a location-scale family (such as normal, log normal, exponential, ...), we can interpret shifts in $y$ direction as a change/deviation in location, and a change in slope as a change in scale.}
 
 A sample $x$ is considered as being consistent with a normal distribution, if empirical and theoretical quantiles fall close to  a straight line.  Closeness can  be assessed visually based on whether the points fall inside the envelope of 95\%  pointwise confidence intervals \citep[][p.~150--154]{Davison:1997}.
-\alnote{We need to be careful here. Since we are using pointwise CIs, we would expect a certain \% of points to fall outside the CIs. I think in the first review of the JCGS paper a reviewer was concerned about this as well.}
-\hhnote{Well, yes, point taken,  but it is also important  how far outside the points are ... }
-\alnote{I think the Davison and Hinkley reference takes care of this. I will reread that section and add a page number soon.}
+% \alnote{We need to be careful here. Since we are using pointwise CIs, we would expect a certain \% of points to fall outside the CIs. I think in the first review of the JCGS paper a reviewer was concerned about this as well.}
+% \hhnote{Well, yes, point taken,  but it is also important  how far outside the points are ... }
+% \alnote{I think the Davison and Hinkley reference takes care of this. I will reread that section and add a page number soon.}
 
 In assessing differences between points and lines, onlookers have a tendency to evaluate shortest, i.e.~orthogonal, distance, even when asked to evaluate differences based on vertical distance \citep{sineillusion, robbins:2005, cleveland:1984}. 
 
@@ -566,7 +566,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 %
 \begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
 % latex table generated in R 3.1.1 by xtable 1.7-3 package
-% Tue Aug 19 15:34:52 2014
+% Wed Aug 27 10:08:58 2014
    &   & 1 & 1 & 2 \\ 
    \hline
 1.7 & 2 & 9.3 & 1 &   \\ 
@@ -587,7 +587,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 %
 \begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
 % latex table generated in R 3.1.1 by xtable 1.7-3 package
-% Tue Aug 19 15:34:54 2014
+% Wed Aug 27 10:09:03 2014
    &   &   &   &   \\ 
    \hline
 1 &   & \bf \it 23 &   &   \\ 
@@ -626,7 +626,7 @@ Q-Q plots are not restricted to assessing normality. In fact, they provide a gen
  samples from `approximate' normal or asymptotic normal distributions, as long as there exists a method  to generate data under the null hypothesis, which can then be used to provide null plots in the lineup.
 }
 \hh{One of the problems with lineups is that they come at a cost, both monetary and in time, that is higher than that of classical testing.
-But developments such as {\tt nullabor} \citep{nullabor} or {\tt vistest} \citep{vistest} allow us to be, at least to a degree, our own testers. For tests that are of a more sensitive nature, the cost of a test using a crowd-sourcing service is certainly a small enough item in the overall project budget that it is a feasible 
+But developments such as {\tt nullabor} \citep{nullabor} or {\tt vis.test} \citep{vistest} allow us to be, at least to a degree, our own testers. For tests that are of a more sensitive nature, the cost of a test using a crowd-sourcing service is certainly a small enough item in the overall project budget that it is a feasible 
 option. It also discourages the analyst from multiple testing!}
 
 \hh{Several possibilities for immediate extensions are obvious: the simulation study here is only concerned with deviations from normality as given by the $t$-distribution. Other types of deviations, such as given by skew distributions or mixed distributions, would be interesting to consider as well. We doubt that the overall results would change dramatically, but it might give us more insight into what observers of plots consider in making their assessments. }
