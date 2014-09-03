@@ -143,10 +143,20 @@ b) Out of the variations discussed, de-trended Q-Q plots perform significantly w
 %------------------------------------------------------------------------------------
 \section{Introduction}
 %------------------------------------------------------------------------------------
+
+\al{In statistical modeling we strive to specify models that could generate the observed data. Parametric models center around the specification of a family of probability distributions and the estimation of the parameters such that the estimated distribution could have pluasibly generated the data. 
+The statistical modeling process is cyclical, however, so it does not end with parameter estimation, but continues to model checking and, where necessary, model reformulation. Model checking is central to statistical modeling, since the appropriateness of our results depends on the correct distributional specifications. For example, prediction intervals in the classical regression setting depend directly on the assumption of normality, so they are quite sensitive to departures from normality. 
+
+Graphical procedures, such as the quantile-quantile (Q-Q) plot \citep{Wilk:1968}, are arguably the most widely used method of distributional assessment, though some may find their interpretation to be overly subjective. Formal goodness-of-fit tests do exist, but only indicate whether there is a lack of fit, not why there is lack of fit. For example, the Shapiro-Wilk test of normality \citep{Shapiro:1965kt} is a powerful test of normality, but does not indicate what feature of the distribution is non-normal, so a plot, such as a Q-Q plot, must be rendered after any rejection. 
+
+In this paper we explore the use of the lineup protocol \citep{buja:2009hp} to inject rigor to graphical distributional assessment and compare its power to that of formal distributional tests. We focus on diagnosing non-normality, so our discussion centers around the normal Q-Q plot, but is general enough that is can be extended to the assessment of other distributions. XXX some lead in to the rest of the intro }
+
 \hhnote{Why do we need to assess distributional assumptions in the first place?
 Verify that distributional assumptions hold, check model results (such as residuals), ... XXX ...
 Impact of violation? wrong or overly confident predictions, XXX
 }
+
+\alnote{I was thinking that we could have a general intro (my first attempt, without any edits, is above), and then we can use subheadings for the rest of section 1 with more specific intros such as: Tests of Normality, Q-Q Plots, and Lineup Tests.}
 
 Standard quantile-quantile (Q-Q) plots \citep{Wilk:1968} are an essential tool for  visually evaluating a specific distributional assumption. In a Q-Q plot we plot quantiles of the empirical distribution against the expected quantiles from the assumed distribution. 
 The line of identity therefore represents the theoretical distribution and points show the empirical distribution. 
@@ -566,7 +576,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 %
 \begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
 % latex table generated in R 3.1.1 by xtable 1.7-3 package
-% Wed Aug 27 10:08:58 2014
+% Tue Aug 19 15:34:52 2014
    &   & 1 & 1 & 2 \\ 
    \hline
 1.7 & 2 & 9.3 & 1 &   \\ 
@@ -587,7 +597,7 @@ The corresponding $p$-value by Shapiro Wilks is 0.2318, after Lilliefors (0.1689
 %
 \begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
 % latex table generated in R 3.1.1 by xtable 1.7-3 package
-% Wed Aug 27 10:09:03 2014
+% Tue Aug 19 15:34:54 2014
    &   &   &   &   \\ 
    \hline
 1 &   & \bf \it 23 &   &   \\ 
