@@ -222,10 +222,10 @@ ctrl_lineup <- function(dframe) {
 \section{Introduction}
 %------------------------------------------------------------------------------------
 
-\al{In statistical modeling we strive to specify models that could generate the observed data. Parametric models center around the specification of a family of probability distributions and the estimation of the parameters such that the estimated distribution could have pluasibly generated the data. 
-The statistical modeling process is cyclical, however, so it does not end with parameter estimation, but continues to model checking and, where necessary, model reformulation. Model checking is central to statistical modeling, since the appropriateness of our results depends on the correct distributional specifications. For example, prediction intervals in the classical regression setting depend directly on the assumption of normality, so they are quite sensitive to departures from normality. 
+\al{In statistical modeling we strive to specify models that could generate the observed data. Parametric models center around the specification of a family of probability distributions and the estimation of the parameters such that the estimated distribution could have plausibly generated the data. 
+The statistical modeling process is cyclical, however, so it does not end with parameter estimation, but continues with model checking and, where necessary, model reformulation. Model checking is central to statistical modeling, since the appropriateness of our results depends on the correct distributional specifications. For example, prediction intervals in the classical regression setting depend directly on the assumption of normality, so they are quite sensitive to departures from normality. 
 
-Graphical procedures, such as the quantile-quantile (Q-Q) plot \citep{Wilk:1968}, are arguably the most widely used method of distributional assessment, though some may find their interpretation to be overly subjective. Formal goodness-of-fit tests do exist, but only indicate whether there is a lack of fit, not why there is lack of fit. For example, the Shapiro-Wilk test of normality \citep{Shapiro:1965kt} is a powerful test of normality, but does not indicate what feature of the distribution is non-normal, so a plot, such as a Q-Q plot, must be rendered after any rejection. 
+Graphical procedures, such as the quantile-quantile (Q-Q) plot \citep{Wilk:1968}, are arguably the most widely used method of distributional assessment, though some argue that their interpretation is overly subjective. Formal goodness-of-fit tests are available and are quite poweful, but only indicate whether there is a lack of fit, not why there is lack of fit. For example, the Shapiro-Wilk test \citep{Shapiro:1965kt} is a powerful test of normality, but does not indicate what feature of the distribution is non-normal, so a plot, such as a Q-Q plot, must be rendered after any rejection. 
 
 In this paper we explore the use of the lineup protocol \citep{buja:2009hp} to inject rigor to graphical distributional assessment and compare its power to that of formal distributional tests. We focus on diagnosing non-normality, so our discussion centers around the normal Q-Q plot, but is general enough that is can be extended to the assessment of other distributions. XXX some lead in to the rest of the intro }
 
@@ -233,8 +233,6 @@ In this paper we explore the use of the lineup protocol \citep{buja:2009hp} to i
 Verify that distributional assumptions hold, check model results (such as residuals), ... XXX ...
 Impact of violation? wrong or overly confident predictions, XXX
 }
-
-\alnote{I was thinking that we could have a general intro (my first attempt, without any edits, is above), and then we can use subheadings for the rest of section 1 with more specific intros such as: Tests of Normality, Q-Q Plots, and Lineup Tests.}
 
 \subsection{Classical tests of normality}
 \al{Numerous tests have been proposed to test whether a random sample comes from a normal distribution. In this section we review commonly used tests of normality. }
@@ -655,6 +653,8 @@ m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address)
 \multicolumn{6}{l}{Signif. codes:  0 $\le$ *** $\le$ 0.001 $\le$ ** $\le$ 0.01 $\le$ * $\le$ 0.05 $\le$ . $\le$ 0.1 $\le$ ' ' $\le$ 1}
 \end{tabular}
 \end{table}
+
+\alnote{I haven't been able to find a TAS paper that included a table with significance stars, so I am not sure what exactly to do here. }
 
 The estimated model coefficients for model $M_1$ are shown in Table~\ref{tab:model}. 
 Estimates of the variance components are $\widehat{\sigma}_u = \Sexpr{round(m0@theta[1],2)}$, $\widehat{\sigma}_d=\Sexpr{round(m0@theta[2],2)}$, and $\widehat{\sigma} = \Sexpr{round(sqrt(sum((fitted(m0)-turkw$correct)^2)/(nrow(turkw)-8)),2)}$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
