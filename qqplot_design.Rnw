@@ -75,13 +75,16 @@
 
 \maketitle
 \begin{abstract}
-this paper holds two messages: 
-a) our eyes are well suited to assess distributional assumptions. We  objectively measure  power and sensitivity of Q-Q plots using lineup tests. 
-At the example of normal distributions we can show that Q-Q plots are better at identifying non-normality than some prominent tests of normality, such as Shapiro-Wilks,  Anderson-Darling,  Kolmogorov-Smirnov, Lilliefors, or  Cramer-von-Mises.
-
-b) Out of the variations discussed, de-trended Q-Q plots perform significantly worse than the other two variants. This is surprising, because cognitive theory tells us, that de-trended plots should be better suited in assessing the difference between empirical and hypothesized  distribution.
-\end{abstract}
+In statistical modeling we strive to specify models that resemble data collected in studies or observed from processes. Consequently, distributional specification and parameter estimation are central to parametric models. Graphical procedures, such as the quantile-quantile (Q-Q) plot, are arguably the most widely used method of distributional assessment, though critics find their interpretation to be overly subjective. Formal goodness-of-fit tests are available and are quite poweful, but only indicate whether there is a lack of fit, not why there is lack of fit. In this paper we explore the use of the lineup protocol to inject rigor to graphical distributional assessment and compare its power to that of formal distributional tests. We find that lineups of standard Q-Q plots are more powerful than lineups of de-trended Q-Q plots and that lineup tests are more powerful than traditional tests of normality. While, we focus on diagnosing non-normality, our approach is general and can be directly extended to the assessment of other distributions.
+% 
+% 
+% this paper holds two messages: 
+% a) our eyes are well suited to assess distributional assumptions. We  objectively measure  power and sensitivity of Q-Q plots using lineup tests. 
+% At the example of normal distributions we can show that Q-Q plots are better at identifying non-normality than some prominent tests of normality, such as Shapiro-Wilks,  Anderson-Darling,  Kolmogorov-Smirnov, Lilliefors, or  Cramer-von-Mises.
+% 
+% b) Out of the variations discussed, de-trended Q-Q plots perform significantly worse than the other two variants. This is surprising, because cognitive theory tells us, that de-trended plots should be better suited in assessing the difference between empirical and hypothesized  distribution.
 \keywords{Quantile-Quantile plot, Normality test, Statistical graphics, Lineup protocol, Visual inference}
+\end{abstract}
 
 <<setup, echo=FALSE, results='hide'>>=
 suppressWarnings(library(ggplot2))
@@ -222,8 +225,8 @@ ctrl_lineup <- function(dframe) {
 \section{Introduction}
 %------------------------------------------------------------------------------------
 
-\al{In statistical modeling we strive to specify models that \hh{resemble data collected in studies or observed from processes.} %could generate the observed data. 
-\hh{Distributional specification and parameter estimation are central to parametric models.}
+\al{In statistical modeling we strive to specify models that \hh{resemble data collected in studies or observed from processes.} \al{Consequently,} %could generate the observed data. 
+\hh{distributional specification and parameter estimation are central to parametric models.}
 %Parametric models center around the specification of a family of probability distributions and the estimation of the parameters such that the estimated distribution could have pluasibly generated the data. 
 The statistical modeling process is cyclical \citep{tukey:eda}, so after parameters are estimated and the model is checked, the process might continue through another cycle with a refined model formulation. Model checking is central to statistical modeling; in particular, any conclusions based on a model depend  on  correct distributional specifications. For example, prediction intervals in the classical regression setting depend directly on the assumption of normality, so they are quite sensitive to departures from normality. 
 
