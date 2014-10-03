@@ -566,12 +566,12 @@ ggsave(plot=p, filename="figures/figvisnorm.pdf", width=5.5, height=4)
 \centering
 \begin{subfigure}[b]{.3\textwidth}
 <<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))
+ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4)) + xlab("De-trended")
 @
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 <<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Control, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))
+ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Control, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))  + xlab("De-trended")
 @
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
