@@ -89,6 +89,7 @@ In statistical modeling we strive to specify models that resemble data collected
 \clearpage
 <<setup, echo=FALSE, results='hide'>>=
 suppressWarnings(library(ggplot2))
+suppressWarnings(library(grid))
 library(knitr)
 opts_chunk$set(cache=TRUE, fig.width=4, fig.height=4)
 @
@@ -190,22 +191,89 @@ p <- ggplot(aes(x=naive1.qq.x, y=naive1.qq.y), data = dframe) +
           geom_ribbon(aes(x = naive1.qq.x, ymin = naive1.env.lower, ymax = naive1.env.upper),alpha = .2)+
           labs(x = "", y = "") +
           theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
-                axis.ticks = element_blank())
+                axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm"))
   p  
 }
 
 
-rot_lineup <- function(dframe) {
+std_ts_lineup <- function(dframe) {
   require(ggplot2)
+  require(grid)
+  print(ggplot(aes(x=ts.qq.x, y=ts.qq.y), data = dframe) + 
+          #  geom_smooth(aes(naive1.qq.x, naive1.env.fit.value), colour="grey50", se=FALSE, method="loess") +
+          geom_abline(colour="grey50") +
+          facet_wrap(~.sample, ncol=5) +
+          geom_point() + 
+#          theme_bw() + 
+          xlab("") + ylab("") +
+          geom_ribbon(aes(x = ts.qq.x, ymin = ts.qq.lower, ymax = ts.qq.upper),alpha = .2)+
+          theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
+                axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm"))
+  )  
+}
+
+rot2_lineup <- function(dframe) {
+  require(ggplot2)
+  require(grid)
   print(  ggplot(aes(x=naive1.qq.x, y=naive1.qq.y-naive1.env.fit.value), data = dframe) + 
             facet_wrap(~.sample, ncol=5) + 
             geom_hline(yintercept=0, colour="grey30")+
             geom_point() + 
             geom_ribbon(aes(x = naive1.qq.x, 
                             ymin = naive1.env.lower-naive1.env.fit.value, ymax = naive1.env.upper-naive1.env.fit.value),alpha = .2)+
-            labs(x = "", y = "") +
+#            theme_bw() + 
+            xlab("") + ylab("") +
+            ylim(range(dframe$naive1.qq.y)) +
             theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
-                  axis.ticks = element_blank()))
+                  axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm")))
+}
+
+rot2_ts_lineup <- function(dframe) {
+  require(ggplot2)
+  require(grid)
+  print(  ggplot(aes(x=ts.qq.x, y=ts.qq.y-ts.qq.x), data = dframe) + 
+            facet_wrap(~.sample, ncol=5) + 
+            geom_hline(yintercept=0, colour="grey30")+
+            geom_point() + 
+            geom_ribbon(aes(x = ts.qq.x, 
+                            ymin = ts.qq.lower-ts.qq.x, ymax = ts.qq.upper-ts.qq.x),alpha = .2)+
+#            theme_bw() + 
+            xlab("") + ylab("") +
+            ylim(range(dframe$ts.qq.y)) +
+            theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
+                  axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm")))
+}
+
+rot_lineup <- function(dframe) {
+  require(ggplot2)
+  require(grid)
+  print(  ggplot(aes(x=naive1.qq.x, y=naive1.qq.y-naive1.env.fit.value), data = dframe) + 
+            facet_wrap(~.sample, ncol=5) + 
+            geom_hline(yintercept=0, colour="grey30")+
+            geom_point() + 
+            geom_ribbon(aes(x = naive1.qq.x, 
+                            ymin = naive1.env.lower-naive1.env.fit.value, ymax = naive1.env.upper-naive1.env.fit.value),alpha = .2)+
+#            theme_bw() + 
+            xlab("") + ylab("") +
+#            xlab("Normal Quantiles") + 
+#            ylab("Sample Quantiles") +
+            theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
+                  axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm")))
+}
+
+rot_ts_lineup <- function(dframe) {
+  require(ggplot2)
+  require(grid)
+  print(  ggplot(aes(x=ts.qq.x, y=ts.qq.y-ts.qq.x), data = dframe) + 
+            facet_wrap(~.sample, ncol=5) + 
+            geom_hline(yintercept=0, colour="grey30")+
+            geom_point() + 
+            geom_ribbon(aes(x = ts.qq.x, 
+                            ymin = ts.qq.lower-ts.qq.x, ymax = ts.qq.upper-ts.qq.x),alpha = .2)+
+#            theme_bw() + 
+            xlab("") + ylab("") +
+            theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
+                  axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm")))
 }
 
 ctrl_lineup <- function(dframe) {
@@ -216,7 +284,7 @@ ctrl_lineup <- function(dframe) {
           facet_wrap(~.sample, ncol=5) +
           labs(x = "", y = "") +
           theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
-                axis.ticks = element_blank())
+                axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm"))
   )
 }
 @
@@ -331,6 +399,7 @@ Based on a visual inspection in a Q-Q plot, a
  sample is therefore considered to be consistent with a normal distribution if the empirical and theoretical quantiles fall close to the line representing the theoretical distribution.  This decision is helped additionally by an assessment of
  %Closeness can  be assessed visually based on
  whether the points fall inside the envelope of 95\%  pointwise confidence intervals \citep[][p.~150--154]{Davison:1997}.
+\hh{Include discussion of TS interval here.} 
 % \alnote{We need to be careful here. Since we are using pointwise CIs, we would expect a certain \% of points to fall outside the CIs. I think in the first review of the JCGS paper a reviewer was concerned about this as well.}
 % \hhnote{Well, yes, point taken,  but it is also important  how far outside the points are ... }
 % \alnote{I think the Davison and Hinkley reference takes care of this. I will reread that section and add a page number soon.}
@@ -339,6 +408,8 @@ In assessing differences between points and lines, onlookers have a tendency to 
 In so-called {\it de-trended Q-Q plots} \citep[][p.~25--26]{thode:2002} the $y$ axis is changed to show the difference between theoretical and sample quantiles. The line of the theoretical distribution therefore falls onto the $x$ axis, and (vertical) differences between empirical and theoretical distribution coincide with the orthogonal distance. 
 De-trending should aid in the visual assessment between the empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show rather than asking audiences to derive it \citep{wainer:2000}.  Another point in favor of this design is that it makes better use of the available space.
 
+\hh{XXX we're going to use two approaches to distinguish between effect of detrending and larger amount of space available. }
+
 In this paper we investigate the effectiveness and power of the modifications made to Q-Q plots.
 Examples of the three versions of Q-Q plots under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \citep{Davison:1997}
 %\alnote{I think pointwise bands are described in Atkinson (1985). Meeker uses simultaneous confidence bands for P-P plots. The motivation to use pointwise in the lineups seems to be that it is what people do (i.e., JMP (I think). qqPlot in the car package in R, etc.)}
@@ -346,6 +417,7 @@ based on the estimated standard error of the order statistics for an independent
 
 \begin{figure}
 \centering
+% % 
 % <<qqplots, dependson='functions', fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=TRUE>>=
 % dframe <- read.csv("lineup-data/data-1-1-1-20-2-14-5.csv")
 % library(ggplot2)
@@ -353,13 +425,17 @@ based on the estimated standard error of the order statistics for an independent
 % ctrl_lineup(subset(dframe, .sample_outer==5))
 % dframe$.sample <- "Standard"
 % std_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "De-trended"
+% dframe$.sample <- "De-trended (1)"
+% rot2_lineup(subset(dframe, .sample_outer==5))
+% dframe$.sample <- "De-trended (2)"
 % rot_lineup(subset(dframe, .sample_outer==5))
 % @
-\includegraphics[width=0.3\textwidth]{qqplots1}
-\includegraphics[width=0.3\textwidth]{qqplots2}
-\includegraphics[width=0.3\textwidth]{qqplots3}
-\caption{ \label{qqplots} Three versions of Q-Q plots: control, standard, and de-trended.}
+% % 
+\includegraphics[width=0.22\textwidth]{qqplots-1}
+\includegraphics[width=0.22\textwidth]{qqplots-2}
+\includegraphics[width=0.22\textwidth]{qqplots-3}
+\includegraphics[width=0.22\textwidth]{qqplots-4}
+\caption{ \label{qqplots} \hh{Four} versions of Q-Q plots: control, standard, and \hh{two versions of} de-trended \hh{Q-Q plots}.}
 \end{figure}
 
 
@@ -484,7 +560,7 @@ parse_filename <- function(fname) {
 
 exps <- ldply(as.character(lps$data_name), parse_filename)
 lps<-data.frame(lps, exps)
-require(vinference)
+suppressMessages(require(vinference))
 lps$pvals <- unlist(llply(1:nrow(lps), function(i) {
   correct <- floor(lps$correct[i])
   n <- lps$num[i]

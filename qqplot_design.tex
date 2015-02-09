@@ -253,6 +253,7 @@ Based on a visual inspection in a Q-Q plot, a
  sample is therefore considered to be consistent with a normal distribution if the empirical and theoretical quantiles fall close to the line representing the theoretical distribution.  This decision is helped additionally by an assessment of
  %Closeness can  be assessed visually based on
  whether the points fall inside the envelope of 95\%  pointwise confidence intervals \citep[][p.~150--154]{Davison:1997}.
+\hh{Include discussion of TS interval here.} 
 % \alnote{We need to be careful here. Since we are using pointwise CIs, we would expect a certain \% of points to fall outside the CIs. I think in the first review of the JCGS paper a reviewer was concerned about this as well.}
 % \hhnote{Well, yes, point taken,  but it is also important  how far outside the points are ... }
 % \alnote{I think the Davison and Hinkley reference takes care of this. I will reread that section and add a page number soon.}
@@ -261,6 +262,8 @@ In assessing differences between points and lines, onlookers have a tendency to 
 In so-called {\it de-trended Q-Q plots} \citep[][p.~25--26]{thode:2002} the $y$ axis is changed to show the difference between theoretical and sample quantiles. The line of the theoretical distribution therefore falls onto the $x$ axis, and (vertical) differences between empirical and theoretical distribution coincide with the orthogonal distance. 
 De-trending should aid in the visual assessment between the empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show rather than asking audiences to derive it \citep{wainer:2000}.  Another point in favor of this design is that it makes better use of the available space.
 
+\hh{XXX we're going to use two approaches to distinguish between effect of detrending and larger amount of space available. }
+
 In this paper we investigate the effectiveness and power of the modifications made to Q-Q plots.
 Examples of the three versions of Q-Q plots under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \citep{Davison:1997}
 %\alnote{I think pointwise bands are described in Atkinson (1985). Meeker uses simultaneous confidence bands for P-P plots. The motivation to use pointwise in the lineups seems to be that it is what people do (i.e., JMP (I think). qqPlot in the car package in R, etc.)}
@@ -268,6 +271,7 @@ based on the estimated standard error of the order statistics for an independent
 
 \begin{figure}
 \centering
+% % 
 % <<qqplots, dependson='functions', fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=TRUE>>=
 % dframe <- read.csv("lineup-data/data-1-1-1-20-2-14-5.csv")
 % library(ggplot2)
@@ -275,13 +279,17 @@ based on the estimated standard error of the order statistics for an independent
 % ctrl_lineup(subset(dframe, .sample_outer==5))
 % dframe$.sample <- "Standard"
 % std_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "De-trended"
+% dframe$.sample <- "De-trended (1)"
+% rot2_lineup(subset(dframe, .sample_outer==5))
+% dframe$.sample <- "De-trended (2)"
 % rot_lineup(subset(dframe, .sample_outer==5))
 % @
-\includegraphics[width=0.3\textwidth]{qqplots1}
-\includegraphics[width=0.3\textwidth]{qqplots2}
-\includegraphics[width=0.3\textwidth]{qqplots3}
-\caption{ \label{qqplots} Three versions of Q-Q plots: control, standard, and de-trended.}
+% % 
+\includegraphics[width=0.22\textwidth]{qqplots-1}
+\includegraphics[width=0.22\textwidth]{qqplots-2}
+\includegraphics[width=0.22\textwidth]{qqplots-3}
+\includegraphics[width=0.22\textwidth]{qqplots-4}
+\caption{ \label{qqplots} \hh{Four} versions of Q-Q plots: control, standard, and \hh{two versions of} de-trended \hh{Q-Q plots}.}
 \end{figure}
 
 
@@ -346,14 +354,14 @@ Note that IQR is used here in estimating scale---this is standard practice for Q
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-1-1} 
 
 \end{knitrout}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2-1} 
 
 \end{knitrout}
 \end{subfigure}
@@ -384,7 +392,13 @@ Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and
 %
 Half of the lineups that observers were shown allowed multiple choices of plots from a lineup for the final answer. While most participants still chose only a single plot, in the analysis we dealt with multiple answers to a lineup by using a weighting variable defined as the reciprocal of the number of answers given by a participant.
 
-
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+## Loading C code of R package 'Rmpfr': GMP using 64 bits per limb
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 
 
@@ -396,21 +410,21 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-1} 
 
 \end{knitrout}
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-1} 
 
 \end{knitrout}
 \end{subfigure}
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-5} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-5-1} 
 
 \end{knitrout}
 \end{subfigure}
@@ -485,81 +499,6 @@ Compared to the difficulty level of lineups, participants' abilities only vary l
 1.9-fold probability of detecting the data plot from a lineup. 
 
 %------------------------------------------------------------------------------------
-\section{Power: three different designs of Q-Q plots}\label{sec:power1}
-%-----------------------------------------------------------------------------------
-
-%
-As expected, the task of identifying non-normality becomes easier with increased sample size and more pronounced deviations from normality due to lower degrees of freedom. The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands help with evaluation in the standard design, but the difference is not significant.  Surprisingly, the de-trended Q-Q plot is significantly less powerful in detecting non-normality than either of the other designs. 
-In terms of rejections of the null hypothesis, this means that normality is rejected in 24 out of the 48 lineups of the de-trended Q-Q plot. All of these cases are being rejected in all of the other designs as well, but using the control design another four lineups reject normality, and the standard design rejects yet another lineup.
-
-% \begin{table}[ht]
-% \centering
-% \caption{\label{tab:reject1}
-% %
-%  From left to right, we see the number of rejections from different lineup designs.
-%   Out of the 24 non-normal samples, 12 get rejected at the 5\% significance level based on evaluation of the de-trended design. Besides these 12 normality is rejected for another two samples by lineups in the control design. The standard design detects non-normality in yet another design. }
-% 
-% \begin{tabular}{rrrr}
-%   \hline
-%  & Standard & Control & De-trended  \\ 
-%   \hline
-%   \hline
-%   reject $N(0,1)$ & 15 & 14 & 12    \\ 
-% \end{tabular}
-% \end{table}
-To further investigate the difference between the standard and the de-trended designs, consider figure \ref{fig:rotstd}. Here, we have an example of a sample that is rejected based on a  lineup in the standard design, but not from a lineup of de-trended Q-Q plots. Instead of focusing on the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked as being most different 9 out of 27 times in the standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$ from the standard design. 
-\begin{figure}[hbt]
-\begin{subfigure}{0.5\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/notrotated} 
-
-\end{knitrout}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/notrotated2} 
-
-\end{knitrout}
-\end{subfigure}
-\caption{\label{fig:rotstd}Lineups of the same data in two different designs. In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. The same data set is only identified once out of 21 times in the lineup showing the de-trended design. Observers instead pick panel \#$(3^2-2)$ 18 times. }
-\end{figure}
-%xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Standard"))
-%xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Rotated"))
-Two of the observers picking panel \#7 from the de-trended lineup thought that this panel was the one with the ``most dots outside the shaded area,'' i.e.~they focused on the middle of plot \#7. This is not a singular occurrence---when investigating  overall reasoning we take a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area). It seems to help in identifying the data plot in the standard design, but it severely  increases the chance of picking a null plot in the de-trended design. Why is that? The de-trended version is making better use of the space in the plot, it therefore  emphasizes deviations of points from the $x$-axis (i.e.~the theoretical distribution) and with it  the fact whether individual points are inside or outside the shaded areas corresponding to the (pointwise) 95\% confidence intervals. The responses suggest that participants take the shading very seriously and make their choice dependent on it. It also seems that the confidence bands mislead people---this suggests, that for the de-trended Q-Q plot design we might have to re-think how to display confidence intervals: it might be better to  either use  a more conservative  confidence level or change the approach altogether from pointwise confidence intervals to simultaneous confidence bands as, for example, discussed by \citet{Rosenkrantz:2000fd}.
-% \alnote{This would be a very natural place to put in TAS citations: Aldor-Noiman et al (2013) and Rosenkrantz (2000). }
-% \hhnote{comment on Rosenkrantz is missing still}
-
-Another promising approach might be to base confidence bands on the TS test \citep{buja:2013}. These bands define a test of normality and are narrower in the tails than those associated with the Kolmogorov-Smirnov test, while slightly more conservative in the middle of the distribution. These findings coincide with our observation that points  outside the confidence intervals were misleading participants, if this occurred in the middle of the plot.
-
-
-
-\begin{figure}[hbt]
-\centering
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=.65\textwidth]{figure/rotfalse} 
-
-\end{knitrout}
-\caption{\label{fig:rotfalse}Mentioning ``outside'' or ``area'' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. }
-\end{figure}
-
-\begin{figure}[hbt]
-\centering
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\textwidth]{figure/trtplot} 
-
-\end{knitrout}
-\caption{\label{fig:choices}Overview of reasons participants gave for  their answer. ``Outliers'' as a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious to see that so many more observers respond ``left side different'' over ``right;''  all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
-\end{figure}
-
-Figure~\ref{fig:choices} summarizes the reasons participants gave for the choice of plot they selected. Bars on the left show  identifications of the data plot, bars on the right represent selections of a null plot. The reasons represent the four reasons offered  to participants in check boxes. Notably, the reasons do not seem to differentiate between the three designs. Stating ``outliers'' as a reason for choosing a plot is helpful across all designs in picking the data out of the lineup. Stating ``left side different'' or ``points curve''  as the reason for choosing a plot decreases the chance for this plot to be the data plot. ``Right side different'' does not seem to have any effect. Interestingly, there is a big difference in the percentages of ``right'' and ``left.'' Participants favored to give ``left side different'' as a reason over ``right side different'', even though all distributions involved were symmetric, and therefore deviations from normality should also manifest themselves in a symmetric fashion.
-
-%\hhnote{another idea: go through reasons for choices. For standard design the line was often interpreted as a line of fit (how often for the de-trended design?), ie. we are tapping into what general population knows about regression. While this is not completely appropriate, the knowledge transfer might be the reason for the better performance.}
-
-%------------------------------------------------------------------------------------
 \section{Power: visual and classical}\label{sec:power2}
 %-----------------------------------------------------------------------------------
 
@@ -603,13 +542,13 @@ An inferior performance of normality tests based on sample mean and variance is 
 \begin{figure}
 \begin{subfigure}[t]{.5\textwidth}
 
-\includegraphics[width=\maxwidth]{figure/plot} 
+\includegraphics[width=\maxwidth]{figure/plot-1} 
 
 \hfill
 %
 \begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
 % latex table generated in R 3.1.1 by xtable 1.7-3 package
-% Wed Aug 27 10:08:58 2014
+% Mon Feb  9 16:22:25 2015
    &   & 1 & 1 & 2 \\ 
    \hline
 1.7 & 2 & 9.3 & 1 &   \\ 
@@ -624,13 +563,13 @@ An inferior performance of normality tests based on sample mean and variance is 
 \end{subfigure}
 \begin{subfigure}[t]{.5\textwidth}
 
-\includegraphics[width=\maxwidth]{figure/plot2} 
+\includegraphics[width=\maxwidth]{figure/plot2-1} 
 
 \hfill
 %
 \begin{tabular}{C{0.75cm}|C{0.75cm}|C{0.75cm}|C{0.75cm}|c}
 % latex table generated in R 3.1.1 by xtable 1.7-3 package
-% Wed Aug 27 10:09:03 2014
+% Mon Feb  9 16:22:28 2015
    &   &   &   &   \\ 
    \hline
 1 &   & \bf \it 23 &   &   \\ 
@@ -651,12 +590,88 @@ An inferior performance of normality tests based on sample mean and variance is 
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=0.5\textwidth]{figure/lp3} 
+\includegraphics[width=0.5\textwidth]{figure/lp3-1} 
 
 \end{knitrout}
 \caption{\label{fig:lp3} Lineup of standard design Q-Q plots showing the data of the lineup on the right in figure~\ref{fig:lpnorm}. The hypothesized distribution is $N(0, \widehat{\sigma}^2)$, where $\widehat{\sigma}^2$ is estimated as the regular (i.e.~non-robust) sample variance, and nulls are drawn from that distribution. While not actually user tested, we do not think that the data stands out from the lineup.}
 \end{figure}
 %-----------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------------
+\section{Power: three different designs of Q-Q plots}\label{sec:power1}
+%-----------------------------------------------------------------------------------
+
+%
+As expected, the task of identifying non-normality becomes easier with increased sample size and more pronounced deviations from normality due to lower degrees of freedom. The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands help with evaluation in the standard design, but the difference is not significant.  Surprisingly, the de-trended Q-Q plot is significantly less powerful in detecting non-normality than either of the other designs. 
+In terms of rejections of the null hypothesis, this means that normality is rejected in 24 out of the 48 lineups of the de-trended Q-Q plot. All of these cases are being rejected in all of the other designs as well, but using the control design another four lineups reject normality, and the standard design rejects yet another lineup.
+
+% \begin{table}[ht]
+% \centering
+% \caption{\label{tab:reject1}
+% %
+%  From left to right, we see the number of rejections from different lineup designs.
+%   Out of the 24 non-normal samples, 12 get rejected at the 5\% significance level based on evaluation of the de-trended design. Besides these 12 normality is rejected for another two samples by lineups in the control design. The standard design detects non-normality in yet another design. }
+% 
+% \begin{tabular}{rrrr}
+%   \hline
+%  & Standard & Control & De-trended  \\ 
+%   \hline
+%   \hline
+%   reject $N(0,1)$ & 15 & 14 & 12    \\ 
+% \end{tabular}
+% \end{table}
+To further investigate the difference between the standard and the de-trended designs, consider figure \ref{fig:rotstd}. Here, we have an example of a sample that is rejected based on a  lineup in the standard design, but not from a lineup of de-trended Q-Q plots. Instead of focusing on the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked as being most different 9 out of 27 times in the standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$ from the standard design. 
+\begin{figure}[hbt]
+\begin{subfigure}{0.5\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/notrotated-1} 
+
+\end{knitrout}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/notrotated2-1} 
+
+\end{knitrout}
+\end{subfigure}
+\caption{\label{fig:rotstd}Lineups of the same data in two different designs. In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. The same data set is only identified once out of 21 times in the lineup showing the de-trended design. Observers instead pick panel \#$(3^2-2)$ 18 times. }
+\end{figure}
+%xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Standard"))
+%xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Rotated"))
+Two of the observers picking panel \#7 from the de-trended lineup thought that this panel was the one with the ``most dots outside the shaded area,'' i.e.~they focused on the middle of plot \#7. This is not a singular occurrence---when investigating  overall reasoning we take a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area). It seems to help in identifying the data plot in the standard design, but it severely  increases the chance of picking a null plot in the de-trended design. Why is that? The de-trended version is making better use of the space in the plot, it therefore  emphasizes deviations of points from the $x$-axis (i.e.~the theoretical distribution) and with it  the fact whether individual points are inside or outside the shaded areas corresponding to the (pointwise) 95\% confidence intervals. The responses suggest that participants take the shading very seriously and make their choice dependent on it. It also seems that the confidence bands mislead people---this suggests, that for the de-trended Q-Q plot design we might have to re-think how to display confidence intervals: it might be better to  either use  a more conservative  confidence level or change the approach altogether from pointwise confidence intervals to simultaneous confidence bands as, for example, discussed by \citet{Rosenkrantz:2000fd}.
+% \alnote{This would be a very natural place to put in TAS citations: Aldor-Noiman et al (2013) and Rosenkrantz (2000). }
+% \hhnote{comment on Rosenkrantz is missing still}
+
+Another promising approach might be to base confidence bands on the TS test \citep{buja:2013}. These bands define a test of normality and are narrower in the tails than those associated with the Kolmogorov-Smirnov test, while slightly more conservative in the middle of the distribution. These findings coincide with our observation that points  outside the confidence intervals were misleading participants, if this occurred in the middle of the plot.
+
+
+
+\begin{figure}[hbt]
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=.65\textwidth]{figure/rotfalse-1} 
+
+\end{knitrout}
+\caption{\label{fig:rotfalse}Mentioning ``outside'' or ``area'' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. }
+\end{figure}
+
+\begin{figure}[hbt]
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\textwidth]{figure/trtplot-1} 
+
+\end{knitrout}
+\caption{\label{fig:choices}Overview of reasons participants gave for  their answer. ``Outliers'' as a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious to see that so many more observers respond ``left side different'' over ``right;''  all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
+\end{figure}
+
+Figure~\ref{fig:choices} summarizes the reasons participants gave for the choice of plot they selected. Bars on the left show  identifications of the data plot, bars on the right represent selections of a null plot. The reasons represent the four reasons offered  to participants in check boxes. Notably, the reasons do not seem to differentiate between the three designs. Stating ``outliers'' as a reason for choosing a plot is helpful across all designs in picking the data out of the lineup. Stating ``left side different'' or ``points curve''  as the reason for choosing a plot decreases the chance for this plot to be the data plot. ``Right side different'' does not seem to have any effect. Interestingly, there is a big difference in the percentages of ``right'' and ``left.'' Participants favored to give ``left side different'' as a reason over ``right side different'', even though all distributions involved were symmetric, and therefore deviations from normality should also manifest themselves in a symmetric fashion.
+
+%\hhnote{another idea: go through reasons for choices. For standard design the line was often interpreted as a line of fit (how often for the de-trended design?), ie. we are tapping into what general population knows about regression. While this is not completely appropriate, the knowledge transfer might be the reason for the better performance.}
+
 %------------------------------------------------------------------------------------
 \section{Discussion and Conclusion}\label{sec:discussion}
 %-----------------------------------------------------------------------------------
