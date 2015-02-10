@@ -392,13 +392,7 @@ Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and
 %
 Half of the lineups that observers were shown allowed multiple choices of plots from a lineup for the final answer. While most participants still chose only a single plot, in the analysis we dealt with multiple answers to a lineup by using a weighting variable defined as the reciprocal of the number of answers given by a participant.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-## Loading C code of R package 'Rmpfr': GMP using 64 bits per limb
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+
 
 
 
@@ -636,7 +630,14 @@ To further investigate the difference between the standard and the de-trended de
 
 \end{knitrout}
 \end{subfigure}
-\caption{\label{fig:rotstd}Lineups of the same data in two different designs. In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. The same data set is only identified once out of 21 times in the lineup showing the de-trended design. Observers instead pick panel \#$(3^2-2)$ 18 times. }
+\begin{subfigure}{0.5\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/notrotated3-1} 
+
+\end{knitrout}
+\end{subfigure}
+\caption{\label{fig:rotstd}Lineups of the same data in two different designs. In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. The same data set is only identified once out of 21 times in the lineup showing the de-trended design. Observers instead pick panel \#$(3^2-2)$ 18 times. \hh{The additional lineup below shows the same data in the de-trended design using the TS confidence band.}}
 \end{figure}
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Standard"))
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Rotated"))
