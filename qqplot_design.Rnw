@@ -1,12 +1,12 @@
 \documentclass{article} % JASA requires 12 pt font for manuscripts
 %\usepackage{JASA_manu}        % For JASA manuscript formatting
-\usepackage{times, asa}
+\usepackage{times, asa, url}
 
 %\usepackage{endfloat} % just for while I am writing
 
 % for citations
 \usepackage[authoryear]{natbib} % natbib required for JASA
-\usepackage[colorlinks=true, citecolor=blue, linkcolor=blue]{hyperref}
+% \usepackage[colorlinks=true, citecolor=blue, linkcolor=blue]{hyperref} % comment out and use url package for submission
 
 % for the fancy tables with the icons
 %\usepackage[margin=1.0in]{geometry}% http://ctan.org/pkg/margin
@@ -70,6 +70,8 @@
 
 \author{Adam Loy, Lendie Follett, Heike Hofmann
 \thanks{Adam Loy is an Assistant Professor in the Department of Mathematics, Lawrence University, Appleton, WI, 54911 (e-mail: adam.m.loy@lawrence.edu);  Lendie Follett is a Ph.D. student in the Department of Statistics and Statistical Laboratory, Iowa State University, Ames, IA 50011-1210; Heike Hofmann is a Professor in the Department of Statistics and Statistical Laboratory, Iowa State University, Ames, IA 50011-1210. This work was funded in part by National Science Foundation grant DMS 1007697. All data  in the study was collected  with approval from the internal review board IRB 10-347.}}
+
+\pdfminorversion=4
 
 \begin{document}
 
