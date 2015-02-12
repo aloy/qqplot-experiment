@@ -249,11 +249,11 @@ lineup <- function(method, dframe, filename, script, toggle="toggle") {
   grid.export(filename, uniqueNames=FALSE, exportJS="inline", exportCoords="inline", exportMappings="inline")
 }
 ##########################
-
-files <- dir("lineups/data")
+# for N(0,s)
+files <- dir("lineups-N(0,s)/data")
 
 for (fname in files) {
-  dframe <- read.csv(sprintf("lineups/data/%s", fname))
+  dframe <- read.csv(sprintf("lineups-N(0,s)/data/%s", fname))
   
   fit2 <- dframe
   b <- (HLMdiag:::qqlineInfo(dframe$x[dframe$.n==20]))[2] # slope of the real data determines slope of all
@@ -267,13 +267,13 @@ for (fname in files) {
                 ts.qq=QQ.cb(x, plot=FALSE))
   res <- parse_filename(gsub(".csv", "", fname))
 
-  for (dsnfun in c("std_lineup", "std_ts_lineup", "rot_lineup", "rot_ts_lineup", "rot2_lineup", "rot2_ts_lineup", "ctrl_lineup")) {
+  for (dsnfun in c( "std_ts_lineup", "rot_ts_lineup", "rot2_lineup", "rot2_ts_lineup")) {
     # outer panel  
     fit2$.sample <- fit2$.sample_outer
     eval(as.symbol(dsnfun))(fit2)    
-    ggsave(file=sprintf("lineups/pdfs/%s",gsub(".csv","-outer.pdf", fname)))
+    ggsave(file=sprintf("lineups-N(0,s)/pdfs/%s",gsub(".csv","-outer.pdf", fname)))
     tmpfile <- sprintf("%s.svg",tempfile(tmpdir=""))
-    lineup(dsnfun, fit2, filename= sprintf("lineups/images%s", tmpfile), 
+    lineup(dsnfun, fit2, filename= sprintf("lineups-N(0,s)/images%s", tmpfile), 
            toggle="toggle", script=scriptURL)
     test_param <- sprintf("turk17-%s-Outer-Multiple-rep-%s-null-%s", dsnfun, res["rep"], res["null"])
     param_value <- sprintf("%s-%s", res["n"], res["df"])
@@ -289,15 +289,15 @@ for (fname in files) {
       difficulty=fname,
       data_name=fname
     ), 
-    file="lineups/picture-details.csv", row.names=FALSE, sep=",",
-    col.names=!file.exists("lineups/picture-details.csv"), append=TRUE)
+    file="lineups-N(0,s)/picture-details.csv", row.names=FALSE, sep=",",
+    col.names=!file.exists("lineups-N(0,s)/picture-details.csv"), append=TRUE)
     
     # inner panel  
     fit2$.sample <- fit2$.sample_inner
     eval(as.symbol(dsnfun))(fit2)    
-    ggsave(file=sprintf("lineups/pdfs/%s",gsub(".csv","-inner.pdf", fname)))
+    ggsave(file=sprintf("lineups-N(0,s)/pdfs/%s",gsub(".csv","-inner.pdf", fname)))
     tmpfile <- sprintf("%s.svg",tempfile(tmpdir=""))
-    lineup(dsnfun, fit2, filename= sprintf("lineups/images%s", tmpfile), 
+    lineup(dsnfun, fit2, filename= sprintf("lineups-N(0,s)/images%s", tmpfile), 
            toggle="toggle", script=scriptURL)
     test_param <- sprintf("turk17-%s-Inner-Multiple-rep-%s-null-%s", dsnfun, res["rep"], res["null"])
     param_value <- sprintf("%s-%s", res["n"], res["df"])
@@ -313,11 +313,159 @@ for (fname in files) {
       difficulty=fname,
       data_name=fname
     ), 
-    file="lineups/picture-details.csv", row.names=FALSE, sep=",",
-    col.names=!file.exists("lineups/picture-details.csv"), append=TRUE)
+    file="lineups-N(0,s)/picture-details.csv", row.names=FALSE, sep=",",
+    col.names=!file.exists("lineups-N(0,s)/picture-details.csv"), append=TRUE)
   }
 
 
+  
+  
+}
+#####################################
+files <- dir("lineups-N(0,1)/data")
+
+for (fname in files) {
+  dframe <- read.csv(sprintf("lineups-N(0,1)/data/%s", fname))
+  
+  fit2 <- dframe
+#  b <- (HLMdiag:::qqlineInfo(dframe$x[dframe$.n==20]))[2] # slope of the real data determines slope of all
+#  fit2$x[fit2$.n==20] <- dframe$x[dframe$.n==20]/b # change variance to 1, compare then
+  idx <- grep("naive1.qq", names(fit2))
+  fit2 <- ddply(fit2[,-idx], .(.n), transform, 
+                naive1.qq=qqnorm(x, plot.it=FALSE))
+  idx <- grep("naive1.env", names(fit2))
+  fit2 <- ddply(fit2[,-idx], .(.n), transform, 
+                naive1.env=sim_env(x),
+                ts.qq=QQ.cb(x, plot=FALSE))
+  res <- parse_filename(gsub(".csv", "", fname))
+  
+for (dsnfun in c( "std_ts_lineup", "rot_ts_lineup", "rot2_lineup", "rot2_ts_lineup")) {
+  # outer panel  
+    fit2$.sample <- fit2$.sample_outer
+    eval(as.symbol(dsnfun))(fit2)    
+    ggsave(file=sprintf("lineups-N(0,1)/pdfs/%s",gsub(".csv","-outer.pdf", fname)))
+    tmpfile <- sprintf("%s.svg",tempfile(tmpdir=""))
+    lineup(dsnfun, fit2, filename= sprintf("lineups-N(0,1)/images%s", tmpfile), 
+           toggle="toggle", script=scriptURL)
+    test_param <- sprintf("turk17-%s-Outer-Multiple-rep-%s-null-%s", dsnfun, res["rep"], res["null"])
+    param_value <- sprintf("%s-%s", res["n"], res["df"])
+    
+    write.table(data.frame(
+      sample_size=res["n"], 
+      test_param=test_param,
+      param_value=param_value,
+      p_value=NA,
+      obs_plot_location=res["outerPos"], 
+      pic_name=tmpfile,
+      experiment="turk17",
+      difficulty=fname,
+      data_name=fname
+    ), 
+    file="lineups-N(0,1)/picture-details.csv", row.names=FALSE, sep=",",
+    col.names=!file.exists("lineups-N(0,1)/picture-details.csv"), append=TRUE)
+    
+    # inner panel  
+    fit2$.sample <- fit2$.sample_inner
+    eval(as.symbol(dsnfun))(fit2)    
+    ggsave(file=sprintf("lineups-N(0,1)/pdfs/%s",gsub(".csv","-inner.pdf", fname)))
+    tmpfile <- sprintf("%s.svg",tempfile(tmpdir=""))
+    lineup(dsnfun, fit2, filename= sprintf("lineups-N(0,1)/images%s", tmpfile), 
+           toggle="toggle", script=scriptURL)
+    test_param <- sprintf("turk17-%s-Inner-Multiple-rep-%s-null-%s", dsnfun, res["rep"], res["null"])
+    param_value <- sprintf("%s-%s", res["n"], res["df"])
+    
+    write.table(data.frame(
+      sample_size=res["n"], 
+      test_param=test_param,
+      param_value=param_value,
+      p_value=NA,
+      obs_plot_location=res["innerPos"], 
+      pic_name=tmpfile,
+      experiment="turk17",
+      difficulty=fname,
+      data_name=fname
+    ), 
+    file="lineups-N(0,1)/picture-details.csv", row.names=FALSE, sep=",",
+    col.names=!file.exists("lineups-N(0,1)/picture-details.csv"), append=TRUE)
+  }
+  
+  
+  
+  
+}
+
+##########################
+# trials
+
+files <- dir("trials/data")
+
+for (fname in files) {
+  dframe <- read.csv(sprintf("trials/data/%s", fname))
+  
+  fit2 <- dframe
+  b <- (HLMdiag:::qqlineInfo(dframe$x[dframe$.n==20]))[2] # slope of the real data determines slope of all
+  fit2$x[fit2$.n==20] <- dframe$x[dframe$.n==20]/b # change variance to 1, compare then
+  idx <- grep("naive1.qq", names(fit2))
+  fit2 <- ddply(fit2[,-idx], .(.n), transform, 
+                naive1.qq=qqnorm(x, plot.it=FALSE))
+  idx <- grep("naive1.env", names(fit2))
+  fit2 <- ddply(fit2[,-idx], .(.n), transform, 
+                naive1.env=sim_env(x),
+                ts.qq=QQ.cb(x, plot=FALSE))
+  res <- parse_filename(gsub(".csv", "", fname))
+  
+  #  for (dsnfun in c("std_lineup", "std_ts_lineup", "rot_lineup", "rot_ts_lineup", "rot2_lineup", "rot2_ts_lineup", "ctrl_lineup")) {
+  for (dsnfun in c( "std_ts_lineup", "rot_ts_lineup", "rot2_lineup", "rot2_ts_lineup")) {
+    # outer panel  
+    fit2$.sample <- fit2$.sample_outer
+    eval(as.symbol(dsnfun))(fit2)    
+    ggsave(file=sprintf("trials/pdfs/%s",gsub(".csv","-outer.pdf", fname)))
+    tmpfile <- sprintf("%s.svg",tempfile(tmpdir=""))
+    lineup(dsnfun, fit2, filename= sprintf("trials/images%s", tmpfile), 
+           toggle="toggle", script=scriptURL)
+    test_param <- sprintf("turk17-%s-Outer-Multiple-rep-%s-null-%s", dsnfun, res["rep"], res["null"])
+    param_value <- sprintf("%s-%s", res["n"], res["df"])
+    
+    write.table(data.frame(
+      sample_size=res["n"], 
+      test_param=test_param,
+      param_value=param_value,
+      p_value=NA,
+      obs_plot_location=res["outerPos"], 
+      pic_name=tmpfile,
+      experiment="turk17",
+      difficulty=fname,
+      data_name=fname
+    ), 
+    file="trials/picture-trials-details.csv", row.names=FALSE, sep=",",
+    col.names=!file.exists("trials/picture-trials-details.csv"), append=TRUE)
+    
+    # inner panel  
+    fit2$.sample <- fit2$.sample_inner
+    eval(as.symbol(dsnfun))(fit2)    
+    ggsave(file=sprintf("trials/pdfs/%s",gsub(".csv","-inner.pdf", fname)))
+    tmpfile <- sprintf("%s.svg",tempfile(tmpdir=""))
+    lineup(dsnfun, fit2, filename= sprintf("trials/images%s", tmpfile), 
+           toggle="toggle", script=scriptURL)
+    test_param <- sprintf("turk17-%s-Inner-Multiple-rep-%s-null-%s", dsnfun, res["rep"], res["null"])
+    param_value <- sprintf("%s-%s", res["n"], res["df"])
+    
+    write.table(data.frame(
+      sample_size=res["n"], 
+      test_param=test_param,
+      param_value=param_value,
+      p_value=NA,
+      obs_plot_location=res["innerPos"], 
+      pic_name=tmpfile,
+      experiment="turk17",
+      difficulty=fname,
+      data_name=fname
+    ), 
+    file="trials/picture-trials-details.csv", row.names=FALSE, sep=",",
+    col.names=!file.exists("trials/picture-trials-details.csv"), append=TRUE)
+  }
+  
+  
   
   
 }
