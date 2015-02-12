@@ -464,9 +464,5 @@ for (fname in files) {
     file="trials/picture-trials-details.csv", row.names=FALSE, sep=",",
     col.names=!file.exists("trials/picture-trials-details.csv"), append=TRUE)
   }
-  
-  
-  
-  
 }
 
