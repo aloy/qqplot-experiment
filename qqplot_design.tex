@@ -126,7 +126,7 @@
 
 \maketitle
 \begin{abstract}
-In statistical modeling we strive to specify models that resemble data collected in studies or observed from processes. Consequently, distributional specification and parameter estimation are central to parametric models. Graphical procedures, such as the quantile-quantile (Q-Q) plot, are arguably the most widely used method of distributional assessment, though critics find their interpretation to be overly subjective. Formal goodness-of-fit tests are available and are quite powerful, but only indicate whether there is a lack of fit, not why there is lack of fit. In this paper we explore the use of the lineup protocol to inject rigor to graphical distributional assessment and compare its power to that of formal distributional tests. We find that lineups of standard Q-Q plots are more powerful than lineups of de-trended Q-Q plots and that lineup tests are more powerful than traditional tests of normality. While, we focus on diagnosing non-normality, our approach is general and can be directly extended to the assessment of other distributions.
+In statistical modeling we strive to specify models that resemble data collected in studies or observed from processes. Consequently, distributional specification and parameter estimation are central to parametric models. Graphical procedures, such as the quantile-quantile (Q-Q) plot, are arguably the most widely used method of distributional assessment, though critics find their interpretation to be overly subjective. Formal goodness-of-fit tests are available and are quite powerful, but only indicate whether there is a lack of fit, not why there is lack of fit. In this paper we explore the use of the lineup protocol to inject rigor to graphical distributional assessment and compare its power to that of formal distributional tests. We find that lineups of standard Q-Q plots are more powerful than lineups of de-trended Q-Q plots and that lineup tests are more powerful than traditional tests of normality. While we focus on diagnosing non-normality, our approach is general and can be directly extended to the assessment of other distributions.
 % 
 % 
 % this paper holds two messages: 
@@ -262,7 +262,15 @@ Based on a visual inspection in a Q-Q plot, a
 
 In assessing differences between points and lines, onlookers have a tendency to evaluate the shortest, i.e.~orthogonal, distance, even when asked to evaluate differences based on vertical distance \citep{sineillusion, robbins:2005, cleveland:1984}. 
 In so-called {\it de-trended Q-Q plots} \citep[][p.~25--26]{thode:2002} the $y$ axis is changed to show the difference between theoretical and sample quantiles. The line of the theoretical distribution therefore falls onto the $x$ axis, and (vertical) differences between empirical and theoretical distribution coincide with the orthogonal distance. 
-De-trending should aid in the visual assessment between the empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show rather than asking audiences to derive it \citep{wainer:2000}.  Another point in favor of this design is that it makes better use of the available space.
+De-trending should aid in the visual assessment between the empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show rather than asking audiences to derive it \citep{wainer:2000}.
+\hh{This is the motivation for Detrended(1). We need to really find a better name for that.}
+
+\hh{For this purposes, we are investigating two different designs of de-trended Q-Q plots: in a first step, we rotate the trend line into the horizontal axis, but keep the aspect ratio of the plot to 1, to ensure that distances in $x$ and $y$ direction are on the same scale. 
+}
+Another point in favor of this design is that it makes better use of the available space.
+
+\hh{Detrended(2) uses the available space.}
+
 
 \hh{XXX we're going to use two approaches to distinguish between effect of detrending and larger amount of space available. }
 
@@ -273,25 +281,36 @@ based on the estimated standard error of the order statistics for an independent
 
 \begin{figure}
 \centering
-% % 
+% % % 
 % <<qqplots, dependson='functions', fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=TRUE>>=
 % dframe <- read.csv("lineup-data/data-1-1-1-20-2-14-5.csv")
 % library(ggplot2)
 % dframe$.sample <- "Control"
 % ctrl_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "Standard"
+% dframe$.sample <- "Standard, DH"
 % std_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "De-trended (1)"
-% rot2_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "De-trended (2)"
+% dframe$.sample <- "De-trended (1), DH"
+% rot2_lineup(subset(dframe, .sample_outer==5)) + ylim(c(-3.5,3.5))
+% dframe$.sample <- "De-trended (2), DH"
 % rot_lineup(subset(dframe, .sample_outer==5))
+% dframe$.sample <- "Standard, TS"
+% dframe <- ddply(dframe, .(.n), transform, ts.qq=QQ.cb(x, plot=FALSE))
+% std_ts_lineup(subset(dframe, .sample_outer==5))
+% dframe$.sample <- "De-trended (1), TS"
+% rot2_ts_lineup(subset(dframe, .sample_outer==5)) + ylim(c(-3.5,3.5))
+% dframe$.sample <- "De-trended (2), TS"
+% rot_ts_lineup(subset(dframe, .sample_outer==5))
 % @
-% % 
-\includegraphics[width=0.22\textwidth]{qqplots-1}
-\includegraphics[width=0.22\textwidth]{qqplots-2}
-\includegraphics[width=0.22\textwidth]{qqplots-3}
-\includegraphics[width=0.22\textwidth]{qqplots-4}
-\caption{ \label{qqplots} \hh{Four} versions of Q-Q plots: control, standard, and \hh{two versions of} de-trended \hh{Q-Q plots}.}
+% % % 
+\includegraphics[width=0.22\textwidth]{figures/qqplots-1}
+\includegraphics[width=0.22\textwidth]{figures/qqplots-2}
+\includegraphics[width=0.22\textwidth]{figures/qqplots-3}
+\includegraphics[width=0.22\textwidth]{figures/qqplots-4}
+\includegraphics[width=0.22\textwidth]{figures/blank}
+\includegraphics[width=0.22\textwidth]{figures/qqplots-5}
+\includegraphics[width=0.22\textwidth]{figures/qqplots-6}
+\includegraphics[width=0.22\textwidth]{figures/qqplots-7}
+\caption{ \label{qqplots} \hh{Q-Q plot variations:} control, standard, and \hh{two versions of} de-trended \hh{Q-Q plots}, with Davison Hinkley (DH) or TS 95\% confidence regions.}
 \end{figure}
 
 
