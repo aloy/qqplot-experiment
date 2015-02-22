@@ -775,7 +775,7 @@ m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address)
   \hline
  & estimates & lower & upper & odds & odds.low & odds.high \\ 
   \hline
-(Intercept) & 1.19 & 0.90 & 12.08 & 3.30 & 2.46 & 176710.96 \\ 
+Intercept & 1.19 & 0.90 & 12.08 & 3.30 & 2.46 & 176710.96 \\ 
   CIdesignDetrended.HD & -0.43 & 0.54 & 0.78 & 0.65 & 1.72 & 2.18 \\ 
   CIdesignDetrended2.HD & 0.41 & 1.21 & 1.86 & 1.50 & 3.35 & 6.41 \\ 
   CIdesignStandard.HD & 0.10 & 0.92 & 1.32 & 1.10 & 2.51 & 3.74 \\ 
@@ -1083,9 +1083,9 @@ The application of the lineup framework based on the related probability (P-P) p
 \bibliographystyle{asa}
 \bibliography{qqplots}
 
-\newpage
-\begin{appendix}
-\section{Model and Results}
+%\newpage
+%\begin{appendix}
+%\section{Model and Results}
 
 % latex table generated in R 3.1.0 by xtable 1.7-3 package
 % Sun Aug  3 11:20:58 2014
@@ -1094,29 +1094,28 @@ The application of the lineup framework based on the related probability (P-P) p
 \centering
 \caption{\label{tab:model} Coefficients and significances corresponding to  model $M_1$. The type of design is important for the power of a lineup. De-trended (2) Q-Q plots with Davison Hinkley confidence bands lose a significant amount of power compared to the other  versions of Q-Q plots. If TS intervals are used, this loss does not happen. De-trended Q-Q plots with fixed aspect ratio perform significantly better than the other versions.}
 \begin{tabular}{rrrrrl}
-  \hline
- &\bf Estimate &\bf Std. Error &\bf z value &\bf Pr($>$$|$z$|$) & \\ 
-  \hline
-Intercept & 1.19 & 0.662 & 1.80 & 0.0713 & .\\ [3pt]
-\multicolumn{3}{l}{\bf design (CI)} \\
-  Control & 0.00 & ----- & ----- & ----- \\ [2pt]
+   \hline
+  &\bf Estimate &\bf Std. Error &\bf z value &\bf Pr($>$$|$z$|$) & \\ 
+   \hline
+ Intercept & 1.19 & 0.662 & 1.80 & 0.0713 & .\\ [3pt]
+ \multicolumn{3}{l}{\bf design (CI)} \\
+   Control & 0.00 & ----- & ----- & ----- \\ [2pt]
   Standard (HD) & 0.10 & 0.092 & 1.05 & 0.2923 \\ 
   Standard (TS) & -0.18 & 0.111 & -1.60 & 0.1093 \\ [2pt]
-  Detrended2 (HD) & -0.43 & 0.093 & -4.63 & 0.0000 & ***\\ 
-  Detrended2 (TS) & 0.00 & 0.110 & 0.04 & 0.9691 \\ [2pt]
-  Detrended (HD) & 0.41 & 0.110 & 3.70 & 0.0002 & ***\\ 
-  Detrended (TS) & 0.30 & 0.109 & 2.73 & 0.0063 & **\\ [3pt]
-\multicolumn{3}{l}{\bf degrees of freedom} \\
-  2 & 0.00 & ----- & ----- & ----- \\ 
-  5 & -3.67 & 0.662 & -5.54 & 0.0000 & ***\\ 
-  10 & -5.99 & 0.671 & -8.94 & 0.0000 & ***\\ [3pt]
-\multicolumn{3}{l}{\bf sample size} \\
-  20 & 0.00 & ----- & ----- & ----- \\ 
-  30 & 1.10 & 0.764 & 1.44 & 0.1489 \\ 
-  50 & 2.99 & 0.766 & 3.90 & 0.0001 & ***\\ 
-  75 & 2.28 & 0.766 & 2.98 & 0.0029 & **\\ 
-   \hline
-\end{tabular}   
+   Detrended2 (HD) & -0.43 & 0.093 & -4.63 & 0.0000 & ***\\ 
+   Detrended2 (TS) & 0.00 & 0.110 & 0.04 & 0.9691 \\ [2pt]
+   Detrended (HD) & 0.41 & 0.110 & 3.70 & 0.0002 & ***\\ 
+   Detrended (TS) & 0.30 & 0.109 & 2.73 & 0.0063 & **\\ [3pt]
+ \multicolumn{3}{l}{\bf degrees of freedom} \\
+   2 & 0.00 & ----- & ----- & ----- \\ 
+   5 & -3.67 & 0.662 & -5.54 & 0.0000 & ***\\ 
+   10 & -5.99 & 0.671 & -8.94 & 0.0000 & ***\\ [3pt]
+ \multicolumn{3}{l}{\bf sample size} \\
+   20 & 0.00 & ----- & ----- & ----- \\ 
+   30 & 1.10 & 0.764 & 1.44 & 0.1489 \\ 
+   50 & 2.99 & 0.766 & 3.90 & 0.0001 & ***\\ 
+   75 & 2.28 & 0.766 & 2.98 & 0.0029 & **\\ 
+    \hline
 \multicolumn{6}{l}{Signif. codes:  0 $\le$ *** $\le$ 0.001 $\le$ ** $\le$ 0.01 $\le$ * $\le$ 0.05 $\le$ . $\le$ 0.1 $\le$ ' ' $\le$ 1}
 \end{tabular}
 \end{table}
