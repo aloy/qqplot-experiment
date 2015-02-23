@@ -372,44 +372,7 @@ Note that the above list of hypotheses is not exhaustive. Any theoretical distri
 
 Note that IQR is used here in estimating scale---this is standard practice for Q-Q plot. Robust estimation of the variance is preferred for better assessment of the tails and outliers of the empirical distribution. We could use alternative estimators for variance, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, but this will likely also change the power of the corresponding lineup.
 
-\begin{figure}[hbt]
-
-\begin{subfigure}{0.5\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-1-1} 
-
-\end{knitrout}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2-1} 
-
-\end{knitrout}
-\end{subfigure}
-\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
-The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. }
-\end{figure}
-
-Next, we model the aforementioned probability $p_i$ with which observer $i$ picks the true data from a lineup. 
-Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision on the $i$th evaluation and $\pi_i$ is the probability with which the observer chooses the data plot. This probability is influenced by a number of factors:
-
-\begin{center}
-\begin{tabular}{lp{5in}}
-$\tau$ & the design used in the lineup (Control, Standard, De-trended), \\
-&  the specific parameters under which the data for the lineup were created: \\
-&  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
-&  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
-$d$ &  the level of difficulty based on the actual sample, and \\
-$u$ & the users' subjective abilities.
- \end{tabular}
-\end{center}
-%
-
-%
-The combination of different levels of sample size and degrees of freedom of the $t$ distribution result in 12 parameter settings. Under each setting, we  generated data twice. Additionally, we made use of two different sets of null data for each sample, yielding 48 different sets of data, which we render in each of the variations, resulting in 144 different lineups. 
-
+XXXX
 
 Using  Amazon MTurk \citep{amazon}, 674 independent observers were recruited and asked to evaluate ten lineups each. 
 %
@@ -427,21 +390,21 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 \begin{subfigure}[b]{.3\textwidth}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-1-1} 
+
+\end{knitrout}
+\end{subfigure}
+\begin{subfigure}[b]{.3\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2-1} 
+
+\end{knitrout}
+\end{subfigure}
+\begin{subfigure}[b]{.3\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-1} 
-
-\end{knitrout}
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-1} 
-
-\end{knitrout}
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-5-1} 
 
 \end{knitrout}
 \end{subfigure}
@@ -726,9 +689,49 @@ The application of the lineup framework based on the related probability (P-P) p
 \bibliographystyle{asa}
 \bibliography{qqplots}
 
-%\newpage
-%\begin{appendix}
-%\section{Model and Results}
+\newpage
+\begin{appendix}
+\section{Model and Results}
+
+
+\begin{figure}[hbt]
+
+\begin{subfigure}{0.5\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-1} 
+
+\end{knitrout}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-5-1} 
+
+\end{knitrout}
+\end{subfigure}
+\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
+The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. }
+\end{figure}
+
+Next, we model the aforementioned probability $p_i$ with which observer $i$ picks the true data from a lineup. 
+Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision on the $i$th evaluation and $\pi_i$ is the probability with which the observer chooses the data plot. This probability is influenced by a number of factors:
+
+\begin{center}
+\begin{tabular}{lp{5in}}
+$\tau$ & the design used in the lineup (Control, Standard, De-trended), \\
+&  the specific parameters under which the data for the lineup were created: \\
+&  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
+&  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
+$d$ &  the level of difficulty based on the actual sample, and \\
+$u$ & the users' subjective abilities.
+ \end{tabular}
+\end{center}
+%
+
+%
+The combination of different levels of sample size and degrees of freedom of the $t$ distribution result in 12 parameter settings. Under each setting, we  generated data twice. Additionally, we made use of two different sets of null data for each sample, yielding 48 different sets of data, which we render in each of the variations, resulting in 144 different lineups. 
+
 
 % latex table generated in R 3.1.0 by xtable 1.7-3 package
 % Sun Aug  3 11:20:58 2014
@@ -803,6 +806,6 @@ The application of the lineup framework based on the related probability (P-P) p
 % \end{figure}
 % 
 % \hhnote{gender, education, geographic location?}
-% \end{appendix}
+\end{appendix}
 
 \end{document}
