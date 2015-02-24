@@ -160,7 +160,9 @@ t15w$correct <- t15w$response == t15w$obs_plot_location
 t15w$sample_size <- factor(t15w$sample_size)
 t15w$df <- factor(t15w$df)
 @
-
+<<data-all, echo=FALSE>>=
+turkall <- read.csv("data/turk-10-13-17.csv")
+@
 <<functions, echo=FALSE>>=
 sim_env <- function(x, conf = .95, line=FALSE){
   n <- length(x)
@@ -541,11 +543,11 @@ In the next section, we describe the simulation study used to compare the three 
 \hh{We'll have to split the simulation setup from the model, and move the model into the back to the power of the designs ... we'll also probably deal with more designs. }
 
 \hh{In order to evaluate and compare the power of Q-Q plots in the various modifications to normal distribution tests, we make use of the following simulation scenario in lineup tests:
-
+using samples of size $s \in \{20, 30, 50, 75\}$ from a $t_\nu$ distribution with $\nu \in \{2, 5, 10\}$ degrees of freedom
 }
 
 
-To further develop the assessment of normality using lineups, we conducted a study comparing the three different versions of the Q-Q plot.
+%To further develop the assessment of normality using lineups, we conducted a study comparing the three different versions of the Q-Q plot.
 %We are testing three different versions of a Q-Q plot, 
 
 
@@ -702,6 +704,18 @@ Y &=& g^{-1}(\eta) + \varepsilon
 where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard, De-trended$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular data sample used. 
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$. We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.
 
+<<modelall, echo=FALSE, dependson='data-all', message=FALSE>>=
+library(lme4)
+turkall$CIdesign <- with(turkall, interaction(design, CI))
+#lm0 <- glm(correct~CIdesign+IO+SM+ df + sample_size, family=quasibinomial(), data=turkall, weight=1/num_answers)
+turkall$df <- factor(turkall$df, levels=c("10", "5", "2"))
+
+
+m1 <- glmer(correct~CIdesign +  factor(sample_size) + factor(df) + (1|ip_address) + (1|data_name), 
+            data=turkall, family=binomial(), 
+            control=glmerControl(optimizer="bobyqa"))
+
+@
 
 <<model, echo=FALSE, dependson='data', message=FALSE>>=
 library(lme4)
@@ -729,6 +743,18 @@ m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address)
 
 % latex table generated in R 3.1.1 by xtable 1.7-3 package
 % Sat Feb 21 18:16:18 2015
+% cis <- data.frame(confint(m1, method="Wald"))
+% names(cis) <- c("lower", "upper")
+% cis$estimates <- fixef(m1)
+% 
+% #ciprofile <- data.frame(confint(m1))
+% library(xtable)
+% dc <- cis[,c("estimates", "lower", "upper")]
+% dc$odds <- exp(dc$estimates)
+% dc$odds.low <- exp(dc$lower)
+% dc$odds.high <- exp(dc$upper)
+% 
+% print(xtable(dc))
 \begin{table}[ht]
 \centering
 %\begin{tabular}{rr>{ (}r<{,}>r<{) }rrl}
@@ -737,10 +763,10 @@ m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address)
 & estimates & \bf low & \bf high && odds &  \bf low & \bf high \\ 
  \cline{2-4} \cline{6-8}
 %  \hline
-  Intercept & 1.19 & -0.10 & 2.49 && 3.30 & 0.90 & 12.08 \\ [3pt]
+  Intercept & \bf -5.27 & \bf -6.69 & \bf -3.86 && \bf 0.01 & \bf 0.00 & \bf 0.02 \\ [3pt]
 \multicolumn{1}{l}{\bf design (CI)} \\  
 Control & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
-Standard (HD) & 0.10 & -0.08 & 0.28 && 1.10 & 0.92 & 1.32 \\ 
+Standard (HD) & 0.06 & -0.13 & 0.25 && 1.06 & 0.88 & 1.29 \\ 
   Standard (TS) & -0.18 & -0.40 & 0.04 && 0.84 & 0.67 & 1.04 \\ [2pt]
     Detrended2 (HD) & \bf -0.43 & \bf-0.61 & \bf -0.25 && \bf 0.65 & \bf 0.54 & \bf 0.78 \\ 
   Detrended2 (TS) & 0.00 & -0.21 & 0.22 && 1.00 & 0.81 & 1.25 \\ [2pt]
@@ -757,6 +783,8 @@ Detrended (HD) & \bf 0.41 & \bf 0.19 & \bf 0.62 && \bf 1.50 & \bf 1.21 & \bf 1.8
  5 & \bf -3.67 & \bf -4.97 & \bf -2.37 && \bf 0.03 & \bf 0.01 & \bf 0.09 \\ 
  10 & \bf -5.99 & \bf -7.31 & \bf -4.68 && \bf 0.00 & \bf 0.00 & \bf 0.01 \\ 
 \cline{2-4} \cline{6-8}
+
+
 \end{tabular}
 \end{table}
 
