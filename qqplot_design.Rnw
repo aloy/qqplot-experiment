@@ -618,7 +618,58 @@ lps15$pvals.adj <- unlist(llply(1:nrow(lps15), function(i) {
 lps <- merge(lps, lps15[, c("data_name", "treatment", "pvals.adj")], by=c("data_name", "treatment"), all=TRUE)
 @
 
+<<compare-designs, echo=FALSE, fig.width=10, fig.height=8, warning=FALSE, message=FALSE>>=
+dsets <- ddply(turkall, .(data_name), summarize,
+                 n= length(data_name),
+                 correct=sum(correct))
+dsets$mean <- dsets$correct/dsets$n
+levels(turkall$rep) <- c("1", "2", "1", "2")
+dataset <- ddply(turkall, .(data_name, CIdesign, rep, df, sample_size), summarize,
+                 n= length(data_name),
+                 correct=sum(correct))
+dataset$pval <- NULL
+require(vinference)
+for (i in 1:nrow(dataset)) dataset$pval[i] <- with(dataset[i,], pV(x=correct, K=n, m=20, scenario=3))
+dataset$signif <- dataset$pval < 0.05
+dataset$params <- with(dataset, interaction(sample_size, df))
+dataset$CIdesign <- factor(dataset$CIdesign, levels=c("Standard.HD", "Standard.TS", "Detrended2.HD", "Detrended2.TS", "Detrended.HD", "Detrended.TS", "Control.HD"))
+dataset <- merge(dataset, dsets[,c("data_name", "mean")], all.x=TRUE)
+dataset$s <- paste("s:", dataset$sample_size)
+dataset$nu <- paste("nu:", dataset$df)
+dataset$nu <- factor(dataset$nu, levels=c("nu: 10","nu: 5","nu: 2"))
 
+
+back1 <- data.frame(expand.grid(s=unique(dataset$s), nu=unique(dataset$nu)))
+back1$xmin <- 0.5
+back1$xmax <- 2.5
+back1$ymin <- -5
+back1$ymax <- 105
+
+back2 <- data.frame(expand.grid(s=unique(dataset$s), nu=unique(dataset$nu)))
+back2$xmin <- 4.5
+back2$xmax <- 6.5
+back2$ymin <- -5
+back2$ymax <- 105
+
+text <- data.frame(label = c("Standard", "Detrended", "Detrended 2", "Control"), 
+                   x=c(1.5, 3.5, 5.5, 7), 
+                   y=30,
+                   nu="nu: 10",
+                   s= "s: 20")
+
+ggplot() + 
+  geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back1) + 
+  geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back2) + 
+  geom_text(aes(x = x, y= y, label=label), size=7, colour="grey40", angle=90, hjust=0, data=text) + 
+  geom_point(aes(x=as.numeric(CIdesign), y=100*correct/n, colour=factor(rep), shape=factor(signif)), size=4,  data=dataset) +
+  geom_line(aes(x=as.numeric(CIdesign), y=100*correct/n, colour=factor(rep), group=data_name), data=dataset) +
+  facet_grid(facets=nu~s, labeller="label_parsed") + scale_colour_brewer(palette="Set1") +
+  theme_bw() + scale_shape_manual(values=c(1,19)) + ylab("Percentage of data identifications") +
+#  scale_x_continuous(breaks=1:7, labels=levels(dataset$CIdesign)) + 
+  scale_x_continuous("", breaks=1:7, labels=c("\nHD", "\nTS","HD", "TS","HD", "TS","Control")) +
+  theme(legend.position="bottom", legend.direction="horizontal")
+#  theme(axis.text.x = element_text(angle = 0, hjust = 1))
+@
 <<triples, echo=FALSE, warning=FALSE, message=FALSE, results='hide'>>=
 library(reshape2)
 lps$prop <- with(lps, correct/num)
@@ -692,7 +743,7 @@ ggplot() + geom_abline(colour="grey50") + geom_point(aes(x=Control, y=Standard, 
 
 
 
-Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely agree for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform  worse than either standard or control Q-Q plots. Lineups of data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. Lineups showing a sample from a $t_5$ distribution cover the whole range.
+Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the different variations of Q-Q plots. All three versions provide highly correlated results, and largely agree for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform  worse than either standard or control Q-Q plots. Lineups of data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. Lineups showing a sample from a $t_5$ distribution cover the whole range.
 We base an evaluation of the three different Q-Q plot designs on the premise that if participants find it easier to identify the data plot under one lineup over another lineup (given identical data underlying the lineups), the first lineup uses the better design.
 
 Let $Y_i$ be the outcome of the $i$th evaluation. Then $Y_i$ is a Bernoulli variable, where $\pi_i$ denotes the probablity of identifying the data plot from the lineup; i.e.~$P(Y_i = 1) = \pi_i = E[Y_i]$.   
@@ -701,7 +752,7 @@ The probability of identifying the lineup is affected by several factors: (a) th
 g(\pi_i) &=& \eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},\\
 Y &=& g^{-1}(\eta) + \varepsilon
 \end{eqnarray*}
-where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard, De-trended$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular data sample used. 
+where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard (HD), Standard (TS), De-trended (HD), De-trended (TS), De-trended2 (HD), De-trended2 (TS)$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular data sample used. 
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$. We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.
 
 <<modelall, echo=FALSE, dependson='data-all', message=FALSE>>=
@@ -717,15 +768,15 @@ m1 <- glmer(correct~CIdesign +  factor(sample_size) + factor(df) + (1|ip_address
 
 @
 
-<<model, echo=FALSE, dependson='data', message=FALSE>>=
-library(lme4)
-# takes quite a bit of time to fit
-lm0 <- glm(correct~treatment+placement+choice+ df + sample_size, family=quasibinomial(), data=turkw, weight=weight)
-
-# after making sure that this actually converges, we can suppress Warnings (this is about the non-integer response, which can't be helped)
-turkw$df <- factor(turkw$df, levels=c("10", "5", "2"))
-m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address) + (1|difficulty), family=binomial(), data=turkw, weight=weight, control=glmerControl(optimizer="bobyqa")))
-@
+% <<model, echo=FALSE, dependson='data', message=FALSE>>=
+% library(lme4)
+% # takes quite a bit of time to fit
+% lm0 <- glm(correct~treatment+placement+choice+ df + sample_size, family=quasibinomial(), data=turkw, weight=weight)
+% 
+% # after making sure that this actually converges, we can suppress Warnings (this is about the non-integer response, which can't be helped)
+% turkw$df <- factor(turkw$df, levels=c("10", "5", "2"))
+% m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address) + (1|difficulty), family=binomial(), data=turkw, weight=weight, control=glmerControl(optimizer="bobyqa")))
+% @
 
 % \begin{figure}
 % \begin{subfigure}[b]{0.5\textwidth}
@@ -756,6 +807,7 @@ m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address)
 % 
 % print(xtable(dc))
 \begin{table}[ht]
+\caption{\label{tab:coefs} \hh{Estimates and confidence intervals corresponding to Model (1).}}
 \centering
 %\begin{tabular}{rr>{ (}r<{,}>r<{) }rrl}
 \begin{tabular}{rr>{ (}r@{, }r<{) }rr>{ (}r@{, }r<{) }}
@@ -764,23 +816,23 @@ m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address)
  \cline{2-4} \cline{6-8}
 %  \hline
   Intercept & -4.84 & -6.19 & -3.49 && 0.01 & 0.00 & 0.03 \\ [3pt]
-\multicolumn{1}{l}{\bf design (CI)} \\  
+\multicolumn{1}{r}{\bf design (CI)} \\  
 Control & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
 Standard (HD) & 0.10 & -0.08 & 0.29 && 1.11 & 0.92 & 1.33 \\ 
   Standard (TS) & -0.18 & -0.40 & 0.04 && 0.83 & 0.67 & 1.04 \\ [2pt]
-    Detrended2 (HD) & \bf -0.42 & -0.61 & -0.24 && 0.66 & 0.54 & 0.79 \\ 
+    Detrended2 (HD) & \bf -0.42 & \bf -0.61 & \bf  -0.24 && \bf 0.66 & \bf 0.54 & \bf  0.79 \\ 
   Detrended2 (TS) & 0.03 & -0.19 & 0.25 && 1.03 & 0.83 & 1.28 \\ [2pt]
 %
-Detrended (HD) & \bf 0.42 & 0.20 & 0.64 && 1.52 & 1.22 & 1.89 \\ 
-  Detrended (TS) & \bf 0.32 & 0.10 & 0.53 && 1.37 & 1.10 & 1.70 \\ [3pt]
-\multicolumn{1}{l}{\bf sample size} \\  
+Detrended (HD) & \bf 0.42 & \bf 0.20 & \bf 0.64 && \bf  1.52 & \bf 1.22 & \bf 1.89 \\ 
+  Detrended (TS) & \bf 0.32 & \bf 0.10 & \bf 0.53 && \bf 1.37 & \bf 1.10 & \bf 1.70 \\ [3pt]
+\multicolumn{1}{r}{\bf sample size} \\  
 20 & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
-  30 & 1.07 & -0.45 & 2.60 & 2.92 & 0.64 & 13.43 \\ 
-  50 & \bf 3.00 & 1.47 & 4.53 & 20.13 & 4.37 & 92.77 \\ 
-  75 & \bf 2.36 & 0.83 & 3.89 & 10.59 & 2.29 & 49.04 \\ [3pt]
-\multicolumn{1}{l}{\bf degrees of freedom} \\  
- 2 & \bf 6.08 & 4.74 & 7.42 & 436.30 & 114.26 & 1666.09 \\ 
- 5 & \bf 2.35 & 1.03 & 3.66 & 10.44 & 2.80 & 38.93 \\ 
+  30 & 1.07 & -0.45 & 2.60 && 2.92 & 0.64 & 13.43 \\ 
+  50 & \bf 3.00 & \bf 1.47 & \bf 4.53 && \bf 20.13 & \bf 4.37 & \bf 92.77 \\ 
+  75 & \bf 2.36 & \bf 0.83 & \bf 3.89 && \bf 10.59 & \bf 2.29 & \bf 49.04 \\ [3pt]
+\multicolumn{1}{r}{\bf degrees of freedom} \\  
+ 2 & \bf 6.08 & \bf 4.74 & \bf 7.42 && \bf 436.30 & \bf  114.26 & \bf 1666.09 \\ 
+ 5 & \bf 2.35 & \bf 1.03 & \bf  3.66 && \bf 10.44 & \bf 2.80 & \bf 38.93 \\ 
 10 & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
 \cline{2-4} \cline{6-8}
 \end{tabular}
@@ -788,12 +840,6 @@ Detrended (HD) & \bf 0.42 & 0.20 & 0.64 && 1.52 & 1.22 & 1.89 \\
 
 
 
-The estimated model coefficients for model $M_1$ are shown in Table~\ref{tab:model}. 
-Estimates of the variance components are $\widehat{\sigma}_u = \Sexpr{round(m0@theta[1],2)}$, $\widehat{\sigma}_d=\Sexpr{round(m0@theta[2],2)}$, and $\widehat{\sigma} = \Sexpr{round(sqrt(sum((fitted(m0)-turkw$correct)^2)/(nrow(turkw)-8)),2)}$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
-%
-%Figure~\ref{fig:ranef} shows histograms of the predicted random effects for participants' abilities (left) and difficulty level of lineups (right). 
-Compared to the difficulty level of lineups, participants' abilities only vary little. The difference between best and worst performance by participants has an effect of at most an estimated 
-\Sexpr{require(lme4); eff <- range(ranef(m0)[["ip_address"]][,1]); probs <- exp(eff)/(1+exp(eff)); round(probs[2]/probs[1],1)}-fold probability of detecting the data plot from a lineup. 
 
 %------------------------------------------------------------------------------------
 \section{Power: visual and classical}\label{sec:power2}
@@ -1116,7 +1162,7 @@ Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision o
 
 \begin{center}
 \begin{tabular}{lp{5in}}
-$\tau$ & the design used in the lineup (Control, Standard, De-trended), \\
+$\tau$ & the combination of design used in the lineup (Control, Standard, De-trended, De-trended2) and confidence interval (HD, TS), \\
 &  the specific parameters under which the data for the lineup were created: \\
 &  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
 &  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
@@ -1162,6 +1208,13 @@ The combination of different levels of sample size and degrees of freedom of the
 \multicolumn{6}{l}{Signif. codes:  0 $\le$ *** $\le$ 0.001 $\le$ ** $\le$ 0.01 $\le$ * $\le$ 0.05 $\le$ . $\le$ 0.1 $\le$ ' ' $\le$ 1}
 \end{tabular}
 \end{table}
+
+The estimated model coefficients for model $M_1$ are shown in Table~\ref{tab:model}. 
+Estimates of the variance components are $\widehat{\sigma}_u = \Sexpr{round(m1@theta[1],2)}$, $\widehat{\sigma}_d=\Sexpr{round(m1@theta[2],2)}$, and $\widehat{\sigma} = \Sexpr{round(sqrt(sum((fitted(m1)-turkall$correct)^2)/(nrow(turkall)-8)),2)}$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
+%
+%Figure~\ref{fig:ranef} shows histograms of the predicted random effects for participants' abilities (left) and difficulty level of lineups (right). 
+Compared to the difficulty level of lineups, participants' abilities only vary little. The difference between best and worst performance by participants has an effect of at most an estimated 
+\Sexpr{require(lme4); eff <- range(ranef(m1)[["ip_address"]][,1]); probs <- exp(eff)/(1+exp(eff)); round(probs[2]/probs[1],1)}-fold probability of detecting the data plot from a lineup. 
 
 % 
 % \section{Demographics and other study results}

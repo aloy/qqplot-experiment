@@ -387,7 +387,11 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 
 
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/compare-designs-1} 
 
+\end{knitrout}
 
 
 \begin{figure}
@@ -418,7 +422,7 @@ Half of the lineups that observers were shown allowed multiple choices of plots 
 
 
 
-Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the three different variations of Q-Q plots. All three versions provide highly correlated results, and largely agree for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform  worse than either standard or control Q-Q plots. Lineups of data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. Lineups showing a sample from a $t_5$ distribution cover the whole range.
+Figure~\ref{fig:compare} shows proportions of correct evaluations of the lineups under the different variations of Q-Q plots. All three versions provide highly correlated results, and largely agree for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform  worse than either standard or control Q-Q plots. Lineups of data samples from a $t_2$-distribution  are all rejected in lineups under the standard design, while most of the $t_{10}$ samples go undetected. Lineups showing a sample from a $t_5$ distribution cover the whole range.
 We base an evaluation of the three different Q-Q plot designs on the premise that if participants find it easier to identify the data plot under one lineup over another lineup (given identical data underlying the lineups), the first lineup uses the better design.
 
 Let $Y_i$ be the outcome of the $i$th evaluation. Then $Y_i$ is a Bernoulli variable, where $\pi_i$ denotes the probablity of identifying the data plot from the lineup; i.e.~$P(Y_i = 1) = \pi_i = E[Y_i]$.   
@@ -427,12 +431,20 @@ The probability of identifying the lineup is affected by several factors: (a) th
 g(\pi_i) &=& \eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},\\
 Y &=& g^{-1}(\eta) + \varepsilon
 \end{eqnarray*}
-where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard, De-trended$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular data sample used. 
+where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard (HD), Standard (TS), De-trended (HD), De-trended (TS), De-trended2 (HD), De-trended2 (TS)$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular data sample used. 
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$. We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.
 
 
 
-
+% <<model, echo=FALSE, dependson='data', message=FALSE>>=
+% library(lme4)
+% # takes quite a bit of time to fit
+% lm0 <- glm(correct~treatment+placement+choice+ df + sample_size, family=quasibinomial(), data=turkw, weight=weight)
+% 
+% # after making sure that this actually converges, we can suppress Warnings (this is about the non-integer response, which can't be helped)
+% turkw$df <- factor(turkw$df, levels=c("10", "5", "2"))
+% m0 <- suppressWarnings(glmer(correct~treatment+ df + sample_size +(1|ip_address) + (1|difficulty), family=binomial(), data=turkw, weight=weight, control=glmerControl(optimizer="bobyqa")))
+% @
 
 % \begin{figure}
 % \begin{subfigure}[b]{0.5\textwidth}
@@ -463,6 +475,7 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 % 
 % print(xtable(dc))
 \begin{table}[ht]
+\caption{\label{tab:coefs} \hh{Estimates and confidence intervals corresponding to Model (1).}}
 \centering
 %\begin{tabular}{rr>{ (}r<{,}>r<{) }rrl}
 \begin{tabular}{rr>{ (}r@{, }r<{) }rr>{ (}r@{, }r<{) }}
@@ -471,23 +484,23 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
  \cline{2-4} \cline{6-8}
 %  \hline
   Intercept & -4.84 & -6.19 & -3.49 && 0.01 & 0.00 & 0.03 \\ [3pt]
-\multicolumn{1}{l}{\bf design (CI)} \\  
+\multicolumn{1}{r}{\bf design (CI)} \\  
 Control & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
 Standard (HD) & 0.10 & -0.08 & 0.29 && 1.11 & 0.92 & 1.33 \\ 
   Standard (TS) & -0.18 & -0.40 & 0.04 && 0.83 & 0.67 & 1.04 \\ [2pt]
-    Detrended2 (HD) & \bf -0.42 & -0.61 & -0.24 && 0.66 & 0.54 & 0.79 \\ 
+    Detrended2 (HD) & \bf -0.42 & \bf -0.61 & \bf  -0.24 && \bf 0.66 & \bf 0.54 & \bf  0.79 \\ 
   Detrended2 (TS) & 0.03 & -0.19 & 0.25 && 1.03 & 0.83 & 1.28 \\ [2pt]
 %
-Detrended (HD) & \bf 0.42 & 0.20 & 0.64 && 1.52 & 1.22 & 1.89 \\ 
-  Detrended (TS) & \bf 0.32 & 0.10 & 0.53 && 1.37 & 1.10 & 1.70 \\ [3pt]
-\multicolumn{1}{l}{\bf sample size} \\  
+Detrended (HD) & \bf 0.42 & \bf 0.20 & \bf 0.64 && \bf  1.52 & \bf 1.22 & \bf 1.89 \\ 
+  Detrended (TS) & \bf 0.32 & \bf 0.10 & \bf 0.53 && \bf 1.37 & \bf 1.10 & \bf 1.70 \\ [3pt]
+\multicolumn{1}{r}{\bf sample size} \\  
 20 & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
-  30 & 1.07 & -0.45 & 2.60 & 2.92 & 0.64 & 13.43 \\ 
-  50 & \bf 3.00 & 1.47 & 4.53 & 20.13 & 4.37 & 92.77 \\ 
-  75 & \bf 2.36 & 0.83 & 3.89 & 10.59 & 2.29 & 49.04 \\ [3pt]
-\multicolumn{1}{l}{\bf degrees of freedom} \\  
- 2 & \bf 6.08 & 4.74 & 7.42 & 436.30 & 114.26 & 1666.09 \\ 
- 5 & \bf 2.35 & 1.03 & 3.66 & 10.44 & 2.80 & 38.93 \\ 
+  30 & 1.07 & -0.45 & 2.60 && 2.92 & 0.64 & 13.43 \\ 
+  50 & \bf 3.00 & \bf 1.47 & \bf 4.53 && \bf 20.13 & \bf 4.37 & \bf 92.77 \\ 
+  75 & \bf 2.36 & \bf 0.83 & \bf 3.89 && \bf 10.59 & \bf 2.29 & \bf 49.04 \\ [3pt]
+\multicolumn{1}{r}{\bf degrees of freedom} \\  
+ 2 & \bf 6.08 & \bf 4.74 & \bf 7.42 && \bf 436.30 & \bf  114.26 & \bf 1666.09 \\ 
+ 5 & \bf 2.35 & \bf 1.03 & \bf  3.66 && \bf 10.44 & \bf 2.80 & \bf 38.93 \\ 
 10 & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
 \cline{2-4} \cline{6-8}
 \end{tabular}
@@ -495,12 +508,6 @@ Detrended (HD) & \bf 0.42 & 0.20 & 0.64 && 1.52 & 1.22 & 1.89 \\
 
 
 
-The estimated model coefficients for model $M_1$ are shown in Table~\ref{tab:model}. 
-Estimates of the variance components are $\widehat{\sigma}_u = 0.44$, $\widehat{\sigma}_d=1.95$, and $\widehat{\sigma} = 0.31$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
-%
-%Figure~\ref{fig:ranef} shows histograms of the predicted random effects for participants' abilities (left) and difficulty level of lineups (right). 
-Compared to the difficulty level of lineups, participants' abilities only vary little. The difference between best and worst performance by participants has an effect of at most an estimated 
-1.9-fold probability of detecting the data plot from a lineup. 
 
 %------------------------------------------------------------------------------------
 \section{Power: visual and classical}\label{sec:power2}
@@ -737,7 +744,7 @@ Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision o
 
 \begin{center}
 \begin{tabular}{lp{5in}}
-$\tau$ & the design used in the lineup (Control, Standard, De-trended), \\
+$\tau$ & the combination of design used in the lineup (Control, Standard, De-trended, De-trended2) and confidence interval (HD, TS), \\
 &  the specific parameters under which the data for the lineup were created: \\
 &  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
 &  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
@@ -783,6 +790,13 @@ The combination of different levels of sample size and degrees of freedom of the
 \multicolumn{6}{l}{Signif. codes:  0 $\le$ *** $\le$ 0.001 $\le$ ** $\le$ 0.01 $\le$ * $\le$ 0.05 $\le$ . $\le$ 0.1 $\le$ ' ' $\le$ 1}
 \end{tabular}
 \end{table}
+
+The estimated model coefficients for model $M_1$ are shown in Table~\ref{tab:model}. 
+Estimates of the variance components are $\widehat{\sigma}_u = 0.66$, $\widehat{\sigma}_d=1.87$, and $\widehat{\sigma} = 0.3$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
+%
+%Figure~\ref{fig:ranef} shows histograms of the predicted random effects for participants' abilities (left) and difficulty level of lineups (right). 
+Compared to the difficulty level of lineups, participants' abilities only vary little. The difference between best and worst performance by participants has an effect of at most an estimated 
+3.2-fold probability of detecting the data plot from a lineup. 
 
 % 
 % \section{Demographics and other study results}
