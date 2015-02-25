@@ -618,7 +618,9 @@ lps15$pvals.adj <- unlist(llply(1:nrow(lps15), function(i) {
 lps <- merge(lps, lps15[, c("data_name", "treatment", "pvals.adj")], by=c("data_name", "treatment"), all=TRUE)
 @
 
-<<compare-designs, echo=FALSE, fig.width=10, fig.height=8, warning=FALSE, message=FALSE>>=
+\begin{figure}[ht]
+\centering
+<<compare-designs, echo=FALSE, fig.width=12.5, fig.height=8, out.width='\\textwidth', warning=FALSE, message=FALSE>>=
 dsets <- ddply(turkall, .(data_name), summarize,
                  n= length(data_name),
                  correct=sum(correct))
@@ -660,86 +662,90 @@ text <- data.frame(label = c("Standard", "Detrended", "Detrended 2", "Control"),
 ggplot() + 
   geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back1) + 
   geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back2) + 
-  geom_text(aes(x = x, y= y, label=label), size=7, colour="grey40", angle=90, hjust=0, data=text) + 
-  geom_point(aes(x=as.numeric(CIdesign), y=100*correct/n, colour=factor(rep), shape=factor(signif)), size=4,  data=dataset) +
+  geom_text(aes(x = x, y= y, label=label), size=5, colour="grey40", angle=90, hjust=0, data=text) + 
+  geom_point(aes(x=as.numeric(CIdesign), y=100*correct/n, colour=factor(rep), shape=factor(signif)), size=3,  data=dataset) +
   geom_line(aes(x=as.numeric(CIdesign), y=100*correct/n, colour=factor(rep), group=data_name), data=dataset) +
-  facet_grid(facets=nu~s, labeller="label_parsed") + scale_colour_brewer(palette="Set1") +
-  theme_bw() + scale_shape_manual(values=c(1,19)) + ylab("Percentage of data identifications") +
+  facet_grid(facets=nu~s, labeller="label_parsed") + scale_colour_brewer("Replicate", palette="Set1") +
+  theme_bw() + scale_shape_manual("Significant difference\nfrom normality",values=c(1,19)) + ylab("Percentage of data identifications") +
 #  scale_x_continuous(breaks=1:7, labels=levels(dataset$CIdesign)) + 
-  scale_x_continuous("", breaks=1:7, labels=c("\nHD", "\nTS","HD", "TS","HD", "TS","Control")) +
-  theme(legend.position="bottom", legend.direction="horizontal")
+  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nHD", "\nTS","\t\t\t\t\tDetrended\nHD", "\nTS","\t\t\t\t\tDetrended2\nHD", "\nTS","Control")) +
+  theme(legend.position="bottom", legend.direction="horizontal", legend.box="horizontal")
 #  theme(axis.text.x = element_text(angle = 0, hjust = 1))
 @
-<<triples, echo=FALSE, warning=FALSE, message=FALSE, results='hide'>>=
-library(reshape2)
-lps$prop <- with(lps, correct/num)
-dt <- dcast(lps, data_name~treatment, value.var="prop")
-exps <- ldply(as.character(dt$data_name), parse_filename)
-exps$data_name <- as.character(dt$data_name)
-dt <- merge(dt, exps, by="data_name")
-dt$df <- as.factor(dt$df)
-dt$df <- factor(dt$df, levels=c(2,5,10))
-
-
-pvals <- dcast(lps, data_name~treatment, value.var="signif")
-names(pvals) <- gsub("^", "sg.",names(pvals))
-names(pvals)[1] <- "data_name"
-
-dt <- merge(dt, pvals, by="data_name")
-dt$sg.Standard <- factor(dt$sg.Standard)
-dt$sg.Standard <- factor(dt$sg.Standard, levels=c("TRUE", "FALSE"))
-dt$df <- factor(dt$df, levels=c("10", "5", "2"))
-@
-<<nortests, echo=FALSE>>=
-pvals <- read.csv("data/pvalues.csv")
-lps$pvals.adj[is.na(lps$pvals.adj)] <- lps$pvals[is.na(lps$pvals.adj)]
-lppvals <- dcast(lps, data_name~treatment, value.var="pvals.adj")
-
-lppvals <- merge(lppvals, pvals, by="data_name")
-lppvals <- merge(lppvals, exps, by="data_name")
-
-#cor(lppvals[,c("Standard", "Control", "Rotated", "cvm", "ad", "ks", "sw", "lf")])
-#ggpairs(lppvals[,c("Standard", "Control", "Rotated", "cvm", "ad", "ks", "sw")])
-lppvals$df <- factor(lppvals$df)
-lppvals$df <- factor(lppvals$df, levels=c("10", "5", "2"))
-
-require(reshape2)
-lppvalscb <- dcast(lppvals, ad+sw+lf+cvm+ks+rep+n+df~null, value.var="Standard")
-lppvalscb$Standard <- with(lppvalscb, (`1`+`2`)/2)
-
-p <- ggplot() + 
-  geom_abline(colour="grey70") + 
-  geom_rect(aes(xmin=-0.02, xmax=1, ymin=-0.02, ymax=0.05), fill="grey70", alpha=0.5) + 
-  geom_rect(aes(xmin=-0.02, xmax=0.05, ymin=-0.02, ymax=1), fill="grey70", alpha=0.5) + 
-  geom_point(aes(x=Standard, y=sw, colour=df, shape=df), size=3, data=lppvalscb) + 
-  scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(-0.02,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvalscb, (Standard < 0.03 & sw > 0.2) |(Standard > 0.05 & sw < 0.05))) + theme() + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (p-values)") 
-                                                                                                                                                                                                                                                                                                        
-#suppressWarnings(p)
-ggsave(plot=p, filename="figures/figvisnorm.pdf", width=5.5, height=4)
-# data-1-2-17-20-5-8-2.csv  # Standard significant
-# data-2-2-17-20-5-8-15.csv
-# data-1-2-23-50-10-8-10.csv  # Standard not significant
-# data-2-1-6-30-5-14-15.csv
-@
-\begin{figure}
-\centering
-\begin{subfigure}[b]{.3\textwidth}
-<<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4)) + xlab("De-trended")
-@
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-<<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Control, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))  + xlab("De-trended")
-@
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-<<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") + geom_point(aes(x=Control, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw()  + scale_size_manual(values=c(3,4), guide="none") +scale_colour_brewer("degrees of\nfreedom",palette="Set2", guide="none") + theme(legend.position=c(0.75, 0.20),legend.background = element_rect(fill = "white", colour = NA)) + scale_shape_manual("degrees of freedom\n(significance)", values=c(  15,16,17, 22,21), labels=c("10 ","5 ","2 ","10 (n.s.)", "5 (n.s.)")) + guides(shape=guide_legend(ncol=2, override.aes = list(size = c(3,3,3,4,4), colour=c("#66C2A5", "#FC8D62", "#8DA0CB", "#66C2A5", "#FC8D62"))))
-@
-\end{subfigure}
-\caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. De-trended Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
+\caption{\label{fig:compare} Percentages of identifying the $t$ sample from lineups of different variations of Q-Q plots. Each lineup is shown as a dot. Filled dots indicate a (visually) significant deviation from normality (as determined in the user experiment). Dots of the same lineup data (sample and null data) are connected by a line.
+The four lines in each panel correspond to four different lineups: the lines of the same color correspond to the same $t$-sample, but different null data; the lines of the other colour change both in sample and null data. The results are facetted by parameter setting: sample sizes $s$ (columns) vary from 20 to 75, degrees of freedom $\nu$ are shown in rows. With increasing sample size and decreasing degrees of freedom the percentage of picking the $t$ sample  from the normal samples generally increases. 
+ }
 \end{figure}
+% <<triples, echo=FALSE, warning=FALSE, message=FALSE, results='hide'>>=
+% library(reshape2)
+% lps$prop <- with(lps, correct/num)
+% dt <- dcast(lps, data_name~treatment, value.var="prop")
+% exps <- ldply(as.character(dt$data_name), parse_filename)
+% exps$data_name <- as.character(dt$data_name)
+% dt <- merge(dt, exps, by="data_name")
+% dt$df <- as.factor(dt$df)
+% dt$df <- factor(dt$df, levels=c(2,5,10))
+% 
+% 
+% pvals <- dcast(lps, data_name~treatment, value.var="signif")
+% names(pvals) <- gsub("^", "sg.",names(pvals))
+% names(pvals)[1] <- "data_name"
+% 
+% dt <- merge(dt, pvals, by="data_name")
+% dt$sg.Standard <- factor(dt$sg.Standard)
+% dt$sg.Standard <- factor(dt$sg.Standard, levels=c("TRUE", "FALSE"))
+% dt$df <- factor(dt$df, levels=c("10", "5", "2"))
+% @
+% <<nortests, echo=FALSE>>=
+% pvals <- read.csv("data/pvalues.csv")
+% lps$pvals.adj[is.na(lps$pvals.adj)] <- lps$pvals[is.na(lps$pvals.adj)]
+% lppvals <- dcast(lps, data_name~treatment, value.var="pvals.adj")
+% 
+% lppvals <- merge(lppvals, pvals, by="data_name")
+% lppvals <- merge(lppvals, exps, by="data_name")
+% 
+% #cor(lppvals[,c("Standard", "Control", "Rotated", "cvm", "ad", "ks", "sw", "lf")])
+% #ggpairs(lppvals[,c("Standard", "Control", "Rotated", "cvm", "ad", "ks", "sw")])
+% lppvals$df <- factor(lppvals$df)
+% lppvals$df <- factor(lppvals$df, levels=c("10", "5", "2"))
+% 
+% require(reshape2)
+% lppvalscb <- dcast(lppvals, ad+sw+lf+cvm+ks+rep+n+df~null, value.var="Standard")
+% lppvalscb$Standard <- with(lppvalscb, (`1`+`2`)/2)
+% 
+% p <- ggplot() + 
+%   geom_abline(colour="grey70") + 
+%   geom_rect(aes(xmin=-0.02, xmax=1, ymin=-0.02, ymax=0.05), fill="grey70", alpha=0.5) + 
+%   geom_rect(aes(xmin=-0.02, xmax=0.05, ymin=-0.02, ymax=1), fill="grey70", alpha=0.5) + 
+%   geom_point(aes(x=Standard, y=sw, colour=df, shape=df), size=3, data=lppvalscb) + 
+%   scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(-0.02,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvalscb, (Standard < 0.03 & sw > 0.2) |(Standard > 0.05 & sw < 0.05))) + theme() + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (p-values)") 
+%                                                                                                                                                                                                                                                                                                         
+% #suppressWarnings(p)
+% ggsave(plot=p, filename="figures/figvisnorm.pdf", width=5.5, height=4)
+% # data-1-2-17-20-5-8-2.csv  # Standard significant
+% # data-2-2-17-20-5-8-15.csv
+% # data-1-2-23-50-10-8-10.csv  # Standard not significant
+% # data-2-1-6-30-5-14-15.csv
+% @
+% \begin{figure}
+% \centering
+% \begin{subfigure}[b]{.3\textwidth}
+% <<dependson='triples', echo=FALSE>>=
+% ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4)) + xlab("De-trended")
+% @
+% \end{subfigure}
+% \begin{subfigure}[b]{.3\textwidth}
+% <<dependson='triples', echo=FALSE>>=
+% ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Control, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))  + xlab("De-trended")
+% @
+% \end{subfigure}
+% \begin{subfigure}[b]{.3\textwidth}
+% <<dependson='triples', echo=FALSE>>=
+% ggplot() + geom_abline(colour="grey50") + geom_point(aes(x=Control, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw()  + scale_size_manual(values=c(3,4), guide="none") +scale_colour_brewer("degrees of\nfreedom",palette="Set2", guide="none") + theme(legend.position=c(0.75, 0.20),legend.background = element_rect(fill = "white", colour = NA)) + scale_shape_manual("degrees of freedom\n(significance)", values=c(  15,16,17, 22,21), labels=c("10 ","5 ","2 ","10 (n.s.)", "5 (n.s.)")) + guides(shape=guide_legend(ncol=2, override.aes = list(size = c(3,3,3,4,4), colour=c("#66C2A5", "#FC8D62", "#8DA0CB", "#66C2A5", "#FC8D62"))))
+% @
+% \end{subfigure}
+% \caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. De-trended Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
+% \end{figure}
 
 
 
