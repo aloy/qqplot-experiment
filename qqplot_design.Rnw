@@ -408,7 +408,7 @@ Based on a visual inspection in a Q-Q plot, a
  sample is therefore considered to be consistent with a normal distribution if the empirical and theoretical quantiles fall close to the line representing the theoretical distribution.  This decision is helped additionally by an assessment of
  %Closeness can  be assessed visually based on
  whether the points fall inside the envelope of 95\%  pointwise confidence intervals \citep[][p.~150--154]{Davison:1997}.
-\hh{Include discussion of TS interval here.} 
+\hh{Include discussion of Tail-Sensitive (TS) simultaneous confidence bands \citep{buja:2013} here.} 
 % \alnote{We need to be careful here. Since we are using pointwise CIs, we would expect a certain \% of points to fall outside the CIs. I think in the first review of the JCGS paper a reviewer was concerned about this as well.}
 % \hhnote{Well, yes, point taken,  but it is also important  how far outside the points are ... }
 % \alnote{I think the Davison and Hinkley reference takes care of this. I will reread that section and add a page number soon.}
@@ -430,7 +430,7 @@ Another point in favor of this design is that it makes better use of the availab
 In \hh{section~\ref{sec:power1}} we investigate the effectiveness and power of the modifications made to Q-Q plots.
 Examples of \hh{all the different} Q-Q plot \hh{designs} under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with \hh{an added grey band representing a confidence band, a \emph{de-trended} Q-Q plot preserving relative distances in the plot and a \emph{de-trended} Q-Q plot making full use of the space along the $y$-axis.}
 
-\hh{Q-Q plots in the upper row of figure~\ref{qqplots} use Davison-Hinkley (DH) 95\% pointwise confidence region \citep{Davison:1997}, while the shading in the lower row represents 95\% TS confidence bands \cite{buja:2013}. }
+\hh{Q-Q plots in the upper row of figure~\ref{qqplots} use Davison-Hinkley (DH) 95\% pointwise confidence region \citep{Davison:1997}, while the shading in the lower row represents 95\% Tail-Sensitive (TS) simultaneous confidence bands \cite{buja:2013}. }
 Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
 
 
@@ -491,7 +491,8 @@ Assessing this ability requires that each individual evaluates multiple lineups.
 If that is not possible, we must assume that all participants share the same ability, $p$. %, and the power calculation in Equation~\ref{eqn:power} simplifies to $1 - B_{N, \hat{p}}(x_\alpha)$, where $\widehat{p}$ is an estimate for the probability of choosing the data plot for a specific lineup.
 Similar to classical inference, we can make use of power to assess the sensitivity of tests. This allows us to make decisions about designs for particular tasks by evaluating lineups displaying  the same data in different types of displays \citep{Hofmann:2012ts}. 
 
-In the next section, we describe the simulation study used to compare the three Q-Q plot designs. An initial comparison of the three designs is also given. We use a generalized linear mixed model to compare the power of the three designs in section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). Finally, we compare the power of a lineup test of normality to the classical normality tests in section~\ref{sec:power2}, and outline areas for future research in section~\ref{sec:discussion}. 
+\hh{In the following sections of this paper we compare the power of classical tests in detecting deviations from normality compared to visual detecting using Q-Q plots (section~\ref{sec:power2}) based on a simulation study, which we introduce in section~\ref{sec:simu}. Besides the power comparison of classical versus visual tests, we compare the power of the different designs in section~\ref{sec:power1} in a generalized linear mixed model. We also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). }
+%In the next section, we describe the simulation study used to compare the three Q-Q plot designs. An initial comparison of the three designs is also given. We use a generalized linear mixed model to compare the power of the three designs in section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). Finally, we compare the power of a lineup test of normality to the classical normality tests in section~\ref{sec:power2}, and outline areas for future research in section~\ref{sec:discussion}. 
 
 
 %------------------------------------------------------------------------------------
@@ -501,10 +502,9 @@ In the next section, we describe the simulation study used to compare the three 
 \section{Simulation Setup and Model}\label{sec:simu}
 %------------------------------------------------------------------------------------
 
-\hh{We'll have to split the simulation setup from the model, and move the model into the back to the power of the designs ... we'll also probably deal with more designs. }
-
-\hh{In order to evaluate and compare the power of Q-Q plots in the various modifications to normal distribution tests, we make use of the following simulation scenario in lineup tests:
-using samples of size $s \in \{20, 30, 50, 75\}$ from a $t_\nu$ distribution with $\nu \in \{2, 5, 10\}$ degrees of freedom
+\hh{In order to evaluate the power of Q-Q plots and compare their performance to normal distribution tests, we make use of a simulation study, 
+using samples of size $s \in \{20, 30, 50, 75\}$ from a $t_\nu$ distribution with $\nu \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.
+For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from normally distributed samples of the same size. For each data sample, two sets of null plots are created, so that we have a total of 48 lineup data. 
 }
 
 
@@ -512,7 +512,7 @@ using samples of size $s \in \{20, 30, 50, 75\}$ from a $t_\nu$ distribution wit
 %We are testing three different versions of a Q-Q plot, 
 
 
-To investigate the power of the three different Q-Q plot versions, we sampled data from a $t$ distribution with varying degrees of freedom and sample sizes, and included a Q-Q plot of these data in a lineup of null charts drawn from standard normal samples of the same size.
+%To investigate the power of the three different Q-Q plot versions, we sampled data from a $t$ distribution with varying degrees of freedom and sample sizes, and included a Q-Q plot of these data in a lineup of null charts drawn from standard normal samples of the same size.
 For lineup tests it is of extreme importance to consider the generation of the null sets and the construction of the plots in the lineup. 
 Null data is created conistently with the null hypothesis. Here, we have two different null hypotheses to consider:
 
@@ -531,11 +531,19 @@ Examples for both hypotheses are shown in figure~\ref{fig:lps}. Both lineups sho
 
 Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in a Q-Q plot corresponds to a  hypothesis test against that distribution. As long as there is a method to generate samples under the null hypothesis, we do not even need to know the exact distribution. This allows us to assess situations in which we only have approximate or asymptotic results, which are otherwise hard, if not impossible, to investigate  with the (small) finite samples we typically deal with in practice.
 
-Note that IQR is used here in estimating scale---this is standard practice for Q-Q plot. Robust estimation of the variance is preferred for better assessment of the tails and outliers of the empirical distribution. We could use alternative estimators for variance, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, but this will likely also change the power of the corresponding lineup.
+The interquartile range (IQR) is used---as is standard practice for Q-Q plots---to estimate scale. Robust estimation of the variance is preferred for better assessment of the tails and outliers of the empirical distribution. We could use alternative estimators for variance, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, but this will likely also change the power of the corresponding lineup.
 
 
 
-Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} independent observers were recruited and asked to evaluate ten lineups each. 
+Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} independent observers were recruited and asked to evaluate ten lineups each. \hh{Lineups were randomly assigned to participants, such that each participant
+\begin{itemize}
+\item  evaluated each data set at most once, 
+\item was exposed to multiple parameter settings (`harder' and `easier' lineups), and
+\item evaluated each Q-Q plot design at most twice.
+\end{itemize}
+
+XXX discussion of amazon turk studies in comparison to lab experiments: practical considerations \citep{Kosara:2010}, study by \citet{cleveland:1984} re-run on Amazon MTurk with similar results by \citet{Heer:2010}.
+}
 %
 Half of the lineups that observers were shown allowed multiple choices of plots from a lineup for the final answer. While most participants still chose only a single plot, in the analysis we dealt with multiple answers to a lineup by using a weighting variable defined as the reciprocal of the number of answers given by a participant.
 
@@ -637,76 +645,6 @@ ggplot() +
 The four lines in each panel correspond to four different lineups: the lines of the same color correspond to the same $t$-sample, but different null data; the lines of the other colour change both in sample and null data. The results are facetted by parameter setting: sample sizes $s$ (columns) vary from 20 to 75, degrees of freedom $\nu$ are shown in rows. With increasing sample size and decreasing degrees of freedom the percentage of picking the $t$ sample  from the normal samples generally increases. }
  }
 \end{figure}
-% <<triples, echo=FALSE, warning=FALSE, message=FALSE, results='hide'>>=
-% library(reshape2)
-% lps$prop <- with(lps, correct/num)
-% dt <- dcast(lps, data_name~treatment, value.var="prop")
-% exps <- ldply(as.character(dt$data_name), parse_filename)
-% exps$data_name <- as.character(dt$data_name)
-% dt <- merge(dt, exps, by="data_name")
-% dt$df <- as.factor(dt$df)
-% dt$df <- factor(dt$df, levels=c(2,5,10))
-% 
-% 
-% pvals <- dcast(lps, data_name~treatment, value.var="signif")
-% names(pvals) <- gsub("^", "sg.",names(pvals))
-% names(pvals)[1] <- "data_name"
-% 
-% dt <- merge(dt, pvals, by="data_name")
-% dt$sg.Standard <- factor(dt$sg.Standard)
-% dt$sg.Standard <- factor(dt$sg.Standard, levels=c("TRUE", "FALSE"))
-% dt$df <- factor(dt$df, levels=c("10", "5", "2"))
-% @
-% <<nortests, echo=FALSE>>=
-% pvals <- read.csv("data/pvalues.csv")
-% lps$pvals.adj[is.na(lps$pvals.adj)] <- lps$pvals[is.na(lps$pvals.adj)]
-% lppvals <- dcast(lps, data_name~treatment, value.var="pvals.adj")
-% 
-% lppvals <- merge(lppvals, pvals, by="data_name")
-% lppvals <- merge(lppvals, exps, by="data_name")
-% 
-% #cor(lppvals[,c("Standard", "Control", "Rotated", "cvm", "ad", "ks", "sw", "lf")])
-% #ggpairs(lppvals[,c("Standard", "Control", "Rotated", "cvm", "ad", "ks", "sw")])
-% lppvals$df <- factor(lppvals$df)
-% lppvals$df <- factor(lppvals$df, levels=c("10", "5", "2"))
-% 
-% require(reshape2)
-% lppvalscb <- dcast(lppvals, ad+sw+lf+cvm+ks+rep+n+df~null, value.var="Standard")
-% lppvalscb$Standard <- with(lppvalscb, (`1`+`2`)/2)
-% 
-% p <- ggplot() + 
-%   geom_abline(colour="grey70") + 
-%   geom_rect(aes(xmin=-0.02, xmax=1, ymin=-0.02, ymax=0.05), fill="grey70", alpha=0.5) + 
-%   geom_rect(aes(xmin=-0.02, xmax=0.05, ymin=-0.02, ymax=1), fill="grey70", alpha=0.5) + 
-%   geom_point(aes(x=Standard, y=sw, colour=df, shape=df), size=3, data=lppvalscb) + 
-%   scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(-0.02,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvalscb, (Standard < 0.03 & sw > 0.2) |(Standard > 0.05 & sw < 0.05))) + theme() + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (p-values)") 
-%                                                                                                                                                                                                                                                                                                         
-% #suppressWarnings(p)
-% ggsave(plot=p, filename="figures/figvisnorm.pdf", width=5.5, height=4)
-% # data-1-2-17-20-5-8-2.csv  # Standard significant
-% # data-2-2-17-20-5-8-15.csv
-% # data-1-2-23-50-10-8-10.csv  # Standard not significant
-% # data-2-1-6-30-5-14-15.csv
-% @
-% \begin{figure}
-% \centering
-% \begin{subfigure}[b]{.3\textwidth}
-% <<dependson='triples', echo=FALSE>>=
-% ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4)) + xlab("De-trended")
-% @
-% \end{subfigure}
-% \begin{subfigure}[b]{.3\textwidth}
-% <<dependson='triples', echo=FALSE>>=
-% ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Control, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))  + xlab("De-trended")
-% @
-% \end{subfigure}
-% \begin{subfigure}[b]{.3\textwidth}
-% <<dependson='triples', echo=FALSE>>=
-% ggplot() + geom_abline(colour="grey50") + geom_point(aes(x=Control, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw()  + scale_size_manual(values=c(3,4), guide="none") +scale_colour_brewer("degrees of\nfreedom",palette="Set2", guide="none") + theme(legend.position=c(0.75, 0.20),legend.background = element_rect(fill = "white", colour = NA)) + scale_shape_manual("degrees of freedom\n(significance)", values=c(  15,16,17, 22,21), labels=c("10 ","5 ","2 ","10 (n.s.)", "5 (n.s.)")) + guides(shape=guide_legend(ncol=2, override.aes = list(size = c(3,3,3,4,4), colour=c("#66C2A5", "#FC8D62", "#8DA0CB", "#66C2A5", "#FC8D62"))))
-% @
-% \end{subfigure}
-% \caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. De-trended Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
-% \end{figure}
 
 
 
@@ -782,7 +720,7 @@ m1 <- glmer(correct~CIdesign +  factor(sample_size) + factor(df) + (1|ip_address
 & estimates & \bf low & \bf high && odds &  \bf low & \bf high \\ 
  \cline{2-4} \cline{6-8}
 %  \hline
-  Intercept & -4.84 & -6.19 & -3.49 && 0.01 & 0.00 & 0.03 \\ [3pt]
+  Intercept & \bf -4.84 & \bf -6.19 & \bf -3.49 && \bf 0.01 & \bf 0.00 & \bf 0.03 \\ [3pt]
 \multicolumn{1}{r}{\bf design (CI)} \\  
 Control & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
 Standard (HD) & 0.10 & -0.08 & 0.29 && 1.11 & 0.92 & 1.33 \\ 
