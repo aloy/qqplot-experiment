@@ -49,3 +49,5 @@ data/turk15.csv
 *.gz(busy)
 
 *.ttt
+
+data/turk-10-13-17.csv
