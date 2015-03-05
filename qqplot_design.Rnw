@@ -395,62 +395,20 @@ The Shapiro-Wilk test \cite[SW-test,][]{Shapiro:1965kt} does not utilize deviati
 \]
 For a sample drawn from a normal distribution, $b^2$ and $s^2$ are, up to a constant, estimating the same quantity, whereas the two estimators will generally not be estimating the same quantity under non-normality. The SW test has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}.
 
-In Section~\ref{sec:power2} we will return to these tests in order to assess the effectiveness of different variations of standard Q-Q plots.
+In Section~\ref{sec:power2} we will return to these tests in order to \hh{compare their effectiveness to visual evaluation of normality in Q-Q plots.}
+%assess the effectiveness of different variations of standard Q-Q plots.
 
 \subsection{Q-Q Plots}
 
 Standard quantile-quantile (Q-Q) plots \citep{Wilk:1968} are an essential tool for  visually evaluating a specific distributional assumption.  A Q-Q plot  is constructed from a sample, $x_1, \ldots, x_n$, by plotting the theoretical quantiles, $F^{-1}(F_n(x_i))$, against the sample quantiles, $x_{(i)}$. If the empirical distribution, $F_n$, is consistent with the theoretical distribution, $F$, the points in the Q-Q plot fall on the line of identity. 
 For any sample tested against a distribution within a location-scale family, such as a normal, log normal, or exponential distribution, the sample quantiles still fall on a line when plotted against the theoretical quantiles of any of the family's member distributions. Plotting the empiricial quantiles of a normally distributed sample $x \sim N(\mu, \sigma^2)$ against the quantiles of a standard normal will result in a line, where  the slope is an estimate of $\sigma$, and the intercept estimates $\mu$. Visually  the only change in the Q-Q plot is a  change in the scale of the $y$-axis. We can therefore employ Q-Q plots in the more general framework of testing the distribution of a sample for normality similar to standard normality tests, such as the AD, LF, CVM, and SW tests. We do have to make a decision with respect to the exact parameters of the normal distribution we test against when we plot a line alongside the points in the Q-Q plot for additional comparison purposes, i.e.~the parameters $\mu$ and $\sigma$ have to be estimated from the sample. In Q-Q plots, variability is based on a robust measure of spread given as the ratio of the inter-quartile ranges (IQRs) of the empirical and theoretical distributions: $\left(F^{-1}_n(0.75) - F^{-1}_n(0.25)\right) / \left(F^{-1}(0.75) - F^{-1}(0.25)\right)$ \citep{becker:s}. 
 
-% In a Q-Q plot we plot quantiles of the empirical distribution against the expected quantiles from the assumed distribution. 
-% The line of identity therefore represents the theoretical distribution and points show the empirical distribution. 
-% \alnote{I am having trouble with the last sentence. The line of identity represents agreement between the two distributions and the points represent the comparison. I know what we're trying to say here, and I think the issue is that the current wording conditions on the data point.}
-% \hhnote{OK, I can see what you mean - but I still believe that we can think of the line as representing the graph of the theoretical distribution. What is important is to note, that the line is determined completely by the theoretical distribution and does not rely on the sample at all.  This is going to be a crucial point later on in the rescaling discussion. I'll think about how to clarify this more. Here, I just wanted to introduce Q-Q plots quickly and then go into a more formal explanation later on.}
-% Deviations from the theoretical distribution then manifest themselves as vertical differences between points and the line of identity. 
 
-% This difference is featured in a series of distributional tests. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample size of $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is then the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Lilliefors \cite[LF-test, ][]{lilliefors}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises test \citep[CVM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
-% 
-% The KS test uses the maximal  difference, which is displayed as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample, i.e. a difference $D$ observed at either tail of the distribution carries the same weight and is interpreted in the same way as a difference $D$ in the center of the distribution. While the KS test allows for adjusting parameters of the normal distribution to sample mean and variance, it is more appropriate to use LF for this purpose. LF and KS share the same test statistic, but the sampling distribution in the LF test statistic is adjusted for the two additional parameters.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling upregulates the tail effect using a weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
-% 
-% 
-% \begin{table}
-% \centering
-% \begin{tabular}{lrl}\hline
-% Test && Statistic\\\hline\hline
-% Kolmogorov-Smirnov & $D =$ & $ \sup_{1 \le i \le n} \left | F_n(x_i) - F(x_i)\right|$ \\
-% Lilliefors & $D =$ & $ \sup_{1 \le i \le n} \left | F_n(x_i) - F(x_i)\right|$ \\
-% Anderson-Darling & $A =$ & $ n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)\right|^2/\left(F(x)(1 - F(x)\right) dF(x)$\\
-% Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)\right|^2 dF(x)$ \\\hline
-% \end{tabular}
-% \caption{\label{tab:tests} Four prominent tests for normality based on the difference between empirical and hypothesized distribution function. An overview of the performance and power of these tests can be found in \citet{stephens:1974}.}
-% \end{table}
-% %
-% 
-% % The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not fit this scheme, but has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}. 
-% The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not utilize deviations from the theoretical distribution function, rather it focuses on the linearity of a normal Q-Q plot. Under normality, a set of observations, $x_1, \ldots, x_n$, can expressed as $x_i = \mu + \sigma z_i$, where $z_i$ is a quantile from the standard normal distribution. The Shapiro-Wilk test compares (up to a constant of proportionality, $c$) two estimates for $\sigma$: the best linear unbiased estimate obtained from a generalized least squares regression of the sample order statistics on their expected values, denoted $\widehat{\sigma}$, and the sample standard deviation, $s$.
-% \[
-%   W = \frac{(c \widehat{\sigma})^2}{s^2} = \frac{b^2}{s^2}
-% \]
-% For a sample drawn from a normal distribution, $b^2$ and $s^2$ are, up to a constant, estimating the same quantity, whereas the two estimators will generally not be estimating the same quantity under nonnormality. The SW test has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}.
-% 
-% 
-% We will be making use of these tests to assess the effectiveness of different variations of standard Q-Q plots.
-% 
-% \alnote{As I was rereading I felt that the below paragraph seemed out of place. I don't know where else it would go yet...}
-
-% A Q-Q plot of sample $x$ is constructed by plotting theoretical quantiles $F^{-1}(F_n(x_i))$ against sample quantiles $x_{(i)}$. In the case that the empirical distribution $F_n$ is consistent with distribution $F$, the points in the Q-Q plot falls on the line of identity. 
-% For any sample tested against a distribution within a location-scale family, such as e.g.~normal, log normal, or exponential, the sample quantiles still fall on a line when plotted against the theoretical quantiles of any of the family's member distributions. Plotting the empiricial quantiles of a normally distributed sample $x \sim N(\mu, \sigma^2)$ against the quantiles of a standard normal will result in a line, where  the slope is an estimate of $\sigma$, and the intercept estimates $\mu$. Visually  the only change in the Q-Q plot is a  change in the scale of the $y$-axis. We can therefore employ Q-Q plot in the more general framework of testing the distribution of a sample $x$ for normality similar to standard normality tests, such as the AD, LF, CVM, and SW test. We do have to make a decision with respect to the exact parameters of the normal distribution we test against, when we plot a line alongside the points in the Q-Q plot for additional comparison purposes, i.e.~parameters $\mu$ and $\sigma$ have to be estimated from the sample. In Q-Q plots, variability is based on a robust measure of spread given as the ratio of the inter-quartile ranges (IQRs) of empirical and theoretical distributions: $\left(F^{-1}_n(0.75) - F^{-1}_n(0.25)\right) / \left(F^{-1}(0.75) - F^{-1}(0.25)\right)$ \citep[see e.g.~][\hh{p.~XXX}]{tukey:eda}. 
- 
-%\hhnote{How are Q-Q plots interpreted?}
-
-%\hhnote{slope is standard deviation of theoretical distribution, $y$ offset its location. For any distribution within a location-scale family (such as normal, log normal, exponential, ...), we can interpret shifts in $y$ direction as a change/deviation in location, and a change in slope as a change in scale.}
-
-%\alnote{I am not sure where the below sentences fit best.}
 Based on a visual inspection in a Q-Q plot, a
  sample is therefore considered to be consistent with a normal distribution if the empirical and theoretical quantiles fall close to the line representing the theoretical distribution.  This decision is helped additionally by an assessment of
  %Closeness can  be assessed visually based on
  whether the points fall inside the envelope of 95\%  pointwise confidence intervals \citep[][p.~150--154]{Davison:1997}.
-\hh{Include discussion of TS interval here.} 
+\hh{Include discussion of Tail-Sensitive (TS) simultaneous confidence bands \citep{buja:2013} here.} 
 % \alnote{We need to be careful here. Since we are using pointwise CIs, we would expect a certain \% of points to fall outside the CIs. I think in the first review of the JCGS paper a reviewer was concerned about this as well.}
 % \hhnote{Well, yes, point taken,  but it is also important  how far outside the points are ... }
 % \alnote{I think the Davison and Hinkley reference takes care of this. I will reread that section and add a page number soon.}
@@ -469,10 +427,13 @@ Another point in favor of this design is that it makes better use of the availab
 
 \hh{XXX we're going to use two approaches to distinguish between effect of detrending and larger amount of space available. }
 
-In this paper we investigate the effectiveness and power of the modifications made to Q-Q plots.
-Examples of the three versions of Q-Q plots under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \citep{Davison:1997}
-%\alnote{I think pointwise bands are described in Atkinson (1985). Meeker uses simultaneous confidence bands for P-P plots. The motivation to use pointwise in the lineups seems to be that it is what people do (i.e., JMP (I think). qqPlot in the car package in R, etc.)}
-based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{de-trended} Q-Q plot. Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
+In \hh{section~\ref{sec:power1}} we investigate the effectiveness and power of the modifications made to Q-Q plots.
+Examples of \hh{all the different} Q-Q plot \hh{designs} under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with \hh{an added grey band representing a confidence band, a \emph{de-trended} Q-Q plot preserving relative distances in the plot and a \emph{de-trended} Q-Q plot making full use of the space along the $y$-axis.}
+
+\hh{Q-Q plots in the upper row of figure~\ref{qqplots} use Davison-Hinkley (DH) 95\% pointwise confidence region \citep{Davison:1997}, while the shading in the lower row represents 95\% Tail-Sensitive (TS) simultaneous confidence bands \cite{buja:2013}. }
+Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
+
+
 
 \begin{figure}
 \centering
@@ -530,7 +491,8 @@ Assessing this ability requires that each individual evaluates multiple lineups.
 If that is not possible, we must assume that all participants share the same ability, $p$. %, and the power calculation in Equation~\ref{eqn:power} simplifies to $1 - B_{N, \hat{p}}(x_\alpha)$, where $\widehat{p}$ is an estimate for the probability of choosing the data plot for a specific lineup.
 Similar to classical inference, we can make use of power to assess the sensitivity of tests. This allows us to make decisions about designs for particular tasks by evaluating lineups displaying  the same data in different types of displays \citep{Hofmann:2012ts}. 
 
-In the next section, we describe the simulation study used to compare the three Q-Q plot designs. An initial comparison of the three designs is also given. We use a generalized linear mixed model to compare the power of the three designs in section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). Finally, we compare the power of a lineup test of normality to the classical normality tests in section~\ref{sec:power2}, and outline areas for future research in section~\ref{sec:discussion}. 
+\hh{In the following sections of this paper we compare the power of classical tests in detecting deviations from normality compared to visual detecting using Q-Q plots (section~\ref{sec:power2}) based on a simulation study, which we introduce in section~\ref{sec:simu}. Besides the power comparison of classical versus visual tests, we compare the power of the different designs in section~\ref{sec:power1} in a generalized linear mixed model. We also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). }
+%In the next section, we describe the simulation study used to compare the three Q-Q plot designs. An initial comparison of the three designs is also given. We use a generalized linear mixed model to compare the power of the three designs in section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). Finally, we compare the power of a lineup test of normality to the classical normality tests in section~\ref{sec:power2}, and outline areas for future research in section~\ref{sec:discussion}. 
 
 
 %------------------------------------------------------------------------------------
@@ -540,10 +502,9 @@ In the next section, we describe the simulation study used to compare the three 
 \section{Simulation Setup and Model}\label{sec:simu}
 %------------------------------------------------------------------------------------
 
-\hh{We'll have to split the simulation setup from the model, and move the model into the back to the power of the designs ... we'll also probably deal with more designs. }
-
-\hh{In order to evaluate and compare the power of Q-Q plots in the various modifications to normal distribution tests, we make use of the following simulation scenario in lineup tests:
-using samples of size $s \in \{20, 30, 50, 75\}$ from a $t_\nu$ distribution with $\nu \in \{2, 5, 10\}$ degrees of freedom
+\hh{In order to evaluate the power of Q-Q plots and compare their performance to normal distribution tests, we make use of a simulation study, 
+using samples of size $s \in \{20, 30, 50, 75\}$ from a $t_\nu$ distribution with $\nu \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.
+For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from normally distributed samples of the same size. For each data sample, two sets of null plots are created, so that we have a total of 48 lineup data. 
 }
 
 
@@ -551,7 +512,7 @@ using samples of size $s \in \{20, 30, 50, 75\}$ from a $t_\nu$ distribution wit
 %We are testing three different versions of a Q-Q plot, 
 
 
-To investigate the power of the three different Q-Q plot versions, we sampled data from a $t$ distribution with varying degrees of freedom and sample sizes, and included a Q-Q plot of these data in a lineup of null charts drawn from standard normal samples of the same size.
+%To investigate the power of the three different Q-Q plot versions, we sampled data from a $t$ distribution with varying degrees of freedom and sample sizes, and included a Q-Q plot of these data in a lineup of null charts drawn from standard normal samples of the same size.
 For lineup tests it is of extreme importance to consider the generation of the null sets and the construction of the plots in the lineup. 
 Null data is created conistently with the null hypothesis. Here, we have two different null hypotheses to consider:
 
@@ -570,11 +531,19 @@ Examples for both hypotheses are shown in figure~\ref{fig:lps}. Both lineups sho
 
 Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in a Q-Q plot corresponds to a  hypothesis test against that distribution. As long as there is a method to generate samples under the null hypothesis, we do not even need to know the exact distribution. This allows us to assess situations in which we only have approximate or asymptotic results, which are otherwise hard, if not impossible, to investigate  with the (small) finite samples we typically deal with in practice.
 
-Note that IQR is used here in estimating scale---this is standard practice for Q-Q plot. Robust estimation of the variance is preferred for better assessment of the tails and outliers of the empirical distribution. We could use alternative estimators for variance, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, but this will likely also change the power of the corresponding lineup.
+The interquartile range (IQR) is used---as is standard practice for Q-Q plots---to estimate scale. Robust estimation of the variance is preferred for better assessment of the tails and outliers of the empirical distribution. We could use alternative estimators for variance, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, but this will likely also change the power of the corresponding lineup.
 
 
 
-Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} independent observers were recruited and asked to evaluate ten lineups each. 
+Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} independent observers were recruited and asked to evaluate ten lineups each. \hh{Lineups were randomly assigned to participants, such that each participant
+\begin{itemize}
+\item  evaluated each data set at most once, 
+\item was exposed to multiple parameter settings (`harder' and `easier' lineups), and
+\item evaluated each Q-Q plot design at most twice.
+\end{itemize}
+
+XXX discussion of amazon turk studies in comparison to lab experiments: practical considerations \citep{Kosara:2010}, study by \citet{cleveland:1984} re-run on Amazon MTurk with similar results by \citet{Heer:2010}.
+}
 %
 Half of the lineups that observers were shown allowed multiple choices of plots from a lineup for the final answer. While most participants still chose only a single plot, in the analysis we dealt with multiple answers to a lineup by using a weighting variable defined as the reciprocal of the number of answers given by a participant.
 
@@ -618,7 +587,9 @@ lps15$pvals.adj <- unlist(llply(1:nrow(lps15), function(i) {
 lps <- merge(lps, lps15[, c("data_name", "treatment", "pvals.adj")], by=c("data_name", "treatment"), all=TRUE)
 @
 
-<<compare-designs, echo=FALSE, fig.width=10, fig.height=8, warning=FALSE, message=FALSE>>=
+\begin{figure}[ht]
+\centering
+<<compare-designs, echo=FALSE, fig.width=12.5, fig.height=8, out.width='\\textwidth', warning=FALSE, message=FALSE>>=
 dsets <- ddply(turkall, .(data_name), summarize,
                  n= length(data_name),
                  correct=sum(correct))
@@ -660,85 +631,19 @@ text <- data.frame(label = c("Standard", "Detrended", "Detrended 2", "Control"),
 ggplot() + 
   geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back1) + 
   geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back2) + 
-  geom_text(aes(x = x, y= y, label=label), size=7, colour="grey40", angle=90, hjust=0, data=text) + 
-  geom_point(aes(x=as.numeric(CIdesign), y=100*correct/n, colour=factor(rep), shape=factor(signif)), size=4,  data=dataset) +
+  geom_text(aes(x = x, y= y, label=label), size=5, colour="grey40", angle=90, hjust=0, data=text) + 
+  geom_point(aes(x=as.numeric(CIdesign), y=100*correct/n, colour=factor(rep), shape=factor(signif)), size=3,  data=dataset) +
   geom_line(aes(x=as.numeric(CIdesign), y=100*correct/n, colour=factor(rep), group=data_name), data=dataset) +
-  facet_grid(facets=nu~s, labeller="label_parsed") + scale_colour_brewer(palette="Set1") +
-  theme_bw() + scale_shape_manual(values=c(1,19)) + ylab("Percentage of data identifications") +
+  facet_grid(facets=nu~s, labeller="label_parsed") + scale_colour_brewer("Replicate", palette="Set1") +
+  theme_bw() + scale_shape_manual("Significant difference\nfrom normality",values=c(1,19)) + ylab("Percentage of data identifications") +
 #  scale_x_continuous(breaks=1:7, labels=levels(dataset$CIdesign)) + 
-  scale_x_continuous("", breaks=1:7, labels=c("\nHD", "\nTS","HD", "TS","HD", "TS","Control")) +
-  theme(legend.position="bottom", legend.direction="horizontal")
+  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nHD", "\nTS","\t\t\t\t\tDetrended\nHD", "\nTS","\t\t\t\t\tDetrended2\nHD", "\nTS","Control")) +
+  theme(legend.position="bottom", legend.direction="horizontal", legend.box="horizontal")
 #  theme(axis.text.x = element_text(angle = 0, hjust = 1))
 @
-<<triples, echo=FALSE, warning=FALSE, message=FALSE, results='hide'>>=
-library(reshape2)
-lps$prop <- with(lps, correct/num)
-dt <- dcast(lps, data_name~treatment, value.var="prop")
-exps <- ldply(as.character(dt$data_name), parse_filename)
-exps$data_name <- as.character(dt$data_name)
-dt <- merge(dt, exps, by="data_name")
-dt$df <- as.factor(dt$df)
-dt$df <- factor(dt$df, levels=c(2,5,10))
-
-
-pvals <- dcast(lps, data_name~treatment, value.var="signif")
-names(pvals) <- gsub("^", "sg.",names(pvals))
-names(pvals)[1] <- "data_name"
-
-dt <- merge(dt, pvals, by="data_name")
-dt$sg.Standard <- factor(dt$sg.Standard)
-dt$sg.Standard <- factor(dt$sg.Standard, levels=c("TRUE", "FALSE"))
-dt$df <- factor(dt$df, levels=c("10", "5", "2"))
-@
-<<nortests, echo=FALSE>>=
-pvals <- read.csv("data/pvalues.csv")
-lps$pvals.adj[is.na(lps$pvals.adj)] <- lps$pvals[is.na(lps$pvals.adj)]
-lppvals <- dcast(lps, data_name~treatment, value.var="pvals.adj")
-
-lppvals <- merge(lppvals, pvals, by="data_name")
-lppvals <- merge(lppvals, exps, by="data_name")
-
-#cor(lppvals[,c("Standard", "Control", "Rotated", "cvm", "ad", "ks", "sw", "lf")])
-#ggpairs(lppvals[,c("Standard", "Control", "Rotated", "cvm", "ad", "ks", "sw")])
-lppvals$df <- factor(lppvals$df)
-lppvals$df <- factor(lppvals$df, levels=c("10", "5", "2"))
-
-require(reshape2)
-lppvalscb <- dcast(lppvals, ad+sw+lf+cvm+ks+rep+n+df~null, value.var="Standard")
-lppvalscb$Standard <- with(lppvalscb, (`1`+`2`)/2)
-
-p <- ggplot() + 
-  geom_abline(colour="grey70") + 
-  geom_rect(aes(xmin=-0.02, xmax=1, ymin=-0.02, ymax=0.05), fill="grey70", alpha=0.5) + 
-  geom_rect(aes(xmin=-0.02, xmax=0.05, ymin=-0.02, ymax=1), fill="grey70", alpha=0.5) + 
-  geom_point(aes(x=Standard, y=sw, colour=df, shape=df), size=3, data=lppvalscb) + 
-  scale_colour_brewer("degrees of\nfreedom", palette="Set2") + theme_bw() +scale_shape("degrees of\nfreedom") + ylim(c(-0.02,1)) + geom_point(aes(x=Standard, y=sw), pch=21, size=7, data=subset(lppvalscb, (Standard < 0.03 & sw > 0.2) |(Standard > 0.05 & sw < 0.05))) + theme() + ylab("Shapiro-Wilks (p-values)") + xlab("Standard Q-Q plot lineup (p-values)") 
-                                                                                                                                                                                                                                                                                                        
-#suppressWarnings(p)
-ggsave(plot=p, filename="figures/figvisnorm.pdf", width=5.5, height=4)
-# data-1-2-17-20-5-8-2.csv  # Standard significant
-# data-2-2-17-20-5-8-15.csv
-# data-1-2-23-50-10-8-10.csv  # Standard not significant
-# data-2-1-6-30-5-14-15.csv
-@
-\begin{figure}
-\centering
-\begin{subfigure}[b]{.3\textwidth}
-<<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4)) + xlab("De-trended")
-@
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-<<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") +  geom_point(aes(x=Rotated, y=Control, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw() +scale_colour_brewer(palette="Set2") + theme(legend.position="none") + scale_shape_manual(values=c( 15,16,17, 22,21)) + scale_size_manual(values=c(3,4))  + xlab("De-trended")
-@
-\end{subfigure}
-\begin{subfigure}[b]{.3\textwidth}
-<<dependson='triples', echo=FALSE>>=
-ggplot() + geom_abline(colour="grey50") + geom_point(aes(x=Control, y=Standard, colour=df, shape=interaction(df,sg.Standard), size=sg.Standard), data=dt) + theme_bw()  + scale_size_manual(values=c(3,4), guide="none") +scale_colour_brewer("degrees of\nfreedom",palette="Set2", guide="none") + theme(legend.position=c(0.75, 0.20),legend.background = element_rect(fill = "white", colour = NA)) + scale_shape_manual("degrees of freedom\n(significance)", values=c(  15,16,17, 22,21), labels=c("10 ","5 ","2 ","10 (n.s.)", "5 (n.s.)")) + guides(shape=guide_legend(ncol=2, override.aes = list(size = c(3,3,3,4,4), colour=c("#66C2A5", "#FC8D62", "#8DA0CB", "#66C2A5", "#FC8D62"))))
-@
-\end{subfigure}
-\caption{\label{fig:compare}Proportions of successful evaluation of the same data in the three different variations of Q-Q plots. Standard and control displays exhibit the highest correlation. De-trended Q-Q plots agree with decisions made based on Q-Q plots in the control or standard design, but display lower rates of correct responses in the `middle' field. Significances are based on lineup evaluations in the standard design. }
+\caption{\label{fig:compare} \hh{Percentages of identifying the $t$ sample from lineups of different variations of Q-Q plots. Each lineup is shown as a dot. Filled dots indicate a (visually) significant deviation from normality (as determined in the user experiment). Dots of the same lineup data (sample and null data) are connected by a line.
+The four lines in each panel correspond to four different lineups: the lines of the same color correspond to the same $t$-sample, but different null data; the lines of the other colour change both in sample and null data. The results are facetted by parameter setting: sample sizes $s$ (columns) vary from 20 to 75, degrees of freedom $\nu$ are shown in rows. With increasing sample size and decreasing degrees of freedom the percentage of picking the $t$ sample  from the normal samples generally increases. }
+ }
 \end{figure}
 
 
@@ -815,7 +720,7 @@ m1 <- glmer(correct~CIdesign +  factor(sample_size) + factor(df) + (1|ip_address
 & estimates & \bf low & \bf high && odds &  \bf low & \bf high \\ 
  \cline{2-4} \cline{6-8}
 %  \hline
-  Intercept & -4.84 & -6.19 & -3.49 && 0.01 & 0.00 & 0.03 \\ [3pt]
+  Intercept & \bf -4.84 & \bf -6.19 & \bf -3.49 && \bf 0.01 & \bf 0.00 & \bf 0.03 \\ [3pt]
 \multicolumn{1}{r}{\bf design (CI)} \\  
 Control & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
 Standard (HD) & 0.10 & -0.08 & 0.29 && 1.11 & 0.92 & 1.33 \\ 
