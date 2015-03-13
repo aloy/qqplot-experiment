@@ -193,6 +193,8 @@ Anderson-Darling & $A =$ & $ n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)\ri
 Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)\right|^2 dF(x)$ \\\hline
 \end{tabular}
 \end{table}
+\afterpage{clearpage}
+
 %
 
 % The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not fit this scheme, but has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}. 
@@ -314,7 +316,7 @@ based on the estimated standard error of the order statistics for an independent
 \includegraphics[width=0.22\textwidth]{figures/qqplots-7}
 \caption{ \label{qqplots} \hh{Q-Q plot variations:} control, standard, and \hh{two versions of} de-trended \hh{Q-Q plots}, with Davison Hinkley (DH) or TS 95\% confidence regions.}
 \end{figure}
-
+\afterpage{clearpage}
 
 
 In order to objectively evaluate  the three designs and quantify their effectiveness we make use of {\it lineup tests}.
@@ -374,34 +376,26 @@ The reference line has a slope of $S$ (and an intercept of 0).  All panels have 
 
 Examples for both hypotheses are shown in figure~\ref{fig:lps}. Both lineups show the same dataset (in panel \#$(3^2-3)$\footnote{The little piece of calculus is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.}). On the left the data stand out (all 33 observers picked the data plot), i.e.~we reject the null hypothesis of a standard normal distribution. On the right, the data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{\sigma}=1.578$. 
 
-% \begin{figure}[hbt]
-% <<lps-dsn, dependson='functions', echo=FALSE, message=FALSE>>=
-% dframe <- read.csv("lineup-data/data-1-2-15-50-2-13-6.csv")
-% dframe$.sample <- dframe$.sample_outer
-% 
-% fit2 <- dframe
-% b <- (HLMdiag:::qqlineInfo(dframe$x[dframe$.n==20]))[2] # get robust estimate for sigma
-% #sd(fit2$x[fit2$.n==20])
-% fit2$x[fit2$.n==20] <- dframe$x[dframe$.n==20]/b # change variance to 1, compare then
-% idx <- grep("naive1.qq", names(fit2))
-% fit2 <- ddply(fit2[,-idx], .(.n), transform, naive1.qq=qqnorm(x, plot.it=FALSE))
-% idx <- grep("naive1.env", names(fit2))
-% fit2 <- ddply(fit2[,-idx], .(.n), transform, naive1.env=sim_env(x))
-% @
-% \begin{subfigure}{0.5\textwidth}
-% <<echo=FALSE, fig.width=7, fig.height=7>>=
-% std_lineup(dframe)
-% @
-% \end{subfigure}
-% \begin{subfigure}{0.5\textwidth}
-% <<echo=FALSE, fig.width=7, fig.height=7>>=
-% std_lineup(fit2) 
-% @
-% \end{subfigure}
-% \caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
-% The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. }
-% \end{figure}
-% \afterpage{\clearpage}
+\begin{figure}[hbt]
+
+\begin{subfigure}{0.5\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-1-1} 
+
+\end{knitrout}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2-1} 
+
+\end{knitrout}
+\end{subfigure}
+\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
+The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. }
+\end{figure}
+\afterpage{\clearpage}
 
 Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in a Q-Q plot corresponds to a  hypothesis test against that distribution. As long as there is a method to generate samples under the null hypothesis, we do not even need to know the exact distribution. This allows us to assess situations in which we only have approximate or asymptotic results, which are otherwise hard, if not impossible, to investigate  with the (small) finite samples we typically deal with in practice.
 
@@ -436,7 +430,9 @@ The four lines in each panel correspond to four different lineups: the lines of 
 
 
 Figure~\ref{fig:compare} shows proportions of data picks in the lineups under the different variations of Q-Q plots. 
-\hh{All versions of Q-Q plots provide highly correlated results, and largely agree in the decision on normality (filled circles indicate a  rejection of standard normality based on visual evaluation, open circles indicate a lack of rejection). Each of the panels shows the four lineups corresponding to the same sample size $n$ and degrees of freedom $\nu$ of the $t$ distribution. Lines of the same color correspond to the same data sample. Different lines indicate different sets of null plots. Generally, within each panel, lines of the same color (lineups share the same data sample, but have different nulls) are closer together than lines of different color (different sample, different nulls).  }
+\hh{All versions of Q-Q plots provide highly correlated results, and largely agree in the decision on normality. Filled circles indicate a  rejection of standard normality based on visual evaluation, open circles indicate a lack of rejection. Each of the panels shows the four lineups corresponding to the same sample size $n$ and degrees of freedom $\nu$ of the $t$ distribution.
+Each line connects the evaluations based on the same lineup data (same data, same null plots).
+Lines of the same color correspond to lineups with the same data sample, while differently colored lines show lineups of different samples.  Generally, within each panel, lines of the same color (lineups share the same data sample, but have different nulls) are closer together than lines of different color (different sample, different nulls).  }
 As expected, the task of identifying non-normality becomes easier with increased sample size and more pronounced deviations from normality due to lower degrees of freedom. 
 %All three versions provide highly correlated results, and largely agree for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform  worse than either standard or control Q-Q plots. 
 
@@ -563,6 +559,7 @@ An inferior performance of normality tests based on sample mean and variance is 
 \includegraphics[width=0.5\textwidth]{figures/figvisnorm.pdf} 
 \caption{\label{fig:visnorm}  Scatterplot of $p$-values from the Shapiro-Wilk test and estimated $p$-values from lineups of Standard Q-Q plots. The grey shaded areas represent areas of rejection under at least one of the tests. The circled observations correspond to samples that lead to decidedly different decisions under the two tests. The lineups corresponding to these observations are shown in figure~\ref{fig:lpnorm}.}
 \end{figure}
+\afterpage{\clearpage}
 
 \begin{figure}
 \begin{subfigure}[t]{.5\textwidth}
@@ -610,6 +607,7 @@ An inferior performance of normality tests based on sample mean and variance is 
 \caption{\label{fig:lpnorm}  On the left, results are not significant, on the right they are highly significant. These two lineups correspond to the results circled in~figure~\ref{fig:visnorm}. The tables below the lineups show the number of times each of the panels was picked as the most different. Non-integer numbers result from multiple choice plots. The italicized numbers refer to the panel that contains the actual sample.
 }
 \end{figure}
+\afterpage{\clearpage}
 
 \begin{figure}
 \centering
@@ -620,6 +618,7 @@ An inferior performance of normality tests based on sample mean and variance is 
 \end{knitrout}
 \caption{\label{fig:lp3} Lineup of standard design Q-Q plots showing the data of the lineup on the right in figure~\ref{fig:lpnorm}. The hypothesized distribution is $N(0, \widehat{\sigma}^2)$, where $\widehat{\sigma}^2$ is estimated as the regular (i.e.~non-robust) sample variance, and nulls are drawn from that distribution. While not actually user tested, we do not think that the data stands out from the lineup.}
 \end{figure}
+\afterpage{\clearpage}
 %-----------------------------------------------------------------------------------
 
 %------------------------------------------------------------------------------------
@@ -687,6 +686,7 @@ Detrended (HD) & \bf 0.42 & \bf 0.20 & \bf 0.64 && \bf  1.52 & \bf 1.22 & \bf 1.
 \cline{2-4} \cline{6-8}
 \end{tabular}
 \end{table}
+\afterpage{clearpage}
 
 
 
@@ -735,6 +735,8 @@ To further investigate the difference between the standard and the de-trended de
 \end{subfigure}
 \caption{\label{fig:rotstd}Lineups of the same data in two different designs. In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. The same data set is only identified once out of 21 times in the lineup showing the de-trended design. Observers instead pick panel \#$(3^2-2)$ 18 times. \hh{The additional lineup below shows the same data in the de-trended design using the TS confidence band.}}
 \end{figure}
+\afterpage{\clearpage}
+
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Standard"))
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Rotated"))
 Two of the observers picking panel \#7 from the de-trended lineup thought that this panel was the one with the ``most dots outside the shaded area,'' i.e.~they focused on the middle of plot \#7. This is not a singular occurrence---when investigating  overall reasoning we take a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area). It seems to help in identifying the data plot in the standard design, but it severely  increases the chance of picking a null plot in the de-trended design. Why is that? The de-trended version is making better use of the space in the plot, it therefore  emphasizes deviations of points from the $x$-axis (i.e.~the theoretical distribution) and with it  the fact whether individual points are inside or outside the shaded areas corresponding to the (pointwise) 95\% confidence intervals. The responses suggest that participants take the shading very seriously and make their choice dependent on it. It also seems that the confidence bands mislead people---this suggests, that for the de-trended Q-Q plot design we might have to re-think how to display confidence intervals: it might be better to  either use  a more conservative  confidence level or change the approach altogether from pointwise confidence intervals to simultaneous confidence bands as, for example, discussed by \citet{Rosenkrantz:2000fd}.
@@ -754,6 +756,7 @@ Another promising approach might be to base confidence bands on the TS test \cit
 \end{knitrout}
 \caption{\label{fig:rotfalse}Mentioning ``outside'' or ``area'' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. }
 \end{figure}
+\afterpage{\clearpage}
 
 \begin{figure}[hbt]
 \centering
@@ -764,6 +767,7 @@ Another promising approach might be to base confidence bands on the TS test \cit
 \end{knitrout}
 \caption{\label{fig:choices}Overview of reasons participants gave for  their answer. ``Outliers'' as a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious to see that so many more observers respond ``left side different'' over ``right;''  all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
 \end{figure}
+\afterpage{\clearpage}
 
 Figure~\ref{fig:choices} summarizes the reasons participants gave for the choice of plot they selected. Bars on the left show  identifications of the data plot, bars on the right represent selections of a null plot. The reasons represent the four reasons offered  to participants in check boxes. Notably, the reasons do not seem to differentiate between the three designs. Stating ``outliers'' as a reason for choosing a plot is helpful across all designs in picking the data out of the lineup. Stating ``left side different'' or ``points curve''  as the reason for choosing a plot decreases the chance for this plot to be the data plot. ``Right side different'' does not seem to have any effect. Interestingly, there is a big difference in the percentages of ``right'' and ``left.'' Participants favored to give ``left side different'' as a reason over ``right side different'', even though all distributions involved were symmetric, and therefore deviations from normality should also manifest themselves in a symmetric fashion.
 
@@ -798,25 +802,34 @@ The application of the lineup framework based on the related probability (P-P) p
 \section{Model and Results}
 
 
-\begin{figure}[hbt]
-
-\begin{subfigure}{0.5\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-1-1} 
-
-\end{knitrout}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2-1} 
-
-\end{knitrout}
-\end{subfigure}
-\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
-The observed data in both lineups is displayed in panel \#$(3^2 - 3)$. }
-\end{figure}
+% \begin{figure}[hbt]
+% <<lps-dsn2, dependson='functions', echo=FALSE, message=FALSE>>=
+% dframe <- read.csv("lineup-data/data-1-2-15-50-2-13-6.csv")
+% dframe$.sample <- dframe$.sample_outer
+% 
+% fit2 <- dframe
+% b <- (HLMdiag:::qqlineInfo(dframe$x[dframe$.n==20]))[2] # get robust estimate for sigma
+% #sd(fit2$x[fit2$.n==20])
+% fit2$x[fit2$.n==20] <- dframe$x[dframe$.n==20]/b # change variance to 1, compare then
+% idx <- grep("naive1.qq", names(fit2))
+% fit2 <- ddply(fit2[,-idx], .(.n), transform, naive1.qq=qqnorm(x, plot.it=FALSE))
+% idx <- grep("naive1.env", names(fit2))
+% fit2 <- ddply(fit2[,-idx], .(.n), transform, naive1.env=sim_env(x))
+% @
+% \begin{subfigure}{0.5\textwidth}
+% <<echo=FALSE, fig.width=7, fig.height=7>>=
+% std_lineup(dframe)
+% @
+% \end{subfigure}
+% \begin{subfigure}{0.5\textwidth}
+% <<echo=FALSE, fig.width=7, fig.height=7>>=
+% std_lineup(fit2) 
+% @
+% \end{subfigure}
+% \caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
+% The observed data in both lineups is displayed in panel \#$(3^2 - 3)$\footnote{The little piece of calculus is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.}. }
+% \end{figure}
+% \afterpage{\clearpage}
 
 Next, we model the aforementioned probability $p_i$ with which observer $i$ picks the true data from a lineup. 
 Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision on the $i$th evaluation and $\pi_i$ is the probability with which the observer chooses the data plot. This probability is influenced by a number of factors:
@@ -869,6 +882,7 @@ The combination of different levels of sample size and degrees of freedom of the
 \multicolumn{6}{l}{Signif. codes:  0 $\le$ *** $\le$ 0.001 $\le$ ** $\le$ 0.01 $\le$ * $\le$ 0.05 $\le$ . $\le$ 0.1 $\le$ ' ' $\le$ 1}
 \end{tabular}
 \end{table}
+\afterpage{clearpage}
 
 The estimated model coefficients for model $M_1$ are shown in Table~\ref{tab:model}. 
 Estimates of the variance components are $\widehat{\sigma}_u = 0.66$, $\widehat{\sigma}_d=1.87$, and $\widehat{\sigma} = 0.3$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
