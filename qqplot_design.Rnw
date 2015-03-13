@@ -388,7 +388,7 @@ Anderson-Darling & $A =$ & $ n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)\ri
 Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)\right|^2 dF(x)$ \\\hline
 \end{tabular}
 \end{table}
-\afterpage{clearpage}
+\afterpage{\clearpage}
 
 %
 
@@ -511,7 +511,7 @@ based on the estimated standard error of the order statistics for an independent
 \includegraphics[width=0.22\textwidth]{figures/qqplots-7}
 \caption{ \label{qqplots} \hh{Q-Q plot variations:} control, standard, and \hh{two versions of} de-trended \hh{Q-Q plots}, with Davison Hinkley (DH) or TS 95\% confidence regions.}
 \end{figure}
-\afterpage{clearpage}
+\afterpage{\clearpage}
 
 
 In order to objectively evaluate  the three designs and quantify their effectiveness we make use of {\it lineup tests}.
@@ -1017,7 +1017,7 @@ Detrended (HD) & \bf 0.42 & \bf 0.20 & \bf 0.64 && \bf  1.52 & \bf 1.22 & \bf 1.
 \cline{2-4} \cline{6-8}
 \end{tabular}
 \end{table}
-\afterpage{clearpage}
+\afterpage{\clearpage}
 
 
 
@@ -1257,7 +1257,7 @@ The combination of different levels of sample size and degrees of freedom of the
 \multicolumn{6}{l}{Signif. codes:  0 $\le$ *** $\le$ 0.001 $\le$ ** $\le$ 0.01 $\le$ * $\le$ 0.05 $\le$ . $\le$ 0.1 $\le$ ' ' $\le$ 1}
 \end{tabular}
 \end{table}
-\afterpage{clearpage}
+\afterpage{\clearpage}
 
 The estimated model coefficients for model $M_1$ are shown in Table~\ref{tab:model}. 
 Estimates of the variance components are $\widehat{\sigma}_u = \Sexpr{round(m1@theta[1],2)}$, $\widehat{\sigma}_d=\Sexpr{round(m1@theta[2],2)}$, and $\widehat{\sigma} = \Sexpr{round(sqrt(sum((fitted(m1)-turkall$correct)^2)/(nrow(turkall)-8)),2)}$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.

@@ -436,7 +436,7 @@ Lines of the same color correspond to lineups with the same data sample, while d
 As expected, the task of identifying non-normality becomes easier with increased sample size and more pronounced deviations from normality due to lower degrees of freedom. 
 %All three versions provide highly correlated results, and largely agree for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform  worse than either standard or control Q-Q plots. 
 
-\hh{Lineups of data samples from a $t_2$-distribution (bottom row)  are all rejected in lineups under the standard design, while the $t_{10}$ samples largely go undetected except for two of the larger samples.} 
+\hh{Lineups of data samples from a $t_2$-distribution (bottom row)  are  rejected in lineups under all designs (with one exception), while the $t_{10}$ samples largely go undetected except for two of the larger samples.} 
 Lineups showing a sample from a $t_5$ distribution \hh{show the most variability. Table~\ref{tab:no1} gives an overview of the rejections of a standard normal distribution by design. A more thorough discussion on the power of different designs follows in section~\ref{sec:power1}.} 
  
 \begin{table} 
@@ -531,7 +531,7 @@ This is not quite true, as can be seen in Table~\ref{tab:reject}, but what becom
 \begin{table}[ht]
 \centering
 \caption{\label{tab:reject}
- From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 24 non-normal samples, 12 get rejected at the 5\% significance level based on evaluation by observers. None of the standard normal tests come close to that rejection rate. The power we observe here matches the power discussion by \citet{razali:2011} for the SW, AD, and the LF  test. The number in parentheses is the number of situations in which the Standard Q-Q plot agrees with the normal test in rejecting normality of the sample.}
+ From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 24 non-normal samples, 12 get rejected at the 5\% significance level based on evaluation by observers in the standard lineup with Davison-Hinkley confidence bands, 15 get rejected using lineups of standard Q-Q plots with TS confidence bands . None of the standard normal tests come close to those rejection rates. The power we observe here matches the power discussion by \citet{razali:2011} for the SW, AD, and the LF  test. The number in parentheses is the number of situations in which the Standard Q-Q plot agrees with the normal test in rejecting normality of the sample. \hh{XXX we should do something about the parentheses}}
 
 \begin{tabular}{rrrrrrrrr}
   \hline
