@@ -667,7 +667,7 @@ dataset <- ddply(turkall, .(data_name, CIdesign, rep, df, sample_size), summariz
                  n= length(data_name),
                  correct=sum(correct))
 dataset$pval <- NULL
-require(vinference)
+suppressMessages(require(vinference))
 for (i in 1:nrow(dataset)) dataset$pval[i] <- with(dataset[i,], pV(x=correct, K=n, m=20, scenario=3))
 dataset$signif <- dataset$pval < 0.05
 dataset$params <- with(dataset, interaction(sample_size, df))
@@ -955,6 +955,7 @@ idx <- grep("naive1.qq", names(fit2))
 fit2 <- ddply(fit2[,-idx], .(.n), transform, naive1.qq=qqnorm(x, plot.it=FALSE))
 idx <- grep("naive1.env", names(fit2))
 fit2 <- ddply(fit2[,-idx], .(.n), transform, naive1.env=sim_env(x))
+
 #std_lineup(fit2)
 
 p <- std_lineup(fit2) + theme_bw() + labs(x = "", y = "") +
@@ -968,6 +969,15 @@ dt <- as.data.frame(xtabs(weight~response, data=t15w, data_name=="data-2-2-17-20
 dt$.sample <- as.numeric(as.character(dt$response))
 p + geom_text(aes(x=0.5, y=-2.5, label=round(Freq,1)), colour="grey80", size=7, data=dt, hjust=0)
 
+
+fit3 <- dframe
+b <- sd(dframe$x[dframe$.n==20]) # get robust estimate for sigma
+fit3$x[fit3$.n==20] <- dframe$x[dframe$.n==20]/b # change variance to 1, compare then
+idx <- grep("naive1.qq", names(fit3))
+fit3 <- ddply(fit3[,-idx], .(.n), transform, naive1.qq=qqnorm(x, plot.it=FALSE))
+idx <- grep("naive1.env", names(fit3))
+fit3 <- ddply(fit3[,-idx], .(.n), transform, naive1.env=sim_env(x))
+lp3 <- std_lineup(fit3)
 #dx <- matrix(0, ncol=4, nrow=5)
 #dt$response <- as.numeric(as.character(dt$response))
 #dx[dt$response] <- dt$Freq
@@ -995,7 +1005,7 @@ Non-integer numbers result from multiple choice answers. %\hh{XXX} The italicize
 
 \begin{figure}
 \centering
-<<lp3, echo=FALSE, fig.width=6, fig.height=6, out.width='0.5\\textwidth'>>=
+<<lp3, dependson='plot2', echo=FALSE, fig.width=6, fig.height=6, out.width='0.5\\textwidth'>>=
 lp3
 @
 \caption{\label{fig:lp3} Lineup of standard design Q-Q plots showing the data of the lineup on the right in figure~\ref{fig:lpnorm}. The hypothesized distribution is $N(0, \widehat{\sigma}^2)$, where $\widehat{\sigma}^2$ is estimated as the regular (i.e.~non-robust) sample variance, and nulls are drawn from that distribution. While not actually user tested, we do not think that the data stands out from the lineup.}
