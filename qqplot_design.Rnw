@@ -547,7 +547,9 @@ In the next section, we describe the simulation study used to compare the three 
 
 \hh{In order to evaluate the power of Q-Q plots and compare their performance to normal distribution tests, we make use of a simulation study, 
 using samples of size $s \in \{20, 30, 50, 75\}$ from a $t_\nu$ distribution with $\nu \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.
-For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from normally distributed samples of the same size. For each data sample, two sets of null plots are created, so that we have a total of 48 lineup data. 
+For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from standard normally distributed samples of the same size. For each data sample, two sets of null plots are created, so that we have a total of 48 lineup data. 
+
+These lineup data are rendered in each of the Q-Q plot variations, resulting in $48 \times 7 = 336$ different lineups.  Additionally, Standard plots (both TS and DH bands) are also rendered against $N(0, $S^2$)$ null data (see discussion below), adding another $2 \times 48 = 96$ lineups.
 }
 
 
@@ -614,8 +616,10 @@ XXX discussion of amazon turk studies in comparison to lab experiments: practica
 }
 %
 Half of the lineups that observers were shown allowed for multiple choices of plots from a lineup for the final answer. Very few participants made use of this option. In the analysis we dealt with multiple answers to a lineup by using a weighting variable defined as the reciprocal of the number of answers given by a participant.
-
-<<rejects, dependson='data', echo=FALSE, message=FALSE>>=
+<<load, dependson='data', echo=FALSE, results='hide', message=FALSE>>=
+suppressMessages(require(vinference))
+@
+<<rejects, dependson='load', echo=FALSE, message=FALSE>>=
 lps <- ddply(turkw, .(data_name, treatment), summarise,
              correct=sum(correct*weight),
              num=sum(weight)
@@ -629,7 +633,6 @@ parse_filename <- function(fname) {
 
 exps <- ldply(as.character(lps$data_name), parse_filename)
 lps<-data.frame(lps, exps)
-suppressMessages(require(vinference))
 lps$pvals <- unlist(llply(1:nrow(lps), function(i) {
   correct <- floor(lps$correct[i])
   n <- lps$num[i]
@@ -657,7 +660,7 @@ lps <- merge(lps, lps15[, c("data_name", "treatment", "pvals.adj")], by=c("data_
 
 \begin{figure}[ht]
 \centering
-<<compare-designs, echo=FALSE, fig.width=12.5, fig.height=8, out.width='\\textwidth', warning=FALSE, message=FALSE>>=
+<<compare-designs, echo=FALSE, fig.width=14, fig.height=8.5, out.width='\\textwidth', warning=FALSE, message=FALSE>>=
 dsets <- ddply(turkall, .(data_name), summarize,
                  n= length(data_name),
                  correct=sum(correct))
@@ -667,7 +670,7 @@ dataset <- ddply(turkall, .(data_name, CIdesign, rep, df, sample_size), summariz
                  n= length(data_name),
                  correct=sum(correct))
 dataset$pval <- NULL
-suppressMessages(require(vinference))
+#suppressMessages(require(vinference))
 for (i in 1:nrow(dataset)) dataset$pval[i] <- with(dataset[i,], pV(x=correct, K=n, m=20, scenario=3))
 dataset$signif <- dataset$pval < 0.05
 dataset$params <- with(dataset, interaction(sample_size, df))
@@ -690,7 +693,7 @@ back2$xmax <- 6.5
 back2$ymin <- -5
 back2$ymax <- 105
 
-text <- data.frame(label = c("Standard", "Detrended", "Detrended 2", "Control"), 
+text <- data.frame(label = c("Standard", "Detrended (1)", "Detrended (2)", "Control"), 
                    x=c(1.5, 3.5, 5.5, 7), 
                    y=30,
                    nu="nu: 10",
@@ -705,7 +708,7 @@ ggplot() +
   facet_grid(facets=nu~s, labeller="label_parsed") + scale_colour_brewer("Replicate", palette="Set1") +
   theme_bw() + scale_shape_manual("Significant difference\nfrom normality",values=c(1,19)) + ylab("Percentage of data identifications") +
 #  scale_x_continuous(breaks=1:7, labels=levels(dataset$CIdesign)) + 
-  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nHD", "\nTS","\t\t\t\t\tDetrended\nHD", "\nTS","\t\t\t\t\tDetrended2\nHD", "\nTS","Control")) +
+  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nHD", "\nTS","\t\t\t\t\tDetrended (1)\nHD", "\nTS","\t\t\t\t\tDetrended (2)\nHD", "\nTS","Control")) +
   theme(legend.position="bottom", legend.direction="horizontal", legend.box="horizontal")
 #  theme(axis.text.x = element_text(angle = 0, hjust = 1))
 @
@@ -728,9 +731,9 @@ Lineups of samples from a $t_5$ distribution \hh{show the most variability. Tabl
  
 \begin{table} 
 \centering
-\begin{tabular}{lccccccc}\hline
+\begin{tabular}{lC{.6cm}C{.6cm}C{.6cm}C{.6cm}C{.6cm}C{.6cm}c}\hline
 \bf Design & \multicolumn{2}{c}{\bf Standard} & \multicolumn{2}{c}{\bf De-trended (1)} & \multicolumn{2}{c}{\bf Detrended (2)} & \bf Control \\
-\bf Confidence & HD & TS & HD & TS & HD & TS & --- \\ \hline
+\bf Confidence & HD & TS & HD & TS & HD & TS & --- \\ \hline \hline
 Reject $N(0,1)$ & 30 & 30 & 30 & 33 & 26 & 29 & 28 \\ \hline
 \end{tabular}
 \caption{\label{tab:no1} Number of rejections (out of 48) of standard normality by design. }
@@ -818,17 +821,17 @@ This is not quite true, as can be seen in Table~\ref{tab:reject}, but what becom
 \begin{table}[ht]
 \centering
 \caption{\label{tab:reject}
- From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 24 non-normal samples, 14 get rejected at the 5\% significance level based on evaluation by observers in the standard lineup with Davison-Hinkley confidence bands, 17 get rejected using lineups of standard Q-Q plots with TS confidence bands . None of the standard normal tests come close to those rejection rates. The power we observe here matches the power discussion by \citet{razali:2011} for the SW, AD, and the LF  tests. }
+ From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 24 non-normal samples, 14 get rejected at the 5\% significance level based on evaluation by observers in the standard lineup with Davison-Hinkley confidence bands, 17 get rejected using lineups of standard Q-Q plots with TS confidence bands. None of the standard normal tests come close to those rejection rates. The power we observe here matches the power discussion by \citet{razali:2011} for the SW, AD, and the LF  tests. }
 
 \begin{tabular}{rrrrrrrrr}
   \hline
- & Standard (DH/TS) & SW & AD & LF   & CvM & \\ 
+ & \bf  Standard (TS/DH) & \bf SW & \bf AD & \bf LF   & \bf CvM & \\ 
   \hline
   \hline
 %  reject $N(0,1)$ & 15 & 14 & 12  &   &  &   &  & 2\\ 
 %  not reject & 19 & 20 & 22 &  &   &  &   & 44\\ 
 %   \hline
-  reject $N(0,S^2)$  & 14 / 17 &  8  & 5  &  5  & 4 & \\ 
+  reject $N(0,S^2)$  & 17 / 14 &  8  & 5  &  5  & 4 & \\ 
 %  not reject &  &  &  & 32 & 38  & 38 &  40 & \\ 
 \hline
 \end{tabular}
@@ -1017,18 +1020,25 @@ lp3
 \section{Power: three different designs of Q-Q plots}\label{sec:power1}
 %-----------------------------------------------------------------------------------
 
-We base an evaluation of the three different Q-Q plot designs on the premise that if participants find it easier to identify the data plot under one lineup over another lineup (given identical data underlying the lineups), the first lineup uses the better design.
+\hh{In this section, we are investigating the differences that we see in Figure~\ref{fig:compare} of evaluations of the same data between different designs in more detail. We first model the results, then we investigate differences based on participants' answers. }
+
+\hh{The premise underlying our} evaluation of the different Q-Q plot designs is that if participants find it easier to identify the data plot in one lineup than in another lineup (given identical data underlying the lineups), the first lineup uses the better design.
 
 Let $Y_i$ be the outcome of the $i$th evaluation. Then $Y_i$ is a Bernoulli variable, where $\pi_i$ denotes the probablity of identifying the data plot from the lineup; i.e.~$P(Y_i = 1) = \pi_i = E[Y_i]$.   
-The probability of identifying the lineup is affected by several factors: (a) the strength of the signal, i.e.~degrees of freedom of the $t$ distribution, and the sample size, (b) a human factor, i.e~the visual ability of the observer, and (c)  the `lineup factor': depending on which $m-1$ representatives of the test distribution the null plots show, lineups of the same data plot can have different difficulty. We capture all of this in a logistic regression model with fixed effects for signal strength and random effects for lineup difficulty, $d$, and user ability, $u$: 
+The probability of identifying the lineup is affected by several factors: (a) the strength of the signal, i.e.~degrees of freedom of the $t$ distribution, and the sample size, (b) a human factor, i.e~the visual ability of the observer, and (c)  the `lineup factor': depending on which $m-1$ representatives of the test distribution the null plots show, lineups of the same data plot can have different difficulty. We capture all of this in a logistic regression model with fixed effects for signal strength ($\delta$ for degrees of freedom, and $\nu$ for sample size) and random effects for lineup difficulty, $d$, and user ability, $u$: 
 \begin{eqnarray*}
 g(\pi_i) &=& \eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},\\
 Y &=& g^{-1}(\eta) + \varepsilon
 \end{eqnarray*}
-where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard (HD), Standard (TS), De-trended (HD), De-trended (TS), De-trended2 (HD), De-trended2 (TS)$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular data sample used. 
+where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard (HD), Standard (TS), De-trended (HD), De-trended (TS), De-trended2 (HD), De-trended2 (TS)$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular sample \hh{and null data} used. 
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$. We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.
 %
-The  design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands help with evaluation in the standard design, but the difference is not significant.  Surprisingly, the de-trended Q-Q plot is significantly less powerful in detecting non-normality than either of the other designs. 
+\hh{Table~\ref{tab:coefs} gives an overview of the coefficients. As could be seen in various figures before, an increase in signal strength (larger sample size, fewer degrees of freedom) result in lineups, in which the sample is picked out more often by observers.}
+
+\hh{Aside from that,} the design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands help with evaluation in the standard design, but the difference is not significant.  
+
+\hh{The first de-trended version of Q-Q plots, in which the aspect ratio is kept the same as in the standard plot, shows significant increases in detecting non-normality. }
+Surprisingly, the \hh{second version of} de-trended Q-Q plots is significantly less powerful in detecting non-normality. \hh{Q-Q plots with DH bands are actually performing significantly worse than the control charts, while Q-Q plots with the TS bands just lose their previous gain from de-trending.} \hh{XXX needs a bit more discussion: additional space emphasizes artifacts, plotted distances between points don't reflect actual distances in the data space.} 
 
 <<modelall, echo=FALSE, dependson='data-all', message=FALSE>>=
 library(lme4)
@@ -1072,11 +1082,12 @@ m1 <- glmer(correct~CIdesign +  factor(sample_size) + factor(df) + (1|ip_address
 Control & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
 Standard (HD) & 0.10 & -0.08 & 0.29 && 1.11 & 0.92 & 1.33 \\ 
   Standard (TS) & -0.18 & -0.40 & 0.04 && 0.83 & 0.67 & 1.04 \\ [2pt]
-    Detrended2 (HD) & \bf -0.42 & \bf -0.61 & \bf  -0.24 && \bf 0.66 & \bf 0.54 & \bf  0.79 \\ 
-  Detrended2 (TS) & 0.03 & -0.19 & 0.25 && 1.03 & 0.83 & 1.28 \\ [2pt]
 %
-Detrended (HD) & \bf 0.42 & \bf 0.20 & \bf 0.64 && \bf  1.52 & \bf 1.22 & \bf 1.89 \\ 
-  Detrended (TS) & \bf 0.32 & \bf 0.10 & \bf 0.53 && \bf 1.37 & \bf 1.10 & \bf 1.70 \\ [3pt]
+Detrended 1 (HD) & \bf 0.42 & \bf 0.20 & \bf 0.64 && \bf  1.52 & \bf 1.22 & \bf 1.89 \\ 
+  Detrended 1 (TS) & \bf 0.32 & \bf 0.10 & \bf 0.53 && \bf 1.37 & \bf 1.10 & \bf 1.70 \\ [2pt]
+%
+Detrended 2 (HD) & \bf -0.42 & \bf -0.61 & \bf  -0.24 && \bf 0.66 & \bf 0.54 & \bf  0.79 \\ 
+  Detrended 2 (TS) & 0.03 & -0.19 & 0.25 && 1.03 & 0.83 & 1.28 \\ [3pt]
 \multicolumn{1}{r}{\bf sample size} \\  
 20 & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
   30 & 1.07 & -0.45 & 2.60 && 2.92 & 0.64 & 13.43 \\ 
@@ -1120,7 +1131,7 @@ To further investigate the difference between the standard and the de-trended de
 lppvals <- dcast(lps, data_name~treatment, value.var="pvals")
 frames <- subset(lppvals, Standard < 0.05 & Rotated > 0.5)$data_name
 dframe <- read.csv(sprintf("lineup-data/%s",frames[1]))
-dframe$.sample <- dframe$.sample_inner                   
+dframe$.sample <- dframe$.sample_outer                   
 #std_lineup(dframe) # don't plot. need to remove all references to this chart
 @
 %\end{subfigure}
@@ -1140,7 +1151,7 @@ dframe$.sample <- dframe$.sample_inner
 @
 \end{subfigure}
 \caption{\label{fig:rotstd}Lineups of the same data in two different designs. %In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. 
-In the lineup on the left the data sample (in panel \#$(2^2+1)$) is only identified once out of 21 times in the lineup showing the de-trended design \hh{with a DH band}. Observers instead pick panel \#$(3^2-2)$ 18 times. \hh{The lineup on the right shows the same data in the de-trended design using the TS confidence band.}}
+In the lineup on the left the data sample in panel \#$(2^2+1)$ is only identified once in 21 evaluations in the lineup showing the de-trended design \hh{with a DH band}. Observers instead pick panel \#$(3^2-2)$ 18 times. \hh{The lineup on the right shows the same data in the de-trended design using the TS confidence band.}}
 \end{figure}
 \afterpage{\clearpage}
 
@@ -1285,7 +1296,7 @@ Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision o
 
 \begin{center}
 \begin{tabular}{lp{5in}}
-$\tau$ & the combination of design used in the lineup (Control, Standard, De-trended, De-trended2) and confidence interval (HD, TS), \\
+$\tau$ & the combination of design used in the lineup  \{ Control, Standard, De-trended (1), De-trended (2)\} and confidence interval (HD, TS), \\
 &  the specific parameters under which the data for the lineup were created: \\
 &  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
 &  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
@@ -1296,7 +1307,7 @@ $u$ & the users' subjective abilities.
 %
 
 %
-The combination of different levels of sample size and degrees of freedom of the $t$ distribution result in 12 parameter settings. Under each setting, we  generated data twice. Additionally, we made use of two different sets of null data for each sample, yielding 48 different sets of data, which we render in each of the variations, resulting in 144 different lineups. 
+
 
 
 % latex table generated in R 3.1.0 by xtable 1.7-3 package
@@ -1304,7 +1315,7 @@ The combination of different levels of sample size and degrees of freedom of the
 % xtable(summary(m1)$coefficients, digits=c(0,2,3,2,4))
 \begin{table}[ht]
 \centering
-\caption{\label{tab:model} Coefficients and significances corresponding to  model $M_1$. The type of design is important for the power of a lineup. De-trended (2) Q-Q plots with Davison Hinkley confidence bands lose a significant amount of power compared to the other  versions of Q-Q plots. If TS intervals are used, this loss does not happen. De-trended Q-Q plots with fixed aspect ratio perform significantly better than the other versions.}
+\caption{\label{tab:model} Coefficients and significances corresponding to  model $M_1$. The type of design is important for the power of a lineup. \hh{ De-trended (2) Q-Q plots with Davison-Hinkley confidence bands lose a significant amount of power compared to the other  versions of Q-Q plots. If TS intervals are used, this loss does not occur. De-trended (1) Q-Q plots with fixed aspect ratio perform significantly better than all of the other versions of Q-Q plots.}}
 \begin{tabular}{rrrrrl}
    \hline
   &\bf Estimate &\bf Std. Error &\bf z value &\bf Pr($>$$|$z$|$) & \\ 
