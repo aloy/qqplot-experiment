@@ -1038,7 +1038,10 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 \hh{Aside from that,} the design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands help with evaluation in the standard design, but the difference is not significant.  
 
 \hh{The first de-trended version of Q-Q plots, in which the aspect ratio is kept the same as in the standard plot, shows significant increases in detecting non-normality. }
-Surprisingly, the \hh{second version of} de-trended Q-Q plots is significantly less powerful in detecting non-normality. \hh{Q-Q plots with DH bands are actually performing significantly worse than the control charts, while Q-Q plots with the TS bands just lose their previous gain from de-trending.} \hh{XXX needs a bit more discussion: additional space emphasizes artifacts, plotted distances between points don't reflect actual distances in the data space.} 
+Surprisingly, the \hh{second version of} de-trended Q-Q plots is significantly less powerful in detecting non-normality. \hh{De-trended (2) Q-Q plots with DH bands are actually performing significantly worse than the control charts, while Q-Q plots with the TS bands just lose their previous gain from de-trending.} \hh{It seems that the additional space on the $y$-axis emphasizes artifacts that are hard to judge, because distances in $x$ directions have a different meaning than distances in the $y$ direction. Due to the difference in aspect ratio plotted distances between points are not proportional to distances in the data space.} 
+
+\hh{For the other two designs, Q-Q plots with TS bands have slightly less power than the same version of Q-Q plots with DH bands. While not significant, this makes sense, and is likely due to TS bands being wider in the center of the distribution and at the tips of the tails.}
+
 
 <<modelall, echo=FALSE, dependson='data-all', message=FALSE>>=
 library(lme4)
@@ -1121,10 +1124,11 @@ Detrended 2 (HD) & \bf -0.42 & \bf -0.61 & \bf  -0.24 && \bf 0.66 & \bf 0.54 & \
 % \end{table}
 
 
-In terms of rejections of the null hypothesis, this means that normality is rejected in 24 out of the 48 lineups of the de-trended (2) Q-Q plot. All of these cases are being rejected in all of the other designs as well, but using the control design another four lineups reject normality, and the standard design rejects yet another lineup.
+%In terms of rejections of the null hypothesis, this means that normality is rejected in 24 out of the 48 lineups of the de-trended (2) Q-Q plot. All of these cases are being rejected in all of the other designs as well, but using the control design another four lineups reject normality, and the standard design rejects yet another lineup.
 
-
-To further investigate the difference between the standard and the de-trended designs, consider figure \ref{fig:rotstd}. Here, we have an example of a sample that is rejected based on a  lineup in the standard design, but not from a lineup of de-trended Q-Q plots. Instead of focusing on the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked as being most different 9 out of 27 times in the standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$ from the standard design. 
+To further investigate the difference between the designs, consider figure \ref{fig:rotstd}. Here, we have an example of a $t_2$ sample of size $n=20$ that is rejected \hh{from all designs besides the de-trended (2) Q-Q plots with a DH band.}  
+\hh{The de-trended (2) DH band is shown on the left side of figure~\ref{fig:rotstd}. Instead of the data sample in panel \#$(2^2+1)$ observers pick panel \#7 in 18 out of 21 evaluations. For any of the other designs, as e.g.\ the de-trended (2) Q-Q plot with TS bands on the right of figure~\ref{fig:rotstd}, observers pick the panel of the data sample at a rate that leads to a rejection of normality for all of them.  }
+%Instead of focusing on the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked as being most different 9 out of 27 times in the standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$ from the standard design. 
 \begin{figure}[hbt]
 %\begin{subfigure}{0.5\textwidth}
 <<notrotated, dependson='data', echo=FALSE, fig.width=6, fig.height=6>>=
@@ -1151,13 +1155,15 @@ dframe$.sample <- dframe$.sample_outer
 @
 \end{subfigure}
 \caption{\label{fig:rotstd}Lineups of the same data in two different designs. %In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. 
-In the lineup on the left the data sample in panel \#$(2^2+1)$ is only identified once in 21 evaluations in the lineup showing the de-trended design \hh{with a DH band}. Observers instead pick panel \#$(3^2-2)$ 18 times. \hh{The lineup on the right shows the same data in the de-trended design using the TS confidence band.}}
+In the lineup on the left the data sample in panel \#$(2^2+1)$ is only identified once in 21 evaluations in the lineup showing the de-trended (2) design \hh{with a DH band}. Observers instead pick panel \#$(3^2-2)$ 18 times. \hh{The lineup on the right shows the same data in the same de-trended (2) design using the TS confidence band.}}
 \end{figure}
 \afterpage{\clearpage}
 
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Standard"))
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Rotated"))
-Two of the observers picking panel \#7 from the de-trended lineup thought that this panel was the one with the ``most dots outside the shaded area,'' i.e.~they focused on the middle of plot \#7. This is not a singular occurrence---when investigating  overall reasoning we take a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area). It seems to help in identifying the data plot in the standard design, but it severely  increases the chance of picking a null plot in the de-trended design. Why is that? The de-trended version is making better use of the space in the plot, it therefore  emphasizes deviations of points from the $x$-axis (i.e.~the theoretical distribution) and with it  the fact whether individual points are inside or outside the shaded areas corresponding to the (pointwise) 95\% confidence intervals. The responses suggest that participants take the shading very seriously and make their choice dependent on it. It also seems that the confidence bands mislead people---this suggests, that for the de-trended Q-Q plot design we might have to re-think how to display confidence intervals: it might be better to  either use  a more conservative  confidence level or change the approach altogether from pointwise confidence intervals to simultaneous confidence bands as, for example, discussed by \citet{Rosenkrantz:2000fd}.
+%Two of the observers picking panel \#7 from the de-trended lineup thought that this panel was the one with the ``most dots outside the shaded area,'' i.e.~they focused on the middle of plot \#7. This is not a singular occurrence---when investigating  overall reasoning we took a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area).
+%\hh{investigate whether outside area is also indicative for TS plots}
+%It seems to help in identifying the data plot in the standard design, but it severely  increases the chance of picking a null plot in the de-trended design. Why is that? The de-trended version is making better use of the space in the plot, it therefore  emphasizes deviations of points from the $x$-axis (i.e.~the theoretical distribution) and with it  the fact whether individual points are inside or outside the shaded areas corresponding to the (pointwise) 95\% confidence intervals. The responses suggest that participants take the shading very seriously and make their choice dependent on it. It also seems that the confidence bands mislead people---this suggests, that for the de-trended Q-Q plot design we might have to re-think how to display confidence intervals: it might be better to  either use  a more conservative  confidence level or change the approach altogether from pointwise confidence intervals to simultaneous confidence bands as, for example, discussed by \citet{Rosenkrantz:2000fd}.
 % \alnote{This would be a very natural place to put in TAS citations: Aldor-Noiman et al (2013) and Rosenkrantz (2000). }
 % \hhnote{comment on Rosenkrantz is missing still}
 
@@ -1179,57 +1185,72 @@ parse_choice <- function(x) {
   choices
 }
 
-ch <- parse_choice(turkw$choice_reason)
-turkw <- data.frame(turkw, ch)
-trt <- ddply(turkw, .(treatment, correct), summarise,
+ch <- parse_choice(turkall$choice_reason)
+turkall <- data.frame(turkall, ch)
+turkall$weight <- 1/turkall$num_answers
+trt <- ddply(turkall, .(CIdesign, correct), summarise,
       n=sum(weight),
       outlier=sum(outlier*weight),
       left=sum(left*weight),
       right=sum(right*weight),
       curve=sum(curve*weight),
-      other=paste(other, collapse=", ")
+      other=sum((nchar(other)>0)*weight),
+      otherw=paste(other, collapse=", ")
       )
-levels(trt$treatment)[2] <- "De-trended"
+levels(trt$CIdesign)
 require(reshape2)
 trt$choice <- "null"
 trt$choice[trt$correct] <- "data"
-trtm <- melt(trt,id.var=c("treatment", "n","choice"), measure.var=c("outlier", "left", "right", "curve"))
+trtm <- melt(trt,id.var=c("CIdesign", "n","choice"), measure.var=c("outlier", "left", "right", "curve", "other"))
 trtm$pct <- trtm$value/trtm$n*100
 
 
-trt$other <- gsub(",","", trt$other)
-trt$other <- gsub(" +"," ", trt$other)
-trt$other <- tolower(trt$other)
+trt$otherw <- gsub(",","", trt$otherw)
+trt$otherw <- gsub(" +"," ", trt$otherw)
+trt$otherw <- tolower(trt$otherw)
 
 #trt$above <- unlist(llply(gregexpr("above",trt$other), length))
-trt$area <- unlist(llply(gregexpr("area",trt$other), length))
-trt$outside <- unlist(llply(gregexpr("outside",trt$other), length))
+trt$area <- unlist(llply(gregexpr("area",trt$otherw), length))
+trt$outside <- unlist(llply(gregexpr("outside",trt$otherw), length))
 #trt$test <- unlist(llply(gregexpr("below",trt$other), length))
 @
-\begin{figure}[hbt]
-\centering
-<<rotfalse,echo=FALSE, fig.width=6, fig.height=3, out.width='.65\\textwidth'>>=
-trtm2 <- melt(trt,id.var=c("treatment", "n","choice"), measure.var=c("area", "outside"))
-qplot(treatment, fill=choice, weight=value, data=trtm2, position="dodge") + scale_fill_brewer(palette="Set2") + facet_wrap(~variable) + theme_bw()
-@
-\caption{\label{fig:rotfalse}Mentioning ``outside'' or ``area'' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. }
-\end{figure}
-\afterpage{\clearpage}
+% \begin{figure}[hbt]
+% \centering
+% <<rotfalse,echo=FALSE, fig.width=6, fig.height=6, out.width='.65\\textwidth'>>=
+% trtm2 <- melt(trt,id.var=c("CIdesign", "n","choice"), measure.var=c("outlier", "left", "right", "curve"))
+% qplot(CIdesign, fill=choice, weight=value, data=trtm2, position="dodge") + scale_fill_brewer(palette="Set2") + facet_wrap(~variable) + theme_bw()
+% @
+% \caption{\label{fig:rotfalse}Mentioning ``outside'' or ``area'' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. }
+% \end{figure}
+% \afterpage{\clearpage}
 
 \begin{figure}[hbt]
 \centering
-<<trtplot, echo=FALSE, fig.width=10, fig.height=4, out.width='\\textwidth'>>=
-qplot(treatment,fill=choice, weight=pct, geom="bar", position="dodge",data=trtm) +
-  facet_grid(.~variable) + theme_bw() + ylab("percent") + 
-  theme(legend.position="bottom") + 
-  scale_fill_brewer(palette="Set2")
+<<trtplot, echo=FALSE, fig.width=9, fig.height=8, out.width='0.7\\textwidth'>>=
+back1 <- data.frame(expand.grid(variable=levels(trtm$variable)))
+back1$xmin <- 1.5
+back1$xmax <- 3.5
+back1$ymin <- -5
+back1$ymax <- 75
+
+trtm$CIdesign <- factor(trtm$CIdesign, levels=c("Control.HD", "Standard.HD", "Standard.TS", "Detrended2.HD", "Detrended2.TS", "Detrended.HD", "Detrended.TS"))
+labels <- levels(factor(trtm$CIdesign))
+labels <- c("Control","Standard (DH)", "Standard (TS)", "Detrended 1 (DH)", "Detrended 1 (TS)",  "Detrended 2 (DH)", "Detrended 2 (TS)")
+ggplot() +
+#  geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, weight=1), fill="grey70", alpha=0.5, data=back1) +   
+  geom_bar(aes(x=CIdesign,fill=choice, weight=pct), position="dodge",data=trtm) + 
+  facet_wrap(~variable) +
+  theme_bw() + ylab("percent") + xlab("") +
+  theme(legend.position="bottom", axis.text.x  = element_text(angle=90, vjust=0.5, hjust=1)) + 
+  scale_fill_brewer(palette="Set2") + scale_x_discrete(labels=labels)
 
 @
-\caption{\label{fig:choices}Overview of reasons participants gave for  their answer. ``Outliers'' as a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious to see that so many more observers respond ``left side different'' over ``right;''  all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
+\caption{\label{fig:choices}Overview of reasons participants gave for  their answer. ``Outliers" as a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious, that more observers gave ``left side different" as a reason than ``right side different";   all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
 \end{figure}
 \afterpage{\clearpage}
 
-Figure~\ref{fig:choices} summarizes the reasons participants gave for the choice of plot they selected. Bars on the left show  identifications of the data plot, bars on the right represent selections of a null plot. The reasons represent the four reasons offered  to participants in check boxes. Notably, the reasons do not seem to differentiate between the three designs. Stating ``outliers'' as a reason for choosing a plot is helpful across all designs in picking the data out of the lineup. Stating ``left side different'' or ``points curve''  as the reason for choosing a plot decreases the chance for this plot to be the data plot. ``Right side different'' does not seem to have any effect. Interestingly, there is a big difference in the percentages of ``right'' and ``left.'' Participants favored to give ``left side different'' as a reason over ``right side different'', even though all distributions involved were symmetric, and therefore deviations from normality should also manifest themselves in a symmetric fashion.
+\hh{Figure~\ref{fig:choices} summarizes the reasons participants gave for the choice of plot they selected. Bars on the left show  identifications of the data plot, bars on the right represent selections of a null plot. The reasons represent the five reasons offered  to participants. Notably, the reasons do not seem to differentiate between the different designs. Stating ``outliers'' as a reason for choosing a plot is helpful across all designs in picking the data out of the lineup. Stating ``points are on a curve'' or ``other"  as the reason for choosing a plot decreases the chance for this plot to be the data plot. ``Right side different'' or ``left side different" do not seem to have much of an effect. } 
+%is a big difference in the percentages of ``right'' and ``left.'' Participants favored to give ``left side different'' as a reason over ``right side different'', even though all distributions involved were symmetric, and therefore deviations from normality should also manifest themselves in a symmetric fashion.
 
 %\hhnote{another idea: go through reasons for choices. For standard design the line was often interpreted as a line of fit (how often for the de-trended design?), ie. we are tapping into what general population knows about regression. While this is not completely appropriate, the knowledge transfer might be the reason for the better performance.}
 
