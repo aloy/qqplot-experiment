@@ -99,14 +99,14 @@ opts_chunk$set(cache=TRUE, fig.width=4, fig.height=4)
 @
 
 <<data, echo=FALSE, results='hide', message=FALSE>>=
-turk <- read.csv("data/turk-10-13.csv")
-suppressMessages(require(plyr))
-params <- ldply(strsplit(split="-", as.character(turk$test_param)), function(x) x)
-turk$treatment <- params$V2
-turk$placement <- params$V3
-turk$choice <- params$V4
-turk$replicate <- params$V5
-turk$df <- as.numeric(llply(strsplit(split="-", as.character(turk$param_value)), function(x) x[2]))
+turk <- read.csv("data/turk-10-13-17.csv")
+#suppressMessages(require(plyr))
+#params <- ldply(strsplit(split="-", as.character(turk$test_param)), function(x) x)
+#turk$treatment <- params$V2
+turk$placement <- turk$IO
+turk$choice <- turk$SM
+turk$replicate <- turk$rep
+#turk$df <- as.numeric(llply(strsplit(split="-", as.character(turk$param_value)), function(x) x[2]))
 
 library(lubridate)
 turk$start_time <- ymd_hms(turk$start_time)
@@ -114,11 +114,12 @@ turk <- ddply(turk, .(ip_address), transform,
               attempt=rank(start_time, ties.method="random"),
               numeval=length(start_time))
 
-turk$weight <- ldply(strsplit(as.character(turk$response_no), split=","), length)$V1
+#turk$weight <- ldply(strsplit(as.character(turk$response_no), split=","), length)$V1
+turk$weight <- turk$num_answers
 # kick out responses without an answer:
 turk <- subset(turk, weight!=0)
 # take out participants with fewer than 10 responses:
-turk <- subset(turk, numeval >= 10)
+# turk <- subset(turk, numeval >= 10)  # all participants did at least 7 evaluations.
 
 
 res <- llply(turk, function(x) rep(x, turk$weight))
@@ -1197,7 +1198,6 @@ trt <- ddply(turkall, .(CIdesign, correct), summarise,
       other=sum((nchar(other)>0)*weight),
       otherw=paste(other, collapse=", ")
       )
-levels(trt$CIdesign)
 require(reshape2)
 trt$choice <- "null"
 trt$choice[trt$correct] <- "data"
