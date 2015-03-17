@@ -482,7 +482,7 @@ based on the estimated standard error of the order statistics for an independent
 
 \begin{figure}
 \centering
-% % % 
+% % % % 
 % <<qqplots, dependson='functions', fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=TRUE>>=
 % dframe <- read.csv("lineup-data/data-1-1-1-20-2-14-5.csv")
 % library(ggplot2)
@@ -621,7 +621,7 @@ Half of the lineups that observers were shown allowed for multiple choices of pl
 suppressMessages(require(vinference))
 @
 <<rejects, dependson='load', echo=FALSE, message=FALSE>>=
-lps <- ddply(turkw, .(data_name, treatment), summarise,
+lps <- ddply(turkw, .(data_name, CIdesign), summarise,
              correct=sum(correct*weight),
              num=sum(weight)
              )
@@ -1133,17 +1133,18 @@ To further investigate the difference between the designs, consider figure \ref{
 \begin{figure}[hbt]
 %\begin{subfigure}{0.5\textwidth}
 <<notrotated, dependson='data', echo=FALSE, fig.width=6, fig.height=6>>=
-lppvals <- dcast(lps, data_name~treatment, value.var="pvals")
-frames <- subset(lppvals, Standard < 0.05 & Rotated > 0.5)$data_name
+#lppvals <- dcast(lps, data_name~treatment, value.var="pvals")
+#frames <- subset(lppvals, Standard < 0.05 & Rotated > 0.5)$data_name
+frames <- "data-1-2-20-75-5-8-3.csv"
 dframe <- read.csv(sprintf("lineup-data/%s",frames[1]))
 dframe$.sample <- dframe$.sample_outer                   
 #std_lineup(dframe) # don't plot. need to remove all references to this chart
 # get all of the .sample_inner responses to .sample_outer responses
 
-answers <- subset(turkw, data_name=="data-1-1-1-20-2-14-5.csv") # frames[1]
+answers <- subset(turkw, data_name==frames[1]) # frames[1]
 code <- unique(dframe[, c(".sample_inner", ".sample_outer", ".n")])
 code <- code[order(code$.sample_inner),]
-code$.sample_outer[as.numeric(head(subset(answers, placement=="Inner")$response, 10))]
+#code$.sample_outer[as.numeric(head(subset(answers, placement=="Inner")$response, 10))]
 
 idx <- which(answers$placement=="Inner")
 answers$response <- as.numeric(answers$response)
