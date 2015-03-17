@@ -285,7 +285,7 @@ based on the estimated standard error of the order statistics for an independent
 
 \begin{figure}
 \centering
-% % % 
+% % % % 
 % <<qqplots, dependson='functions', fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=TRUE>>=
 % dframe <- read.csv("lineup-data/data-1-1-1-20-2-14-5.csv")
 % library(ggplot2)
@@ -413,27 +413,9 @@ XXX discussion of amazon turk studies in comparison to lab experiments: practica
 %
 Half of the lineups that observers were shown allowed for multiple choices of plots from a lineup for the final answer. Very few participants made use of this option. In the analysis we dealt with multiple answers to a lineup by using a weighting variable defined as the reciprocal of the number of answers given by a participant.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'treatment' not found}}
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in inherits(.data, "{}split"{}): object 'lps' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in data.frame(lps, exps): object 'lps' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in nrow(lps): object 'lps' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'lps' not found}}\end{kframe}
-\end{knitrout}
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in merge(lps, lps15[, c("{}data\_name"{}, "{}treatment"{}, "{}pvals.adj"{})], : object 'lps' not found}}\end{kframe}
-\end{knitrout}
 
 \begin{figure}[ht]
 \centering
@@ -748,46 +730,11 @@ Detrended 2 (DH) & \bf -0.42 & \bf -0.61 & \bf  -0.24 && \bf 0.66 & \bf 0.54 & \
 %In terms of rejections of the null hypothesis, this means that normality is rejected in 24 out of the 48 lineups of the de-trended (2) Q-Q plot. All of these cases are being rejected in all of the other designs as well, but using the control design another four lineups reject normality, and the standard design rejects yet another lineup.
 
 To further investigate the difference between the designs, consider figure \ref{fig:rotstd}. Here, we have an example of a $t_2$ sample of size $n=20$ that is rejected \hh{from all designs besides the de-trended (2) Q-Q plots with a DH band.}  
-\hh{The de-trended (2) DH band is shown on the left side of figure~\ref{fig:rotstd}. Instead of the data sample in panel \#$(2^2+1)$ observers pick panel \#7 in 18 out of 21 evaluations. For any of the other designs, as e.g.\ the de-trended (2) Q-Q plot with TS bands on the right of figure~\ref{fig:rotstd}, observers pick the panel of the data sample at a rate that leads to a rejection of normality for all of them.  }
+\hh{The de-trended (2) DH band is shown on the left side of figure~\ref{fig:rotstd}. Instead of the data sample in panel \#$(2^2+1)$ observers pick panel \#7 in 32.2 out of 45 evaluations. For any of the other designs, as e.g.\ the de-trended (2) Q-Q plot with TS bands on the right of figure~\ref{fig:rotstd}, observers pick the panel of the data sample at a rate that leads to a rejection of normality.  }
 %Instead of focusing on the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked as being most different 9 out of 27 times in the standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$ from the standard design. 
 \begin{figure}[hbt]
 %\begin{subfigure}{0.5\textwidth}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in match(x, table, nomatch = 0L): object 'lps' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in subset(lppvals, Standard < 0.05 \& Rotated > 0.5): object 'lppvals' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in sprintf("{}lineup-data/\%s"{}, frames[1]): object 'frames' not found}}\begin{verbatim}
-##  [1]  7 11  7 17 17 11 20  7 17 14
-##                response
-## CIdesign           1    3    4    5    6    7    8    9   11   12   13
-##   Control.HD     0.5  0.2  0.0 10.2  0.0 27.1  0.0  0.0  0.0  0.0  0.5
-##   Detrended.HD   0.0  2.2  0.0  1.2  1.2 32.2  0.0  0.7  2.5  0.2  0.0
-##   Detrended.TS   0.0  0.5  0.1  1.6  0.0 16.7  0.3  0.0  0.4  0.0  0.0
-##   Detrended2.HD  0.0  0.2  0.5  4.7  0.0 19.7  0.0  0.0  0.0  0.0  0.0
-##   Detrended2.TS  0.0  4.3  0.0  6.5  0.0 17.3  1.0  0.0  0.0  0.0  0.0
-##   Standard.HD    0.0  1.0  1.0 17.2  0.0 17.8  0.0  0.0  0.0  0.0  0.0
-##   Standard.TS    0.0  0.0  0.0  5.5  0.5 18.5  0.0  0.0  0.5  0.0  0.0
-##                response
-## CIdesign          14   15   16   17   18   19   20
-##   Control.HD     1.8  0.0  1.5  3.8  0.2  0.0  0.0
-##   Detrended.HD   1.2  0.0  0.0  1.6  1.0  0.3  0.7
-##   Detrended.TS   0.1  0.2  0.0  5.7  1.0  0.1  0.0
-##   Detrended2.HD  0.0  0.0  0.0  5.2  0.7  0.0  0.0
-##   Detrended2.TS  0.3  0.0  0.0  3.5  0.0  0.0  0.0
-##   Standard.HD    1.0  0.0  0.0 16.8  0.2  0.0  0.0
-##   Standard.TS    0.5  1.0  1.0  4.0  0.0  0.5  0.0
-## CIdesign
-##    Control.HD  Detrended.HD  Detrended.TS Detrended2.HD Detrended2.TS 
-##            46            45            27            31            33 
-##   Standard.HD   Standard.TS 
-##            55            32
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
 %\end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \begin{knitrout}
@@ -804,13 +751,24 @@ To further investigate the difference between the designs, consider figure \ref{
 \end{knitrout}
 \end{subfigure}
 \caption{\label{fig:rotstd}Lineups of the same data in two different designs. %In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. 
-In the lineup on the left the data sample in panel \#$(2^2+1)$ is only identified once in 21 evaluations in the lineup showing the de-trended (2) design \hh{with a DH band}. Observers instead pick panel \#$(3^2-2)$ 18 times. \hh{The lineup on the right shows the same data in the same de-trended (2) design using the TS confidence band.}}
+In the lineup on the left the data sample in panel \#$(2^2+1)$ is only identified \hh{2.8 times in 45} evaluations in the lineup showing the de-trended (2) design \hh{with a DH band}. Observers instead pick panel \#$(3^2-2)$ \hh{32.2} times. \hh{The lineup on the right shows the same data in a de-trended (2) Q-Q plot design using the TS confidence band. The data sample is picked 7.2 times in 27 evaluations, leading to a rejection of normality at a 5\% signficance level.}}
 \end{figure}
 \afterpage{\clearpage}
 
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Standard"))
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Rotated"))
-%Two of the observers picking panel \#7 from the de-trended lineup thought that this panel was the one with the ``most dots outside the shaded area,'' i.e.~they focused on the middle of plot \#7. This is not a singular occurrence---when investigating  overall reasoning we took a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot (figure~\ref{fig:rotfalse}). As expected, these words barely occur in the control design (where there is no shaded area).
+\hh{In only 6.3\% of all evaluations made use of the option of giving feedback for the reason of their choice in form of a free-form answer. }
+%
+\hh{The two participants who gave a free-form answer for their choice in the lineup on the left hand side of figure~\ref{fig:rotstd}, picked panel \#7 from the de-trended lineup, and stated that this panel was the one with the ``most dots outside the shaded area,'' i.e.~they focused on the middle of panel \#7}. 
+
+\hh{XXX update March 17 XXX - there's nothing in the choices that participants gave. in the additional experiment participants only commented in about 1\% of the lineups on their reason. XXXX}
+
+\hh{alternative: for every single lineup, in which the DHs are not significant, but TS is, let's check which panels participants picked. }
+
+This is not a singular occurrence---when investigating  overall reasoning we took a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot %(figure~\ref{fig:rotfalse}). 
+As expected, these words barely occur in the control design (where there is no shaded area).
+
+
 %\hh{investigate whether outside area is also indicative for TS plots}
 %It seems to help in identifying the data plot in the standard design, but it severely  increases the chance of picking a null plot in the de-trended design. Why is that? The de-trended version is making better use of the space in the plot, it therefore  emphasizes deviations of points from the $x$-axis (i.e.~the theoretical distribution) and with it  the fact whether individual points are inside or outside the shaded areas corresponding to the (pointwise) 95\% confidence intervals. The responses suggest that participants take the shading very seriously and make their choice dependent on it. It also seems that the confidence bands mislead people---this suggests, that for the de-trended Q-Q plot design we might have to re-think how to display confidence intervals: it might be better to  either use  a more conservative  confidence level or change the approach altogether from pointwise confidence intervals to simultaneous confidence bands as, for example, discussed by \citet{Rosenkrantz:2000fd}.
 % \alnote{This would be a very natural place to put in TAS citations: Aldor-Noiman et al (2013) and Rosenkrantz (2000). }
@@ -820,15 +778,34 @@ Another promising approach might be to base confidence bands on the TS test \cit
 
 
 
-% \begin{figure}[hbt]
-% \centering
-% <<rotfalse,echo=FALSE, fig.width=6, fig.height=6, out.width='.65\\textwidth'>>=
-% trtm2 <- melt(trt,id.var=c("CIdesign", "n","choice"), measure.var=c("outlier", "left", "right", "curve"))
-% qplot(CIdesign, fill=choice, weight=value, data=trtm2, position="dodge") + scale_fill_brewer(palette="Set2") + facet_wrap(~variable) + theme_bw()
+
+% <<sentiment, echo=FALSE>>=
+% library(wordcloud)
+% library(tm)
+% for (i in 1:nrow(design)) {
+% words.corpus <- Corpus(DataframeSource(data.frame(design$otherw[i])))
+% words.corpus <- tm_map(words.corpus, removePunctuation)
+% 
+% tdm <- TermDocumentMatrix(words.corpus)
+% m <- as.matrix(tdm)
+% v <- sort(rowSums(m),decreasing=TRUE)
+% d <- data.frame(word = names(v),freq=v)
+% pal <- brewer.pal(9, "BuGn")
+% pal <- pal[-(1:2)]
+% png(sprintf("wordcloud/wordcloud-%s-%s.png",design$CIdesign[i], design$choice[i]), width=960,height=600)
+% wordcloud(d$word,d$freq, scale=c(8,.3),min.freq=2,max.words=100, random.order=T, rot.per=.15, colors="black", vfont=c("sans serif","plain"))
+% dev.off()
+% }
 % @
-% \caption{\label{fig:rotfalse}Mentioning ``outside'' or ``area'' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. }
-% \end{figure}
-% \afterpage{\clearpage}
+% 
+% % \begin{figure}[hbt]
+% % \centering
+%  <<rotfalse,echo=FALSE, fig.width=6, fig.height=6, out.width='.65\\textwidth'>>=
+% qplot(CIdesign, fill=choice, weight=pct, data=subset(designm, CIdesign != "Control.HD"), position="fill") + scale_fill_brewer(palette="Set2") + facet_wrap(~variable) + theme_bw()
+%  @
+% % \caption{\label{fig:rotfalse}Mentioning ``outside'' or ``area'' in the reason for selecting the plot from the lineup increases the probability of not identifying the data plot by a large factor in de-trended Q-Q plots. }
+% % \end{figure}
+% % \afterpage{\clearpage}
 
 \begin{figure}[hbt]
 \centering
