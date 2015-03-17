@@ -482,7 +482,7 @@ based on the estimated standard error of the order statistics for an independent
 
 \begin{figure}
 \centering
-% % % 
+% % % % 
 % <<qqplots, dependson='functions', fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=TRUE>>=
 % dframe <- read.csv("lineup-data/data-1-1-1-20-2-14-5.csv")
 % library(ggplot2)
@@ -550,7 +550,7 @@ In the next section, we describe the simulation study used to compare the three 
 using samples of size $s \in \{20, 30, 50, 75\}$ from a $t_\nu$ distribution with $\nu \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.
 For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from standard normally distributed samples of the same size. For each data sample, two sets of null plots are created, so that we have a total of 48 lineup data. 
 
-These lineup data are rendered in each of the Q-Q plot variations, resulting in $48 \times 7 = 336$ different lineups.  Additionally, Standard plots (both TS and DH bands) are also rendered against $N(0, $S^2$)$ null data (see discussion below), adding another $2 \times 48 = 96$ lineups.
+These lineup data are rendered in each of the Q-Q plot variations, resulting in $48 \times 7 = 336$ different lineups.  Additionally, Standard plots (both TS and DH bands) are also rendered against $N(0, S^2)$ null data (see discussion below), adding another $2 \times 48 = 96$ lineups.
 }
 
 
