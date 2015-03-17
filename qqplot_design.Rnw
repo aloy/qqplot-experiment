@@ -709,7 +709,7 @@ ggplot() +
   facet_grid(facets=nu~s, labeller="label_parsed") + scale_colour_brewer("Replicate", palette="Set1") +
   theme_bw() + scale_shape_manual("Significant difference\nfrom normality",values=c(1,19)) + ylab("Percentage of data identifications") +
 #  scale_x_continuous(breaks=1:7, labels=levels(dataset$CIdesign)) + 
-  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nHD", "\nTS","\t\t\t\t\tDetrended (1)\nHD", "\nTS","\t\t\t\t\tDetrended (2)\nHD", "\nTS","Control")) +
+  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nDH", "\nTS","\t\t\t\t\tDetrended (1)\nDH", "\nTS","\t\t\t\t\tDetrended (2)\nDH", "\nTS","Control")) +
   theme(legend.position="bottom", legend.direction="horizontal", legend.box="horizontal")
 #  theme(axis.text.x = element_text(angle = 0, hjust = 1))
 @
@@ -734,7 +734,7 @@ Lineups of samples from a $t_5$ distribution \hh{show the most variability. Tabl
 \centering
 \begin{tabular}{lC{.6cm}C{.6cm}C{.6cm}C{.6cm}C{.6cm}C{.6cm}c}\hline
 \bf Design & \multicolumn{2}{c}{\bf Standard} & \multicolumn{2}{c}{\bf De-trended (1)} & \multicolumn{2}{c}{\bf Detrended (2)} & \bf Control \\
-\bf Confidence & HD & TS & HD & TS & HD & TS & --- \\ \hline \hline
+\bf Confidence & DH & TS & DH & TS & DH & TS & --- \\ \hline \hline
 Reject $N(0,1)$ & 30 & 30 & 30 & 33 & 26 & 29 & 28 \\ \hline
 \end{tabular}
 \caption{\label{tab:no1} Number of rejections (out of 48) of standard normality by design. }
@@ -1031,7 +1031,7 @@ The probability of identifying the lineup is affected by several factors: (a) th
 g(\pi_i) &=& \eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},\\
 Y &=& g^{-1}(\eta) + \varepsilon
 \end{eqnarray*}
-where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard (HD), Standard (TS), De-trended (HD), De-trended (TS), De-trended2 (HD), De-trended2 (TS)$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular sample \hh{and null data} used. 
+where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard (DH), Standard (TS), De-trended (DH), De-trended (TS), De-trended2 (DH), De-trended2 (TS)$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular sample \hh{and null data} used. 
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$. We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.
 %
 \hh{Table~\ref{tab:coefs} gives an overview of the coefficients. As could be seen in various figures before, an increase in signal strength (larger sample size, fewer degrees of freedom) result in lineups, in which the sample is picked out more often by observers.}
@@ -1084,13 +1084,13 @@ m1 <- glmer(correct~CIdesign +  factor(sample_size) + factor(df) + (1|ip_address
   Intercept & \bf -4.84 & \bf -6.19 & \bf -3.49 && \bf 0.01 & \bf 0.00 & \bf 0.03 \\ [3pt]
 \multicolumn{1}{r}{\bf design (CI)} \\  
 Control & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
-Standard (HD) & 0.10 & -0.08 & 0.29 && 1.11 & 0.92 & 1.33 \\ 
+Standard (DH) & 0.10 & -0.08 & 0.29 && 1.11 & 0.92 & 1.33 \\ 
   Standard (TS) & -0.18 & -0.40 & 0.04 && 0.83 & 0.67 & 1.04 \\ [2pt]
 %
-Detrended 1 (HD) & \bf 0.42 & \bf 0.20 & \bf 0.64 && \bf  1.52 & \bf 1.22 & \bf 1.89 \\ 
+Detrended 1 (DH) & \bf 0.42 & \bf 0.20 & \bf 0.64 && \bf  1.52 & \bf 1.22 & \bf 1.89 \\ 
   Detrended 1 (TS) & \bf 0.32 & \bf 0.10 & \bf 0.53 && \bf 1.37 & \bf 1.10 & \bf 1.70 \\ [2pt]
 %
-Detrended 2 (HD) & \bf -0.42 & \bf -0.61 & \bf  -0.24 && \bf 0.66 & \bf 0.54 & \bf  0.79 \\ 
+Detrended 2 (DH) & \bf -0.42 & \bf -0.61 & \bf  -0.24 && \bf 0.66 & \bf 0.54 & \bf  0.79 \\ 
   Detrended 2 (TS) & 0.03 & -0.19 & 0.25 && 1.03 & 0.83 & 1.28 \\ [3pt]
 \multicolumn{1}{r}{\bf sample size} \\  
 20 & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
@@ -1138,6 +1138,18 @@ frames <- subset(lppvals, Standard < 0.05 & Rotated > 0.5)$data_name
 dframe <- read.csv(sprintf("lineup-data/%s",frames[1]))
 dframe$.sample <- dframe$.sample_outer                   
 #std_lineup(dframe) # don't plot. need to remove all references to this chart
+# get all of the .sample_inner responses to .sample_outer responses
+
+answers <- subset(turkw, data_name=="data-1-1-1-20-2-14-5.csv") # frames[1]
+code <- unique(dframe[, c(".sample_inner", ".sample_outer", ".n")])
+code <- code[order(code$.sample_inner),]
+code$.sample_outer[as.numeric(head(subset(answers, placement=="Inner")$response, 10))]
+
+idx <- which(answers$placement=="Inner")
+answers$response <- as.numeric(answers$response)
+answers$response[idx] <- code$.sample_outer[answers$response[idx]]
+round(xtabs(weight~CIdesign+ response, data=answers),1)
+round(xtabs(weight~CIdesign, data=answers),1)
 @
 %\end{subfigure}
 \begin{subfigure}{0.5\textwidth}
@@ -1344,11 +1356,11 @@ $u$ & the users' subjective abilities.
     Intercept & -4.84 & 0.690 & -7.02 & 0.0000 & ***\\ 
  \multicolumn{3}{l}{\bf design (CI)} \\
    Control & 0.00 & ----- & ----- & ----- \\ [2pt]
-   Standard (HD) & 0.10 & 0.093 & 1.12 & 0.2618 \\ 
+   Standard (DH) & 0.10 & 0.093 & 1.12 & 0.2618 \\ 
    Standard (TS) & -0.18 & 0.113 & -1.62 & 0.1053 \\ [2pt]
-   Detrended (HD) & 0.42 & 0.111 & 3.77 & 0.0002 & ***\\ 
+   Detrended (DH) & 0.42 & 0.111 & 3.77 & 0.0002 & ***\\ 
    Detrended (TS) & 0.32 & 0.111 & 2.85 & 0.0044 & **\\ [2pt]
-   Detrended 2 (HD) & -0.42 & 0.094 & -4.49 & 0.0000 & ***\\ 
+   Detrended 2 (DH) & -0.42 & 0.094 & -4.49 & 0.0000 & ***\\ 
    Detrended 2 (TS) & 0.03 & 0.112 & 0.27 & 0.7846 \\ [3pt]
  \multicolumn{3}{l}{\bf sample size} \\
    20 & 0.00 & ----- & ----- & ----- \\ 
