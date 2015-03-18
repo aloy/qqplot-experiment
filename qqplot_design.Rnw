@@ -301,7 +301,7 @@ rot2_ts_lineup <- function(dframe) {
 rot_lineup <- function(dframe) {
   require(ggplot2)
   require(grid)
-  print(  ggplot(aes(x=naive1.qq.x, y=naive1.qq.y-naive1.env.fit.value), data = dframe) + 
+    ggplot(aes(x=naive1.qq.x, y=naive1.qq.y-naive1.env.fit.value), data = dframe) + 
             facet_wrap(~.sample, ncol=5) + 
             geom_hline(yintercept=0, colour="grey30")+
             geom_point() + 
@@ -312,13 +312,13 @@ rot_lineup <- function(dframe) {
 #            xlab("Normal Quantiles") + 
 #            ylab("Sample Quantiles") +
             theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
-                  axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm")))
+                  axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm"))
 }
 
 rot_ts_lineup <- function(dframe) {
   require(ggplot2)
   require(grid)
-  print(  ggplot(aes(x=ts.qq.x, y=ts.qq.y-ts.qq.x), data = dframe) + 
+  ggplot(aes(x=ts.qq.x, y=ts.qq.y-ts.qq.x), data = dframe) + 
             facet_wrap(~.sample, ncol=5) + 
             geom_hline(yintercept=0, colour="grey30")+
             geom_point() + 
@@ -327,12 +327,12 @@ rot_ts_lineup <- function(dframe) {
             theme_bw() + 
             xlab("") + ylab("") +
             theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
-                  axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm")))
+                  axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm"))
 }
 
 ctrl_lineup <- function(dframe) {
   require(ggplot2)
-  print(ggplot(aes(x=naive1.qq.x, y=naive1.qq.y), data = dframe) + 
+  ggplot(aes(x=naive1.qq.x, y=naive1.qq.y), data = dframe) + 
           geom_smooth(aes(naive1.qq.x, naive1.env.fit.value), colour="grey50", se=FALSE, method="loess") +
           geom_point() + 
           theme_bw() + 
@@ -340,7 +340,7 @@ ctrl_lineup <- function(dframe) {
           labs(x = "", y = "") +
           theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
                 axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm"))
-  )
+  
 }
 @
 
@@ -662,17 +662,18 @@ lps <- merge(lps, lps15[, c("data_name", "CIdesign", "pvals.adj")], by=c("data_n
 \begin{figure}[ht]
 \centering
 <<compare-designs, echo=FALSE, fig.width=14, fig.height=8.5, out.width='\\textwidth', warning=FALSE, message=FALSE>>=
+turkall$weight <- 1/turkall$num_answers
 dsets <- ddply(turkall, .(data_name), summarize,
                  n= length(data_name),
-                 correct=sum(correct))
+                 correct=sum(weight*correct))
 dsets$mean <- dsets$correct/dsets$n
 levels(turkall$rep) <- c("1", "2", "1", "2")
 dataset <- ddply(turkall, .(data_name, CIdesign, rep, df, sample_size), summarize,
                  n= length(data_name),
-                 correct=sum(correct))
+                 correct=sum(correct*weight))
 dataset$pval <- NULL
 #suppressMessages(require(vinference))
-for (i in 1:nrow(dataset)) dataset$pval[i] <- with(dataset[i,], pV(x=correct, K=n, m=20, scenario=3))
+for (i in 1:nrow(dataset)) dataset$pval[i] <- with(dataset[i,], pV(x=round(correct), K=n, m=20, scenario=3))
 dataset$signif <- dataset$pval < 0.05
 dataset$params <- with(dataset, interaction(sample_size, df))
 dataset$CIdesign <- factor(dataset$CIdesign, levels=c("Standard.HD", "Standard.TS", "Detrended2.HD", "Detrended2.TS", "Detrended.HD", "Detrended.TS", "Control.HD"))
@@ -1411,6 +1412,79 @@ Estimates of the variance components are $\widehat{\sigma}_u = \Sexpr{round(m1@t
 %Figure~\ref{fig:ranef} shows histograms of the predicted random effects for participants' abilities (left) and difficulty level of lineups (right). 
 Compared to the difficulty level of lineups, participants' abilities only vary little. The difference between best and worst performance by participants has an effect of at most an estimated 
 \Sexpr{require(lme4); eff <- range(ranef(m1)[["ip_address"]][,1]); probs <- exp(eff)/(1+exp(eff)); round(probs[2]/probs[1],1)}-fold probability of detecting the data plot from a lineup. 
+
+\section{Some specific lineups}
+<<lpselect, dependson='compare-designs', echo=FALSE>>=
+require(reshape2)
+lselects <- dcast(dataset, data_name  ~ CIdesign, value.var='signif')
+stds <- as.character(lselects$data_name[which(lselects$Standard.HD != lselects$Standard.TS)])
+dt1 <- as.character(lselects$data_name[which(lselects$Detrended2.HD != lselects$Detrended2.TS)])
+dt2 <- as.character(lselects$data_name[which(lselects$Detrended.HD != lselects$Detrended.TS)])
+@
+%
+In this section we are listing all lineups in which lineups of Q-Q plots with a  Davison-Hinkley band results in a different outcome than the same Q-Q plot design with a TS band. 
+Under both the standard design and the detrended (1)  design there are \Sexpr{length(dt1)} lineups each with different outcomes. Under the detrended (2) design there are \Sexpr{length(dt2)} lineups with different outcomes. They are shown in figures~\ref{fig:lpsstds},~\ref{fig:lpsdt1}, and~\ref{fig:lpsdt2}, respectively. 
+
+
+\begin{figure}
+\centering
+<<lpsdt1, dependson='lpselect', echo=FALSE, fig.show='hold', out.width='0.4\\textwidth', fig.width=7, fig.height=7>>=
+for (fname in dt1) {
+  dframe <- read.csv(sprintf("lineup-data/%s",fname))
+  dframe$.sample <- dframe$.sample_outer                   
+  fit2 <- dframe
+  fit2$x[fit2$.n==20] <- dframe$x[dframe$.n==20] # add ts
+  fit2 <- ddply(fit2, .(.n), transform, ts.qq=QQ.cb(x, plot=FALSE))
+
+  answers <- subset(turkw, data_name==fname) 
+  code <- unique(dframe[, c(".sample_inner", ".sample_outer", ".n")])
+  code <- code[order(code$.sample_inner),]
+  idx <- which(answers$placement=="Inner")
+  answers$response <- as.numeric(answers$response)
+  answers$response[idx] <- code$.sample_outer[answers$response[idx]]
+
+  dh <- as.data.frame(xtabs(weight~response, data=answers, CIdesign=="Detrended2.HD"))
+  dh$.sample <- as.numeric(as.character(dh$response))
+  xdh=max(dframe$naive1.qq.x)
+  ydh=min(dframe$naive1.qq.y)
+  dh$max <- sum(dh$Freq)
+  
+  back1 <- data.frame(expand.grid(s=unique(dataset$s), nu=unique(dataset$nu)))
+back1$xmin <- 0.5
+back1$xmax <- 2.5
+back1$ymin <- -5
+back1$ymax <- 105
+  
+  p1 <- rot2_lineup(dframe) + geom_text(aes(x=xdh, y=ydh, label=sprintf("%.1f/%.0f", Freq,max)), colour="grey70", size=7, data=dh, vjust=0, hjust=1)
+  
+  dt <- as.data.frame(xtabs(weight~response, data=answers, CIdesign=="Detrended2.TS"))
+  dt$.sample <- as.numeric(as.character(dt$response))
+  xdt=max(fit2$ts.qq.x)
+  ydt=min(fit2$ts.qq.y)
+  dt$max <- sum(dt$Freq)
+  
+  p2 <- rot2_ts_lineup(fit2) + geom_text(aes(x=xdt, y=ydt, label=sprintf("%.1f/%.0f", Freq, max)), colour="grey70", size=7, data=dt, vjust=0, hjust=1)
+
+  print(fname)
+  print(p1)
+  print(p2)
+
+}
+
+@
+\caption{\label{fig:lpsdt1} De-trended (1) lineup with different outcomes depending on the choice of confidence band.  \hh{XXX I still want to show the parameter values somehow and the panel of the sample} }
+\end{figure}
+\afterpage{\clearpage}
+
+
+
+
+
+
+
+
+
+
 
 % 
 % \section{Demographics and other study results}
