@@ -736,9 +736,9 @@ Lineups of samples from a $t_5$ distribution \hh{show the most variability. Tabl
 \begin{tabular}{lC{.6cm}C{.6cm}C{.6cm}C{.6cm}C{.6cm}C{.6cm}c}\hline
 \bf Design & \multicolumn{2}{c}{\bf Standard} & \multicolumn{2}{c}{\bf De-trended (1)} & \multicolumn{2}{c}{\bf Detrended (2)} & \bf Control \\
 \bf Confidence & DH & TS & DH & TS & DH & TS & --- \\ \hline \hline
-Reject $N(0,1)$ & 30 & 30 & 30 & 33 & 26 & 29 & 28 \\ \hline
+Reject $N(0,1)$ & 29 & 30 & 30 & 32 & 26 & 28 & 28 \\ \hline
 \end{tabular}
-\caption{\label{tab:no1} Number of rejections (out of 48) of standard normality by design. }
+\caption{\label{tab:no1} Number of rejections (out of 48) of standard normality by design.}
 \end{table}
 \afterpage{\clearpage}
 
