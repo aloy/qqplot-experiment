@@ -253,7 +253,7 @@ p <- ggplot(aes(x=naive1.qq.x, y=naive1.qq.y), data = dframe) +
 std_ts_lineup <- function(dframe) {
   require(ggplot2)
   require(grid)
-  print(ggplot(aes(x=ts.qq.x, y=ts.qq.y), data = dframe) + 
+  ggplot(aes(x=ts.qq.x, y=ts.qq.y), data = dframe) + 
           #  geom_smooth(aes(naive1.qq.x, naive1.env.fit.value), colour="grey50", se=FALSE, method="loess") +
           geom_abline(colour="grey50") +
           facet_wrap(~.sample, ncol=5) +
@@ -263,7 +263,6 @@ std_ts_lineup <- function(dframe) {
           geom_ribbon(aes(x = ts.qq.x, ymin = ts.qq.lower, ymax = ts.qq.upper),alpha = .2)+
           theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
                 axis.ticks = element_blank(), plot.margin=unit(c(0,0,0,0), "cm"))
-  )  
 }
 
 rot2_lineup <- function(dframe) {
@@ -1182,12 +1181,16 @@ In the lineup on the left the data sample in panel \#$(2^2+1)$ is only identifie
 %
 \hh{The two participants who gave a free-form answer for their choice in the lineup on the left hand side of figure~\ref{fig:rotstd}, picked panel \#7 from the de-trended lineup, and stated that this panel was the one with the ``most dots outside the shaded area,'' i.e.~they focused on the middle of panel \#7}. 
 
-\hh{XXX update March 17 XXX - there's nothing in the choices that participants gave. in the additional experiment participants only commented in about 1\% of the lineups on their reason. XXXX}
+\hh{XXX update March 17 XXX - there's nothing in the choices that participants gave. in the additional experiment participants only commented in about 1\% of the lineups on their reason. I think it'd be better to get rid of this argument. Instead, I've added all of the lineups, in which DH and TS result in different outcomes. XXXX}
 
-\hh{alternative: for every single lineup, in which the DHs are not significant, but TS is, let's check which panels participants picked. }
+This is not a singular occurrence---when investigating \hh{all lineups of the same design which lead to different outcome depending on the choice of confidence band (an exhaustive list of all these lineups is given in the appendix in section~\ref{sec:lplist}), we find that for designs using DH bands, in XXX out of XXX cases those panels were picked in favor of the data sample, where dots were outside the shaded area. This happened predominantly in the middle of the distribution.  } 
+%overall reasoning we took a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot %(figure~\ref{fig:rotfalse}). 
 
-This is not a singular occurrence---when investigating  overall reasoning we took a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot %(figure~\ref{fig:rotfalse}). 
-As expected, these words barely occur in the control design (where there is no shaded area).
+Another promising approach might be to base confidence bands on the TS test \citep{buja:2013}. These bands define a test of normality and are narrower in the tails than those associated with the Kolmogorov-Smirnov test, while slightly more conservative in the middle of the distribution. These findings coincide with our observation that points  outside the confidence intervals were misleading participants, if this occurred in the middle of the plot.
+
+
+%This is not a singular occurrence---when investigating  overall reasoning we took a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot %(figure~\ref{fig:rotfalse}). 
+%As expected, these words barely occur in the control design (where there is no shaded area).
 
 
 %\hh{investigate whether outside area is also indicative for TS plots}
@@ -1195,7 +1198,6 @@ As expected, these words barely occur in the control design (where there is no s
 % \alnote{This would be a very natural place to put in TAS citations: Aldor-Noiman et al (2013) and Rosenkrantz (2000). }
 % \hhnote{comment on Rosenkrantz is missing still}
 
-Another promising approach might be to base confidence bands on the TS test \citep{buja:2013}. These bands define a test of normality and are narrower in the tails than those associated with the Kolmogorov-Smirnov test, while slightly more conservative in the middle of the distribution. These findings coincide with our observation that points  outside the confidence intervals were misleading participants, if this occurred in the middle of the plot.
 
 
 <<choice, echo=FALSE>>=
@@ -1414,7 +1416,7 @@ Estimates of the variance components are $\widehat{\sigma}_u = \Sexpr{round(m1@t
 Compared to the difficulty level of lineups, participants' abilities only vary little. The difference between best and worst performance by participants has an effect of at most an estimated 
 \Sexpr{require(lme4); eff <- range(ranef(m1)[["ip_address"]][,1]); probs <- exp(eff)/(1+exp(eff)); round(probs[2]/probs[1],1)}-fold probability of detecting the data plot from a lineup. 
 
-\section{Some specific lineups}
+\section{Differences between Davison-Hinkley and Tail-sensitive confidence bands}\label{sec:lplist}
 <<lpselect, dependson='compare-designs', echo=FALSE>>=
 require(reshape2)
 lselects <- dcast(dataset, data_name  ~ CIdesign, value.var='signif')
@@ -1424,7 +1426,65 @@ dt2 <- as.character(lselects$data_name[which(lselects$Detrended.HD != lselects$D
 @
 %
 In this section we are listing all lineups in which lineups of Q-Q plots with a  Davison-Hinkley band results in a different outcome than the same Q-Q plot design with a TS band. 
-Under both the standard design and the detrended (1)  design there are \Sexpr{length(dt1)} lineups each with different outcomes. Under the detrended (2) design there are \Sexpr{length(dt2)} lineups with different outcomes. They are shown in figures~\ref{fig:lpsstds},~\ref{fig:lpsdt1}, and~\ref{fig:lpsdt2}, respectively. 
+Under the standard design there is one lineup, the detrended (1)  design has two lineups with different outcomes, while the detrended (2) design has four lineups with different outcomes. They are shown in figures~\ref{fig:lpsstds},~\ref{fig:lpsdt1}, and~\ref{fig:lpsdt2}, respectively. 
+
+\begin{figure}
+\centering
+<<lpsstds, dependson='lpselect', echo=FALSE, fig.show='hold', out.width='0.4\\textwidth', fig.width=7, fig.height=7>>=
+for (fname in stds) {
+  dframe <- read.csv(sprintf("lineup-data/%s",fname))
+  dframe$.sample <- dframe$.sample_outer                   
+  fit2 <- dframe
+  fit2$x[fit2$.n==20] <- dframe$x[dframe$.n==20] # add ts
+  fit2 <- ddply(fit2, .(.n), transform, ts.qq=QQ.cb(x, plot=FALSE))
+
+  answers <- subset(turkw, data_name==fname) 
+  code <- unique(dframe[, c(".sample_inner", ".sample_outer", ".n")])
+  code <- code[order(code$.sample_inner),]
+  idx <- which(answers$placement=="Inner")
+  answers$response <- as.numeric(answers$response)
+  answers$response[idx] <- code$.sample_outer[answers$response[idx]]
+
+  dh <- as.data.frame(xtabs(weight~response, data=answers, CIdesign=="Standard.HD"))
+  dh$.sample <- as.numeric(as.character(dh$response))
+  xdh=max(dframe$naive1.qq.x)
+  ydh=min(c(dframe$naive1.qq.y, dframe$naive1.env.lower))
+  dh$max <- sum(dh$Freq)
+  
+  outline1 <- data.frame(xmin=min(dframe$naive1.qq.x)*1.0, xmax=max(dframe$naive1.qq.x)*1.0, 
+            ymin=ydh*1.0, ymax=max(c(dframe$naive1.qq.y, dframe$naive1.env.upper))*1.0, 
+            .sample=dframe$.sample_outer[nrow(dframe)])  
+  xlabel <- sprintf("Standard~lineup~with~DH~band:~t[%d]~sample~of~size~%d", dframe$df[1], dframe$n[1])
+
+  p1 <- std_lineup(dframe) + 
+  geom_text(aes(x=xdh, y=ydh, label=sprintf("%.1f/%.0f", Freq,max)), 
+            colour="grey70", size=7, data=dh, vjust=-0.15, hjust=1.05) + 
+  geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, x=0, y=0), fill=NA, colour="grey20", data=outline1) +
+    ggtitle(parse(text=xlabel))
+  
+  dt <- as.data.frame(xtabs(weight~response, data=answers, CIdesign=="Standard.TS"))
+  dt$.sample <- as.numeric(as.character(dt$response))
+  xdt=max(fit2$ts.qq.x)
+  ydt=min(c(fit2$ts.qq.y, fit2$ts.qq.lower))
+  dt$max <- sum(dt$Freq)
+  outline2 <- data.frame(xmin=min(fit2$ts.qq.x)*1.0, xmax=max(fit2$ts.qq.x)*1.0, 
+            ymin=ydt*1.0, ymax=max(c(fit2$ts.qq.y, fit2$ts.qq.upper))*1.0, 
+            .sample=fit2$.sample_outer[nrow(fit2)])  
+  xlabel <- sprintf("Standard~lineup~with~TS~band:~t[%d]~sample~of~size~%d", dframe$df[1], dframe$n[1])
+  
+  p2 <- std_ts_lineup(fit2) + 
+    geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, x=0, y=0), fill=NA, colour="grey20", data=outline2) +
+    geom_text(aes(x=xdt, y=ydt, label=sprintf("%.1f/%.0f", Freq, max)), 
+              colour="grey70", size=7, data=dt, vjust=-0.15, hjust=1.05) +
+    ggtitle(parse(text=xlabel))
+
+  print(p1)
+  print(p2)
+}
+@
+\caption{\label{fig:lpsstds} Standard lineups with different outcomes depending which confidence band is used. The outlined panel marks the location of the data sample, the numbers at the bottom right are showing the number of votes each of the panels was picked by observers.  }
+\end{figure}
+\afterpage{\clearpage}
 
 
 \begin{figure}
@@ -1453,11 +1513,13 @@ for (fname in dt1) {
   outline1 <- data.frame(xmin=min(dframe$naive1.qq.x)*1.0, xmax=max(dframe$naive1.qq.x)*1.0, 
             ymin=min(dframe$naive1.qq.y)*1.0, ymax=max(dframe$naive1.qq.y)*1.0, 
             .sample=dframe$.sample_outer[nrow(dframe)])  
+  xlabel <- sprintf("De-trended~(1)~lineup~with~DH~band:~t[%d]~sample~of~size~%d", dframe$df[1], dframe$n[1])
 
   p1 <- rot2_lineup(dframe) + 
   geom_text(aes(x=xdh, y=ydh, label=sprintf("%.1f/%.0f", Freq,max)), 
             colour="grey70", size=7, data=dh, vjust=-0.15, hjust=1.05) + 
-  geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, x=0, y=0), fill=NA, colour="grey20", data=outline1)
+  geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, x=0, y=0), fill=NA, colour="grey20", data=outline1) +
+    ggtitle(parse(text=xlabel))
   
   dt <- as.data.frame(xtabs(weight~response, data=answers, CIdesign=="Detrended2.TS"))
   dt$.sample <- as.numeric(as.character(dt$response))
@@ -1467,26 +1529,84 @@ for (fname in dt1) {
   outline2 <- data.frame(xmin=min(fit2$ts.qq.x)*1.0, xmax=max(fit2$ts.qq.x)*1.0, 
             ymin=min(fit2$ts.qq.y)*1.0, ymax=max(fit2$ts.qq.y)*1.0, 
             .sample=fit2$.sample_outer[nrow(fit2)])  
+  xlabel <- sprintf("De-trended~(1)~lineup~with~TS~band:~t[%d]~sample~of~size~%d", dframe$df[1], dframe$n[1])
   
   p2 <- rot2_ts_lineup(fit2) + 
     geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, x=0, y=0), fill=NA, colour="grey20", data=outline2) +
     geom_text(aes(x=xdt, y=ydt, label=sprintf("%.1f/%.0f", Freq, max)), 
-              colour="grey70", size=7, data=dt, vjust=-0.15, hjust=1.05) 
+              colour="grey70", size=7, data=dt, vjust=-0.15, hjust=1.05) +
+    ggtitle(parse(text=xlabel))
 
-  print(fname)
   print(p1)
   print(p2)
-
 }
 
 @
-\caption{\label{fig:lpsdt1} De-trended (1) lineup with different outcomes depending on the choice of confidence band. The outlined panel marks the location of the data sample, the numbers at the bottom right are showing the number of votes each of the panels was picked by observers.   \hh{XXX I still want to show the parameter values somehow } }
+\caption{\label{fig:lpsdt1} De-trended (1) lineup with different outcomes depending on the choice of confidence band. The outlined panel marks the location of the data sample, the numbers at the bottom right are showing the number of votes each of the panels was picked by observers.  }
 \end{figure}
 \afterpage{\clearpage}
 
 
 
+\begin{figure}
+\centering
+<<lpsdt2, dependson='lpselect', echo=FALSE, fig.show='hold', out.width='0.4\\textwidth', fig.width=7, fig.height=7>>=
+for (fname in dt2[-1]) {
+  dframe <- read.csv(sprintf("lineup-data/%s",fname))
+  dframe$.sample <- dframe$.sample_outer                   
+  fit2 <- dframe
+  fit2$x[fit2$.n==20] <- dframe$x[dframe$.n==20] # add ts
+  fit2 <- ddply(fit2, .(.n), transform, ts.qq=QQ.cb(x, plot=FALSE))
 
+  answers <- subset(turkw, data_name==fname) 
+  code <- unique(dframe[, c(".sample_inner", ".sample_outer", ".n")])
+  code <- code[order(code$.sample_inner),]
+  idx <- which(answers$placement=="Inner")
+  answers$response <- as.numeric(answers$response)
+  answers$response[idx] <- code$.sample_outer[answers$response[idx]]
+
+  dh <- as.data.frame(xtabs(weight~response, data=answers, CIdesign=="Detrended.HD"))
+  dh$.sample <- as.numeric(as.character(dh$response))
+  xdh=max(dframe$naive1.qq.x)
+  ydh=min(c(dframe$naive1.qq.y-dframe$naive1.env.fit.value, 
+            dframe$naive1.env.lower-dframe$naive1.env.fit.value))
+  dh$max <- sum(dh$Freq)
+  
+  outline1 <- data.frame(xmin=min(dframe$naive1.qq.x)*1.0, xmax=max(dframe$naive1.qq.x)*1.0, 
+            ymin=ydh*1.0, ymax=max(c(dframe$naive1.qq.y-dframe$naive1.env.fit.value, 
+                                     dframe$naive1.env.upper-dframe$naive1.env.fit.value))*1.0, 
+            .sample=dframe$.sample_outer[nrow(dframe)])  
+  xlabel <- sprintf("Detrended~(2)~lineup~with~DH~band:~t[%d]~sample~of~size~%d", dframe$df[1], dframe$n[1])
+
+  p1 <- rot_lineup(dframe) + 
+  geom_text(aes(x=xdh, y=ydh, label=sprintf("%.1f/%.0f", Freq,max)), 
+            colour="grey70", size=7, data=dh, vjust=-0.15, hjust=1.05) + 
+  geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, x=0, y=0), fill=NA, colour="grey20", data=outline1) +
+    ggtitle(parse(text=xlabel))
+  
+  dt <- as.data.frame(xtabs(weight~response, data=answers, CIdesign=="Detrended.TS"))
+  dt$.sample <- as.numeric(as.character(dt$response))
+  xdt=max(fit2$ts.qq.x)
+  ydt=min(c(fit2$ts.qq.y-fit2$ts.qq.x, fit2$ts.qq.lower-fit2$ts.qq.x))
+  dt$max <- sum(dt$Freq)
+  outline2 <- data.frame(xmin=min(fit2$ts.qq.x)*1.0, xmax=max(fit2$ts.qq.x)*1.0, 
+            ymin=ydt*1.0, ymax=max(c(fit2$ts.qq.y-fit2$ts.qq.x, fit2$ts.qq.upper-fit2$ts.qq.x))*1.0, 
+            .sample=fit2$.sample_outer[nrow(fit2)])  
+  xlabel <- sprintf("De-trended~(2)~lineup~with~TS~band:~t[%d]~sample~of~size~%d", dframe$df[1], dframe$n[1])
+  
+  p2 <- rot_ts_lineup(fit2) + 
+    geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, x=0, y=0), fill=NA, colour="grey20", data=outline2) +
+    geom_text(aes(x=xdt, y=ydt, label=sprintf("%.1f/%.0f", Freq, max)), 
+              colour="grey70", size=7, data=dt, vjust=-0.15, hjust=1.05) +
+    ggtitle(parse(text=xlabel))
+
+  print(p1)
+  print(p2)
+}
+@
+\caption{\label{fig:lpsdt2} Three of the  four sets of de-trended (2) lineups with different outcomes depending which confidence band is used. The outlined panel marks the  location of the data sample, the numbers at the bottom right are showing the number of votes each of the panels was picked by observers. The fourth set of lineup with a different outcome is shown in figure~\ref{fig:rotstd}. }
+\end{figure}
+\afterpage{\clearpage}
 
 
 
