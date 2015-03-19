@@ -270,12 +270,13 @@ rot2_lineup <- function(dframe) {
   require(ggplot2)
   require(grid)
    ggplot(aes(x=naive1.qq.x, y=naive1.qq.y-naive1.env.fit.value), data = dframe) + 
-            facet_wrap(~.sample, ncol=5) + 
             geom_hline(yintercept=0, colour="grey30")+
             geom_point() + 
             geom_ribbon(aes(x = naive1.qq.x, 
-                            ymin = naive1.env.lower-naive1.env.fit.value, ymax = naive1.env.upper-naive1.env.fit.value),alpha = .2)+
+                            ymin = naive1.env.lower-naive1.env.fit.value, 
+                            ymax = naive1.env.upper-naive1.env.fit.value), alpha = .2, data=dframe)+
             theme_bw() + 
+            facet_wrap(~.sample, ncol=5) + 
             xlab("") + ylab("") +
             ylim(range(dframe$naive1.qq.y)) +
             theme(axis.text.y = element_blank(), axis.text.x = element_blank(),
@@ -1074,7 +1075,7 @@ m1 <- glmer(correct~CIdesign +  factor(sample_size) + factor(df) + (1|ip_address
 % 
 % print(xtable(dc))
 \begin{table}[ht]
-\caption{\label{tab:coefs} \hh{Estimates and confidence intervals corresponding to Model (1).}}
+\caption{\label{tab:coefs} \hh{Linear estimates and corresponding odds based on Model (1).  95\% Wald confidence intervals are given in parentheses.}}
 \centering
 %\begin{tabular}{rr>{ (}r<{,}>r<{) }rrl}
 \begin{tabular}{rr>{ (}r@{, }r<{) }rr>{ (}r@{, }r<{) }}
@@ -1449,21 +1450,28 @@ for (fname in dt1) {
   ydh=min(dframe$naive1.qq.y)
   dh$max <- sum(dh$Freq)
   
-  back1 <- data.frame(expand.grid(s=unique(dataset$s), nu=unique(dataset$nu)))
-back1$xmin <- 0.5
-back1$xmax <- 2.5
-back1$ymin <- -5
-back1$ymax <- 105
-  
-  p1 <- rot2_lineup(dframe) + geom_text(aes(x=xdh, y=ydh, label=sprintf("%.1f/%.0f", Freq,max)), colour="grey70", size=7, data=dh, vjust=0, hjust=1)
+  outline1 <- data.frame(xmin=min(dframe$naive1.qq.x)*1.0, xmax=max(dframe$naive1.qq.x)*1.0, 
+            ymin=min(dframe$naive1.qq.y)*1.0, ymax=max(dframe$naive1.qq.y)*1.0, 
+            .sample=dframe$.sample_outer[nrow(dframe)])  
+
+  p1 <- rot2_lineup(dframe) + 
+  geom_text(aes(x=xdh, y=ydh, label=sprintf("%.1f/%.0f", Freq,max)), 
+            colour="grey70", size=7, data=dh, vjust=-0.15, hjust=1.05) + 
+  geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, x=0, y=0), fill=NA, colour="grey20", data=outline1)
   
   dt <- as.data.frame(xtabs(weight~response, data=answers, CIdesign=="Detrended2.TS"))
   dt$.sample <- as.numeric(as.character(dt$response))
   xdt=max(fit2$ts.qq.x)
   ydt=min(fit2$ts.qq.y)
   dt$max <- sum(dt$Freq)
+  outline2 <- data.frame(xmin=min(fit2$ts.qq.x)*1.0, xmax=max(fit2$ts.qq.x)*1.0, 
+            ymin=min(fit2$ts.qq.y)*1.0, ymax=max(fit2$ts.qq.y)*1.0, 
+            .sample=fit2$.sample_outer[nrow(fit2)])  
   
-  p2 <- rot2_ts_lineup(fit2) + geom_text(aes(x=xdt, y=ydt, label=sprintf("%.1f/%.0f", Freq, max)), colour="grey70", size=7, data=dt, vjust=0, hjust=1)
+  p2 <- rot2_ts_lineup(fit2) + 
+    geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, x=0, y=0), fill=NA, colour="grey20", data=outline2) +
+    geom_text(aes(x=xdt, y=ydt, label=sprintf("%.1f/%.0f", Freq, max)), 
+              colour="grey70", size=7, data=dt, vjust=-0.15, hjust=1.05) 
 
   print(fname)
   print(p1)
@@ -1472,7 +1480,7 @@ back1$ymax <- 105
 }
 
 @
-\caption{\label{fig:lpsdt1} De-trended (1) lineup with different outcomes depending on the choice of confidence band.  \hh{XXX I still want to show the parameter values somehow and the panel of the sample} }
+\caption{\label{fig:lpsdt1} De-trended (1) lineup with different outcomes depending on the choice of confidence band. The outlined panel marks the location of the data sample, the numbers at the bottom right are showing the number of votes each of the panels was picked by observers.   \hh{XXX I still want to show the parameter values somehow } }
 \end{figure}
 \afterpage{\clearpage}
 
