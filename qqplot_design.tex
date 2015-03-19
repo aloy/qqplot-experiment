@@ -639,11 +639,28 @@ Non-integer numbers result from multiple choice answers. %\hh{XXX} The italicize
 \hh{The premise underlying our} evaluation of the different Q-Q plot designs is that if participants find it easier to identify the data plot in one lineup than in another lineup (given identical data underlying the lineups), the first lineup uses the better design.
 
 Let $Y_i$ be the outcome of the $i$th evaluation. Then $Y_i$ is a Bernoulli variable, where $\pi_i$ denotes the probablity of identifying the data plot from the lineup; i.e.~$P(Y_i = 1) = \pi_i = E[Y_i]$.   
-The probability of identifying the lineup is affected by several factors: (a) the strength of the signal, i.e.~degrees of freedom of the $t$ distribution, and the sample size, (b) a human factor, i.e~the visual ability of the observer, and (c)  the `lineup factor': depending on which $m-1$ representatives of the test distribution the null plots show, lineups of the same data plot can have different difficulty. We capture all of this in a logistic regression model with fixed effects for signal strength ($\delta$ for degrees of freedom, and $\nu$ for sample size) and random effects for lineup difficulty, $d$, and user ability, $u$: 
-\begin{eqnarray*}
-g(\pi_i) &=& \eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},\\
+The probability of identifying the lineup is affected by several factors: (a) the strength of the signal, i.e.~degrees of freedom of the $t$ distribution, and the sample size, (b) a human factor, i.e~the visual ability of the observer, and (c)  the `lineup factor': depending on which $m-1$ representatives of the test distribution the null plots show, lineups of the same data plot can have different difficulty. We capture all of this in a logistic regression model with fixed effects for signal strength and random effects for lineup difficulty and user ability. More specifically: 
+
+%Next, we model the aforementioned probability $p_i$ with which observer $i$ picks the true data from a lineup. 
+%Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision on the $i$th evaluation and $\pi_i$ is the probability with which the observer chooses the data plot. This probability is influenced by a number of factors:
+
+\begin{center}
+\begin{tabular}{lp{5in}}
+$\tau$ & the combination of design used in the lineup; this is either {\it Control} or one of  {\it \{  Standard, De-trended (1), De-trended (2)\}} in combination with a choice of confidence band (HD, TS), \\
+&  the specific parameters under which the data for the lineup were created: \\
+&  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
+&  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
+$d$ &  the level of difficulty based on the actual sample, and \\
+$u$ & the users' subjective abilities.
+ \end{tabular}
+\end{center}
+%
+
+
+\begin{eqnarray} \label{eq:model}
+g(\pi_i) &=& \eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},\\ \nonumber
 Y &=& g^{-1}(\eta) + \varepsilon
-\end{eqnarray*}
+\end{eqnarray}
 where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard (DH), Standard (TS), De-trended (DH), De-trended (TS), De-trended2 (DH), De-trended2 (TS)$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular sample \hh{and null data} used. 
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$. We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.
 %
@@ -730,7 +747,7 @@ Detrended 2 (DH) & \bf -0.42 & \bf -0.61 & \bf  -0.24 && \bf 0.66 & \bf 0.54 & \
 %In terms of rejections of the null hypothesis, this means that normality is rejected in 24 out of the 48 lineups of the de-trended (2) Q-Q plot. All of these cases are being rejected in all of the other designs as well, but using the control design another four lineups reject normality, and the standard design rejects yet another lineup.
 
 To further investigate the difference between the designs, consider figure \ref{fig:rotstd}. Here, we have an example of a $t_2$ sample of size $n=20$ that is rejected \hh{from all designs besides the de-trended (2) Q-Q plots with a DH band.}  
-\hh{The de-trended (2) DH band is shown on the left side of figure~\ref{fig:rotstd}. Instead of the data sample in panel \#$(2^2+1)$ observers pick panel \#7 in 19.7 out of 31 evaluations. For any of the other designs, as e.g.\ the de-trended (2) Q-Q plot with TS bands on the right of figure~\ref{fig:rotstd}, observers pick the panel of the data sample at a rate that leads to a rejection of normality.  }
+\hh{The de-trended (2) DH band is shown on the left side of figure~\ref{fig:rotstd}. Instead of the data sample in panel \#$(2^2+1)$ observers pick panel \#7 in 32.2 out of 45 evaluations. For any of the other designs, as e.g.\ the de-trended (2) Q-Q plot with TS bands on the right of figure~\ref{fig:rotstd}, observers pick the panel of the data sample at a rate that leads to a rejection of normality.  }
 %Instead of focusing on the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked as being most different 9 out of 27 times in the standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$ from the standard design. 
 \begin{figure}[hbt]
 %\begin{subfigure}{0.5\textwidth}
@@ -761,12 +778,15 @@ In the lineup on the left the data sample in panel \#$(2^2+1)$ is only identifie
 %
 \hh{The two participants who gave a free-form answer for their choice in the lineup on the left hand side of figure~\ref{fig:rotstd}, picked panel \#7 from the de-trended lineup, and stated that this panel was the one with the ``most dots outside the shaded area,'' i.e.~they focused on the middle of panel \#7}. 
 
-\hh{XXX update March 17 XXX - there's nothing in the choices that participants gave. in the additional experiment participants only commented in about 1\% of the lineups on their reason. XXXX}
+\hh{XXX update March 17 XXX - there's nothing in the choices that participants gave. in the additional experiment participants only commented in about 1\% of the lineups on their reason. I think it'd be better to get rid of this argument. Instead, I've added all of the lineups, in which DH and TS result in different outcomes. XXXX}
 
-\hh{alternative: for every single lineup, in which the DHs are not significant, but TS is, let's check which panels participants picked. }
+This is not a singular occurrence---when investigating \hh{all lineups of the same design which lead to different outcome depending on the choice of confidence band (an exhaustive list of all these lineups is given in the appendix in section~\ref{sec:lplist}), we find that for designs using DH bands, panels were picked in favor of the data sample, where dots were outside the shaded area. This happened both in the tails and in the middle part of the distribution.  } 
+%overall reasoning we took a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot %(figure~\ref{fig:rotfalse}). 
+\hh{This is consistent with the findings in \citet{buja:2013}, which motivated the research into Tail-Sensitive confidence bands. These bands define a test of normality and are narrower in the tails (but skew) than those associated with the Kolmogorov-Smirnov test, while slightly more conservative in the middle of the distribution.}
 
-This is not a singular occurrence---when investigating  overall reasoning we took a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot %(figure~\ref{fig:rotfalse}). 
-As expected, these words barely occur in the control design (where there is no shaded area).
+
+%This is not a singular occurrence---when investigating  overall reasoning we took a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot %(figure~\ref{fig:rotfalse}). 
+%As expected, these words barely occur in the control design (where there is no shaded area).
 
 
 %\hh{investigate whether outside area is also indicative for TS plots}
@@ -774,7 +794,6 @@ As expected, these words barely occur in the control design (where there is no s
 % \alnote{This would be a very natural place to put in TAS citations: Aldor-Noiman et al (2013) and Rosenkrantz (2000). }
 % \hhnote{comment on Rosenkrantz is missing still}
 
-Another promising approach might be to base confidence bands on the TS test \citep{buja:2013}. These bands define a test of normality and are narrower in the tails than those associated with the Kolmogorov-Smirnov test, while slightly more conservative in the middle of the distribution. These findings coincide with our observation that points  outside the confidence intervals were misleading participants, if this occurred in the middle of the plot.
 
 
 
@@ -851,52 +870,22 @@ The application of the lineup framework based on the related probability (P-P) p
 \begin{appendix}
 \section{Model and Results}
 
+%Next, we model the aforementioned probability $p_i$ with which observer $i$ picks the true data from a lineup. 
+%Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision on the $i$th evaluation and $\pi_i$ is the probability with which the observer chooses the data plot. This probability is influenced by a number of factors:
 
-% \begin{figure}[hbt]
-% <<lps-dsn2, dependson='functions', echo=FALSE, message=FALSE>>=
-% dframe <- read.csv("lineup-data/data-1-2-15-50-2-13-6.csv")
-% dframe$.sample <- dframe$.sample_outer
+% \begin{center}
+% \begin{tabular}{lp{5in}}
+% $\tau$ & the combination of design used in the lineup  \{ Control, Standard, De-trended (1), De-trended (2)\} and confidence interval (HD, TS), \\
+% &  the specific parameters under which the data for the lineup were created: \\
+% &  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
+% &  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
+% $d$ &  the level of difficulty based on the actual sample, and \\
+% $u$ & the users' subjective abilities.
+%  \end{tabular}
+% \end{center}
+% %
 % 
-% fit2 <- dframe
-% b <- (HLMdiag:::qqlineInfo(dframe$x[dframe$.n==20]))[2] # get robust estimate for sigma
-% #sd(fit2$x[fit2$.n==20])
-% fit2$x[fit2$.n==20] <- dframe$x[dframe$.n==20]/b # change variance to 1, compare then
-% idx <- grep("naive1.qq", names(fit2))
-% fit2 <- ddply(fit2[,-idx], .(.n), transform, naive1.qq=qqnorm(x, plot.it=FALSE))
-% idx <- grep("naive1.env", names(fit2))
-% fit2 <- ddply(fit2[,-idx], .(.n), transform, naive1.env=sim_env(x))
-% @
-% \begin{subfigure}{0.5\textwidth}
-% <<echo=FALSE, fig.width=7, fig.height=7>>=
-% std_lineup(dframe)
-% @
-% \end{subfigure}
-% \begin{subfigure}{0.5\textwidth}
-% <<echo=FALSE, fig.width=7, fig.height=7>>=
-% std_lineup(fit2) 
-% @
-% \end{subfigure}
-% \caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
-% The observed data in both lineups is displayed in panel \#$(3^2 - 3)$\footnote{The little piece of calculus is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.}. }
-% \end{figure}
-% \afterpage{\clearpage}
-
-Next, we model the aforementioned probability $p_i$ with which observer $i$ picks the true data from a lineup. 
-Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision on the $i$th evaluation and $\pi_i$ is the probability with which the observer chooses the data plot. This probability is influenced by a number of factors:
-
-\begin{center}
-\begin{tabular}{lp{5in}}
-$\tau$ & the combination of design used in the lineup  \{ Control, Standard, De-trended (1), De-trended (2)\} and confidence interval (HD, TS), \\
-&  the specific parameters under which the data for the lineup were created: \\
-&  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
-&  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
-$d$ &  the level of difficulty based on the actual sample, and \\
-$u$ & the users' subjective abilities.
- \end{tabular}
-\end{center}
-%
-
-%
+% %
 
 
 
@@ -905,7 +894,7 @@ $u$ & the users' subjective abilities.
 % xtable(summary(m1)$coefficients, digits=c(0,2,3,2,4))
 \begin{table}[ht]
 \centering
-\caption{\label{tab:model} Coefficients and significances corresponding to  model $M_1$. The type of design is important for the power of a lineup. \hh{ De-trended (2) Q-Q plots with Davison-Hinkley confidence bands lose a significant amount of power compared to the other  versions of Q-Q plots. If TS intervals are used, this loss does not occur. De-trended (1) Q-Q plots with fixed aspect ratio perform significantly better than all of the other versions of Q-Q plots.}}
+\caption{\label{tab:model} Coefficients and significances corresponding to  model (\ref{eq:model}). The type of design is important for the power of a lineup. \hh{ De-trended (2) Q-Q plots with Davison-Hinkley confidence bands lose a significant amount of power compared to the other  versions of Q-Q plots. If TS intervals are used, this loss does not occur. De-trended (1) Q-Q plots with fixed aspect ratio perform significantly better than all of the other versions of Q-Q plots.}}
 \begin{tabular}{rrrrrl}
    \hline
   &\bf Estimate &\bf Std. Error &\bf z value &\bf Pr($>$$|$z$|$) & \\ 
@@ -934,14 +923,14 @@ $u$ & the users' subjective abilities.
 \end{table}
 \afterpage{\clearpage}
 
-The estimated model coefficients for model $M_1$ are shown in Table~\ref{tab:model}. 
+Table~\ref{tab:model} gives an overview of the estimated coefficients for model (\ref{eq:model}). 
 Estimates of the variance components are $\widehat{\sigma}_u = 0.66$, $\widehat{\sigma}_d=1.87$, and $\widehat{\sigma} = 0.3$. Variances of user ability and data difficulty are large relative to residual variance, indicating that both random effects are necessary.
 %
 %Figure~\ref{fig:ranef} shows histograms of the predicted random effects for participants' abilities (left) and difficulty level of lineups (right). 
 Compared to the difficulty level of lineups, participants' abilities only vary little. The difference between best and worst performance by participants has an effect of at most an estimated 
 3.2-fold probability of detecting the data plot from a lineup. 
 
-\section{Some specific lineups}
+\section{Differences between Davison-Hinkley and Tail-sensitive confidence bands}\label{sec:lplist}
 
 %
 In this section we are listing all lineups in which lineups of Q-Q plots with a  Davison-Hinkley band results in a different outcome than the same Q-Q plot design with a TS band. 
