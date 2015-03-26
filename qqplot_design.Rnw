@@ -617,9 +617,9 @@ The reference line has a slope of $S$ (and an intercept of 0).  All panels have 
 
 %\alnote{The generation of the null data makes sense to me, but is there a way to use bullet points on the right side of the table? That would help me read it...}
 
-Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show the same data set (in panel \#$(3^2-3)$\footnote{The little piece of calculus is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.}). On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. \hh{checked the number - it's fine}
+Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show identical data, the sample\footnote{The little piece of calculus is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.} is in panel \#$(3^2-3)$. On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. \hhnote{checked the number - it's fine}
 \alnote{We need to straighten out our notation for the standard deviation. On this page we use both $\widehat{\sigma}$ and $\widehat{S}$.}
-\hh{XXX $\widehat{\sigma}$ and $\widehat{S}$ are supposed to be two different estimators -- I'm thinking of $\hat{\sigma} = 1/(n-1) \sum_i (x_i - \bar{x})^2$ whereas $\hat{S}$ is a more robust estimator based on the ratio of IQRs in y and x. We need to say that somewhere. }
+\hhnote{XXX $\widehat{\sigma}$ and $\widehat{S}$ are supposed to be two different estimators -- I'm thinking of $\hat{\sigma} = 1/(n-1) \sum_i (x_i - \bar{x})^2$ whereas $\hat{S}$ is a more robust estimator based on the ratio of IQRs in y and x. We need to say that somewhere. }
 
 \begin{figure}[hbt]
 <<lps-dsn, dependson='functions', echo=FALSE, message=FALSE>>=
@@ -763,10 +763,8 @@ ggplot() +
   geom_line(aes(x=as.numeric(CIdesign), y=100*correct/n, colour=factor(rep), group=data_name), data=dataset) +
   facet_grid(facets=nu~s) + scale_colour_brewer("Replicate", palette="Set1") +
   theme_bw() + scale_shape_manual("Significant difference\nfrom normality",values=c(1,19)) + ylab("Percentage of data identifications") +
-#  scale_x_continuous(breaks=1:7, labels=levels(dataset$CIdesign)) + 
   scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nDH", "\nTS","\t\t\t\t\tDetrended (1)\nDH", "\nTS","\t\t\t\t\tDetrended (2)\nDH", "\nTS","Control")) +
   theme(legend.position="bottom", legend.direction="horizontal", legend.box="horizontal")
-#  theme(axis.text.x = element_text(angle = 0, hjust = 1))
 @
 \caption{\label{fig:compare} \hh{Percentages of identifying the $t$ sample from lineups of different variations of Q-Q plots. Each lineup is shown as a dot. Filled dots indicate a (visually) significant deviation from normality (as determined in the user experiment). Dots of the same lineup data (sample and null data) are connected by a line.
 The four lines in each panel correspond to four different lineups: the lines of the same color correspond to the same $t$-sample, but different null data; the lines of the other colour change both in sample and null data. The results are facetted by parameter setting: sample sizes $n$ (columns) vary from 20 to 75, degrees of freedom $df$ are shown in rows. With increasing sample size and decreasing degrees of freedom the percentage of picking the $t$ sample  from the normal samples generally increases. }
@@ -777,7 +775,7 @@ The four lines in each panel correspond to four different lineups: the lines of 
 \alnote{The color in Figure 3 is lost in black and white printing. Should we pay for color in our submission? or should we add another aes parameter to ``double code''?}
 
 Figure~\ref{fig:compare} shows percentages of data picks in the lineups under the different variations of Q-Q plots. 
-\hh{All versions of Q-Q plots provide highly correlated results, and largely agree in the decision on normality. Filled circles indicate a  rejection of standard normality based on visual evaluation, open circles indicate a lack of rejection. Each of the panels shows the four lineups corresponding to the same sample size $n$ and degrees of freedom $\nu$ of the $t$ distribution.
+\hh{All versions of Q-Q plots provide highly correlated results, and largely agree in the decision on normality. Filled circles indicate a  rejection of standard normality based on visual evaluation, open circles indicate a lack of rejection. Each of the panels shows the four lineups corresponding to the same sample size $n$ and degrees of freedom $df$ of the $t$ distribution.
 Each line connects the evaluations based on the same lineup data (same data, same null plots).
 Lines of the same color correspond to lineups with the same data sample, while differently colored lines show lineups of different samples.  Generally, within each panel, lines of the same color (lineups share the same data sample, but have different nulls) are closer together than lines of different color (different sample, different nulls).  }
 As expected, the task of identifying non-normality becomes easier with increased sample size and more pronounced deviations from normality due to lower degrees of freedom. 
@@ -923,7 +921,7 @@ ggplot() +
   geom_line(aes(x=as.numeric(variable), y=value, group=rep), data=pm) + 
   scale_shape_manual("Significant difference\nfrom normality",values=c(1,19))
 @
-\caption{\label{fig:pvals} \hh{ Comparison of visual tests and common normality tests. Each panel shows $p$-values  for each of  the two samples of size $n$ drawn from a $t_\nu$ distribution. If normality of a sample is rejected by a test, the point is hollow. Filled points indicate significant deviation from $N(0, S^2)$. Visual tests (shaded grey background) are generally  more powerful than common normality tests.} }
+\caption{\label{fig:pvals} \hh{ Comparison of visual tests and common normality tests. Each panel shows $p$-values  for each of  the two samples of size $n$ drawn from a $t_{df}$ distribution. If normality of a sample is rejected by a test, the point is hollow. Filled points indicate significant deviation from $N(0, S^2)$. Visual tests (shaded grey background) are generally  more powerful than common normality tests.} }
 \end{figure}
 \afterpage{\clearpage}
 Figure~\ref{fig:pvals} shows an overview of the 24 samples' $p$-values  from the normal tests and estimated visual $p$-values from the lineups of Q-Q plots in the standard designs with either the Davison-Hinkley (DH) or the Tail-sensitive (TS) confidence bands. Out of the 24 samples the tests agree on ten samples, of which only three are rejected by every test.
