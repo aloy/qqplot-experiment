@@ -315,10 +315,11 @@ Another point in favor of this design is that it makes better use of the availab
 
 \hh{XXX we're going to use two approaches to distinguish between effect of detrending and larger amount of space available. }
 
-In this paper we investigate the effectiveness and power of the modifications made to Q-Q plots.
-Examples of the three \al{XX Shouldn't this be 4?} versions of Q-Q plots under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \citep{Davison:1997}
-%\alnote{I think pointwise bands are described in Atkinson (1985). Meeker uses simultaneous confidence bands for P-P plots. The motivation to use pointwise in the lineups seems to be that it is what people do (i.e., JMP (I think). qqPlot in the car package in R, etc.)}
-based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{de-trended} Q-Q plot. Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
+In \hh{section~\ref{sec:power1}} we investigate the effectiveness and power of the modifications made to Q-Q plots.
+Examples of \hh{all the different} Q-Q plot \hh{designs} under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with \hh{an added grey band representing a confidence band, a \emph{de-trended} Q-Q plot preserving relative distances in the plot and a \emph{de-trended} Q-Q plot making full use of the space along the $y$-axis.}
+
+\hh{Q-Q plots in the upper row of figure~\ref{qqplots} use Davison-Hinkley (DH) 95\% pointwise confidence region \citep{Davison:1997}, while the shading in the lower row represents 95\% Tail-Sensitive (TS) simultaneous confidence bands \cite{buja:2013}. }
+Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
 
 \begin{figure}
 \centering
@@ -376,8 +377,10 @@ Assessing this ability requires that each individual evaluates multiple lineups.
 If that is not possible, we must assume that all participants share the same ability, $p$. %, and the power calculation in Equation~\ref{eqn:power} simplifies to $1 - B_{N, \hat{p}}(x_\alpha)$, where $\widehat{p}$ is an estimate for the probability of choosing the data plot for a specific lineup.
 Similar to classical inference, we can make use of power to assess the sensitivity of tests. This allows us to make decisions about designs for particular tasks by evaluating lineups displaying  the same data in different types of displays \citep{Hofmann:2012ts}. 
 
-In the next section, we describe the simulation study used to compare the three \al{(four??)} Q-Q plot designs, and an initial comparison of the three designs is given. 
-\al{In Section~\ref{sec:power2} we compare the power of the lineup test of normality to the classical normality tests. We use a generalized linear mixed model to compare the power of the three designs in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). We conclude with a discussion and outline areas for future research.}
+
+%In the next section, we describe the simulation study used to compare the three \al{(four??)} Q-Q plot designs, and an initial comparison of the three designs is given. 
+\al{In Section~\ref{sec:power2} we compare the power of the lineup test of normality to the classical normality tests
+ \hh{based on a simulation study, which we introduce in section~\ref{sec:simu}}. We use a generalized linear mixed model to compare the power of different designs  of Q-Q plots in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e.\ rejection of normality). We conclude with a discussion and outline areas for future research.}
 % We use a generalized linear mixed model to compare the power of the three designs in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). Finally, we compare the power of a lineup test of normality to the classical normality tests in Section~\ref{sec:power2}, and outline areas for future research in Section~\ref{sec:discussion}. 
 
 
@@ -389,11 +392,11 @@ In the next section, we describe the simulation study used to compare the three 
 %------------------------------------------------------------------------------------
 
 \hh{In order to evaluate the power of Q-Q plots and compare their performance to normal distribution tests, we make use of a simulation study, 
-using samples of size $s \in \{20, 30, 50, 75\}$ from a $t_\nu$ distribution with $\nu \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.}
+using samples of size $n \in \{20, 30, 50, 75\}$ from a $t_{d}$ distribution with $d \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.}
 \alnote{I think using $n$ for sample size is most logical, though this does complicate the notation used in model (2).}
 
-\hh{For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from samples of the same size drawn from the normal distribution. For each data \al{(XX observed (i.e., suspect) rather than data??)} sample, two sets of null plots are created, so that we have a total of 48 lineup samples. 
-These lineup samples are rendered in each of the Q-Q plot variations, resulting in $48 \times 7 = 336$ different lineups.  Additionally, standard plots (both TS and DH bands) are rendered against $N(0, S^2)$ null data (see discussion below), adding another $2 \times 48 = 96$ lineups.
+\hh{For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from samples of the same size drawn from the normal distribution. For each  sample, two sets of null plots are created, so that we have a total of 48 lineup \hh{data sets}. 
+These lineup \hh{data sets} are rendered in each of the Q-Q plot variations, resulting in $48 \times 7 = 336$ different lineups.  Additionally, standard plots (both TS and DH bands) are rendered against $N(0, S^2)$ null data (see discussion below), adding another $2 \times 48 = 96$ lineups.
 }
 
 
@@ -416,8 +419,9 @@ The reference line has a slope of $S$ (and an intercept of 0).  All panels have 
 
 %\alnote{The generation of the null data makes sense to me, but is there a way to use bullet points on the right side of the table? That would help me read it...}
 
-Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show the same data set (in panel \#$(3^2-3)$\footnote{The little piece of calculus is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.}). On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{\sigma}=1.578$. 
+Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show the same data set (in panel \#$(3^2-3)$\footnote{The little piece of calculus is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.}). On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. \hh{checked the number - it's fine}
 \alnote{We need to straighten out our notation for the standard deviation. On this page we use both $\widehat{\sigma}$ and $\widehat{S}$.}
+\hh{XXX $\widehat{\sigma}$ and $\widehat{S}$ are supposed to be two different estimators -- I'm thinking of $\hat{\sigma} = 1/(n-1) \sum_i (x_i - \bar{x})^2$ whereas $\hat{S}$ is a more robust estimator based on the ratio of IQRs in y and x. We need to say that somewhere. }
 
 \begin{figure}[hbt]
 
@@ -442,6 +446,12 @@ The observed data plot in both lineups is displayed in panel \#$(3^2 - 3)$. }
 
 Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in a Q-Q plot corresponds to a  hypothesis test against that distribution, and as long as there is a method to generate samples under the null hypothesis, we do not even need to know the exact distribution. This allows us to assess situations in which we only have approximate or asymptotic results, which are otherwise hard, if not impossible, to investigate  with the (small) finite samples we typically deal with in practice.
 \al{Additionally, we use the interquartile range (IQR) to estimate scale, as it is a standard practice for Q-Q plots.}
+
+\hhnote{`as it is a standard practice' is not stating quite the same as what I was trying to say before. I was not trying to give a reason for why we use a robust estimate, but just stating that this estimator is standard practice for Q-Q plots. 
+How about 
+
+``Additionally, we use the interquartile range (IQR) to estimate scale, as is standard practice for Q-Q plots."
+}
 % The interquartile range (IQR) is used---as is standard practice for Q-Q plots---to estimate scale. 
 Robust estimation of the variance is preferred for better assessment of the tails and outliers of the empirical distribution. We could use alternative estimators for variance, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, but this will likely also change the power of the corresponding lineup.
 
@@ -598,7 +608,7 @@ This is not quite true, as can be seen in Table~\ref{tab:reject} \al{XXX do we n
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-1} 
 
 \end{knitrout}
-\caption{\label{fig:pvals} \hh{ Comparison of visual tests and common normality tests. Each panel shows $p$-values  for each of  the two samples of size $n$ drawn from a $t_\nu$ distribution. If normality of a sample is rejected by a test, the point is hollow. Filled points indicate significant deviation from $N(0, s^2)$. Visual tests (shaded grey background) are generally  more powerful than common normality tests.} }
+\caption{\label{fig:pvals} \hh{ Comparison of visual tests and common normality tests. Each panel shows $p$-values  for each of  the two samples of size $n$ drawn from a $t_\nu$ distribution. If normality of a sample is rejected by a test, the point is hollow. Filled points indicate significant deviation from $N(0, S^2)$. Visual tests (shaded grey background) are generally  more powerful than common normality tests.} }
 \end{figure}
 \afterpage{\clearpage}
 Figure~\ref{fig:pvals} shows an overview of the 24 samples' $p$-values  from the normal tests and estimated visual $p$-values from the lineups of Q-Q plots in the standard designs with either the Davison-Hinkley (DH) or the Tail-sensitive (TS) confidence bands. Out of the 24 samples the tests agree on ten samples, of which only three are rejected by every test.
@@ -973,7 +983,7 @@ Compared to the difficulty level of lineups, participants' abilities only vary l
 \section{Differences between Davison-Hinkley and Tail-sensitive confidence bands}\label{sec:lplist}
 
 %
-In this section we are listing all lineups in which lineups of Q-Q plots with a  Davison-Hinkley band results in a different outcome than the same Q-Q plot design with a TS band. 
+In this section we are listing all lineups in which lineups of Q-Q plots with a Davison-Hinkley band results in a different outcome than the same Q-Q plot design with a TS band. 
 Under the standard design there is one lineup, the detrended (1)  design has two lineups with different outcomes, while the detrended (2) design has four lineups with different outcomes. They are shown in figures~\ref{fig:lpsstds},~\ref{fig:lpsdt1}, and~\ref{fig:lpsdt2}, respectively. 
 
 \begin{figure}
