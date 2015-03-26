@@ -575,8 +575,10 @@ Assessing this ability requires that each individual evaluates multiple lineups.
 If that is not possible, we must assume that all participants share the same ability, $p$. %, and the power calculation in Equation~\ref{eqn:power} simplifies to $1 - B_{N, \hat{p}}(x_\alpha)$, where $\widehat{p}$ is an estimate for the probability of choosing the data plot for a specific lineup.
 Similar to classical inference, we can make use of power to assess the sensitivity of tests. This allows us to make decisions about designs for particular tasks by evaluating lineups displaying  the same data in different types of displays \citep{Hofmann:2012ts}. 
 
-In the next section, we describe the simulation study used to compare the three \al{(four??)} Q-Q plot designs, and an initial comparison of the three designs is given. 
-\al{In Section~\ref{sec:power2} we compare the power of the lineup test of normality to the classical normality tests. We use a generalized linear mixed model to compare the power of the three designs in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). We conclude with a discussion and outline areas for future research.}
+
+%In the next section, we describe the simulation study used to compare the three \al{(four??)} Q-Q plot designs, and an initial comparison of the three designs is given. 
+\al{In Section~\ref{sec:power2} we compare the power of the lineup test of normality to the classical normality tests
+ \hh{based on a simulation study, which we introduce in section~\ref{sec:simu}}. We use a generalized linear mixed model to compare the power of different designs  of Q-Q plots in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e.\ rejection of normality). We conclude with a discussion and outline areas for future research.}
 % We use a generalized linear mixed model to compare the power of the three designs in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). Finally, we compare the power of a lineup test of normality to the classical normality tests in Section~\ref{sec:power2}, and outline areas for future research in Section~\ref{sec:discussion}. 
 
 
