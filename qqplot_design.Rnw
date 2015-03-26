@@ -590,11 +590,11 @@ Similar to classical inference, we can make use of power to assess the sensitivi
 %------------------------------------------------------------------------------------
 
 \hh{In order to evaluate the power of Q-Q plots and compare their performance to normal distribution tests, we make use of a simulation study, 
-using samples of size $s \in \{20, 30, 50, 75\}$ from a $t_\nu$ distribution with $\nu \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.}
+using samples of size $n \in \{20, 30, 50, 75\}$ from a $t_{d}$ distribution with $d \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.}
 \alnote{I think using $n$ for sample size is most logical, though this does complicate the notation used in model (2).}
 
-\hh{For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from samples of the same size drawn from the normal distribution. For each data \al{(XX observed (i.e., suspect) rather than data??)} sample, two sets of null plots are created, so that we have a total of 48 lineup samples. 
-These lineup samples are rendered in each of the Q-Q plot variations, resulting in $48 \times 7 = 336$ different lineups.  Additionally, standard plots (both TS and DH bands) are rendered against $N(0, S^2)$ null data (see discussion below), adding another $2 \times 48 = 96$ lineups.
+\hh{For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from samples of the same size drawn from the normal distribution. For each  sample, two sets of null plots are created, so that we have a total of 48 lineup \hh{data sets}. 
+These lineup \hh{data sets} are rendered in each of the Q-Q plot variations, resulting in $48 \times 7 = 336$ different lineups.  Additionally, standard plots (both TS and DH bands) are rendered against $N(0, S^2)$ null data (see discussion below), adding another $2 \times 48 = 96$ lineups.
 }
 
 
@@ -617,8 +617,9 @@ The reference line has a slope of $S$ (and an intercept of 0).  All panels have 
 
 %\alnote{The generation of the null data makes sense to me, but is there a way to use bullet points on the right side of the table? That would help me read it...}
 
-Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show the same data set (in panel \#$(3^2-3)$\footnote{The little piece of calculus is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.}). On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{\sigma}=1.578$. 
+Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show the same data set (in panel \#$(3^2-3)$\footnote{The little piece of calculus is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.}). On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. \hh{checked the number - it's fine}
 \alnote{We need to straighten out our notation for the standard deviation. On this page we use both $\widehat{\sigma}$ and $\widehat{S}$.}
+\hh{XXX $\widehat{\sigma}$ and $\widehat{S}$ are supposed to be two different estimators -- I'm thinking of $\hat{\sigma} = 1/(n-1) \sum_i (x_i - \bar{x})^2$ whereas $\hat{S}$ is a more robust estimator based on the ratio of IQRs in y and x. We need to say that somewhere. }
 
 \begin{figure}[hbt]
 <<lps-dsn, dependson='functions', echo=FALSE, message=FALSE>>=
@@ -651,6 +652,12 @@ The observed data plot in both lineups is displayed in panel \#$(3^2 - 3)$. }
 
 Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in a Q-Q plot corresponds to a  hypothesis test against that distribution, and as long as there is a method to generate samples under the null hypothesis, we do not even need to know the exact distribution. This allows us to assess situations in which we only have approximate or asymptotic results, which are otherwise hard, if not impossible, to investigate  with the (small) finite samples we typically deal with in practice.
 \al{Additionally, we use the interquartile range (IQR) to estimate scale, as it is a standard practice for Q-Q plots.}
+
+\hh{XXX `as it is a standard practice' is not stating quite the same as what I was trying to say before. I was not trying to give a reason for why we use a robust estimate, but just stating that this estimator is standard practice for Q-Q plots. 
+How about 
+
+``Additionally, we use the interquartile range (IQR) to estimate scale, as is standard practice for Q-Q plots."
+}
 % The interquartile range (IQR) is used---as is standard practice for Q-Q plots---to estimate scale. 
 Robust estimation of the variance is preferred for better assessment of the tails and outliers of the empirical distribution. We could use alternative estimators for variance, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, but this will likely also change the power of the corresponding lineup.
 
