@@ -489,7 +489,7 @@ Based on a visual inspection in a Q-Q plot, a
  sample is considered to be consistent with a normal distribution if the empirical and theoretical quantiles fall close to the line representing the theoretical distribution.  This decision is further aided by an assessment of
  %Closeness can  be assessed visually based on
  whether the points fall inside the envelope of 95\%  pointwise confidence intervals \citep[][p.~150--154]{Davison:1997}.
-\hh{Include discussion of TS interval here.} 
+\hhnote{Include discussion of TS interval here.} 
 % \alnote{We need to be careful here. Since we are using pointwise CIs, we would expect a certain \% of points to fall outside the CIs. I think in the first review of the JCGS paper a reviewer was concerned about this as well.}
 % \hhnote{Well, yes, point taken,  but it is also important  how far outside the points are ... }
 % \alnote{I think the Davison and Hinkley reference takes care of this. I will reread that section and add a page number soon.}
@@ -656,6 +656,7 @@ Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} inde
 (ii) was exposed to multiple parameter settings (`harder' and `easier' lineups), and
 (iii) evaluated each Q-Q plot design at most twice.
 
+\alnote{I can do this soon.}
 XXX discussion of amazon turk studies in comparison to lab experiments: practical considerations \citep{Kosara:2010}, study by \citet{cleveland:1984} re-run on Amazon MTurk with similar results by \citet{Heer:2010}.
 }
 %
@@ -1326,6 +1327,7 @@ trt$outside <- unlist(llply(gregexpr("outside",trt$otherw), length))
 % % \end{figure}
 % % \afterpage{\clearpage}
 
+\alnote{I have concerns here about BW printing. Could we adjust the saturation on one of the bins somehow? }
 \begin{figure}[hbt]
 \centering
 <<trtplot, echo=FALSE, fig.width=9, fig.height=8, out.width='0.7\\textwidth'>>=
