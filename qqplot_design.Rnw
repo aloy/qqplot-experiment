@@ -513,10 +513,11 @@ Another point in favor of this design is that it makes better use of the availab
 
 \hh{XXX we're going to use two approaches to distinguish between effect of detrending and larger amount of space available. }
 
-In this paper we investigate the effectiveness and power of the modifications made to Q-Q plots.
-Examples of the three \al{XX Shouldn't this be 4?} versions of Q-Q plots under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a 95\% pointwise confidence region \citep{Davison:1997}
-%\alnote{I think pointwise bands are described in Atkinson (1985). Meeker uses simultaneous confidence bands for P-P plots. The motivation to use pointwise in the lineups seems to be that it is what people do (i.e., JMP (I think). qqPlot in the car package in R, etc.)}
-based on the estimated standard error of the order statistics for an independent sample from the theoretical distribution, and a \emph{de-trended} Q-Q plot. Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
+In \hh{section~\ref{sec:power1}} we investigate the effectiveness and power of the modifications made to Q-Q plots.
+Examples of \hh{all the different} Q-Q plot \hh{designs} under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with \hh{an added grey band representing a confidence band, a \emph{de-trended} Q-Q plot preserving relative distances in the plot and a \emph{de-trended} Q-Q plot making full use of the space along the $y$-axis.}
+
+\hh{Q-Q plots in the upper row of figure~\ref{qqplots} use Davison-Hinkley (DH) 95\% pointwise confidence region \citep{Davison:1997}, while the shading in the lower row represents 95\% Tail-Sensitive (TS) simultaneous confidence bands \cite{buja:2013}. }
+Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
 
 \begin{figure}
 \centering
@@ -1452,7 +1453,7 @@ dt1 <- as.character(lselects$data_name[which(lselects$Detrended2.HD != lselects$
 dt2 <- as.character(lselects$data_name[which(lselects$Detrended.HD != lselects$Detrended.TS)])
 @
 %
-In this section we are listing all lineups in which lineups of Q-Q plots with a  Davison-Hinkley band results in a different outcome than the same Q-Q plot design with a TS band. 
+In this section we are listing all lineups in which lineups of Q-Q plots with a Davison-Hinkley band results in a different outcome than the same Q-Q plot design with a TS band. 
 Under the standard design there is one lineup, the detrended (1)  design has two lineups with different outcomes, while the detrended (2) design has four lineups with different outcomes. They are shown in figures~\ref{fig:lpsstds},~\ref{fig:lpsdt1}, and~\ref{fig:lpsdt2}, respectively. 
 
 \begin{figure}
