@@ -756,6 +756,7 @@ text <- data.frame(label = c("Standard", "Detrended (1)", "Detrended (2)", "Cont
                    s= "sample size n: 20")
 
 dataset$C = with(dataset, interaction(factor(signif), factor(rep)))
+levels(dataset$C) <- c(" ", "  ", "FALSE", "TRUE")
 ggplot() + 
   geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back1) + 
   geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back2) + 
@@ -939,7 +940,6 @@ The corresponding $p$-value in the SW test is 0.2318, after LF (0.1689) the test
 The difference in significance between normality tests and the visual test might be due to the way the theoretical distribution against which the sample is compared is chosen. The normality tests are based on the sample mean and sample variance, both of which are affected by outliers. Compared to a normal distribution, the samples from a $t$ distribution exhibit heavier tails, and, in a finite sample, the heavier tails might look like outliers. By taking these outliers into account, the normality tests lose substantial power. The Q-Q plots, on the other hand, are based on a robust estimate of the scale based on the middle half of the empirical distribution. Q-Q plots are, therefore, less affected by outliers and the tails of a $t$ distribution are more easily distinguishable from the tails of a normal distribution, as can be seen in the lineup on the right of Figure~\ref{fig:lpnorm}. Compare this to the lineup in Figure~\ref{fig:lp3}, which is based on the same data, but the nulls are sampled from a normal distribution with a variance estimated as the sample variance. The data plot does not stand out, so we would not reject the null hypothesis based on this lineup. 
 An inferior performance of normality tests based on the sample mean and variance is also observed by \cite{buja:2013} in the discussion of the TS test. 
 
-\hh{XXX should we include a start on the comparison between TS and DH performance? TS is never not significant, if any other test is significant. }
 % \begin{figure}
 % \centering
 % \includegraphics[width=0.5\textwidth]{figures/figvisnorm.pdf} 

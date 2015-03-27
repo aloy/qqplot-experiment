@@ -620,7 +620,6 @@ The corresponding $p$-value in the SW test is 0.2318, after LF (0.1689) the test
 The difference in significance between normality tests and the visual test might be due to the way the theoretical distribution against which the sample is compared is chosen. The normality tests are based on the sample mean and sample variance, both of which are affected by outliers. Compared to a normal distribution, the samples from a $t$ distribution exhibit heavier tails, and, in a finite sample, the heavier tails might look like outliers. By taking these outliers into account, the normality tests lose substantial power. The Q-Q plots, on the other hand, are based on a robust estimate of the scale based on the middle half of the empirical distribution. Q-Q plots are, therefore, less affected by outliers and the tails of a $t$ distribution are more easily distinguishable from the tails of a normal distribution, as can be seen in the lineup on the right of Figure~\ref{fig:lpnorm}. Compare this to the lineup in Figure~\ref{fig:lp3}, which is based on the same data, but the nulls are sampled from a normal distribution with a variance estimated as the sample variance. The data plot does not stand out, so we would not reject the null hypothesis based on this lineup. 
 An inferior performance of normality tests based on the sample mean and variance is also observed by \cite{buja:2013} in the discussion of the TS test. 
 
-\hh{XXX should we include a start on the comparison between TS and DH performance? TS is never not significant, if any other test is significant. }
 % \begin{figure}
 % \centering
 % \includegraphics[width=0.5\textwidth]{figures/figvisnorm.pdf} 
@@ -966,6 +965,7 @@ The application of the lineup framework based on the related probability (P-P) p
 In this section we are listing all lineups in which lineups of Q-Q plots with a Davison-Hinkley band results in a different outcome than the same Q-Q plot design with a TS band. 
 Under the standard design there is one lineup, the detrended (1)  design has two lineups with different outcomes, while the detrended (2) design has four lineups with different outcomes. They are shown in figures~\ref{fig:lpsstds},~\ref{fig:lpsdt1}, and~\ref{fig:lpsdt2}, respectively. 
 
+\hh{In all of these figures, the lineup with DH bands is shown on the left, the TS band lineup is on the right. The numbers on the bottom right give the number of (weighted) choices by observers for each of the panels. In most of these lineups, one of the null plots exhibits a strong signal that attracts a lot of attention away from the target sample. In all but one of the lineups the design with the TS band manages to de-emphasize the signal in the null plot enough to collect enough evidence for a rejection of the data sample. }
 \begin{figure}
 \centering
 \begin{knitrout}
