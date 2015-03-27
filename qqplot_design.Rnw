@@ -755,16 +755,22 @@ text <- data.frame(label = c("Standard", "Detrended (1)", "Detrended (2)", "Cont
                    nu="df: 10",
                    s= "sample size n: 20")
 
+dataset$C = with(dataset, interaction(factor(signif), factor(rep)))
 ggplot() + 
   geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back1) + 
   geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back2) + 
   geom_text(aes(x = x, y= y, label=label), size=5, colour="grey40", angle=90, hjust=0, data=text) + 
-  geom_point(aes(x=as.numeric(CIdesign), y=100*correct/n, colour=factor(rep), shape=factor(signif)), size=3,  data=dataset) +
-  geom_line(aes(x=as.numeric(CIdesign), y=100*correct/n, colour=factor(rep), group=data_name), data=dataset) +
-  facet_grid(facets=nu~s) + scale_colour_brewer("Replicate", palette="Set1") +
-  theme_bw() + scale_shape_manual("Significant difference\nfrom normality",values=c(1,19)) + ylab("Percentage of data identifications") +
+  geom_point(aes(x=as.numeric(CIdesign), y=100*correct/n, colour= C, shape=C), size=3.5,  data=dataset) +
+  geom_line(aes(x=as.numeric(CIdesign), y=100*correct/n, colour=C, group=data_name), data=dataset) +
+  facet_grid(facets=nu~s) +
+  theme_bw()  + 
+  scale_shape_manual("Significant difference\nfrom normality", values=c(1,16, 2, 17)) +
+  scale_colour_manual("Significant difference\nfrom normality", values=c("#e41a1c", "#e41a1c", "#377eb8", "#377eb8")) +
+  ylab("Percentage of data identifications") +
   scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nDH", "\nTS","\t\t\t\t\tDetrended (1)\nDH", "\nTS","\t\t\t\t\tDetrended (2)\nDH", "\nTS","Control")) +
-  theme(legend.position="bottom", legend.direction="horizontal", legend.box="horizontal")
+  theme(legend.position="bottom", legend.direction="horizontal", legend.box="horizontal", legend.key.width =unit(1, "cm")) + 
+  guides(shape=guide_legend(title="Significant difference\nfrom normality", ncol=2))
+
 @
 \caption{\label{fig:compare} \hh{Percentages of identifying the $t$ sample from lineups of different variations of Q-Q plots. Each lineup is shown as a dot. Filled dots indicate a (visually) significant deviation from normality (as determined in the user experiment). Dots of the same lineup data (sample and null data) are connected by a line.
 The four lines in each panel correspond to four different lineups: the lines of the same color correspond to the same $t$-sample, but different null data; the lines of the other colour change both in sample and null data. The results are facetted by parameter setting: sample sizes $n$ (columns) vary from 20 to 75, degrees of freedom $df$ are shown in rows. With increasing sample size and decreasing degrees of freedom the percentage of picking the $t$ sample  from the normal samples generally increases. }
