@@ -1429,6 +1429,7 @@ dt2 <- as.character(lselects$data_name[which(lselects$Detrended.HD != lselects$D
 In this section we are listing all lineups in which lineups of Q-Q plots with a Davison-Hinkley band results in a different outcome than the same Q-Q plot design with a TS band. 
 Under the standard design there is one lineup, the detrended (1)  design has two lineups with different outcomes, while the detrended (2) design has four lineups with different outcomes. They are shown in figures~\ref{fig:lpsstds},~\ref{fig:lpsdt1}, and~\ref{fig:lpsdt2}, respectively. 
 
+\hh{In all of these figures, the lineup with DH bands is shown on the left, the TS band lineup is on the right. The numbers on the bottom right give the number of (weighted) choices by observers for each of the panels. In most of these lineups, one of the null plots exhibits a strong signal that attracts a lot of attention away from the target sample. In all but one of the lineups the design with the TS band manages to de-emphasize the signal in the null plot enough to collect enough evidence for a rejection of the data sample. }
 \begin{figure}
 \centering
 <<lpsstds, dependson='lpselect', echo=FALSE, fig.show='hold', out.width='0.4\\textwidth', fig.width=7, fig.height=7>>=
