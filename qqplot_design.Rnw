@@ -756,7 +756,7 @@ text <- data.frame(label = c("Standard", "Detrended (1)", "Detrended (2)", "Cont
                    s= "sample size n: 20")
 
 dataset$C = with(dataset, interaction(factor(signif), factor(rep)))
-levels(dataset$C) <- c(" ", "  ", "FALSE", "TRUE")
+levels(dataset$C) <- c(" ", "  ", "FALSE", "TRU")
 ggplot() + 
   geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back1) + 
   geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back2) + 
