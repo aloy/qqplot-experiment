@@ -658,6 +658,8 @@ How about
 
 ``Additionally, we use the interquartile range (IQR) to estimate scale, as is standard practice for Q-Q plots."
 }
+
+\alnote{That sounds good to me.}
 % The interquartile range (IQR) is used---as is standard practice for Q-Q plots---to estimate scale. 
 Robust estimation of the variance is preferred for better assessment of the tails and outliers of the empirical distribution. We could use alternative estimators for variance, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, but this will likely also change the power of the corresponding lineup.
 
@@ -665,12 +667,18 @@ Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} inde
 (i) evaluated each data set at most once, 
 (ii) was exposed to multiple parameter settings (`harder' and `easier' lineups), and
 (iii) evaluated each Q-Q plot design at most twice.
+Half of the lineups that observers were shown allowed for multiple choices of plots from a lineup for the final answer. Very few participants made use of this option. In the analysis we dealt with multiple answers to a lineup by using a weighting variable defined as the reciprocal of the number of answers given by a participant.
+}
 
 \alnote{I can do this soon.}
 XXX discussion of amazon turk studies in comparison to lab experiments: practical considerations \citep{Kosara:2010}, study by \citet{cleveland:1984} re-run on Amazon MTurk with similar results by \citet{Heer:2010}.
+
+\al{
+INSERT DISCUSSION OF MTURK STUDIES HERE...
 }
+
 %
-Half of the lineups that observers were shown allowed for multiple choices of plots from a lineup for the final answer. Very few participants made use of this option. In the analysis we dealt with multiple answers to a lineup by using a weighting variable defined as the reciprocal of the number of answers given by a participant.
+
 <<load, dependson='data', echo=FALSE, results='hide', message=FALSE>>=
 suppressMessages(require(vinference))
 @
