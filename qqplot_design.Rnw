@@ -393,7 +393,7 @@ In this paper we explore the use of the lineup protocol \citep{buja:2009hp} to i
 
 
 %\alnote{XXX some lead in to the rest of the intro }
-We will first discuss  tests for normality, both from a numerical and graphical viewpoint, and then formally introduce the lineup protocol in the setting of Q-Q plots used for this paper.
+First, we discuss  tests for normality, both from a numerical and graphical viewpoint, and then formally introduce the lineup protocol in the setting of Q-Q plots used for this paper.
 
 %\hhnote{Why do we need to assess distributional assumptions in the first place?
 %Verify that distributional assumptions hold, check model results (such as residuals), ... XXX ...
@@ -403,7 +403,7 @@ We will first discuss  tests for normality, both from a numerical and graphical 
 %\alnote{I was thinking that we could have a general intro (my first attempt, without any edits, is above), and then we can use subheadings for the rest of section 1 with more specific intros such as: Tests of Normality, Q-Q Plots, and Lineup Tests.}
 
 \subsection{Classical tests of normality}
-Numerous tests have been proposed to test whether a random sample comes from a normal distribution. In this section we review commonly used tests of normality. 
+Numerous procedures have been proposed to test whether a random sample comes from a normal distribution. In this section we review commonly used tests of normality. 
 
 A series of distributional tests focus on the difference between the empirical and theoretical distribution functions. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample of size $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Lilliefors \cite[LF-test, ][]{lilliefors}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises tests \citep[CvM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
 
@@ -428,7 +428,7 @@ Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)
 %
 
 % The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not fit this scheme, but has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}. 
-The Shapiro-Wilk test \cite[SW-test,][]{Shapiro:1965kt} does not utilize deviations from the theoretical distribution function, rather it focuses on the linearity of a normal Q-Q plot. Under normality, a set of observations, $x_1, \ldots, x_n$, can expressed as $x_i = \mu + \sigma z_i$, where $z_i$ is a quantile from the standard normal distribution. The Shapiro-Wilk test compares (up to a constant of proportionality, $c$) two estimates for $\sigma$: the best linear unbiased estimate obtained from a generalized least squares regression of the sample order statistics on their expected values, denoted $\widehat{\sigma}$, and the sample standard deviation, $s$.
+The SW test \cite[SW-test,][]{Shapiro:1965kt} does not utilize deviations from the theoretical distribution function, rather it focuses on the linearity of a normal Q-Q plot. Under normality, a set of observations, $x_1, \ldots, x_n$, can expressed as $x_i = \mu + \sigma z_i$, where $z_i$ is a quantile from the standard normal distribution. The Shapiro-Wilk test compares (up to a constant of proportionality, $c$) two estimates for $\sigma$: the best linear unbiased estimate obtained from a generalized least squares regression of the sample order statistics on their expected values, denoted $\widehat{\sigma}$, and the sample standard deviation, $s$.
 \[
   W = \frac{(c \widehat{\sigma})^2}{s^2} = \frac{b^2}{s^2}
 \]
@@ -485,20 +485,17 @@ For any sample tested against a distribution within a location-scale family, suc
 %\hhnote{slope is standard deviation of theoretical distribution, $y$ offset its location. For any distribution within a location-scale family (such as normal, log normal, exponential, ...), we can interpret shifts in $y$ direction as a change/deviation in location, and a change in slope as a change in scale.}
 
 %\alnote{I am not sure where the below sentences fit best.}
-Based on a visual inspection in a Q-Q plot, a
- sample is considered to be consistent with a normal distribution if the empirical and theoretical quantiles fall close to the line representing the theoretical distribution.  This decision is further aided by an assessment of
+Based on visual inspection of a Q-Q plot, a
+ sample is considered to be consistent with a normal distribution if the empirical and theoretical quantiles fall close to the line representing the theoretical distribution.  This decision can be further aided by an assessment of
  %Closeness can  be assessed visually based on
  whether the points fall inside the envelope of 95\%  pointwise confidence intervals \citep[][p.~150--154]{Davison:1997}.
 \hhnote{Include discussion of TS interval here.} 
-% \alnote{We need to be careful here. Since we are using pointwise CIs, we would expect a certain \% of points to fall outside the CIs. I think in the first review of the JCGS paper a reviewer was concerned about this as well.}
-% \hhnote{Well, yes, point taken,  but it is also important  how far outside the points are ... }
-% \alnote{I think the Davison and Hinkley reference takes care of this. I will reread that section and add a page number soon.}
 
-In assessing differences between points and lines, onlookers have a tendency to evaluate the shortest, i.e.~orthogonal, distance, even when asked to evaluate differences based on vertical distance \citep{sineillusion, robbins:2005, cleveland:1984}. 
+In assessing differences between points and lines, onlookers have a tendency to evaluate the shortest, i.e.~orthogonal, distance, even when asked to evaluate differences based on the vertical distance \citep{sineillusion, robbins:2005, cleveland:1984}. 
 In so-called {\it de-trended Q-Q plots} \citep[][p.~25--26]{thode:2002} the $y$ axis is changed to show the difference between theoretical and sample quantiles. 
 \al{Consequently, the line representing the theoretical distribution becomes the $x$ axis,}
 % The line of the theoretical distribution therefore falls onto the $x$ axis, 
-and (vertical) differences between empirical and theoretical distribution coincide with the orthogonal distance. 
+and (vertical) differences between empirical and theoretical distributions coincide with the orthogonal distance. 
 De-trending should aid in the visual assessment between the empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show rather than asking audiences to derive it \citep{wainer:2000}.
 \al{In this paper we label such a detrended Q-Q plot as Detrended (1).}
 \hh{XX We need to really find a better name for that.}
@@ -515,8 +512,7 @@ Another point in favor of this design is that it makes better use of the availab
 
 In \hh{section~\ref{sec:power1}} we investigate the effectiveness and power of the modifications made to Q-Q plots.
 Examples of \hh{all the different} Q-Q plot \hh{designs} under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with \hh{an added grey band representing a confidence band, a \emph{de-trended} Q-Q plot preserving relative distances in the plot and a \emph{de-trended} Q-Q plot making full use of the space along the $y$-axis.}
-
-\hh{Q-Q plots in the upper row of figure~\ref{qqplots} use Davison-Hinkley (DH) 95\% pointwise confidence region \citep{Davison:1997}, while the shading in the lower row represents 95\% Tail-Sensitive (TS) simultaneous confidence bands \cite{buja:2013}. }
+\hh{Q-Q plots in the upper row of figure~\ref{qqplots} use a Davison-Hinkley (DH) 95\% pointwise confidence region \citep{Davison:1997}, while the shading in the lower row represents 95\% Tail-Sensitive (TS) simultaneous confidence bands proposed by \cite{buja:2013}. }
 Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
 
 \begin{figure}
@@ -571,14 +567,15 @@ choose the true plot, or more formally
 \widehat{\text{Power}} = \text{Power}_{N} = 1 - F_{Y} (y_{\alpha}),
 \end{equation}
 where $y_\alpha$ is the critical value for a given significance level $\alpha$, i.e.~$P(Y >  y_{\alpha}) \le \alpha$. $Y$ is composed of the sum of $N$ observers' (binary) decisions $Y_i \sim B_{1, p_i}$, where  $p_i$ is the probability that individual $i$ chooses the data plot. This probability  depends both on the strength of the signal in the data plot and an individual's visual ability.
-Assessing this ability requires that each individual evaluates multiple lineups. 
+Assessing this ability requires each individual to evaluate multiple lineups. 
 If that is not possible, we must assume that all participants share the same ability, $p$. %, and the power calculation in Equation~\ref{eqn:power} simplifies to $1 - B_{N, \hat{p}}(x_\alpha)$, where $\widehat{p}$ is an estimate for the probability of choosing the data plot for a specific lineup.
 Similar to classical inference, we can make use of power to assess the sensitivity of tests. This allows us to make decisions about designs for particular tasks by evaluating lineups displaying  the same data in different types of displays \citep{Hofmann:2012ts}. 
 
 
 %In the next section, we describe the simulation study used to compare the three \al{(four??)} Q-Q plot designs, and an initial comparison of the three designs is given. 
 \al{In Section~\ref{sec:power2} we compare the power of the lineup test of normality to the classical normality tests
- \hh{based on a simulation study, which we introduce in section~\ref{sec:simu}}. We use a generalized linear mixed model to compare the power of different designs  of Q-Q plots in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e.\ rejection of normality). We conclude with a discussion and outline areas for future research.}
+ \hh{based on a simulation study, which we introduce in Section~\ref{sec:simu}}. We use a generalized linear mixed model to compare the power of different designs  of Q-Q plots in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e.\ rejection of normality). We conclude with a discussion and an outline of areas for future research.}
+\alnote{Didn't we move that discussion (of the feedback) to the appendix? This is mainly a note so that i remember to check this later.}
 % We use a generalized linear mixed model to compare the power of the three designs in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). Finally, we compare the power of a lineup test of normality to the classical normality tests in Section~\ref{sec:power2}, and outline areas for future research in Section~\ref{sec:discussion}. 
 
 
@@ -589,12 +586,12 @@ Similar to classical inference, we can make use of power to assess the sensitivi
 \section{Simulation Setup and Model}\label{sec:simu}
 %------------------------------------------------------------------------------------
 
-\hh{In order to evaluate the power of Q-Q plots and compare their performance to normal distribution tests, we make use of a simulation study, 
+\hh{In order to evaluate the power of Q-Q plots and compare their performance to tests of normality, we make use of a simulation study 
 using samples of size $n \in \{20, 30, 50, 75\}$ from a $t_{d}$ distribution with $d \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.}
 %\alnote{I think using $n$ for sample size is most logical, though this does complicate the notation used in model (2).}
 
-\hh{For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from samples of the same size drawn from the normal distribution. For each  sample, two sets of null plots are created, so that we have a total of 48 lineup \hh{data sets}. 
-These lineup \hh{data sets} are rendered in each of the Q-Q plot variations, resulting in $48 \times 7 = 336$ different lineups.  Additionally, standard plots (both TS and DH bands) are rendered against $N(0, S^2)$ null data (see discussion below), adding another $2 \times 48 = 96$ lineups.
+\hh{For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from samples of the same size drawn from the normal distribution. For each  sample, two sets of null plots are created, resulting in a total of 48 lineup \hh{data sets}. 
+These lineup \hh{data sets} are rendered in each of the Q-Q plot variations, resulting in $48 \times 7 = 336$ different lineups.  Additionally, standard plots (with both TS and DH bands) are rendered against $N(0, S^2)$ null data (see discussion below), adding another $2 \times 48 = 96$ lineups.
 }
 
 
@@ -617,7 +614,7 @@ The reference line has a slope of $S$ (and an intercept of 0).  All panels have 
 
 %\alnote{The generation of the null data makes sense to me, but is there a way to use bullet points on the right side of the table? That would help me read it...}
 
-Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show identical data, the sample\footnote{The little piece of calculus is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.} is in panel \#$(3^2-3)$. On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. \hhnote{checked the number - it's fine}
+Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show identical data, the sample\footnote{The little piece of arithmetic is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.} is in panel \#$(3^2-3)$. On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. \hhnote{checked the number - it's fine}
 \alnote{We need to straighten out our notation for the standard deviation. On this page we use both $\widehat{\sigma}$ and $\widehat{S}$.}
 \hhnote{XXX $\widehat{\sigma}$ and $\widehat{S}$ are supposed to be two different estimators -- I'm thinking of $\hat{\sigma} = 1/(n-1) \sum_i (x_i - \bar{x})^2$ whereas $\hat{S}$ is a more robust estimator based on the ratio of IQRs in y and x. We need to say that somewhere. }
 
@@ -645,23 +642,22 @@ std_lineup(dframe)
 std_lineup(fit2) 
 @
 \end{subfigure}
-\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
+\caption{\label{fig:lps} Lineup plots of standard Q-Q plots. The observed data set is the same, but  reference lines and envelopes are based on a standard normal distribution on the left; while  reference lines and envelopes for the lineup on the right are based on a normal distribution $N(0, \widehat{S}^2)$, where $\widehat{S}$ is based on the IQR of the observed data.
 The observed data plot in both lineups is displayed in panel \#$(3^2 - 3)$. }
 \end{figure}
 \afterpage{\clearpage}
 
-Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in a Q-Q plot corresponds to a  hypothesis test against that distribution, and as long as there is a method to generate samples under the null hypothesis, we do not even need to know the exact distribution. This allows us to assess situations in which we only have approximate or asymptotic results, which are otherwise hard, if not impossible, to investigate  with the (small) finite samples we typically deal with in practice.
-\al{Additionally, we use the interquartile range (IQR) to estimate scale, as it is a standard practice for Q-Q plots.}
-
-\hhnote{`as it is a standard practice' is not stating quite the same as what I was trying to say before. I was not trying to give a reason for why we use a robust estimate, but just stating that this estimator is standard practice for Q-Q plots. 
-How about 
-
-``Additionally, we use the interquartile range (IQR) to estimate scale, as is standard practice for Q-Q plots."
-}
-
-\alnote{That sounds good to me.}
+Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in a Q-Q plot corresponds to a  hypothesis test against that distribution, and as long as there is a method to generate samples under the null hypothesis, we do not even need to know the exact distribution. This allows us to assess situations where we only have approximate or asymptotic results, which are otherwise hard, if not impossible, to investigate  with the (small) finite samples we typically deal with in practice.
+Additionally, we use the interquartile range (IQR) to estimate scale, as it is a standard practice for Q-Q plots.
+% \hhnote{`as it is a standard practice' is not stating quite the same as what I was trying to say before. I was not trying to give a reason for why we use a robust estimate, but just stating that this estimator is standard practice for Q-Q plots. 
+% How about 
+% 
+% ``Additionally, we use the interquartile range (IQR) to estimate scale, as is standard practice for Q-Q plots."
+% }
+% 
+% \alnote{That sounds good to me.}
 % The interquartile range (IQR) is used---as is standard practice for Q-Q plots---to estimate scale. 
-Robust estimation of the variance is preferred for better assessment of the tails and outliers of the empirical distribution. We could use alternative estimators for variance, such as median absolute deviation (MAD) or adjusted MAD \citep{rousseeuw}, but this will likely also change the power of the corresponding lineup.
+Robust estimation of the variance is preferred for better assessment of the tails and outliers of the empirical distribution. We could use alternative estimators for variance, such as the median absolute deviation (MAD) or the adjusted MAD \citep{rousseeuw}, but this will likely also change the power of the corresponding lineup.
 
 Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} independent observers were recruited and asked to evaluate ten lineups each. \hh{Lineups were randomly assigned to participants, such that each participant
 (i) evaluated each data set at most once, 
@@ -671,10 +667,10 @@ Half of the lineups that observers were shown allowed for multiple choices of pl
 }
 
 
-\alnote{Should we say more than this?}
+\alnote{Should we say more than this about MTurk?}
 
 \al{
-Crowdsourcing graphical perception experiments through MTurk is a relatively new practice, and involves recruiting human observers from the web. While potential sources of bias in social science research using MTurk has been discussed \cite[cf.,][]{chandler:2014}, the results from MTurk studies for graphical perception experiments are promising, as MTurk experiments have replicated studies conducted in the traditional lab setting \citep{Kosara:2010, Heer:2010}. Specifically, \citet{Heer:2010} replicated the results of \citet{cleveland:1984} using the MTurk platform, and \citet{Kosara:2010} found similar results between a lab study and one performed using MTurk. 
+Crowdsourcing graphical perception experiments through MTurk is a relatively new practice, and involves recruiting human observers from the web. While potential sources of bias in social science research using MTurk have been discussed \cite[cf.,][]{chandler:2014}, the results from MTurk studies for graphical perception experiments are promising, as MTurk experiments have replicated studies conducted in the traditional lab setting \citep{Kosara:2010, Heer:2010}. Specifically, \citet{Heer:2010} replicated the results of \citet{cleveland:1984} using the MTurk platform, and \citet{Kosara:2010} found similar results between a lab study and one performed using MTurk. 
 }
 
 %

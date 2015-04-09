@@ -195,7 +195,7 @@ In this paper we explore the use of the lineup protocol \citep{buja:2009hp} to i
 
 
 %\alnote{XXX some lead in to the rest of the intro }
-We will first discuss  tests for normality, both from a numerical and graphical viewpoint, and then formally introduce the lineup protocol in the setting of Q-Q plots used for this paper.
+First, we discuss  tests for normality, both from a numerical and graphical viewpoint, and then formally introduce the lineup protocol in the setting of Q-Q plots used for this paper.
 
 %\hhnote{Why do we need to assess distributional assumptions in the first place?
 %Verify that distributional assumptions hold, check model results (such as residuals), ... XXX ...
@@ -205,7 +205,7 @@ We will first discuss  tests for normality, both from a numerical and graphical 
 %\alnote{I was thinking that we could have a general intro (my first attempt, without any edits, is above), and then we can use subheadings for the rest of section 1 with more specific intros such as: Tests of Normality, Q-Q Plots, and Lineup Tests.}
 
 \subsection{Classical tests of normality}
-Numerous tests have been proposed to test whether a random sample comes from a normal distribution. In this section we review commonly used tests of normality. 
+Numerous procedures have been proposed to test whether a random sample comes from a normal distribution. In this section we review commonly used tests of normality. 
 
 A series of distributional tests focus on the difference between the empirical and theoretical distribution functions. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample of size $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Lilliefors \cite[LF-test, ][]{lilliefors}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises tests \citep[CvM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
 
@@ -292,9 +292,6 @@ Based on a visual inspection in a Q-Q plot, a
  %Closeness can  be assessed visually based on
  whether the points fall inside the envelope of 95\%  pointwise confidence intervals \citep[][p.~150--154]{Davison:1997}.
 \hhnote{Include discussion of TS interval here.} 
-% \alnote{We need to be careful here. Since we are using pointwise CIs, we would expect a certain \% of points to fall outside the CIs. I think in the first review of the JCGS paper a reviewer was concerned about this as well.}
-% \hhnote{Well, yes, point taken,  but it is also important  how far outside the points are ... }
-% \alnote{I think the Davison and Hinkley reference takes care of this. I will reread that section and add a page number soon.}
 
 In assessing differences between points and lines, onlookers have a tendency to evaluate the shortest, i.e.~orthogonal, distance, even when asked to evaluate differences based on vertical distance \citep{sineillusion, robbins:2005, cleveland:1984}. 
 In so-called {\it de-trended Q-Q plots} \citep[][p.~25--26]{thode:2002} the $y$ axis is changed to show the difference between theoretical and sample quantiles. 
