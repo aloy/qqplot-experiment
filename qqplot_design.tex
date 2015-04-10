@@ -159,7 +159,8 @@
 \bigskip
 
 \begin{abstract}
-In statistical modeling we strive to specify models that resemble data collected in studies or observed from processes. Consequently, distributional specification and parameter estimation are central to parametric models. Graphical procedures, such as the quantile-quantile (Q-Q) plot, are arguably the most widely used method of distributional assessment, though critics find their interpretation to be overly subjective. Formal goodness-of-fit tests are available and are quite powerful, but only indicate whether there is a lack of fit, not why there is lack of fit. In this paper we explore the use of the lineup protocol to inject rigor to graphical distributional assessment and compare its power to that of formal distributional tests. We find that lineups of standard Q-Q plots are more powerful than lineups of de-trended Q-Q plots and that lineup tests are more powerful than traditional tests of normality. While we focus on diagnosing non-normality, our approach is general and can be directly extended to the assessment of other distributions.
+In statistical modeling we strive to specify models that resemble data collected in studies or observed from processes. Consequently, distributional specification and parameter estimation are central to parametric models. Graphical procedures, such as the quantile-quantile (Q-Q) plot, are arguably the most widely used method of distributional assessment, though critics find their interpretation to be overly subjective. Formal goodness-of-fit tests are available and are quite powerful, but only indicate whether there is a lack of fit, not why there is lack of fit. In this paper we explore the use of the lineup protocol to inject rigor to graphical distributional assessment and compare its power to that of formal distributional tests. We find \HH{that lineup tests are considerably more powerful than traditional tests of normality. A further investigation into the design of Q-Q plots shows that de-trended Q-Q plots are more powerful than the standard approach as long as the representing plot preserves distances in $x$ and $y$ to be the same.}
+ While we focus on diagnosing non-normality, our approach is general and can be directly extended to the assessment of other distributions.
 % 
 % 
 % this paper holds two messages: 
@@ -328,12 +329,12 @@ Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same da
 % % % 
 \includegraphics[width=0.22\textwidth]{figures/qqplots-1}
 \includegraphics[width=0.22\textwidth]{figures/qqplots-2}
-\includegraphics[width=0.22\textwidth]{figures/qqplots-3}
 \includegraphics[width=0.22\textwidth]{figures/qqplots-4}
+\includegraphics[width=0.22\textwidth]{figures/qqplots-3}
 \includegraphics[width=0.22\textwidth]{figures/blank}
 \includegraphics[width=0.22\textwidth]{figures/qqplots-5}
-\includegraphics[width=0.22\textwidth]{figures/qqplots-6}
 \includegraphics[width=0.22\textwidth]{figures/qqplots-7}
+\includegraphics[width=0.22\textwidth]{figures/qqplots-6}
 \caption{ \label{qqplots} \hh{Q-Q plot variations:} control, standard, and \hh{two versions of} de-trended \hh{Q-Q plots}, with Davison Hinkley (DH) or tail-sensitive (TS) 95\% confidence regions.}
 \end{figure}
 \afterpage{\clearpage}
@@ -347,6 +348,7 @@ If the `suspect'---i.e., the plot of the observed data---can be identified from 
 The lineup protocol also allows for an assessment of the power of a lineup \citep{mahbub:2013},  
 %as the probability that in $N$ independent evaluations observers 
 and by showing different renderings of the same data in lineups we can evaluate the power  of different designs \citep{Hofmann:2012ts}.
+\hhnote{do we need to discuss p values?}
 
 In considering the power of a lineup, we need to estimate the probability, $p_i$, that observer $i$ identifies the data from the lineup. If the observer is just guessing, this probability is $1/m$, where $m$ is the number of plots in the lineup.
 The power of a lineup is then given as the probability to reject the null hypothesis. Let $Y$ be the number of identifications of the data plot in $N$ independent evaluations, and let $Y \sim F_N$. The power of the lineup is then the probability that more than $y_\alpha$ out of $N$ observers
@@ -362,8 +364,9 @@ Similar to classical inference, we can make use of power to assess the sensitivi
 
 %In the next section, we describe the simulation study used to compare the three \al{(four??)} Q-Q plot designs, and an initial comparison of the three designs is given. 
 \al{In Section~\ref{sec:power2} we compare the power of the lineup test of normality to the classical normality tests
- \hh{based on a simulation study, which we introduce in Section~\ref{sec:simu}}. We use a generalized linear mixed model to compare the power of different designs  of Q-Q plots in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e.\ rejection of normality). We conclude with a discussion and an outline of areas for future research.}
-\alnote{Didn't we move that discussion (of the feedback) to the appendix? This is mainly a note so that i remember to check this later.}
+ \hh{based on a simulation study, which we introduce in Section~\ref{sec:simu}}. We use a generalized linear mixed model to compare the power of different designs  of Q-Q plots in Section~\ref{sec:power1}.%, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e.\ rejection of normality). 
+ We conclude with a discussion and an outline of areas for future research.}
+%\alnote{Didn't we move that discussion (of the feedback) to the appendix? This is mainly a note so that i remember to check this later.}
 % We use a generalized linear mixed model to compare the power of the three designs in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). Finally, we compare the power of a lineup test of normality to the classical normality tests in Section~\ref{sec:power2}, and outline areas for future research in Section~\ref{sec:discussion}. 
 
 
@@ -396,15 +399,15 @@ Null data sets must be created conistently with the null hypothesis. Here, we ha
 $H_0: F = N(0,1)$  \\
 Null samples are drawn from a standard normal distribution; the reference line is the line of identity. Lines and envelopes are the same across all panels, in particular, all panels have the same scale. 
 \item{\bf Situation II:} $H_0: F = N(0,S^2)$ \\
-$S$ is based on the interquartile range of the data; null samples are drawn from $N(0, S^2)$. \\
-The reference line has a slope of $S$ (and an intercept of 0).  All panels have the same scale. 
+%$S$ is based on the interquartile range of the data; 
+\HH{Null samples are drawn from $N(0, S^2)$; the reference line has a slope of $S$ (and an intercept of 0).  All panels have the same scale. Throughout the paper we use $\hat{\sigma}^2$ to indicate the adjusted sample variance $\hat{\sigma}^2 = (n-1)^{-1} \Sigma_{i=1}^n (x_i - \bar{x})^2$, whereas $\hat{S}^2$ is a more estimator based on the interquartile range.}
 \end{itemize}
 
 %\alnote{The generation of the null data makes sense to me, but is there a way to use bullet points on the right side of the table? That would help me read it...}
 
-Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show identical data, the sample\footnote{The little piece of arithmetic is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.} is in panel \#$(3^2-3)$. On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. \hhnote{checked the number - it's fine}
-\alnote{We need to straighten out our notation for the standard deviation. On this page we use both $\widehat{\sigma}$ and $\widehat{S}$.}
-\hhnote{XXX $\widehat{\sigma}$ and $\widehat{S}$ are supposed to be two different estimators -- I'm thinking of $\hat{\sigma} = 1/(n-1) \sum_i (x_i - \bar{x})^2$ whereas $\hat{S}$ is a more robust estimator based on the ratio of IQRs in y and x. We need to say that somewhere. }
+Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show identical data, the sample\footnote{The little piece of arithmetic is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.} is in panel \#$(3^2-3)$. On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. %\hhnote{checked the number - it's fine}
+%\alnote{We need to straighten out our notation for the standard deviation. On this page we use both $\widehat{\sigma}$ and $\widehat{S}$.}
+%\hhnote{XXX $\widehat{\sigma}$ and $\widehat{S}$ are supposed to be two different estimators -- I'm thinking of $\hat{\sigma} = 1/(n-1) \sum_i (x_i - \bar{x})^2$ whereas $\hat{S}$ is a more robust estimator based on the ratio of IQRs in y and x. We need to say that somewhere. }
 
 \begin{figure}[hbt]
 
@@ -488,7 +491,8 @@ Lineups of samples from a $t_5$ distribution \hh{show the most variability. Tabl
 \caption{\label{tab:no1} Number of rejections (out of 48) of standard normality by design.}
 \centering
 \begin{tabular}{lC{.6cm}C{.6cm}C{.6cm}C{.6cm}C{.6cm}C{.6cm}c}\hline
-\bf Design & \multicolumn{2}{c}{\bf Standard} & \multicolumn{2}{c}{\bf adj. Detrended} & \multicolumn{2}{c}{\bf ord. Detrended} & \bf Control \\
+\bf Design & \multicolumn{2}{c}{\bf Standard} & \multicolumn{2}{c}{\bf Detrended} & \multicolumn{2}{c}{\bf Detrended} & \bf Control \\
+&&&  \multicolumn{2}{c}{\bf adjusted } & \multicolumn{2}{c}{\bf ordinary }\\
 \bf Confidence & DH & TS & DH & TS & DH & TS & --- \\ \hline \hline
 Reject $N(0,1)$ & 29 & 30 & 30 & 32 & 26 & 28 & 28 \\ \hline
 \end{tabular}
@@ -687,17 +691,16 @@ $\tau$ & the design used in the lineup; this is either {\it Control} or one of  
 &  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
 &  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
 $d$ &  the level of difficulty of the lineup based on the actual sample, and \\
-$u$ & the users' subjective \al{(XXX individual?)} abilities.
+$u$ & the users' individual abilities.
  \end{tabular}
 \end{center}
 %
 
-\alnote{We need to think about the notation here.}
 \begin{eqnarray} \label{eq:model}
 g(\pi_i) &=& \eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},\\ \nonumber
 Y &=& g^{-1}(\eta) + \varepsilon
 \end{eqnarray}
-where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard (DH), Standard (TS), De-trended (DH), De-trended (TS), De-trended2 (DH), De-trended2 (TS)$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular sample \hh{and null data} used. 
+where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard (DH), Standard (TS), \HH{adj.\ detrended (DH), adj.\ detrended (TS), ord.\ detrended (DH), ord.\ detrended} (TS)$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular sample \hh{and null data} used. 
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$. We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.
 %
 \hh{Table~\ref{tab:coefs} gives an overview of the coefficients.}
@@ -705,10 +708,15 @@ Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, 
 \hh{As could be seen in various figures before, an increase in signal strength (larger sample size, fewer degrees of freedom) result in lineups, in which the sample is picked out more often by observers.}
 \hh{Aside from that,} the design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands help with evaluation in the standard design, but the difference is not significant.  
 
-\hh{The first de-trended version of Q-Q plots, in which the aspect ratio is kept the same as in the standard plot, shows significant increases in detecting non-normality. }
-Surprisingly, the \hh{second version of} de-trended Q-Q plots is significantly less powerful in detecting non-normality. \hh{De-trended (2) Q-Q plots with DH bands are actually performing significantly worse than the control charts, while Q-Q plots with the TS bands just lose their previous gain from de-trending.} \hh{It seems that the additional space on the $y$-axis emphasizes artifacts that are hard to judge, because distances in the $x$ direction have a different meaning than distances in the $y$ direction. Due to the difference in the aspect ratio, plotted distances between points are not proportional to distances in the data space.} 
+Surprisingly, \HH{ordinary} de-trended Q-Q plots \HH{do not improve participants' probabilities } %is significantly less powerful 
+in detecting non-normality. \HH{With DH bands, ordinary detrended Q-Q plots are actually performaing significantly worse than the control charts.}
+%\hh{De-trended (2) Q-Q plots with DH bands are actually performing significantly worse than the control charts, while Q-Q plots with the TS bands just lose their previous gain from de-trending.}
+\HH{In contrast to that, the adjusted version of detrended Q-Q plot shows a significant improvement in detecting non-normality over control and standard charts. }
+%\hh{The first de-trended version of Q-Q plots, in which the aspect ratio is kept the same as in the standard plot, shows significant increases in detecting non-normality. }
+ \hh{It seems that the additional space on the $y$-axis emphasizes artifacts \HH{in the ordinary design} that are hard to judge, because distances in the $x$ direction have a different meaning than distances in the $y$ direction. %Due to the difference in the aspect ratio, plotted distances between points are not proportional to distances in the data space.
+ } 
 
-\hh{For the other two designs, Q-Q plots with TS bands have slightly less power than the same version of Q-Q plots with DH bands. While not significant, this makes sense, and is likely due to TS bands being wider in the center of the distribution and at the tips of the tails.}
+\hh{For the other two designs, Q-Q plots with TS bands have slightly less power than the same version of Q-Q plots with DH bands. While  this effect is not significant, it is likely due to TS bands being wider in the center of the distribution and at the tips of the tails.}
 
 
 
