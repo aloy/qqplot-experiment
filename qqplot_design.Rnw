@@ -530,14 +530,14 @@ dframe$.sample <- "Control"
 ctrl_lineup(subset(dframe, .sample_outer==5))
 dframe$.sample <- "Standard, DH"
 std_lineup(subset(dframe, .sample_outer==5))
-dframe$.sample <- "adj. Detrended, DH"
+dframe$.sample <- "adj.\\ Detrended, DH"
 rot2_lineup(subset(dframe, .sample_outer==5)) + ylim(c(-3.5,3.5))
 dframe$.sample <- "ord. Detrended, DH"
 rot_lineup(subset(dframe, .sample_outer==5))
 dframe$.sample <- "Standard, TS"
 dframe <- ddply(dframe, .(.n), transform, ts.qq=QQ.cb(x, plot=FALSE))
 std_ts_lineup(subset(dframe, .sample_outer==5))
-dframe$.sample <- "adj. Detrended, TS"
+dframe$.sample <- "adj.\\ Detrended, TS"
 rot2_ts_lineup(subset(dframe, .sample_outer==5)) + ylim(c(-3.5,3.5))
 dframe$.sample <- "ord. Detrended, TS"
 rot_ts_lineup(subset(dframe, .sample_outer==5))
@@ -761,7 +761,7 @@ back2$xmax <- 6.5
 back2$ymin <- -5
 back2$ymax <- 105
 
-text <- data.frame(label = c("Standard", "adj. Detrended", "ord. Detrended", "Control"), 
+text <- data.frame(label = c("Standard", "adj.\\ Detrended", "ord. Detrended", "Control"), 
                    x=c(1.5, 3.5, 5.5, 7), 
                    y=30,
                    nu="df: 10",
@@ -780,7 +780,7 @@ ggplot() +
   scale_shape_manual("Significant difference\nfrom normality", values=c(1,16, 2, 17)) +
   scale_colour_manual("Significant difference\nfrom normality", values=c("#e41a1c", "#e41a1c", "#377eb8", "#377eb8")) +
   ylab("Percentage of data identifications") +
-  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nDH", "\nTS","\t\t\t\t\tadj. Detrended\nDH", "\nTS","\t\t\t\t\tord. Detrended\nDH", "\nTS","Control")) +
+  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nDH", "\nTS","\t\t\t\t\tadj.\\ Detrended\nDH", "\nTS","\t\t\t\t\tord. Detrended\nDH", "\nTS","Control")) +
   theme(legend.position="bottom", legend.direction="horizontal", legend.box="horizontal", legend.key.width =unit(1, "cm")) + 
   guides(shape=guide_legend(title="Significant difference\nfrom normality", ncol=2))
 
@@ -1089,7 +1089,7 @@ The probability of identifying the lineup is affected by several factors: (a) th
 
 \begin{center}
 \begin{tabular}{lp{5in}}
-$\tau$ & the design used in the lineup; this is either {\it Control} or one of  {\it \{  Standard, adj. Detrended, ord. Detrended\}} in combination with a choice of confidence band (HD, TS), \\
+$\tau$ & the design used in the lineup; this is either {\it Control} or one of  {\it \{  Standard, adj.\ Detrended, ord. Detrended\}} in combination with a choice of confidence band (HD, TS), \\
 &  the specific parameters under which the data for the lineup were created: \\
 &  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
 &  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
@@ -1211,7 +1211,6 @@ To further investigate the difference between the designs, consider Figure \ref{
 
 \alnote{Can we add the numbers in the background here like we did in the appendix?}
 \hhnote{good idea!}
-\hhnote{XXX naming checked up to here.}
 \begin{figure}[hbt]
 %\begin{subfigure}{0.5\textwidth}
 <<notrotated, dependson='data', echo=FALSE, fig.width=6, fig.height=6>>=
@@ -1280,7 +1279,7 @@ In the lineup on the left the data sample in panel \#$(2^2+1)$ is only identifie
 
 \hh{Only \Sexpr{round(length(grep("5_", turkall$choice_reason))/nrow(turkall)*100, 1)}\% of all evaluations made use of the option of giving feedback for the reason of their choice in form of a free-form answer. }
 %
-\hh{The two participants who gave a free-form answer for their choice in the lineup on the left hand side of Figure~\ref{fig:rotstd}, picked panel \#7 from the de-trended lineup, and stated that this panel was the one with the ``most dots outside the shaded area,'' i.e.~they focused on the middle of panel \#7}. 
+\hh{The two participants who gave a free-form answer for their choice in the lineup on the left hand side of Figure~\ref{fig:rotstd}, picked panel \#7 from the \HH{ordinary} de-trended lineup, and stated that this panel was the one with the ``most dots outside the shaded area,'' i.e.~they focused on the middle of panel \#7}. 
 
 This is not a singular occurrence---when investigating \hh{all lineups of the same design which lead to different outcomes depending on the choice of confidence band (an exhaustive list of all these lineups is given in the appendix in section~\ref{sec:lplist}), we find that for designs using DH bands, panels were picked in favor of the data sample, when dots were outside the shaded area. This happened both in the tails and in the middle part of the distribution.} 
 %overall reasoning we took a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot %(figure~\ref{fig:rotfalse}). 
