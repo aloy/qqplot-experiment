@@ -21,7 +21,7 @@
 
 %\definecolor{Blue}{rgb}{0,0,0.5}
 \newcommand{\hh}[1]{{\color{magenta} #1}}
-\newcommand{\hh2}[1]{{\color{orange} #1}}
+\newcommand{\HH}[1]{{\color{orange} #1}}
 
 \newcommand{\al}[1]{{\color{ForestGreen} #1}}
 
@@ -504,42 +504,43 @@ De-trending should aid in the visual assessment between the empirical CDF and th
 %\al{XX I agree. How about using the adjectives ordinary and adjusted? Or we could just add adjusted for the version with the adjusted aspect ratio (it seems to work with $R^2$ and residuals...)}
 \hhnote{ok, let's go with ordinary De-trended plots for the ones that are labelled De-trended (1) - i.e. full amount of space on the y-axis, and {\it adjusted De-trended plots} for the plots, in which we keep distances in x and y the same (De-trended (2)). I will start to make the changes throughout the paper. Those changes will be in orange.}
 
-\hh{For this purposes, we are investigating two different designs of de-trended Q-Q plots: in a first step, we rotate the trend line into the horizontal axis, but keep the aspect ratio of the plot to 1, to ensure that distances in $x$ and $y$ direction are on the same scale. 
+
+\hh{For this purposes, we are investigating two different designs of de-trended Q-Q plots: }
+\HH{Similar to a residual analysis in a linear model, we distinguish between {\it ordinary} and {\it adjusted} de-trended Q-Q plots. In an ordinary de-trended Q-Q plot we show the raw differences between empirical and theoretical CDFs on the $y$-axis, making full use of the available space; general practice is to show Q-Q plot in a square plot, i.e.\ differences between empirical and theoretical CDFs are considered in  the same amount of space as the range of values on the $x$ axis. }
+\HH{In an {\it adjusted} de-trended Q-Q plot, we rotate the trend line into the horizontal axis, i.e.\ differences between the theoretical and empirical CDFs are shown along the $y$-axis, but we fix $x$ and $y$ axes to show the same range, to ensure that distances in $x$ and $y$ direction are on the same scale. 
 }
-Another point in favor of this design is that it makes better use of the available space.
+%Another point in favor of this design is that it makes better use of the available space.
 
-\hh{Detrended(2) uses the available space.}
+%\hh{Detrended(2) uses the available space.}
 
-
-\hh{XXX we're going to use two approaches to distinguish between effect of detrending and larger amount of space available. }
 
 In \hh{section~\ref{sec:power1}} we investigate the effectiveness and power of the modifications made to Q-Q plots.
-Examples of \hh{all the different} Q-Q plot \hh{designs} under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with \hh{an added grey band representing a confidence band, a \emph{de-trended} Q-Q plot preserving relative distances in the plot and a \emph{de-trended} Q-Q plot making full use of the space along the $y$-axis.}
+Examples of \hh{all the different} Q-Q plot \hh{designs} under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with \hh{an added grey band representing a confidence band, a\HH{n \emph{adjusted}} \emph{de-trended} Q-Q plot preserving relative distances in the plot and a\HH{n \emph{ordinary}} \emph{de-trended} Q-Q plot making full use of the space along the $y$-axis.}
 \hh{Q-Q plots in the upper row of figure~\ref{qqplots} use a Davison-Hinkley (DH) 95\% pointwise confidence region \citep{Davison:1997}, while the shading in the lower row represents 95\% Tail-Sensitive (TS) simultaneous confidence bands proposed by \cite{buja:2013}. }
 Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
 
 \begin{figure}
 \centering
 % % % % 
-% <<qqplots, dependson='functions', fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=TRUE>>=
-% dframe <- read.csv("lineup-data/data-1-1-1-20-2-14-5.csv")
-% library(ggplot2)
-% dframe$.sample <- "Control"
-% ctrl_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "Standard, DH"
-% std_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "De-trended (1), DH"
-% rot2_lineup(subset(dframe, .sample_outer==5)) + ylim(c(-3.5,3.5))
-% dframe$.sample <- "De-trended (2), DH"
-% rot_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "Standard, TS"
-% dframe <- ddply(dframe, .(.n), transform, ts.qq=QQ.cb(x, plot=FALSE))
-% std_ts_lineup(subset(dframe, .sample_outer==5))
-% dframe$.sample <- "De-trended (1), TS"
-% rot2_ts_lineup(subset(dframe, .sample_outer==5)) + ylim(c(-3.5,3.5))
-% dframe$.sample <- "De-trended (2), TS"
-% rot_ts_lineup(subset(dframe, .sample_outer==5))
-% @
+<<qqplots, dependson='functions', fig.width=2.75, fig.height=2.75, out.width='0.3\\textwidth', echo=FALSE, include=TRUE, eval=FALSE>>=
+dframe <- read.csv("lineup-data/data-1-1-1-20-2-14-5.csv")
+library(ggplot2)
+dframe$.sample <- "Control"
+ctrl_lineup(subset(dframe, .sample_outer==5))
+dframe$.sample <- "Standard, DH"
+std_lineup(subset(dframe, .sample_outer==5))
+dframe$.sample <- "adj. Detrended, DH"
+rot2_lineup(subset(dframe, .sample_outer==5)) + ylim(c(-3.5,3.5))
+dframe$.sample <- "ord. Detrended, DH"
+rot_lineup(subset(dframe, .sample_outer==5))
+dframe$.sample <- "Standard, TS"
+dframe <- ddply(dframe, .(.n), transform, ts.qq=QQ.cb(x, plot=FALSE))
+std_ts_lineup(subset(dframe, .sample_outer==5))
+dframe$.sample <- "adj. Detrended, TS"
+rot2_ts_lineup(subset(dframe, .sample_outer==5)) + ylim(c(-3.5,3.5))
+dframe$.sample <- "ord. Detrended, TS"
+rot_ts_lineup(subset(dframe, .sample_outer==5))
+@
 % % % 
 \includegraphics[width=0.22\textwidth]{figures/qqplots-1}
 \includegraphics[width=0.22\textwidth]{figures/qqplots-2}
@@ -577,8 +578,9 @@ Similar to classical inference, we can make use of power to assess the sensitivi
 
 %In the next section, we describe the simulation study used to compare the three \al{(four??)} Q-Q plot designs, and an initial comparison of the three designs is given. 
 \al{In Section~\ref{sec:power2} we compare the power of the lineup test of normality to the classical normality tests
- \hh{based on a simulation study, which we introduce in Section~\ref{sec:simu}}. We use a generalized linear mixed model to compare the power of different designs  of Q-Q plots in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e.\ rejection of normality). We conclude with a discussion and an outline of areas for future research.}
-\alnote{Didn't we move that discussion (of the feedback) to the appendix? This is mainly a note so that i remember to check this later.}
+ \hh{based on a simulation study, which we introduce in Section~\ref{sec:simu}}. We use a generalized linear mixed model to compare the power of different designs  of Q-Q plots in Section~\ref{sec:power1}.%, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e.\ rejection of normality). 
+ We conclude with a discussion and an outline of areas for future research.}
+%\alnote{Didn't we move that discussion (of the feedback) to the appendix? This is mainly a note so that i remember to check this later.}
 % We use a generalized linear mixed model to compare the power of the three designs in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). Finally, we compare the power of a lineup test of normality to the classical normality tests in Section~\ref{sec:power2}, and outline areas for future research in Section~\ref{sec:discussion}. 
 
 
@@ -757,7 +759,7 @@ back2$xmax <- 6.5
 back2$ymin <- -5
 back2$ymax <- 105
 
-text <- data.frame(label = c("Standard", "Detrended (1)", "Detrended (2)", "Control"), 
+text <- data.frame(label = c("Standard", "adj. Detrended", "ord. Detrended", "Control"), 
                    x=c(1.5, 3.5, 5.5, 7), 
                    y=30,
                    nu="df: 10",
@@ -776,7 +778,7 @@ ggplot() +
   scale_shape_manual("Significant difference\nfrom normality", values=c(1,16, 2, 17)) +
   scale_colour_manual("Significant difference\nfrom normality", values=c("#e41a1c", "#e41a1c", "#377eb8", "#377eb8")) +
   ylab("Percentage of data identifications") +
-  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nDH", "\nTS","\t\t\t\t\tDetrended (1)\nDH", "\nTS","\t\t\t\t\tDetrended (2)\nDH", "\nTS","Control")) +
+  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nDH", "\nTS","\t\t\t\t\tadj. Detrended\nDH", "\nTS","\t\t\t\t\tord. Detrended\nDH", "\nTS","Control")) +
   theme(legend.position="bottom", legend.direction="horizontal", legend.box="horizontal", legend.key.width =unit(1, "cm")) + 
   guides(shape=guide_legend(title="Significant difference\nfrom normality", ncol=2))
 
@@ -801,7 +803,7 @@ Lineups of samples from a $t_5$ distribution \hh{show the most variability. Tabl
 \caption{\label{tab:no1} Number of rejections (out of 48) of standard normality by design.}
 \centering
 \begin{tabular}{lC{.6cm}C{.6cm}C{.6cm}C{.6cm}C{.6cm}C{.6cm}c}\hline
-\bf Design & \multicolumn{2}{c}{\bf Standard} & \multicolumn{2}{c}{\bf De-trended (1)} & \multicolumn{2}{c}{\bf Detrended (2)} & \bf Control \\
+\bf Design & \multicolumn{2}{c}{\bf Standard} & \multicolumn{2}{c}{\bf adj. Detrended} & \multicolumn{2}{c}{\bf ord. Detrended} & \bf Control \\
 \bf Confidence & DH & TS & DH & TS & DH & TS & --- \\ \hline \hline
 Reject $N(0,1)$ & 29 & 30 & 30 & 32 & 26 & 28 & 28 \\ \hline
 \end{tabular}
@@ -1084,7 +1086,7 @@ The probability of identifying the lineup is affected by several factors: (a) th
 
 \begin{center}
 \begin{tabular}{lp{5in}}
-$\tau$ & the design used in the lineup; this is either {\it Control} or one of  {\it \{  Standard, De-trended (1), De-trended (2)\}} in combination with a choice of confidence band (HD, TS), \\
+$\tau$ & the design used in the lineup; this is either {\it Control} or one of  {\it \{  Standard, adj. Detrended, ord. Detrended\}} in combination with a choice of confidence band (HD, TS), \\
 &  the specific parameters under which the data for the lineup were created: \\
 &  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
 &  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
@@ -1471,7 +1473,7 @@ dt2 <- as.character(lselects$data_name[which(lselects$Detrended.HD != lselects$D
 @
 %
 In this section we are listing all lineups in which lineups of Q-Q plots with a Davison-Hinkley band results in a different outcome than the same Q-Q plot design with a TS band. 
-Under the standard design there is one lineup, the detrended (1)  design has two lineups with different outcomes, while the detrended (2) design has four lineups with different outcomes. They are shown in figures~\ref{fig:lpsstds},~\ref{fig:lpsdt1}, and~\ref{fig:lpsdt2}, respectively. 
+Under the standard design there is one lineup, the \HH{adj.\ detrended}  design has two lineups with different outcomes, while the \HH{ord.\ detrended} design has four lineups with different outcomes. They are shown in figures~\ref{fig:lpsstds},~\ref{fig:lpsdt1}, and~\ref{fig:lpsdt2}, respectively. 
 
 \hh{In all of these figures, the lineup with DH bands is shown on the left, the TS band lineup is on the right. The numbers on the bottom right give the number of (weighted) choices by observers for each of the panels. In most of these lineups, one of the null plots exhibits a strong signal that attracts a lot of attention away from the target sample. In all but one of the lineups the design with the TS band manages to de-emphasize the signal in the null plot enough to collect enough evidence for a rejection of the data sample. }
 \begin{figure}
@@ -1559,7 +1561,7 @@ for (fname in dt1) {
   outline1 <- data.frame(xmin=min(dframe$naive1.qq.x)*1.0, xmax=max(dframe$naive1.qq.x)*1.0, 
             ymin=min(dframe$naive1.qq.y)*1.0, ymax=max(dframe$naive1.qq.y)*1.0, 
             .sample=dframe$.sample_outer[nrow(dframe)])  
-  xlabel <- sprintf("De-trended~(1)~lineup~with~DH~band:~t[%d]~sample~of~size~%d", dframe$df[1], dframe$n[1])
+  xlabel <- sprintf("adj~detrended~lineup~with~DH~band:~t[%d]~sample~of~size~%d", dframe$df[1], dframe$n[1])
 
   p1 <- rot2_lineup(dframe) + 
   geom_text(aes(x=xdh, y=ydh, label=sprintf("%.1f/%.0f", Freq,max)), 
@@ -1575,7 +1577,7 @@ for (fname in dt1) {
   outline2 <- data.frame(xmin=min(fit2$ts.qq.x)*1.0, xmax=max(fit2$ts.qq.x)*1.0, 
             ymin=min(fit2$ts.qq.y)*1.0, ymax=max(fit2$ts.qq.y)*1.0, 
             .sample=fit2$.sample_outer[nrow(fit2)])  
-  xlabel <- sprintf("De-trended~(1)~lineup~with~TS~band:~t[%d]~sample~of~size~%d", dframe$df[1], dframe$n[1])
+  xlabel <- sprintf("adj~detrended~lineup~with~TS~band:~t[%d]~sample~of~size~%d", dframe$df[1], dframe$n[1])
   
   p2 <- rot2_ts_lineup(fit2) + 
     geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, x=0, y=0), fill=NA, colour="grey20", data=outline2) +
@@ -1588,7 +1590,7 @@ for (fname in dt1) {
 }
 
 @
-\caption{\label{fig:lpsdt1} De-trended (1) lineup with different outcomes depending on the choice of confidence band. The outlined panel marks the location of the data sample, the numbers at the bottom right are showing the number of votes each of the panels was picked by observers.  }
+\caption{\label{fig:lpsdt1} Lineups of adj.\ detrended Q-Q plots with different outcomes depending on the choice of confidence band. The outlined panel marks the location of the data sample, the numbers at the bottom right are showing the number of votes each of the panels was picked by observers.  }
 \end{figure}
 \afterpage{\clearpage}
 
