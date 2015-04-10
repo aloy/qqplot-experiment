@@ -563,6 +563,7 @@ If the `suspect'---i.e., the plot of the observed data---can be identified from 
 The lineup protocol also allows for an assessment of the power of a lineup \citep{mahbub:2013},  
 %as the probability that in $N$ independent evaluations observers 
 and by showing different renderings of the same data in lineups we can evaluate the power  of different designs \citep{Hofmann:2012ts}.
+\hhnote{do we need to discuss p values?}
 
 In considering the power of a lineup, we need to estimate the probability, $p_i$, that observer $i$ identifies the data from the lineup. If the observer is just guessing, this probability is $1/m$, where $m$ is the number of plots in the lineup.
 The power of a lineup is then given as the probability to reject the null hypothesis. Let $Y$ be the number of identifications of the data plot in $N$ independent evaluations, and let $Y \sim F_N$. The power of the lineup is then the probability that more than $y_\alpha$ out of $N$ observers
@@ -613,15 +614,15 @@ Null data sets must be created conistently with the null hypothesis. Here, we ha
 $H_0: F = N(0,1)$  \\
 Null samples are drawn from a standard normal distribution; the reference line is the line of identity. Lines and envelopes are the same across all panels, in particular, all panels have the same scale. 
 \item{\bf Situation II:} $H_0: F = N(0,S^2)$ \\
-$S$ is based on the interquartile range of the data; null samples are drawn from $N(0, S^2)$. \\
-The reference line has a slope of $S$ (and an intercept of 0).  All panels have the same scale. 
+%$S$ is based on the interquartile range of the data; 
+\HH{Null samples are drawn from $N(0, S^2)$; the reference line has a slope of $S$ (and an intercept of 0).  All panels have the same scale. Throughout the paper we use $\hat{\sigma}^2$ to indicate the adjusted sample variance $\hat{\sigma}^2 = (n-1)^{-1} \Sigma_{i=1}^n (x_i - \bar{x})^2$, whereas $\hat{S}^2$ is a more estimator based on the interquartile range.}
 \end{itemize}
 
 %\alnote{The generation of the null data makes sense to me, but is there a way to use bullet points on the right side of the table? That would help me read it...}
 
-Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show identical data, the sample\footnote{The little piece of arithmetic is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.} is in panel \#$(3^2-3)$. On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. \hhnote{checked the number - it's fine}
-\alnote{We need to straighten out our notation for the standard deviation. On this page we use both $\widehat{\sigma}$ and $\widehat{S}$.}
-\hhnote{XXX $\widehat{\sigma}$ and $\widehat{S}$ are supposed to be two different estimators -- I'm thinking of $\hat{\sigma} = 1/(n-1) \sum_i (x_i - \bar{x})^2$ whereas $\hat{S}$ is a more robust estimator based on the ratio of IQRs in y and x. We need to say that somewhere. }
+Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show identical data, the sample\footnote{The little piece of arithmetic is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.} is in panel \#$(3^2-3)$. On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. %\hhnote{checked the number - it's fine}
+%\alnote{We need to straighten out our notation for the standard deviation. On this page we use both $\widehat{\sigma}$ and $\widehat{S}$.}
+%\hhnote{XXX $\widehat{\sigma}$ and $\widehat{S}$ are supposed to be two different estimators -- I'm thinking of $\hat{\sigma} = 1/(n-1) \sum_i (x_i - \bar{x})^2$ whereas $\hat{S}$ is a more robust estimator based on the ratio of IQRs in y and x. We need to say that somewhere. }
 
 \begin{figure}[hbt]
 <<lps-dsn, dependson='functions', echo=FALSE, message=FALSE>>=
