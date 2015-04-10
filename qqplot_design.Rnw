@@ -760,7 +760,7 @@ text <- data.frame(label = c("Standard", "Detrended (1)", "Detrended (2)", "Cont
                    s= "sample size n: 20")
 
 dataset$C = with(dataset, interaction(factor(signif), factor(rep)))
-levels(dataset$C) <- c(" ", "  ", "FALSE", "TRU")
+levels(dataset$C) <- c(" ", "  ", "FALSE", "TRUE")
 ggplot() + 
   geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back1) + 
   geom_rect(aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), fill="grey70", alpha=0.5, data=back2) + 
@@ -1706,18 +1706,18 @@ ggplot() +
 %is a big difference in the percentages of ``right'' and ``left.'' Participants favored to give ``left side different'' as a reason over ``right side different'', even though all distributions involved were symmetric, and therefore deviations from normality should also manifest themselves in a symmetric fashion.
 
 %\hhnote{another idea: go through reasons for choices. For standard design the line was often interpreted as a line of fit (how often for the de-trended design?), ie. we are tapping into what general population knows about regression. While this is not completely appropriate, the knowledge transfer might be the reason for the better performance.}
-
-<<out.width='0.45\\textwidth', fig.keep='hold', echo=FALSE, fig.width=6, fig.height=5>>=
-trt$CId <- factor(trt$CIdesign)
-trt$CI <- "DH"
-trt$CI[grep("TS", trt$CIdesign)] <- "TS"
-trt$CI[grep("Control", trt$CIdesign)] <- "None"
-
-#levels(trt$CId) <- c("Ctrl", "DT 2\nHD", "DT 2\nTS", "DT 1\nHD", "DT 1\nTS", "Std\nHD", "Std\nTS")
-table(trt$CId)
-qplot(CId, weight=left/n*100, colour=I("grey80"), fill=interaction(correct, CI), data=trt, position="dodge") + ylab("Percentage") + theme_bw() + theme(legend.position="bottom") + scale_fill_brewer(palette="Paired")
-qplot(CId, weight=left/n, colour=I("grey80"), fill=interaction(correct, CI), data=trt, position="fill") + theme_bw() + theme(legend.position="bottom")+ scale_fill_brewer(palette="Paired")
-@
+% 
+% <<out.width='0.45\\textwidth', fig.keep='hold', echo=FALSE, fig.width=6, fig.height=5>>=
+% trt$CId <- factor(trt$CIdesign)
+% trt$CI <- "DH"
+% trt$CI[grep("TS", trt$CIdesign)] <- "TS"
+% trt$CI[grep("Control", trt$CIdesign)] <- "None"
+% 
+% #levels(trt$CId) <- c("Ctrl", "DT 2\nHD", "DT 2\nTS", "DT 1\nHD", "DT 1\nTS", "Std\nHD", "Std\nTS")
+% table(trt$CId)
+% qplot(CId, weight=left/n*100, colour=I("grey80"), fill=interaction(correct, CI), data=trt, position="dodge") + ylab("Percentage") + theme_bw() + theme(legend.position="bottom") + scale_fill_brewer(palette="Paired")
+% qplot(CId, weight=left/n, colour=I("grey80"), fill=interaction(correct, CI), data=trt, position="fill") + theme_bw() + theme(legend.position="bottom")+ scale_fill_brewer(palette="Paired")
+% @
 \end{appendix}
 
 \end{document}
