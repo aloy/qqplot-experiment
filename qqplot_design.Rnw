@@ -500,10 +500,7 @@ In so-called {\it de-trended Q-Q plots} \citep[][p.~25--26]{thode:2002} the $y$ 
 % The line of the theoretical distribution therefore falls onto the $x$ axis, 
 and (vertical) differences between empirical and theoretical distributions coincide with the orthogonal distance. 
 De-trending should aid in the visual assessment between the empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show rather than asking audiences to derive it \citep{wainer:2000}.
-%\al{In this paper we refer to such a detrended Q-Q plot as Detrended (1).}
-%\hh{XX We need to really find a better name for that.}
-%\al{XX I agree. How about using the adjectives ordinary and adjusted? Or we could just add adjusted for the version with the adjusted aspect ratio (it seems to work with $R^2$ and residuals...)}
-\hhnote{ok, let's go with ordinary De-trended plots for the ones that are labelled De-trended (1) - i.e. full amount of space on the y-axis, and {\it adjusted De-trended plots} for the plots, in which we keep distances in x and y the same (De-trended (2)). I will start to make the changes throughout the paper. Those changes will be in orange.}
+%\hhnote{ok, let's go with ordinary De-trended plots for the ones that are labelled De-trended (1) - i.e. full amount of space on the y-axis, and {\it adjusted De-trended plots} for the plots, in which we keep distances in x and y the same (De-trended (2)). I will start to make the changes throughout the paper. Those changes will be in orange.}
 
 
 \hh{For this purposes, we are investigating two different designs of de-trended Q-Q plots: }
@@ -532,14 +529,14 @@ dframe$.sample <- "Standard, DH"
 std_lineup(subset(dframe, .sample_outer==5))
 dframe$.sample <- "adj.\\ Detrended, DH"
 rot2_lineup(subset(dframe, .sample_outer==5)) + ylim(c(-3.5,3.5))
-dframe$.sample <- "ord. Detrended, DH"
+dframe$.sample <- "ord.\\ Detrended, DH"
 rot_lineup(subset(dframe, .sample_outer==5))
 dframe$.sample <- "Standard, TS"
 dframe <- ddply(dframe, .(.n), transform, ts.qq=QQ.cb(x, plot=FALSE))
 std_ts_lineup(subset(dframe, .sample_outer==5))
 dframe$.sample <- "adj.\\ Detrended, TS"
 rot2_ts_lineup(subset(dframe, .sample_outer==5)) + ylim(c(-3.5,3.5))
-dframe$.sample <- "ord. Detrended, TS"
+dframe$.sample <- "ord.\\ Detrended, TS"
 rot_ts_lineup(subset(dframe, .sample_outer==5))
 @
 % % % 
@@ -616,7 +613,7 @@ $H_0: F = N(0,1)$  \\
 Null samples are drawn from a standard normal distribution; the reference line is the line of identity. Lines and envelopes are the same across all panels, in particular, all panels have the same scale. 
 \item{\bf Situation II:} $H_0: F = N(0,S^2)$ \\
 %$S$ is based on the interquartile range of the data; 
-\HH{Null samples are drawn from $N(0, S^2)$; the reference line has a slope of $S$ (and an intercept of 0).  All panels have the same scale. Throughout the paper we use $\hat{\sigma}^2$ to indicate the adjusted sample variance $\hat{\sigma}^2 = (n-1)^{-1} \Sigma_{i=1}^n (x_i - \bar{x})^2$, whereas $\hat{S}^2$ is a more estimator based on the interquartile range.}
+\HH{Null samples are drawn from $N(0, S^2)$; the reference line has a slope of $S$ (and an intercept of 0).  All panels have the same scale. Throughout the paper we use $\hat{\sigma}^2$ to indicate the adjusted sample variance $\hat{\sigma}^2 = (n-1)^{-1} \Sigma_{i=1}^n (x_i - \bar{x})^2$, whereas $\hat{S}^2$ is a more robust estimator based on the interquartile range.}
 \end{itemize}
 
 %\alnote{The generation of the null data makes sense to me, but is there a way to use bullet points on the right side of the table? That would help me read it...}
@@ -761,7 +758,7 @@ back2$xmax <- 6.5
 back2$ymin <- -5
 back2$ymax <- 105
 
-text <- data.frame(label = c("Standard", "adj.\\ Detrended", "ord. Detrended", "Control"), 
+text <- data.frame(label = c("Standard", "adj.\\ Detrended", "ord.\\ Detrended", "Control"), 
                    x=c(1.5, 3.5, 5.5, 7), 
                    y=30,
                    nu="df: 10",
@@ -780,7 +777,7 @@ ggplot() +
   scale_shape_manual("Significant difference\nfrom normality", values=c(1,16, 2, 17)) +
   scale_colour_manual("Significant difference\nfrom normality", values=c("#e41a1c", "#e41a1c", "#377eb8", "#377eb8")) +
   ylab("Percentage of data identifications") +
-  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nDH", "\nTS","\t\t\t\t\tadj.\\ Detrended\nDH", "\nTS","\t\t\t\t\tord. Detrended\nDH", "\nTS","Control")) +
+  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nDH", "\nTS","\t\t\t\t\tadj.\\ Detrended\nDH", "\nTS","\t\t\t\t\tord.\\ Detrended\nDH", "\nTS","Control")) +
   theme(legend.position="bottom", legend.direction="horizontal", legend.box="horizontal", legend.key.width =unit(1, "cm")) + 
   guides(shape=guide_legend(title="Significant difference\nfrom normality", ncol=2))
 
@@ -1089,9 +1086,9 @@ The probability of identifying the lineup is affected by several factors: (a) th
 
 \begin{center}
 \begin{tabular}{lp{5in}}
-$\tau$ & the design used in the lineup; this is either {\it Control} or one of  {\it \{  Standard, adj.\ Detrended, ord. Detrended\}} in combination with a choice of confidence band (HD, TS), \\
+$\tau$ & the design used in the lineup; this is either {\it Control} or one of  {\it \{  Standard, adj.\ Detrended, ord.\ Detrended\}} in combination with a choice of confidence band (HD, TS), \\
 &  the specific parameters under which the data for the lineup were created: \\
-&  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$ distribution} and \\
+&  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$-distribution} and \\
 &  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
 $d$ &  the level of difficulty of the lineup based on the actual sample, and \\
 $u$ & the users' individual abilities.
