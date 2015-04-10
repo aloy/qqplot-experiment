@@ -1096,22 +1096,18 @@ Under the standard design there is one lineup, the detrended (1)  design has two
 %is a big difference in the percentages of ``right'' and ``left.'' Participants favored to give ``left side different'' as a reason over ``right side different'', even though all distributions involved were symmetric, and therefore deviations from normality should also manifest themselves in a symmetric fashion.
 
 %\hhnote{another idea: go through reasons for choices. For standard design the line was often interpreted as a line of fit (how often for the de-trended design?), ie. we are tapping into what general population knows about regression. While this is not completely appropriate, the knowledge transfer might be the reason for the better performance.}
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-## 
-##    Control.HD  Detrended.HD Detrended2.HD   Standard.HD  Detrended.TS 
-##             2             2             2             2             2 
-## Detrended2.TS   Standard.TS 
-##             2             2
-\end{verbatim}
-\end{kframe}
-\includegraphics[width=0.45\textwidth]{figure/unnamed-chunk-4-1} 
-
-\includegraphics[width=0.45\textwidth]{figure/unnamed-chunk-4-2} 
-
-\end{knitrout}
+% 
+% <<out.width='0.45\\textwidth', fig.keep='hold', echo=FALSE, fig.width=6, fig.height=5>>=
+% trt$CId <- factor(trt$CIdesign)
+% trt$CI <- "DH"
+% trt$CI[grep("TS", trt$CIdesign)] <- "TS"
+% trt$CI[grep("Control", trt$CIdesign)] <- "None"
+% 
+% #levels(trt$CId) <- c("Ctrl", "DT 2\nHD", "DT 2\nTS", "DT 1\nHD", "DT 1\nTS", "Std\nHD", "Std\nTS")
+% table(trt$CId)
+% qplot(CId, weight=left/n*100, colour=I("grey80"), fill=interaction(correct, CI), data=trt, position="dodge") + ylab("Percentage") + theme_bw() + theme(legend.position="bottom") + scale_fill_brewer(palette="Paired")
+% qplot(CId, weight=left/n, colour=I("grey80"), fill=interaction(correct, CI), data=trt, position="fill") + theme_bw() + theme(legend.position="bottom")+ scale_fill_brewer(palette="Paired")
+% @
 \end{appendix}
 
 \end{document}

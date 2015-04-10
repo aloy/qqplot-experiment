@@ -133,7 +133,7 @@ opts_chunk$set(cache=TRUE, fig.width=4, fig.height=4)
 
 <<data, echo=FALSE, results='hide', message=FALSE>>=
 turk <- read.csv("data/turk-10-13-17.csv")
-#suppressMessages(require(plyr))
+suppressMessages(require(plyr))
 #params <- ldply(strsplit(split="-", as.character(turk$test_param)), function(x) x)
 #turk$treatment <- params$V2
 turk$placement <- turk$IO
@@ -1197,6 +1197,7 @@ To further investigate the difference between the designs, consider Figure \ref{
 %Instead of focusing on the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked as being most different 9 out of 27 times in the standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$ from the standard design. 
 
 \alnote{Can we add the numbers in the background here like we did in the appendix?}
+\hhnote{good idea!}
 \begin{figure}[hbt]
 %\begin{subfigure}{0.5\textwidth}
 <<notrotated, dependson='data', echo=FALSE, fig.width=6, fig.height=6>>=
@@ -1219,11 +1220,21 @@ answers$response[idx] <- code$.sample_outer[answers$response[idx]]
 # tables of responses for the writeup
 # round(xtabs(weight~CIdesign+ response, data=answers),1)
 # round(xtabs(weight~CIdesign, data=answers),1)
+
+
 @
 %\end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 <<notrotated2, dependson='notrotated', echo=FALSE, fig.width=6, fig.height=6>>=
-  rot_lineup(dframe)
+dt <- as.data.frame(round(xtabs(weight~response, data=subset(answers, CIdesign == "Detrended.HD")),1))
+dt$.sample <- as.numeric(as.character(dt$response))
+xdh=max(dframe$naive1.qq.x)
+ydh=min(c(dframe$naive1.qq.y-dframe$naive1.env.fit.value, dframe$naive1.env.lower-dframe$naive1.env.fit.value))
+dt$max <- sum(dt$Freq)
+  
+p <- rot_lineup(dframe)
+p + geom_text(aes(x=xdh, y=ydh, label=sprintf("%.1f/%.0f", Freq,max)), 
+            colour="grey70", size=6, data=dt, vjust=-0.15, hjust=1.05)
 @
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
@@ -1233,7 +1244,16 @@ answers$response[idx] <- code$.sample_outer[answers$response[idx]]
   fit2$x[fit2$.n==20] <- dframe$x[dframe$.n==20] #/b # change variance to 1, compare then
   fit2 <- ddply(fit2, .(.n), transform, ts.qq=QQ.cb(x, plot=FALSE))
 
-  rot_ts_lineup(fit2)
+dt <- as.data.frame(round(xtabs(weight~response, data=subset(answers, CIdesign == "Detrended.TS")),1))
+dt$.sample <- as.numeric(as.character(dt$response))
+xdh=max(fit2$ts.qq.x)
+ydh=min(c(fit2$ts.qq.y-fit2$ts.qq.x, fit2$ts.qq.lower-fit2$ts.qq.x))
+dt$max <- sum(dt$Freq)
+
+  p <- rot_ts_lineup(fit2)
+  p + geom_text(aes(x=xdh, y=ydh, label=sprintf("%.1f/%.0f", Freq,max)), 
+            colour="grey70", size=6, data=dt, vjust=-0.15, hjust=1.05)
+
 @
 \end{subfigure}
 \caption{\label{fig:rotstd}Lineups of the same data in two different designs. %In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. 
