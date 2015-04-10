@@ -561,7 +561,7 @@ If the `suspect'---i.e., the plot of the observed data---can be identified from 
 The lineup protocol also allows for an assessment of the power of a lineup \citep{mahbub:2013},  
 %as the probability that in $N$ independent evaluations observers 
 and by showing different renderings of the same data in lineups we can evaluate the power  of different designs \citep{Hofmann:2012ts}.
-\hhnote{do we need to discuss p values?}
+%\hhnote{do we need to discuss p values?}
 
 In considering the power of a lineup, we need to estimate the probability, $p_i$, that observer $i$ identifies the data from the lineup. If the observer is just guessing, this probability is $1/m$, where $m$ is the number of plots in the lineup.
 The power of a lineup is then given as the probability to reject the null hypothesis. Let $Y$ be the number of identifications of the data plot in $N$ independent evaluations, and let $Y \sim F_N$. The power of the lineup is then the probability that more than $y_\alpha$ out of $N$ observers
@@ -1206,8 +1206,6 @@ To further investigate the difference between the designs, consider Figure \ref{
 \hh{The \HH{ord.\ detrended}  DH band is shown on the left side of Figure~\ref{fig:rotstd}. Instead of the data sample in panel \#$(2^2+1)$ observers pick panel \#7 in 32.2 out of 45 evaluations. For any of the other designs, as e.g.\ the \HH{ord.\ detrended}  Q-Q plot with TS bands on the right of Figure~\ref{fig:rotstd}, observers pick the panel of the data sample at a rate that leads to a rejection of normality.  }
 %Instead of focusing on the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked as being most different 9 out of 27 times in the standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$ from the standard design. 
 
-\alnote{Can we add the numbers in the background here like we did in the appendix?}
-\hhnote{good idea!}
 \begin{figure}[hbt]
 %\begin{subfigure}{0.5\textwidth}
 <<notrotated, dependson='data', echo=FALSE, fig.width=6, fig.height=6>>=
