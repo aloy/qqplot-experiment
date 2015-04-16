@@ -830,7 +830,8 @@ Reject $N(0,1)$ & 29 & 30 & 30 & 32 & 26 & 28 & 28 \\ \hline
 %-----------------------------------------------------------------------------------
 
 It is important to recall that none of the data plots in the lineups were actually created using data from a normal distribution. Ideally, this should lead to rejection of the null hypothesis in every instance.
-\al{This is not quite true. Out of the 24 non-normal samples summarized in Table~\ref{tab:reject}, 14 get rejected at the 5\% significance level based on evaluation by observers in the standard lineup with Davison-Hinkley confidence bands, 17 get rejected using lineups of standard Q-Q plots with TS confidence bands, while only 8 get rejected by the SW test, the most powerful classical test. This demonstrates the high power  of visual inference.} Using lineups we are able to reject non-normality much more often than with any of the classical tests.
+\al{This is not quite true. Out of the 24 non-normal samples summarized in Table~\ref{tab:reject}, 14 get rejected at the 5\% significance level based on evaluation by observers in the standard lineup with Davison-Hinkley confidence bands, 17 get rejected using lineups of standard Q-Q plots with TS confidence bands, while only eight get rejected by the SW test, the most powerful classical test. This demonstrates the high power  of visual inference.} Using lineups we are able to reject non-normality much more often than with any of the classical tests.
+
 % This is not quite true, as can be seen in Table~\ref{tab:reject} \al{XXX do we need to say more about the Table here?}, but what becomes evident is the high power  of visual inference. Using lineups we are able to reject non-normality much more often than with any of the classical tests.
 % <<t15, echo=F>>= 
 % if (!file.exists("data/turk15-summary.csv")) {
@@ -881,10 +882,9 @@ It is important to recall that none of the data plots in the lineups were actual
 % dcast(data=dsets, param_value+rep~design, value.var="pvals")
 % @
 % 
-
 % latex table generated in R 3.0.1 by xtable 1.7-1 package
 % Mon May 27 20:57:50 2013
-\begin{table}[ht]
+\begin{table}[h]
 \centering
 \caption{\label{tab:reject}
  From left to right, we see the number of rejections from visual inference as well as the  Shapiro-Wilk, Anderson-Darling, Lilliefors,  Kolmogorov-Smirnov, and Cram\'er-von Mises tests for normality. Out of the 24 non-normal samples, 14 get rejected at the 5\% significance level based on evaluation by observers in the standard lineup with Davison-Hinkley confidence bands, 17 get rejected using lineups of standard Q-Q plots with TS confidence bands. None of the classical normality tests come close to those rejection rates. The power we observe here matches the power discussion by \citet{razali:2011} for the SW, AD, and the LF  tests. }
@@ -946,7 +946,7 @@ In contrast, the  lineup  on the right includes a $t_5$ sample of size $n=20$ (i
 The corresponding $p$-value in the SW test is 0.2318, after LF (0.1689), the test with the lowest $p$-value on this data sample out of all the normality tests.
 
 
-The difference in significance between normality tests and the visual test might be due to the way the theoretical distribution against which the sample is compared is chosen. The normality tests are based on the sample mean and sample variance, both of which are affected by outliers. Compared to a normal distribution, the samples from a $t$ distribution exhibit heavier tails, and, in a finite sample, the heavier tails might look like outliers. By taking these outliers into account, the normality tests lose substantial power. The Q-Q plots, on the other hand, are based on a robust estimate of the scale based on the middle half of the empirical distribution. Q-Q plots are, therefore, less affected by outliers and the tails of a $t$ distribution are more easily distinguishable from the tails of a normal distribution, as can be seen in the lineup on the right of Figure~\ref{fig:lpnorm}. Compare this to the lineup in Figure~\ref{fig:lp3}, which is based on the same data, but the nulls are sampled from a normal distribution with a variance estimated as the sample variance. The data plot does not stand out, so we would not reject the null hypothesis based on this lineup. 
+The difference in significance between normality tests and the visual test might be due to the way the theoretical distribution against which the sample is compared is chosen. The normality tests are based on the sample mean and sample variance, both of which are affected by outliers. Compared to a normal distribution, the samples from a $t$ distribution exhibit heavier tails, and, in a finite \al{(XXX small?)} sample, the heavier tails might look like outliers. By taking these outliers into account, the normality tests lose substantial power. The Q-Q plots, on the other hand, are based on a robust estimate of the scale based on the middle half of the empirical distribution. Q-Q plots are, therefore, less affected by outliers and the tails of a $t$ distribution are more easily distinguishable from the tails of a normal distribution, as can be seen in the lineup on the right of Figure~\ref{fig:lpnorm}. Compare this to the lineup in Figure~\ref{fig:lp3}, which is based on the same data, but the nulls are sampled from a normal distribution with a variance estimated as the sample variance. The data plot does not stand out, so we would not reject the null hypothesis based on this lineup. 
 Inferior performance of normality tests based on the sample mean and variance is also observed by \cite{buja:2013} in the discussion of the TS test. 
 
 % \begin{figure}
@@ -956,7 +956,10 @@ Inferior performance of normality tests based on the sample mean and variance is
 % \end{figure}
 % \afterpage{\clearpage}
 
-\begin{figure}
+\alnote{I couldn't get the file to render without this clearpage...}
+
+\clearpage
+\begin{figure}[htb]
 \begin{subfigure}[t]{.49\textwidth}
 \caption{Lineup of $t_5$ sample of size 30; data panel is panel \#$(4^2-1)$.}
 <<plot, echo=FALSE, results='asis', fig.width=6, fig.height=6, message=FALSE>>=
@@ -1054,7 +1057,7 @@ lp3 <- std_lineup(fit3)
 % \hfill
 
 \end{subfigure}
-\caption{\label{fig:lpnorm}  \hh{On the left, visual inspection does not imply  a significant deviation of the sample from a normal distribution. On the right the deviation is highly significant.} \hh{The numbers in the bottom right of each panel show the number of times each was picked as the most different. } %The tables below the lineups show the number of times each of the panels was picked as the most different. 
+\caption{\label{fig:lpnorm}  On the left, visual inspection does not imply  a significant deviation of the sample from a normal distribution. On the right the deviation is highly significant. The numbers in the bottom right of each panel show the number of times each was picked as the most different. %The tables below the lineups show the number of times each of the panels was picked as the most different. 
 Non-integer numbers result from multiple choice answers. %\hh{XXX} The italicized numbers refer to the panel that contains the actual sample.
 }
 \end{figure}
