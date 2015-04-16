@@ -305,6 +305,8 @@ De-trending should aid in the visual assessment between the empirical CDF and th
 %\hhnote{ok, let's go with ordinary De-trended plots for the ones that are labelled De-trended (1) - i.e. full amount of space on the y-axis, and {\it adjusted De-trended plots} for the plots, in which we keep distances in x and y the same (De-trended (2)). I will start to make the changes throughout the paper. Those changes will be in orange.}
 
 
+\alnote{I think this transition needs to be smoothed out a bit, but I don't have a good idea for this at the moment.}
+
 \hh{For this purposes, we are investigating two different designs of de-trended Q-Q plots: }
 \HH{Similar to a residual analysis in a linear model, we distinguish between {\it ordinary} and {\it adjusted} de-trended Q-Q plots. In an ordinary de-trended Q-Q plot we show the raw differences between empirical and theoretical CDFs on the $y$-axis, making full use of the available space; general practice is to show Q-Q plot in a square plot, i.e.\ differences between empirical and theoretical CDFs are considered in  the same amount of space as the range of values on the $x$ axis. }
 \HH{In an {\it adjusted} de-trended Q-Q plot, we rotate the trend line into the horizontal axis, i.e.\ differences between the theoretical and empirical CDFs are shown along the $y$-axis, but we fix $x$ and $y$ axes to show the same range, to ensure that distances in $x$ and $y$ direction are on the same scale. 
@@ -966,10 +968,10 @@ The application of the lineup framework based on the related probability (P-P) p
 \section{Lineups with DH and TS confidence bands}\label{sec:lplist}
 
 %
-In this section we are listing all lineups in which lineups of Q-Q plots with a Davison-Hinkley band results in a different outcome than the same Q-Q plot design with a TS band. 
-Under the standard design there is one lineup, the \HH{adj.\ detrended}  design has two lineups with different outcomes, while the \HH{ord.\ detrended} design has four lineups with different outcomes. They are shown in figures~\ref{fig:lpsstds},~\ref{fig:lpsdt1}, and~\ref{fig:lpsdt2}, respectively. 
+In this section we list all lineups in which lineups of Q-Q plots with a Davison-Hinkley band result in a different outcome than the same Q-Q plot design with a TS band. 
+Under the standard design there is one lineup, the adj.\ detrended  design has two lineups with different outcomes, while the ord.\ detrended design has four lineups with different outcomes. They are shown in Figures~\ref{fig:lpsstds},~\ref{fig:lpsdt1}, and~\ref{fig:lpsdt2}, respectively. 
 
-\hh{In all of these figures, the lineup with DH bands is shown on the left, the TS band lineup is on the right. The numbers on the bottom right give the number of (weighted) choices by observers for each of the panels. In most of these lineups, one of the null plots exhibits a strong signal that attracts a lot of attention away from the target sample. In all but one of the lineups the design with the TS band manages to de-emphasize the signal in the null plot enough to collect enough evidence for a rejection of the data sample. }
+In all of these figures, the lineup with DH bands is shown on the left, the TS band lineup is on the right. The numbers on the bottom right give the number of (weighted) choices by observers for each of the panels. In most of these lineups, one of the null plots exhibits a strong signal that attracts a lot of attention away from the target sample. In all but one of the lineups the design with the TS band manages to de-emphasize the signal in the null plot enough to collect enough evidence for a rejection of the data sample.
 \begin{figure}
 \centering
 \begin{knitrout}
@@ -1011,7 +1013,7 @@ Under the standard design there is one lineup, the \HH{adj.\ detrended}  design 
 \includegraphics[width=0.4\textwidth]{figure/lpsdt2-6} 
 
 \end{knitrout}
-\caption{\label{fig:lpsdt2} Three of the  four sets of \HH{ord.\ detrended}  lineups with different outcomes depending which confidence band is used. The outlined panel marks the  location of the data sample, the numbers at the bottom right are showing the number of votes each of the panels was picked by observers. The fourth set of lineup with a different outcome is shown in figure~\ref{fig:rotstd}. }
+\caption{\label{fig:lpsdt2} Three of the  four sets of ord.\ detrended  lineups with different outcomes depending which confidence band is used. The outlined panel marks the  location of the data sample, the numbers at the bottom right are showing the number of votes each of the panels was picked by observers. The fourth set of lineups with a different outcome is shown in Figure~\ref{fig:rotstd}. }
 \end{figure}
 \afterpage{\clearpage}
 
@@ -1064,7 +1066,6 @@ Under the standard design there is one lineup, the \HH{adj.\ detrended}  design 
 
 \section{Reasons}
 
-\alnote{I have concerns here about BW printing. Could we adjust the saturation on one of the bins somehow? }
 \begin{figure}[hbt]
 \centering
 \begin{knitrout}
@@ -1076,7 +1077,7 @@ Under the standard design there is one lineup, the \HH{adj.\ detrended}  design 
 \end{figure}
 \afterpage{\clearpage}
 
-\hh{Figure~\ref{fig:choices} summarizes the reasons participants gave for the choice of plot they selected. Bars on the left show  identifications of the data plot, bars on the right represent selections of a null plot. The reasons represent the five reasons offered  to participants. Notably, the reasons do not seem to differentiate between the different designs. Stating ``outliers'' as a reason for choosing a plot is helpful across all designs in picking the data out of the lineup. Stating ``points are on a curve'' or ``other"  as the reason for choosing a plot decreases the chance for this plot to be the data plot. ``Right side different'' or ``left side different" do not seem to have much of an effect. } 
+Figure~\ref{fig:choices} summarizes the reasons participants gave for the choice of plot they selected. Bars on the left show  identifications of the data plot, bars on the right represent selections of a null plot. The reasons represent the five reasons offered  to participants. Notably, the reasons do not seem to differentiate between the different designs. Stating ``outliers'' as a reason for choosing a plot is helpful across all designs in picking the data out of the lineup. Stating ``points are on a curve'' or ``other"  as the reason for choosing a plot decreases the chance for this plot to be the data plot. ``Right side different'' or ``left side different" do not seem to have much of an effect.
 %is a big difference in the percentages of ``right'' and ``left.'' Participants favored to give ``left side different'' as a reason over ``right side different'', even though all distributions involved were symmetric, and therefore deviations from normality should also manifest themselves in a symmetric fashion.
 
 %\hhnote{another idea: go through reasons for choices. For standard design the line was often interpreted as a line of fit (how often for the de-trended design?), ie. we are tapping into what general population knows about regression. While this is not completely appropriate, the knowledge transfer might be the reason for the better performance.}
