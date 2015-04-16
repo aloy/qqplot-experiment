@@ -159,7 +159,7 @@
 \bigskip
 
 \begin{abstract}
-In statistical modeling we strive to specify models that resemble data collected in studies or observed from processes. Consequently, distributional specification and parameter estimation are central to parametric models. Graphical procedures, such as the quantile-quantile (Q-Q) plot, are arguably the most widely used method of distributional assessment, though critics find their interpretation to be overly subjective. Formal goodness-of-fit tests are available and are quite powerful, but only indicate whether there is a lack of fit, not why there is lack of fit. In this paper we explore the use of the lineup protocol to inject rigor to graphical distributional assessment and compare its power to that of formal distributional tests. We find \HH{that lineup tests are considerably more powerful than traditional tests of normality. A further investigation into the design of Q-Q plots shows that de-trended Q-Q plots are more powerful than the standard approach as long as the representing plot preserves distances in $x$ and $y$ to be the same.}
+In statistical modeling we strive to specify models that resemble data collected in studies or observed from processes. Consequently, distributional specification and parameter estimation are central to parametric models. Graphical procedures, such as the quantile-quantile (Q-Q) plot, are arguably the most widely used method of distributional assessment, though critics find their interpretation to be overly subjective. Formal goodness-of-fit tests are available and are quite powerful, but only indicate whether there is a lack of fit, not why there is lack of fit. In this paper we explore the use of the lineup protocol to inject rigor to graphical distributional assessment and compare its power to that of formal distributional tests. We find that lineup tests are considerably more powerful than traditional tests of normality. A further investigation into the design of Q-Q plots shows that de-trended Q-Q plots are more powerful than the standard approach as long as the representing plot preserves distances in $x$ and $y$ to be the same.
  While we focus on diagnosing non-normality, our approach is general and can be directly extended to the assessment of other distributions.
 % 
 % 
@@ -210,7 +210,7 @@ First, we discuss  tests for normality, both from a numerical and graphical view
 \subsection{Classical tests of normality}
 Numerous procedures have been proposed to test whether a random sample comes from a normal distribution. In this section we review commonly used tests of normality. 
 
-A series of distributional tests focus on the difference between the empirical and theoretical distribution functions. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample of size $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Lilliefors \cite[LF-test, ][]{lilliefors}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises tests \citep[CvM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
+A series of distributional tests focus on the difference between the empirical and theoretical distribution functions. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample of size $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Lilliefors \cite[LF-test, ][]{lilliefors}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises tests \citep[CvM-test,][]{cramer:1928, mises:1928}, as shown in Table~\ref{tab:tests}.
 
 The KS test uses the maximal  difference, 
 %which is displayed as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, 
@@ -233,18 +233,18 @@ Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)
 %
 
 % The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not fit this scheme, but has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}. 
-The SW test \cite[SW-test,][]{Shapiro:1965kt} does not utilize deviations from the theoretical distribution function, rather it focuses on the linearity of a normal Q-Q plot. Under normality, a set of observations, $x_1, \ldots, x_n$, can expressed as $x_i = \mu + \sigma z_i$, where $z_i$ is a quantile from the standard normal distribution. The Shapiro-Wilk test compares (up to a constant of proportionality, $c$) two estimates for $\sigma$: the best linear unbiased estimate obtained from a generalized least squares regression of the sample order statistics on their expected values, denoted $\widehat{\sigma}$, and the sample standard deviation, $s$.
+The SW test \cite[SW-test,][]{Shapiro:1965kt} does not utilize deviations from the theoretical distribution function, rather it focuses on the linearity of a normal Q-Q plot. Under normality, a set of observations, $x_1, \ldots, x_n$, can be expressed as $x_i = \mu + \sigma z_i$, where $z_i$ is a quantile from the standard normal distribution. The Shapiro-Wilk test compares (up to a constant of proportionality, $c$) two estimates for $\sigma$: the best linear unbiased estimate obtained from a generalized least squares regression of the sample order statistics on their expected values, denoted $\widehat{\sigma}$, and the sample standard deviation, $s$.
 \[
   W = \frac{(c \widehat{\sigma})^2}{s^2} = \frac{b^2}{s^2}
 \]
 For a sample drawn from a normal distribution, $b^2$ and $s^2$ are, up to a constant, estimating the same quantity, whereas the two estimators will generally not be estimating the same quantity under non-normality. The SW test has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}.
 
-In Section~\ref{sec:power2} we will return to these tests in order to assess the effectiveness of different variations of standard Q-Q plots.
+In Section~\ref{sec:power2} we will return to these tests in order to \al{compare the power of lineup tests with classical tests for normality.}
 
 \subsection{Q-Q Plots}
 
 Standard quantile-quantile (Q-Q) plots \citep{Wilk:1968} are an essential tool for  visually evaluating a specific distributional assumption.  A Q-Q plot  is constructed from a sample, $x_1, \ldots, x_n$, by plotting the theoretical quantiles, $F^{-1}(F_n(x_i))$, against the sample quantiles, $x_{(i)}$. If the empirical distribution, $F_n$, is consistent with the theoretical distribution, $F$, the points in the Q-Q plot fall on the line of identity. 
-For any sample tested against a distribution within a location-scale family, such as a normal, log normal, or exponential distribution, the sample quantiles still fall on a line when plotted against the theoretical quantiles of any of the family's member distributions. Plotting the empiricial quantiles of a normally distributed sample $x \sim N(\mu, \sigma^2)$ against the quantiles of a standard normal will result in a line, where  the slope is an estimate of $\sigma$, and the intercept estimates $\mu$. Visually  the only change in the Q-Q plot is a  change in the scale of the $y$-axis. We can therefore employ Q-Q plots in the more general framework of testing the distribution of a sample for normality similar to standard normality tests, such as the AD, LF, CvM, and SW tests. However, we do have to make a decision with respect to the exact parameters of the normal distribution we test against when we plot a line alongside the points in the Q-Q plot for additional comparison purposes, i.e.~the parameters $\mu$ and $\sigma$ have to be estimated from the sample. In Q-Q plots, variability is based on a robust measure of spread given as the ratio of the inter-quartile ranges (IQRs) of the empirical and theoretical distributions: $\left(F^{-1}_n(0.75) - F^{-1}_n(0.25)\right) / \left(F^{-1}(0.75) - F^{-1}(0.25)\right)$ \citep{becker:s}. 
+For any sample tested against a distribution within a location-scale family, such as a normal, log normal, or exponential distribution, the sample quantiles still fall on a line when plotted against the theoretical quantiles of any of the family's member distributions. For example, plotting the empiricial quantiles of a normally distributed sample $x \sim N(\mu, \sigma^2)$ against the quantiles of a standard normal will result in a line, where  the slope is an estimate of $\sigma$, and the intercept estimates $\mu$. Visually  the only change in the Q-Q plot is a  change in the scale of the $y$-axis. We can therefore employ Q-Q plots in the more general framework of testing the distribution of a sample for normality similar to standard normality tests, such as the AD, LF, CvM, and SW tests. However, we do have to make a decision with respect to the exact parameters of the normal distribution we test against when we plot a line alongside the points in the Q-Q plot for additional comparison purposes---i.e.~the parameters $\mu$ and $\sigma$ have to be estimated from the sample. In Q-Q plots, variability is based on a robust measure of spread given as the ratio of the inter-quartile ranges (IQRs) of the empirical and theoretical distributions: $\left(F^{-1}_n(0.75) - F^{-1}_n(0.25)\right) / \left(F^{-1}(0.75) - F^{-1}(0.25)\right)$ \citep{becker:s}. 
 
 % In a Q-Q plot we plot quantiles of the empirical distribution against the expected quantiles from the assumed distribution. 
 % The line of identity therefore represents the theoretical distribution and points show the empirical distribution. 
@@ -293,15 +293,15 @@ For any sample tested against a distribution within a location-scale family, suc
 Based on visual inspection of a Q-Q plot, a
  sample is considered to be consistent with a normal distribution if the empirical and theoretical quantiles fall close to the line representing the theoretical distribution.  This decision can be further aided by an assessment of
  %Closeness can  be assessed visually based on
- whether the points fall inside the envelope of 95\%  pointwise confidence intervals \citep[][p.~150--154]{Davison:1997}. \al{Alternatively, simultaneous confidence intervals could be employed so that a rejection of normality would occur if any of the points fell outside of the interval. This is the approach taken by \citet{buja:2013} with their Tail-Sensitive (TS) simultaneous confidence intervals, which they found to be more powerful than the KS test to detect heavy-tailed distributions.
+ whether the points fall inside 95\%  pointwise confidence bands \citep[][p.~150--154]{Davison:1997}. \al{Alternatively, simultaneous confidence bands could be employed so that a rejection of normality would occur if any of the points fell outside of the bands. This is the approach taken by \citet{buja:2013} with their Tail-Sensitive (TS) simultaneous confidence bands, which they found to be more powerful than the KS test to detect heavy-tailed distributions.
 }
 
 In assessing differences between points and lines, onlookers have a tendency to evaluate the shortest, i.e.~orthogonal, distance, even when asked to evaluate differences based on the vertical distance \citep{sineillusion, robbins:2005, cleveland:1984}. 
 In so-called {\it de-trended Q-Q plots} \citep[][p.~25--26]{thode:2002} the $y$ axis is changed to show the difference between theoretical and sample quantiles. 
-\al{Consequently, the line representing the theoretical distribution becomes the $x$ axis,}
+Consequently, the line representing the theoretical distribution becomes the $x$ axis,
 % The line of the theoretical distribution therefore falls onto the $x$ axis, 
 and (vertical) differences between empirical and theoretical distributions coincide with the orthogonal distance. 
-De-trending should aid in the visual assessment between the empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show rather than asking audiences to derive it \citep{wainer:2000}.
+De-trending should aid in the visual assessment between the empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show, rather than asking audiences to derive it \citep{wainer:2000}.
 %\hhnote{ok, let's go with ordinary De-trended plots for the ones that are labelled De-trended (1) - i.e. full amount of space on the y-axis, and {\it adjusted De-trended plots} for the plots, in which we keep distances in x and y the same (De-trended (2)). I will start to make the changes throughout the paper. Those changes will be in orange.}
 
 
@@ -314,10 +314,10 @@ De-trending should aid in the visual assessment between the empirical CDF and th
 %\hh{Detrended(2) uses the available space.}
 
 
-In \hh{section~\ref{sec:power1}} we investigate the effectiveness and power of the modifications made to Q-Q plots.
-Examples of \hh{all the different} Q-Q plot \hh{designs} under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with \hh{an added grey band representing a confidence band, a\HH{n \emph{adjusted}} \emph{de-trended} Q-Q plot preserving relative distances in the plot and a\HH{n \emph{ordinary}} \emph{de-trended} Q-Q plot making full use of the space along the $y$-axis.}
-\hh{Q-Q plots in the upper row of figure~\ref{qqplots} use a Davison-Hinkley (DH) 95\% pointwise confidence region \citep{Davison:1997}, while the shading in the lower row represents 95\% Tail-Sensitive (TS) simultaneous confidence bands proposed by \cite{buja:2013}. }
-Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
+In Section~\ref{sec:power1} we investigate the effectiveness and power of the modifications made to Q-Q plots.
+Examples of the different Q-Q plot designs under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a confidence region, an \emph{adjusted} \emph{de-trended} Q-Q plot preserving relative distances in the plot and an \emph{ordinary} \emph{de-trended} Q-Q plot making full use of the space along the $y$ axis.
+Q-Q plots in the upper row of Figure~\ref{qqplots} use a Davison-Hinkley (DH) 95\% pointwise confidence band, while the shading in the lower row represents 95\% Tail-Sensitive (TS) simultaneous confidence bands.
+Note that all of the Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
 
 \begin{figure}
 \centering
@@ -332,7 +332,7 @@ Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same da
 \includegraphics[width=0.22\textwidth]{figures/qqplots-5}
 \includegraphics[width=0.22\textwidth]{figures/qqplots-7}
 \includegraphics[width=0.22\textwidth]{figures/qqplots-6}
-\caption{ \label{qqplots} \hh{Q-Q plot variations:} control, standard, and \hh{two versions of} de-trended \hh{Q-Q plots}, with Davison Hinkley (DH) or tail-sensitive (TS) 95\% confidence regions.}
+\caption{ \label{qqplots} Q-Q plot variations: control, standard, and two versions of de-trended Q-Q plots, with Davison Hinkley (DH) or tail-sensitive (TS) 95\% confidence regions.}
 \end{figure}
 \afterpage{\clearpage}
 
@@ -340,8 +340,8 @@ Note that all Q-Q plots in Figure~\ref{qqplots} are constructed from the same da
 In order to objectively evaluate  the three designs and quantify their effectiveness we make use of {\it lineup tests}.
 
 \subsection{Lineup Tests}
-Lineup tests have been introduced by \citet{buja:2009hp} to evaluate and quantify the significance of graphical findings. The idea behind a lineup test is that of a police lineup: the chart of the observed data is placed randomly among a set of so-called \emph{null charts}, showing data created consistently with the null hypothesis. In the setting of a lineup of normal Q-Q plots, the null hypothesis  is either that $F$ is standard normal or that $F$ is normal with parameters based on sample mean and variance.
-If the `suspect'---i.e., the plot of the observed data---can be identified from the null charts, this counts as evidence against the null hypothesis. Multiple identifications of the data by independent observers then lead to a rejection of the null hypothesis. 
+Lineup tests were introduced by \citet{buja:2009hp} to evaluate and quantify the significance of graphical findings. The idea behind a lineup test is that of a police lineup: the chart of the observed data is placed randomly among a set of so-called \emph{null charts}, showing data created consistently with the null hypothesis. In the setting of a lineup of normal Q-Q plots, the null hypothesis  is either that $F$ is standard normal or that $F$ is normal with parameters based on the sample mean and variance.
+If the `suspect'---i.e., the plot of the observed data---can be identified from the null charts, this counts as evidence against the null hypothesis. Multiple identifications of the data by independent observers then leads to a rejection of the null hypothesis. 
 The lineup protocol also allows for an assessment of the power of a lineup \citep{mahbub:2013},  
 %as the probability that in $N$ independent evaluations observers 
 and by showing different renderings of the same data in lineups we can evaluate the power  of different designs \citep{Hofmann:2012ts}.
@@ -360,9 +360,9 @@ Similar to classical inference, we can make use of power to assess the sensitivi
 
 
 %In the next section, we describe the simulation study used to compare the three \al{(four??)} Q-Q plot designs, and an initial comparison of the three designs is given. 
-\al{In Section~\ref{sec:power2} we compare the power of the lineup test of normality to the classical normality tests
- \hh{based on a simulation study, which we introduce in Section~\ref{sec:simu}}. We use a generalized linear mixed model to compare the power of different designs  of Q-Q plots in Section~\ref{sec:power1}.%, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e.\ rejection of normality). 
- We conclude with a discussion and an outline of areas for future research.}
+In Section~\ref{sec:power2} we compare the power of the lineup test of normality to the classical normality tests
+based on a simulation study, which we introduce in Section~\ref{sec:simu}. We use a generalized linear mixed model to compare the power of different designs  of Q-Q plots in Section~\ref{sec:power1}, %, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e.\ rejection of normality). 
+and conclude with a discussion and an outline of areas for future research.
 %\alnote{Didn't we move that discussion (of the feedback) to the appendix? This is mainly a note so that i remember to check this later.}
 % We use a generalized linear mixed model to compare the power of the three designs in Section~\ref{sec:power1}, and also explore the feedback of the independent observers to compare the rationale for plot selection (i.e., rejection of normality). Finally, we compare the power of a lineup test of normality to the classical normality tests in Section~\ref{sec:power2}, and outline areas for future research in Section~\ref{sec:discussion}. 
 
