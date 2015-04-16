@@ -590,13 +590,12 @@ and conclude with a discussion and an outline of areas for future research.
 \section{Simulation Setup and Model}\label{sec:simu}
 %------------------------------------------------------------------------------------
 
-\hh{In order to evaluate the power of Q-Q plots and compare their performance to tests of normality, we make use of a simulation study 
-using samples of size $n \in \{20, 30, 50, 75\}$ from a $t_{d}$ distribution with $d \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.}
+In order to evaluate the power of Q-Q plots and compare their performance to tests of normality, we make use of a simulation study 
+using samples of size $n \in \{20, 30, 50, 75\}$ from a $t_{d}$ distribution with $d \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.
 %\alnote{I think using $n$ for sample size is most logical, though this does complicate the notation used in model (2).}
 
-\hh{For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from samples of the same size drawn from the normal distribution. For each  sample, two sets of null plots are created, resulting in a total of 48 lineup \hh{data sets}. 
-These lineup \hh{data sets} are rendered in each of the Q-Q plot variations, resulting in $48 \times 7 = 336$ different lineups.  Additionally, standard plots (with both TS and DH bands) are rendered against $N(0, S^2)$ null data (see discussion below), adding another $2 \times 48 = 96$ lineups.
-}
+For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from samples of the same size drawn from the normal distribution. For each  sample, two sets of null plots are created, resulting in a total of 48 lineup data sets. 
+These lineup data sets are rendered in each of the Q-Q plot variations, resulting in $48 \times 7 = 336$ different lineups.  Additionally, standard plots (with both TS and DH bands) are rendered against $N(0, S^2)$ null data (see discussion below), adding another $2 \times 48 = 96$ lineups.
 
 
 %To further develop the assessment of normality using lineups, we conducted a study comparing the three different versions of the Q-Q plot.
@@ -605,7 +604,7 @@ These lineup \hh{data sets} are rendered in each of the Q-Q plot variations, res
 
 %To investigate the power of the three different Q-Q plot versions, we sampled data from a $t$ distribution with varying degrees of freedom and sample sizes, and included a Q-Q plot of these data in a lineup of null charts drawn from standard normal samples of the same size.
 For lineup tests it is extremely important to consider the generation of the null sets and the construction of the plots in the lineup. 
-Null data sets must be created conistently with the null hypothesis. Here, we have two different null hypotheses to consider:
+Null data sets must be created consistently with the null hypothesis. Here, we have two different null hypotheses to consider:
 
 \begin{itemize}
 \item{\bf Situation I:}
@@ -613,12 +612,12 @@ $H_0: F = N(0,1)$  \\
 Null samples are drawn from a standard normal distribution; the reference line is the line of identity. Lines and envelopes are the same across all panels, in particular, all panels have the same scale. 
 \item{\bf Situation II:} $H_0: F = N(0,S^2)$ \\
 %$S$ is based on the interquartile range of the data; 
-\HH{Null samples are drawn from $N(0, S^2)$; the reference line has a slope of $S$ (and an intercept of 0).  All panels have the same scale. Throughout the paper we use $\hat{\sigma}^2$ to indicate the adjusted sample variance $\hat{\sigma}^2 = (n-1)^{-1} \Sigma_{i=1}^n (x_i - \bar{x})^2$, whereas $\hat{S}^2$ is a more robust estimator based on the interquartile range.}
+Null samples are drawn from $N(0, S^2)$; the reference line has a slope of $S$ (and an intercept of 0).  All panels have the same scale. Throughout the paper we use $\hat{\sigma}^2$ to indicate the adjusted sample variance $\hat{\sigma}^2 = (n-1)^{-1} \Sigma_{i=1}^n (x_i - \bar{x})^2$, whereas $\hat{S}^2$ is a more robust estimator based on the interquartile range.
 \end{itemize}
 
 %\alnote{The generation of the null data makes sense to me, but is there a way to use bullet points on the right side of the table? That would help me read it...}
 
-Examples for both \al{null} hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show identical data, the sample\footnote{The little piece of arithmetic is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.} is in panel \#$(3^2-3)$. On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. %\hhnote{checked the number - it's fine}
+Examples for both null hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show identical data, the sample\footnote{The little piece of arithmetic is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.} is in panel \#$(3^2-3)$. On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. %\hhnote{checked the number - it's fine}
 %\alnote{We need to straighten out our notation for the standard deviation. On this page we use both $\widehat{\sigma}$ and $\widehat{S}$.}
 %\hhnote{XXX $\widehat{\sigma}$ and $\widehat{S}$ are supposed to be two different estimators -- I'm thinking of $\hat{\sigma} = 1/(n-1) \sum_i (x_i - \bar{x})^2$ whereas $\hat{S}$ is a more robust estimator based on the ratio of IQRs in y and x. We need to say that somewhere. }
 
@@ -663,14 +662,13 @@ Additionally, we use the interquartile range (IQR) to estimate scale, as it is a
 % The interquartile range (IQR) is used---as is standard practice for Q-Q plots---to estimate scale. 
 Robust estimation of the variance is preferred for better assessment of the tails and outliers of the empirical distribution. We could use alternative estimators for variance, such as the median absolute deviation (MAD) or the adjusted MAD \citep{rousseeuw}, but this will likely also change the power of the corresponding lineup.
 
-Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} independent observers were recruited and asked to evaluate ten lineups each. \hh{Lineups were randomly assigned to participants, such that each participant
+Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} independent observers were recruited and asked to evaluate ten lineups each. Lineups were randomly assigned to participants, such that each participant
 (i) evaluated each data set at most once, 
 (ii) was exposed to multiple parameter settings (`harder' and `easier' lineups), and
 (iii) evaluated each Q-Q plot design at most twice.
 Half of the lineups that observers were shown allowed for multiple choices of plots from a lineup for the final answer. Very few participants made use of this option. In the analysis we dealt with multiple answers to a lineup by using a weighting variable defined as the reciprocal of the number of answers given by a participant.
-}
 
-Crowdsourcing graphical perception experiments through MTurk is a relatively new practice, and involves recruiting human observers from the web. While potential sources of bias in social science research using MTurk have been discussed \cite[cf.,][]{chandler:2014}, the results from MTurk studies for graphical perception experiments are promising, as MTurk experiments have replicated studies conducted in the traditional lab setting \citep{Kosara:2010, Heer:2010}. Specifically, \citet{Heer:2010} replicated the results of \citet{cleveland:1984} using the MTurk platform, and \citet{Kosara:2010} found similar results between a lab study and one performed using MTurk. 
+Crowdsourcing graphical perception experiments through MTurk is a relatively new practice, and involves recruiting human observers from the web. While potential sources of bias in social science research using MTurk have been discussed \cite[see, for example,][]{chandler:2014}, the results from MTurk studies for graphical perception experiments are promising, as MTurk experiments have replicated studies conducted in the traditional lab setting \citep{Kosara:2010, Heer:2010}. Specifically, \citet{Heer:2010} replicated the results of \citet{cleveland:1984} using the MTurk platform, and \citet{Kosara:2010} found similar results between a lab study and one performed using MTurk. \al{In our study, we followed the advice of \citet{Kosara:2010} and \citet{Heer:2010} to avoid bias from participants trying to ``game the system.''}
 
 
 %
@@ -717,6 +715,7 @@ lps15$CIdesign <- paste(lps15$treatment,".HD", sep="")
 lps <- merge(lps, lps15[, c("data_name", "CIdesign", "pvals.adj")], by=c("data_name", "CIdesign"), all=TRUE)
 @
 
+\alnote{Can we remove the slashes from Fig. 3?}
 \begin{figure}[ht]
 \centering
 <<compare-designs, echo=FALSE, fig.width=15, fig.height=9, out.width='\\textwidth', warning=FALSE, message=FALSE>>=
@@ -777,21 +776,24 @@ ggplot() +
   guides(shape=guide_legend(title="Significant difference\nfrom normality", ncol=2))
 
 @
-\caption{\label{fig:compare} \hh{Percentages of identifying the $t$ sample from lineups of different variations of Q-Q plots. Each lineup is shown as a dot. Filled dots indicate a (visually) significant deviation from normality (as determined in the user experiment). Dots of the same lineup data (sample and null data) are connected by a line.
-The four lines in each panel correspond to four different lineups: the lines of the same color correspond to the same $t$-sample, but different null data; the lines of the other colour change both in sample and null data. The results are facetted by parameter setting: sample sizes $n$ (columns) vary from 20 to 75, degrees of freedom $df$ are shown in rows. With increasing sample size and decreasing degrees of freedom the percentage of picking the $t$ sample  from the normal samples generally increases. }
- }
+\caption{\label{fig:compare} Percentages of participants identifying the $t$ sample from lineups using different variations of Q-Q plots. Each lineup is shown as a dot. Filled dots indicate a (visually) significant deviation from normality (as determined in the user experiment). Dots of the same lineup data (sample and null data) are connected by a line.
+The four lines in each panel correspond to four different lineups: the lines of the same color correspond to the same $t$-sample, but different null data; the lines of the other color change both in sample and null data. The results are facetted by parameter setting: sample sizes $n$ (columns) vary from 20 to 75, degrees of freedom $df$ are shown in rows. With increasing sample size and decreasing degrees of freedom the percentage of participants picking the $t$ sample  from the normal samples generally increases.
+}
 \end{figure}
 \afterpage{\clearpage}
 
-Figure~\ref{fig:compare} shows percentages of data picks in the lineups under the different variations of Q-Q plots. 
-\hh{All versions of Q-Q plots provide highly correlated results, and largely agree in the decision on normality. Filled circles indicate a  rejection of standard normality based on visual evaluation, open circles indicate a lack of rejection. Each of the panels shows the four lineups corresponding to the same sample size $n$ and degrees of freedom $df$ of the $t$ distribution.
+Figure~\ref{fig:compare} shows the percentage of correct identifications under the different variations of Q-Q plots. 
+% shows percentages of data picks in the lineups under the different variations of Q-Q plots. 
+All versions of Q-Q plots provide highly correlated results, and largely agree in the decision on normality. Filled glyphs indicate a  rejection of standard normality based on visual evaluation, open glyphs indicate a lack of rejection. Each of the panels shows the four lineups corresponding to the same sample size, $n$, and degrees of freedom, $df$, of the $t$ distribution.
 Each line connects the evaluations based on the same lineup data (same data, same null plots).
-Lines of the same color correspond to lineups with the same data sample, while differently colored lines show lineups of different samples.  Generally, within each panel, lines of the same color (lineups share the same data sample, but have different nulls) are closer together than lines of different color (different sample, different nulls).  }
+Lines of the same color \al{(which has been double coded using glyphs of the same shape)} correspond to lineups with the same data sample. 
+% while differently colored lines show lineups of different samples.  
+Generally, within each panel, lines of the same color  (lineups share the same data sample, but have different nulls) are closer together than lines of different color (different sample, different nulls).  
 As expected, the task of identifying non-normality becomes easier with increased sample size and more pronounced deviations from normality due to lower degrees of freedom. 
 %All three versions provide highly correlated results, and largely agree for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform  worse than either standard or control Q-Q plots. 
 
-\hh{Lineups of data samples from a $t_2$-distribution (bottom row)  are  rejected in lineups under all designs (with one exception), while the $t_{10}$ samples largely go undetected except for two of the larger samples.} 
-Lineups of samples from a $t_5$ distribution \hh{show the most variability. Table~\ref{tab:no1} gives an overview of the number of rejections of a standard normal distribution by design. A more thorough discussion on the power of different designs follows in the next section.} 
+Lineups of data samples from a $t_2$-distribution (bottom row)  are  rejected in lineups under all designs (with one exception), while the $t_{10}$ samples largely go undetected except for in larger samples.
+Lineups of samples from a $t_5$ distribution show the most variability. Table~\ref{tab:no1} gives an overview of the number of rejections of a standard normal distribution by design. A more thorough discussion on the power of the different designs is given in Section~\ref{sec:power1}.
  
 \begin{table} 
 \caption{\label{tab:no1} Number of rejections (out of 48) of standard normality by design.}
