@@ -608,7 +608,7 @@ In contrast, the  lineup  on the right includes a $t_5$ sample of size $n=20$ (i
 The corresponding $p$-value in the SW test is 0.2318, after LF (0.1689), the test with the lowest $p$-value on this data sample out of all the normality tests.
 
 
-The difference in significance between normality tests and the visual test might be due to the way the theoretical distribution against which the sample is compared is chosen. The normality tests are based on the sample mean and sample variance, both of which are affected by outliers. Compared to a normal distribution, the samples from a $t$ distribution exhibit heavier tails, and, in a finite sample, the heavier tails might look like outliers. By taking these outliers into account, the normality tests lose substantial power. The Q-Q plots, on the other hand, are based on a robust estimate of the scale based on the middle half of the empirical distribution. Q-Q plots are, therefore, less affected by outliers and the tails of a $t$ distribution are more easily distinguishable from the tails of a normal distribution, as can be seen in the lineup on the right of Figure~\ref{fig:lpnorm}. Compare this to the lineup in Figure~\ref{fig:lp3}, which is based on the same data, but the nulls are sampled from a normal distribution with a variance estimated as the sample variance. The data plot does not stand out, so we would not reject the null hypothesis based on this lineup. 
+The difference in significance between normality tests and the visual test might be due to the way the theoretical distribution against which the sample is compared is chosen. The normality tests are based on the sample mean and sample variance, both of which are affected by outliers. Compared to a normal distribution, the samples from a $t$ distribution exhibit heavier tails, and, in a finite \al{(XXX small?)} sample, the heavier tails might look like outliers. By taking these outliers into account, the normality tests lose substantial power. The Q-Q plots, on the other hand, are based on a robust estimate of the scale based on the middle half of the empirical distribution. Q-Q plots are, therefore, less affected by outliers and the tails of a $t$ distribution are more easily distinguishable from the tails of a normal distribution, as can be seen in the lineup on the right of Figure~\ref{fig:lpnorm}. Compare this to the lineup in Figure~\ref{fig:lp3}, which is based on the same data, but the nulls are sampled from a normal distribution with a variance estimated as the sample variance. The data plot does not stand out, so we would not reject the null hypothesis based on this lineup. 
 Inferior performance of normality tests based on the sample mean and variance is also observed by \cite{buja:2013} in the discussion of the TS test. 
 
 % \begin{figure}
@@ -674,11 +674,11 @@ Non-integer numbers result from multiple choice answers. %\hh{XXX} The italicize
 \section{Power: three different designs of Q-Q plots}\label{sec:power1}
 %-----------------------------------------------------------------------------------
 
-\hh{In this section, we are investigating the differences that we see in Figure~\ref{fig:compare} of evaluations of the same data between different designs in more detail. We first model the results, then we investigate differences based on participants' answers. }
-\hh{The premise underlying our} evaluation of the different Q-Q plot designs is that if participants find it easier to identify the data plot in one lineup than in another lineup (given identical data underlying the lineups), the first lineup uses the better design.
+In this section, we further investigate the differences in evaluations of the same data between different designs that we observed in Figure~\ref{fig:compare}. We first model the results, then we investigate differences based on participants' answers.
+The premise underlying our evaluation of the different Q-Q plot designs is that if participants find it easier to identify the data plot in one lineup than in another lineup (given identical data underlying the lineups), the first lineup uses the better design.
 
 Let $Y_i$ be the outcome of the $i$th evaluation. Then $Y_i$ is a Bernoulli random variable, where $\pi_i$ denotes the probablity of identifying the data plot from the lineup; i.e.~$P(Y_i = 1) = \pi_i = E[Y_i]$.   
-The probability of identifying the lineup is affected by several factors: (a) the strength of the signal, i.e.~degrees of freedom of the $t$ distribution, and the sample size, (b) a human factor, i.e.~the visual ability of the observer, and (c)  the `lineup factor': depending on which $m-1$ representatives of the test distribution the null plots show, lineups of the same data plot can have different difficulty. We capture all of this in a logistic regression model with fixed effects for signal strength and random effects for lineup difficulty and user ability. More specifically: 
+The probability of identifying the lineup is affected by several factors: (a) the strength of the signal, i.e.~degrees of freedom of the $t$ distribution, and the sample size, (b) a human factor, i.e.~the visual ability of the observer, and (c)  the `lineup factor': depending on which $m-1$ representatives of the test distribution the null plots show, as lineups of the same data plot can have different difficulty. We capture all of this in a logistic regression model with fixed effects for signal strength, and random effects for lineup difficulty and user ability. More specifically: 
 
 %Next, we model the aforementioned probability $p_i$ with which observer $i$ picks the true data from a lineup. 
 %Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision on the $i$th evaluation and $\pi_i$ is the probability with which the observer chooses the data plot. This probability is influenced by a number of factors:
@@ -699,23 +699,20 @@ $u$ & the users' individual abilities.
 g(\pi_i) &=& \eta_i = \mu + \tau_{j(i)} +\delta_{k(i)}+ \nu_{s(i)} + u_{u(i)} + d_{d(i)},\\ \nonumber
 Y &=& g^{-1}(\eta) + \varepsilon
 \end{eqnarray}
-where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard (DH), Standard (TS), \HH{adj.\ detrended (DH), adj.\ detrended (TS), ord.\ detrended (DH), ord.\ detrended} (TS)$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular sample \hh{and null data} used. 
-Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects, i.e. $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$. We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.
+where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ are  indexing functions that relate evaluation $i$ to the corresponding levels in the factor variables, to the observer, or a particular data sample. More specifically, $j(i) \in \{$Control, Standard (DH), Standard (TS), adj.\ detrended (DH), adj.\ detrended (TS), ord.\ detrended (DH), ord.\ detrended (TS)$\}$; $k(i) \in \{2,5,10\}$; $s(i) \in \{20, 30, 50, 75\}$; $u(i)$ maps to the participant's id of the $i$th evaluation; and $d(i)$ identifies the particular sample and null data used. 
+Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects; that is, $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$. We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.
 %
-\hh{Table~\ref{tab:coefs} gives an overview of the coefficients.}
+Table~\ref{tab:coefs} gives an overview of the coefficients from the fitted model.
 
-\hh{As could be seen in various figures before, an increase in signal strength (larger sample size, fewer degrees of freedom) result in lineups, in which the sample is picked out more often by observers.}
-\hh{Aside from that,} the design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands help with evaluation in the standard design, but the difference is not significant.  
-
-Surprisingly, \HH{ordinary} de-trended Q-Q plots \HH{do not improve participants' probabilities } %is significantly less powerful 
-in detecting non-normality. \HH{With DH bands, ordinary detrended Q-Q plots are actually performaing significantly worse than the control charts.}
+As could be previously observed, an increase in signal strength (larger sample size, fewer degrees of freedom) results in lineups in which the sample is picked out more often by observers.
+Additionally, the design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands help with evaluation in the standard design, but the difference is not significant.  
+Surprisingly, ordinary de-trended Q-Q plots do not improve participants' probabilities %is significantly less powerful 
+in detecting non-normality. With DH bands, ordinary detrended Q-Q plots are actually performaing significantly worse than the control charts,
 %\hh{De-trended (2) Q-Q plots with DH bands are actually performing significantly worse than the control charts, while Q-Q plots with the TS bands just lose their previous gain from de-trending.}
-\HH{In contrast to that, the adjusted version of detrended Q-Q plot shows a significant improvement in detecting non-normality over control and standard charts. }
+whereas the adjusted detrended Q-Q plots show a significant improvement in detecting non-normality over the control and standard charts.
 %\hh{The first de-trended version of Q-Q plots, in which the aspect ratio is kept the same as in the standard plot, shows significant increases in detecting non-normality. }
- \hh{It seems that the additional space on the $y$-axis emphasizes artifacts \HH{in the ordinary design} that are hard to judge, because distances in the $x$ direction have a different meaning than distances in the $y$ direction. %Due to the difference in the aspect ratio, plotted distances between points are not proportional to distances in the data space.
- } 
-
-\hh{For the other two designs, Q-Q plots with TS bands have slightly less power than the same version of Q-Q plots with DH bands. While  this effect is not significant, it is likely due to TS bands being wider in the center of the distribution and at the tips of the tails.}
+It seems that the additional space on the $y$-axis emphasizes artifacts in the ordinary design that are hard to judge, because distances in the $x$ direction have a different meaning than distances in the $y$ direction. %Due to the difference in the aspect ratio, plotted distances between points are not proportional to distances in the data space.
+For the other two designs, Q-Q plots with TS bands have slightly less power than the same version of Q-Q plots with DH bands. While  this effect is not significant, it is likely due to TS bands being wider.
 
 
 
@@ -736,7 +733,7 @@ in detecting non-normality. \HH{With DH bands, ordinary detrended Q-Q plots are 
 % 
 % print(xtable(dc))
 \begin{table}[ht]
-\caption{\label{tab:coefs} \hh{Linear estimates and corresponding odds based on Model (1).  95\% Wald confidence intervals are given in parentheses.}}
+\caption{\label{tab:coefs} Linear estimates and corresponding odds based on Model (1).  95\% Wald confidence intervals are given in parentheses.}
 \centering
 %\begin{tabular}{rr>{ (}r<{,}>r<{) }rrl}
 \begin{tabular}{rr>{ (}r@{, }r<{) }rr>{ (}r@{, }r<{) }}
@@ -750,11 +747,11 @@ Control & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
 Standard (DH) & 0.10 & -0.08 & 0.29 && 1.11 & 0.92 & 1.33 \\ 
   Standard (TS) & -0.18 & -0.40 & 0.04 && 0.83 & 0.67 & 1.04 \\ [2pt]
 %
-\HH{ord.\ }detrended  (DH) & \bf -0.42 & \bf -0.61 & \bf  -0.24 && \bf 0.66 & \bf 0.54 & \bf  0.79 \\ 
-\HH{ord.\ }detrended (TS) & 0.03 & -0.19 & 0.25 && 1.03 & 0.83 & 1.28 \\ [2pt]
+ord.\ detrended  (DH) & \bf -0.42 & \bf -0.61 & \bf  -0.24 && \bf 0.66 & \bf 0.54 & \bf  0.79 \\ 
+ord.\ detrended (TS) & 0.03 & -0.19 & 0.25 && 1.03 & 0.83 & 1.28 \\ [2pt]
 %
-\HH{adj.\ }detrended  (DH) & \bf 0.42 & \bf 0.20 & \bf 0.64 && \bf  1.52 & \bf 1.22 & \bf 1.89 \\ 
-\HH{adj.\ }detrended  (TS) & \bf 0.32 & \bf 0.10 & \bf 0.53 && \bf 1.37 & \bf 1.10 & \bf 1.70 \\ [3pt]
+adj.\ detrended  (DH) & \bf 0.42 & \bf 0.20 & \bf 0.64 && \bf  1.52 & \bf 1.22 & \bf 1.89 \\ 
+adj.\ detrended  (TS) & \bf 0.32 & \bf 0.10 & \bf 0.53 && \bf 1.37 & \bf 1.10 & \bf 1.70 \\ [3pt]
 \multicolumn{1}{r}{\bf sample size} \\  
 20 & 0.00 & \multicolumn{2}{c}{---} && 1.00 & \multicolumn{2}{c}{---}\\
   30 & 1.07 & -0.45 & 2.60 && 2.92 & 0.64 & 13.43 \\ 
@@ -790,10 +787,10 @@ Standard (DH) & 0.10 & -0.08 & 0.29 && 1.11 & 0.92 & 1.33 \\
 
 %In terms of rejections of the null hypothesis, this means that normality is rejected in 24 out of the 48 lineups of the \HH{ord.\ detrended}  Q-Q plot. All of these cases are being rejected in all of the other designs as well, but using the control design another four lineups reject normality, and the standard design rejects yet another lineup.
 
-To further investigate the difference between the designs, consider Figure \ref{fig:rotstd}. Here, we consider a sample from the $t_2$ distribution of size $n=20$ that is rejected \hh{from all designs besides the \HH{ord.\ detrended}  Q-Q plots with a DH band.}  
-\hh{The \HH{ord.\ detrended}  DH band is shown on the left side of Figure~\ref{fig:rotstd}. Instead of the data sample in panel \#$(2^2+1)$ observers pick panel \#7 in 32.2 out of 45 evaluations. For any of the other designs, as e.g.\ the \HH{ord.\ detrended}  Q-Q plot with TS bands on the right of Figure~\ref{fig:rotstd}, observers pick the panel of the data sample at a rate that leads to a rejection of normality.  }
+To further investigate the difference between the designs, consider Figure \ref{fig:rotstd}. Here, we consider a sample from the $t_2$ distribution of size $n=20$ that is rejected by all designs besides the ord.\ detrended  Q-Q plots with a DH band.  
+The ord.\ detrended  DH band is shown on the left side of Figure~\ref{fig:rotstd}. Instead of the data sample in panel \#$(2^2+1)$ observers picked panel \#7 in 32.2 out of 45 evaluations. We display the ord.\ detrended  Q-Q plot with TS bands on the right side of Figure~\ref{fig:rotstd}, based on which observers picked the true plot at a rate that lead to a rejection of normality.
+% For any of the other designs, as e.g.\ the ord.\ detrended  Q-Q plot with TS bands on the right of Figure~\ref{fig:rotstd}, observers pick the panel of the data sample at a rate that leads to a rejection of normality.
 %Instead of focusing on the panel showing the sample, observers focus on panel \#$(3^2-2)$ (with 18 out of 21 picks). This panel was picked as being most different 9 out of 27 times in the standard design, too, indicating that there is something special about it, but most observers (16 out of 27) picked the data in panel \#$(2^2+1)$ from the standard design. 
-
 \begin{figure}[hbt]
 %\begin{subfigure}{0.5\textwidth}
 
@@ -813,20 +810,18 @@ To further investigate the difference between the designs, consider Figure \ref{
 \end{knitrout}
 \end{subfigure}
 \caption{\label{fig:rotstd}Lineups of the same data in two different designs. %In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. 
-In the lineup on the left the data sample in panel \#$(2^2+1)$ is only identified \hh{2.8 times in 45} evaluations in the lineup showing the \HH{ord.\ detrended}  design \hh{with a DH band}. Observers instead pick panel \#$(3^2-2)$ \hh{32.2} times. \hh{The lineup on the right shows the same data in a \HH{ord.\ detrended}  Q-Q plot design using the TS confidence band. The data sample is picked 7.2 times in 27 evaluations, leading to a rejection of normality at a 5\% signficance level.}}
+In the lineup on the left the data sample in panel \#$(2^2+1)$ is only identified 2.8 times in 45 evaluations in the lineup showing the ord.\ detrended  design with a DH band. Observers instead pick panel \#$(3^2-2)$ 32.2 times. The lineup on the right shows the same data in a ord.\ detrended  Q-Q plot design using the TS confidence band. The data sample is picked 7.2 times in 27 evaluations, leading to a rejection of normality at a 5\% signficance level.}
 \end{figure}
 \afterpage{\clearpage}
-
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Standard"))
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Rotated"))
-
-\hh{Only 6.3\% of all evaluations made use of the option of giving feedback for the reason of their choice in form of a free-form answer. }
+Only 6.3\% of all evaluations made use of the option of giving feedback for the reason of their choice in form of a free-form answer.
 %
-\hh{The two participants who gave a free-form answer for their choice in the lineup on the left hand side of Figure~\ref{fig:rotstd}, picked panel \#7 from the \HH{ordinary} de-trended lineup, and stated that this panel was the one with the ``most dots outside the shaded area,'' i.e.~they focused on the middle of panel \#7}. 
+The two participants who gave a free-form answer for their choice in the lineup on the left hand side of Figure~\ref{fig:rotstd}, picked panel \#7 from the ordinary de-trended lineup, and stated that this panel was the one with the ``most dots outside the shaded area,'' indicating that they focused on the middle of panel \#7. 
 
-This is not a singular occurrence---when investigating \hh{all lineups of the same design which lead to different outcomes depending on the choice of confidence band (an exhaustive list of all these lineups is given in the appendix in section~\ref{sec:lplist}), we find that for designs using DH bands, panels were picked in favor of the data sample, when dots were outside the shaded area. This happened both in the tails and in the middle part of the distribution.} 
+This type of discrepency is not a singular occurrence. When investigating all lineups of the same design which lead to different outcomes depending on the choice of confidence band (an exhaustive list of all these lineups is given in the appendix in section~\ref{sec:lplist}) we find that for designs using DH bands, panels were picked over the data sample, when dots were outside the shaded area. This happened both in the tails and in the middle of the distribution.
 %overall reasoning we took a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot %(figure~\ref{fig:rotfalse}). 
-\hh{This is consistent with the findings in \citet{buja:2013}, which motivated the research into Tail-Sensitive confidence bands. These bands define a test of normality and are narrower in the tails (but skew) than those associated with the Kolmogorov-Smirnov test, while slightly more conservative in the middle of the distribution.}
+This is consistent with the findings in \citet{buja:2013}, which motivated the research into Tail-Sensitive confidence bands. These bands define a test of normality and are narrower in the tails (but skew) than those associated with the Kolmogorov-Smirnov test, while slightly more conservative in the middle of the distribution.
 
 
 %This is not a singular occurrence---when investigating  overall reasoning we took a closer look at the effect of the  words ``area'' and ``outside'' in the reason participants gave for making their choice of plot %(figure~\ref{fig:rotfalse}). 
