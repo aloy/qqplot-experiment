@@ -491,8 +491,8 @@ For any sample tested against a distribution within a location-scale family, suc
 Based on visual inspection of a Q-Q plot, a
  sample is considered to be consistent with a normal distribution if the empirical and theoretical quantiles fall close to the line representing the theoretical distribution.  This decision can be further aided by an assessment of
  %Closeness can  be assessed visually based on
- whether the points fall inside the envelope of 95\%  pointwise confidence intervals \citep[][p.~150--154]{Davison:1997}.
-\hhnote{Include discussion of TS interval here.} 
+ whether the points fall inside the envelope of 95\%  pointwise confidence intervals \citep[][p.~150--154]{Davison:1997}. \al{Alternatively, simultaneous confidence intervals could be employed so that a rejection of normality would occur if any of the points fell outside of the interval. This is the approach taken by \citet{buja:2013} with their Tail-Sensitive (TS) simultaneous confidence intervals, which they found to be more powerful than the KS test to detect heavy-tailed distributions.
+}
 
 In assessing differences between points and lines, onlookers have a tendency to evaluate the shortest, i.e.~orthogonal, distance, even when asked to evaluate differences based on the vertical distance \citep{sineillusion, robbins:2005, cleveland:1984}. 
 In so-called {\it de-trended Q-Q plots} \citep[][p.~25--26]{thode:2002} the $y$ axis is changed to show the difference between theoretical and sample quantiles. 
