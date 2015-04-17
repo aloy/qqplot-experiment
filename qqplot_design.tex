@@ -239,7 +239,7 @@ The SW test \cite[SW-test,][]{Shapiro:1965kt} does not utilize deviations from t
 \]
 For a sample drawn from a normal distribution, $b^2$ and $s^2$ are, up to a constant, estimating the same quantity, whereas the two estimators will generally not be estimating the same quantity under non-normality. The SW test has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}.
 
-In Section~\ref{sec:power2} we will return to these tests in order to \al{compare the power of lineup tests with classical tests for normality.}
+In Section~\ref{sec:power2} we will return to these tests in order to compare the power of lineup tests with classical tests for normality.
 
 \subsection{Q-Q Plots}
 
@@ -293,8 +293,8 @@ For any sample tested against a distribution within a location-scale family, suc
 Based on visual inspection of a Q-Q plot, a
  sample is considered to be consistent with a normal distribution if the empirical and theoretical quantiles fall close to the line representing the theoretical distribution.  This decision can be further aided by an assessment of
  %Closeness can  be assessed visually based on
- whether the points fall inside 95\%  pointwise confidence bands \citep[][p.~150--154]{Davison:1997}. \al{Alternatively, simultaneous confidence bands could be employed so that a rejection of normality would occur if any of the points fell outside of the bands. This is the approach taken by \citet{buja:2013} with their Tail-Sensitive (TS) simultaneous confidence bands, which they found to be more powerful than the KS test to detect heavy-tailed distributions.
-}
+ whether the points fall inside 95\%  pointwise confidence bands \citep[][p.~150--154]{Davison:1997}. \hh{Alternatively, when simultaneous confidence bands are employed we reject normality, when any of the points fall outside of the bands.} This is the approach taken by \citet{buja:2013} with the Tail-Sensitive (TS) simultaneous confidence bands, which was found to be more powerful than the KS test in detecting heavy-tailed distributions.
+
 
 In assessing differences between points and lines, onlookers have a tendency to evaluate the shortest, i.e.~orthogonal, distance, even when asked to evaluate differences based on the vertical distance \citep{sineillusion, robbins:2005, cleveland:1984}. 
 In so-called {\it de-trended Q-Q plots} \citep[][p.~25--26]{thode:2002} the $y$ axis is changed to show the difference between theoretical and sample quantiles. 
@@ -304,12 +304,10 @@ and (vertical) differences between empirical and theoretical distributions coinc
 De-trending should aid in the visual assessment between the empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show, rather than asking audiences to derive it \citep{wainer:2000}.
 %\hhnote{ok, let's go with ordinary De-trended plots for the ones that are labelled De-trended (1) - i.e. full amount of space on the y-axis, and {\it adjusted De-trended plots} for the plots, in which we keep distances in x and y the same (De-trended (2)). I will start to make the changes throughout the paper. Those changes will be in orange.}
 
-
-\alnote{I think this transition needs to be smoothed out a bit, but I don't have a good idea for this at the moment.}
-
-\hh{For this purposes, we are investigating two different designs of de-trended Q-Q plots: }
-\HH{Similar to a residual analysis in a linear model, we distinguish between {\it ordinary} and {\it adjusted} de-trended Q-Q plots. In an ordinary de-trended Q-Q plot we show the raw differences between empirical and theoretical CDFs on the $y$-axis, making full use of the available space; general practice is to show Q-Q plot in a square plot, i.e.\ differences between empirical and theoretical CDFs are considered in  the same amount of space as the range of values on the $x$ axis. }
-\HH{In an {\it adjusted} de-trended Q-Q plot, we rotate the trend line into the horizontal axis, i.e.\ differences between the theoretical and empirical CDFs are shown along the $y$-axis, but we fix $x$ and $y$ axes to show the same range, to ensure that distances in $x$ and $y$ direction are on the same scale. 
+\hh{For this purpose we are investigating the power of detrended Q-Q plots. In particular }
+ we are investigating two different designs of de-trended Q-Q plots. 
+Similar to a residual analysis in a linear model, we distinguish between {\it ordinary} and {\it adjusted} de-trended Q-Q plots. In an ordinary de-trended Q-Q plot we show the raw differences between empirical and theoretical CDFs on the $y$-axis, making full use of the available space; general practice is to show Q-Q plot in a square plot, i.e.\ differences between empirical and theoretical CDFs are considered in  the same amount of space as the range of values on the $x$ axis. 
+\HH{In an {\it adjusted} de-trended Q-Q plot, we rotate the trend line into the horizontal axis, i.e.\ differences between the theoretical and empirical CDFs are shown along the $y$-axis, but we fix $x$ and $y$ axes to show the same range, to ensure that distances in $x$ and $y$ direction are on the same scale, i.e.\ that all locations with the same distance from a point would appear as a circle in the plot centered around this point.  
 }
 %Another point in favor of this design is that it makes better use of the available space.
 
@@ -620,10 +618,9 @@ Inferior performance of normality tests based on the sample mean and variance is
 % \end{figure}
 % \afterpage{\clearpage}
 
-\alnote{I couldn't get the file to render without this clearpage...}
+%\alnote{I couldn't get the file to render without this clearpage...}
 
-\clearpage
-\begin{figure}[htb]
+\begin{figure}[hbt]
 \begin{subfigure}[t]{.49\textwidth}
 \caption{Lineup of $t_5$ sample of size 30; data panel is panel \#$(4^2-1)$.}
 
@@ -691,8 +688,8 @@ $\tau$ & the design used in the lineup; this is either {\it Control} or one of  
 &  the specific parameters under which the data for the lineup were created: \\
 &  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$-distribution} and \\
 &  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
-$d$ &  the level of difficulty of the lineup based on the actual sample, and \\
-$u$ & the users' individual abilities.
+$d$ & \hh{is a random intercept for each lineup dataset (interpreted as} the level of difficulty of the lineup based on the actual sample), and \\
+$u$ & \hh{is a random intercept of} the users' individual abilities.
  \end{tabular}
 \end{center}
 %
