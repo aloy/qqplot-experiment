@@ -159,7 +159,7 @@
 \bigskip
 
 \begin{abstract}
-In statistical modeling we strive to specify models that resemble data collected in studies or observed from processes. Consequently, distributional specification and parameter estimation are central to parametric models. Graphical procedures, such as the quantile-quantile (Q-Q) plot, are arguably the most widely used method of distributional assessment, though critics find their interpretation to be overly subjective. Formal goodness-of-fit tests are available and are quite powerful, but only indicate whether there is a lack of fit, not why there is lack of fit. In this paper we explore the use of the lineup protocol to inject rigor to graphical distributional assessment and compare its power to that of formal distributional tests. We find that lineup tests are considerably more powerful than traditional tests of normality. A further investigation into the design of Q-Q plots shows that de-trended Q-Q plots are more powerful than the standard approach as long as the representing plot preserves distances in $x$ and $y$ to be the same.
+In statistical modeling we strive to specify models that resemble data collected in studies or observed from processes. Consequently, distributional specification and parameter estimation are central to parametric models. Graphical procedures, such as the quantile-quantile (Q-Q) plot, are arguably the most widely used method of distributional assessment, though critics find their interpretation to be overly subjective. Formal goodness-of-fit tests are available and are quite powerful, but only indicate whether there is a lack of fit, not why there is lack of fit. In this paper we explore the use of the lineup protocol to inject rigor into graphical distributional assessment and compare its power to that of formal distributional tests. We find that lineup tests are considerably more powerful than traditional tests of normality. A further investigation into the design of Q-Q plots shows that de-trended Q-Q plots are more powerful than the standard approach as long as the plot preserves distances in $x$ and $y$ to be the same.
  While we focus on diagnosing non-normality, our approach is general and can be directly extended to the assessment of other distributions.
 % 
 % 
@@ -194,7 +194,7 @@ The statistical modeling process is cyclical \citep{tukey:eda}, so after paramet
 
 Graphical procedures, such as the quantile-quantile (Q-Q) plot \citep{Wilk:1968}, are arguably the most widely used methods of distributional assessment, though critics find their interpretation to be overly subjective. Formal goodness-of-fit tests are available and are quite powerful, but only indicate whether there is a lack of fit, not why there is lack of fit. For example, the Shapiro-Wilk test \citep{Shapiro:1965kt} is a powerful test of normality, but does not indicate what feature of the distribution is non-normal, so a plot, such as a Q-Q plot, must be rendered after any rejection. 
 
-In this paper we explore the use of the lineup protocol \citep{buja:2009hp} to inject rigor into graphical distributional assessment and compare its power to that of formal distributional tests. We focus on diagnosing non-normality, so our discussion centers around the normal Q-Q plot, but our approach is general enough and can be directly extended to the assessment of other distributions.
+In this paper we explore the use of the lineup protocol \citep{buja:2009hp} to inject rigor into graphical distributional assessment and compare its power to that of formal distributional tests. We focus on diagnosing non-normality, so our discussion centers around the normal Q-Q plot, but our approach is general and can be directly extended to the assessment of other distributions.
 
 
 %\alnote{XXX some lead in to the rest of the intro }
@@ -219,7 +219,7 @@ regardless of the range of the sample---i.e., a difference, $D$, observed in eit
 
 \begin{table}
 \centering
-\caption{\label{tab:tests} Four prominent tests for normality based on the difference between empirical and hypothesized distribution function. An overview of the performance and power of these tests can be found in \citet{stephens:1974}.}
+\caption{\label{tab:tests} Four prominent tests for normality based on the difference between the empirical and hypothesized distribution functions. An overview of the performance and power of these tests can be found in \citet{stephens:1974}.}
 \begin{tabular}{lrl}\hline
 Test && Statistic\\\hline\hline
 Kolmogorov-Smirnov & $D =$ & $ \sup_{1 \le i \le n} \left | F_n(x_i) - F(x_i)\right|$ \\
@@ -293,7 +293,7 @@ For any sample tested against a distribution within a location-scale family, suc
 Based on visual inspection of a Q-Q plot, a
  sample is considered to be consistent with a normal distribution if the empirical and theoretical quantiles fall close to the line representing the theoretical distribution.  This decision can be further aided by an assessment of
  %Closeness can  be assessed visually based on
- whether the points fall inside 95\%  pointwise confidence bands \citep[][p.~150--154]{Davison:1997}. \hh{Alternatively, when simultaneous confidence bands are employed we reject normality, when any of the points fall outside of the bands.} This is the approach taken by \citet{buja:2013} with the Tail-Sensitive (TS) simultaneous confidence bands, which was found to be more powerful than the KS test in detecting heavy-tailed distributions.
+ whether the points fall inside 95\%  pointwise confidence bands \citep[][p.~150--154]{Davison:1997}. Alternatively, when simultaneous confidence bands are employed, we reject normality when any of the points fall outside of the bands. This is the approach taken by \citet{buja:2013} with the Tail-Sensitive (TS) simultaneous confidence bands, which was found to be more powerful than the KS test in detecting heavy-tailed distributions.
 
 
 In assessing differences between points and lines, onlookers have a tendency to evaluate the shortest, i.e.~orthogonal, distance, even when asked to evaluate differences based on the vertical distance \citep{sineillusion, robbins:2005, cleveland:1984}. 
@@ -304,11 +304,11 @@ and (vertical) differences between empirical and theoretical distributions coinc
 De-trending should aid in the visual assessment between the empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show, rather than asking audiences to derive it \citep{wainer:2000}.
 %\hhnote{ok, let's go with ordinary De-trended plots for the ones that are labelled De-trended (1) - i.e. full amount of space on the y-axis, and {\it adjusted De-trended plots} for the plots, in which we keep distances in x and y the same (De-trended (2)). I will start to make the changes throughout the paper. Those changes will be in orange.}
 
-\hh{For this purpose we are investigating the power of detrended Q-Q plots. In particular }
+For this purpose we are investigating the power of detrended Q-Q plots. In particular
  we are investigating two different designs of de-trended Q-Q plots; 
-similar to a residual analysis in a linear model, we distinguish between {\it ordinary} and {\it adjusted} de-trended Q-Q plots. In an ordinary de-trended Q-Q plot we show the raw differences between empirical and theoretical CDFs on the $y$-axis, making full use of the available space; general practice is to show Q-Q plot in a square plot, i.e.\ differences between empirical and theoretical CDFs are considered in  the same amount of space as the range of values on the $x$ axis. 
-\HH{In an {\it adjusted} de-trended Q-Q plot, we rotate the trend line into the horizontal axis, i.e.\ differences between the theoretical and empirical CDFs are shown along the $y$-axis, but we fix $x$ and $y$ axes to show the same range, to ensure that distances in $x$ and $y$ direction are on the same scale, i.e.\ that all locations with the same distance from a point would appear as a circle in the plot centered around this point.  
-}
+similar to a residual analysis in a linear model, we distinguish between {\it ordinary} and {\it adjusted} de-trended Q-Q plots. In an ordinary de-trended Q-Q plot we show the raw differences between empirical and theoretical CDFs on the $y$-axis, making full use of the available space; general practice is to show Q-Q plots in a square plot, so differences between empirical and theoretical CDFs are considered in  the same amount of space as the range of values on the $x$ axis. 
+In an {\it adjusted} de-trended Q-Q plot, we rotate the trend line into the horizontal axis---i.e.\ differences between the theoretical and empirical CDFs are shown along the $y$-axis---but we fix the $x$ and $y$ axes to show the same range. This ensures that distances in the $x$ and $y$ directions are on the same scale; thus, all locations with the same distance from a point would appear as a circle in the plot centered around this point.  
+
 %Another point in favor of this design is that it makes better use of the available space.
 
 %\hh{Detrended(2) uses the available space.}
