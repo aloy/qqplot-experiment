@@ -1075,22 +1075,22 @@ lp3
 \section{Power: three different designs of Q-Q plots}\label{sec:power1}
 %-----------------------------------------------------------------------------------
 
-In this section, we further investigate the differences in evaluations of the same data between different designs that we observed in Figure~\ref{fig:compare}. We first model the results, then we investigate differences based on participants' answers.
+In this section, we further investigate the differences in evaluations of the same data between different Q-Q plot designs that we observed in Figure~\ref{fig:compare}. 
 The premise underlying our evaluation of the different Q-Q plot designs is that if participants find it easier to identify the data plot in one lineup than in another lineup (given identical data underlying the lineups), the first lineup uses the better design.
 
 Let $Y_i$ be the outcome of the $i$th evaluation. Then $Y_i$ is a Bernoulli random variable, where $\pi_i$ denotes the probablity of identifying the data plot from the lineup; i.e.~$P(Y_i = 1) = \pi_i = E[Y_i]$.   
-The probability of identifying the lineup is affected by several factors: (a) the strength of the signal, i.e.~degrees of freedom of the $t$ distribution, and the sample size, (b) a human factor, i.e.~the visual ability of the observer, and (c)  the `lineup factor': depending on which $m-1$ representatives of the test distribution the null plots show, as lineups of the same data plot can have different difficulty. We capture all of this in a logistic regression model with fixed effects for signal strength, and random effects for lineup difficulty and user ability. More specifically: 
+The probability of identifying the lineup is affected by several factors: (a) the strength of the signal, i.e.~degrees of freedom of the $t$ distribution, and the sample size, (b) a human factor, i.e.~the visual ability of the observer, and (c)  the `lineup factor': depending on which $m-1$ representatives of the test distribution the null plots show, as lineups of the same data plot can have different difficulty. We capture all of this in a logistic regression model with fixed effects for signal strength, and random intercepts for lineup difficulty and user ability. More specifically: 
 
 %Next, we model the aforementioned probability $p_i$ with which observer $i$ picks the true data from a lineup. 
 %Let $X_i \sim B_{1, \pi_i}, 1 \le i \le n$, where $X_i$ is the binary decision on the $i$th evaluation and $\pi_i$ is the probability with which the observer chooses the data plot. This probability is influenced by a number of factors:
 
 \begin{center}
 \begin{tabular}{lp{5in}}
-$\tau$ & the design used in the lineup; this is either {\it Control} or one of  {\it \{  Standard, adj.\ Detrended, ord.\ Detrended\}} in combination with a choice of confidence band (HD, TS), \\
+$\tau$ & the design used in the lineup; this is either {\it Control} or one of  {\it \{  Standard, adj.\ Detrended, ord.\ Detrended\}} in combination with a choice of confidence band (DH, TS), \\
 &  the specific parameters under which the data for the lineup were created: \\
 &  $\delta$ \ \ \ degrees of freedom (2, 5, 10) {of the $t$-distribution} and \\
 &  $\nu$  \ \ \ sample size (20, 30, 50, 75), \\
-$d$ & is a random intercept for each lineup dataset (interpreted as the level of difficulty of the lineup based on the actual sample), and \\
+$d$ & is a random intercept for each lineup data set (interpreted as the level of difficulty of the lineup based on the actual sample), and \\
 $u$ & is a random intercept of the users' individual abilities.
  \end{tabular}
 \end{center}
@@ -1108,7 +1108,7 @@ Table~\ref{tab:coefs} gives an overview of the coefficients from the fitted mode
 As could be previously observed, an increase in signal strength (larger sample size, fewer degrees of freedom) results in lineups in which the sample is picked out more often by observers.
 Additionally, the design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands help with evaluation in the standard design, but the difference is not significant.  
 Surprisingly, ordinary de-trended Q-Q plots do not improve participants' probabilities %is significantly less powerful 
-in detecting non-normality. With DH bands, ordinary detrended Q-Q plots are actually performaing significantly worse than the control charts,
+in detecting non-normality. With DH bands, ordinary detrended Q-Q plots are actually performing significantly worse than the control charts,
 %\hh{De-trended (2) Q-Q plots with DH bands are actually performing significantly worse than the control charts, while Q-Q plots with the TS bands just lose their previous gain from de-trending.}
 whereas the adjusted detrended Q-Q plots show a significant improvement in detecting non-normality over the control and standard charts.
 %\hh{The first de-trended version of Q-Q plots, in which the aspect ratio is kept the same as in the standard plot, shows significant increases in detecting non-normality. }
@@ -1262,7 +1262,7 @@ dt$max <- sum(dt$Freq)
 @
 \end{subfigure}
 \caption{\label{fig:rotstd}Lineups of the same data in two different designs. %In the standard design the data sample (in panel \#$(2^2+1)$) is identified 16 out of 27 times, leading to a rejection of normality. 
-In the lineup on the left the data sample in panel \#$(2^2+1)$ is only identified 2.8 times in 45 evaluations in the lineup showing the ord.\ detrended  design with a DH band. Observers instead pick panel \#$(3^2-2)$ 32.2 times. The lineup on the right shows the same data in a ord.\ detrended  Q-Q plot design using the TS confidence band. The data sample is picked 7.2 times in 27 evaluations, leading to a rejection of normality at a 5\% signficance level.}
+In the lineup on the left the data sample in panel \#$(2^2+1)$ is only identified 2.8 times in 45 evaluations in the lineup showing the ord.\ detrended  design with a DH confidence band. Observers instead pick panel \#$(3^2-2)$ 32.2 times. The lineup on the right shows the same data in a ord.\ detrended  Q-Q plot design using the TS confidence band. The data sample is picked 7.2 times in 27 evaluations, leading to a rejection of normality at a 5\% signficance level.}
 \end{figure}
 \afterpage{\clearpage}
 %xtabs(weight~response, data=subset(turkw, data_name==frames[1] & plot_location==5 & treatment=="Standard"))
