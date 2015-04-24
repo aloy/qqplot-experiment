@@ -769,8 +769,11 @@ ggplot() +
   theme_bw()  + 
   scale_shape_manual("Significant difference\nfrom normality", values=c(1,16, 2, 17)) +
   scale_colour_manual("Significant difference\nfrom normality", values=c("#e41a1c", "#e41a1c", "#377eb8", "#377eb8")) +
+#   coord_cartesian(ylim = c(-5, 100)) +
+#   annotate(geom = "text", x = c(1.5, 3.5, 5.5, 7), y = -50, label = c("Standard", "adj. Detrended", "ord. Detrended", "Control"), size = 4) +
+#   annotate(geom = "text", x = seq_len(nrow(df)), y = 34, label = df$quarter, size = 4) +
   ylab("Percentage of data identifications") +
-  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nDH", "\nTS","\t\t\t\t\tadj.\\ Detrended\nDH", "\nTS","\t\t\t\t\tord.\\ Detrended\nDH", "\nTS","Control")) +
+  scale_x_continuous("", breaks=1:7, labels=c("\t\t\t\t\tStandard\nDH", "\nTS","\t\t\t\t\tadj. Detrended\nDH", "\nTS","\t\t\t\t\tord. Detrended\nDH", "\nTS","Control")) +
   theme(legend.position="bottom", legend.direction="horizontal", legend.box="horizontal", legend.key.width =unit(1, "cm")) + 
   guides(shape=guide_legend(title="Significant difference\nfrom normality", ncol=2))
 
