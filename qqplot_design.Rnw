@@ -591,7 +591,7 @@ and conclude with a discussion and an outline of areas for future research.
 %------------------------------------------------------------------------------------
 
 In order to evaluate the power of Q-Q plots and compare their performance to tests of normality, we make use of a simulation study 
-using samples of size $n \in \{20, 30, 50, 75\}$ from a $t_{d}$ distribution with $d \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.
+using samples of size $n \in \{20, 30, 50, 75\}$ from a $t_{df}$ distribution with $df \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.
 %\alnote{I think using $n$ for sample size is most logical, though this does complicate the notation used in model (2).}
 
 For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from samples of the same size drawn from the normal distribution. For each  sample, two sets of null plots are created, resulting in a total of 48 lineup data sets. 
@@ -612,7 +612,7 @@ $H_0: F = N(0,1)$  \\
 Null samples are drawn from a standard normal distribution; the reference line is the line of identity. Lines and envelopes are the same across all panels, in particular, all panels have the same scale. 
 \item{\bf Situation II:} $H_0: F = N(0,S^2)$ \\
 %$S$ is based on the interquartile range of the data; 
-Null samples are drawn from $N(0, S^2)$; the reference line has a slope of $S$ (and an intercept of 0).  All panels have the same scale. Throughout the paper we use $\hat{\sigma}^2$ to indicate the adjusted sample variance $\hat{\sigma}^2 = (n-1)^{-1} \Sigma_{i=1}^n (x_i - \bar{x})^2$, whereas $\hat{S}^2$ is a more robust estimator based on the interquartile range.
+Null samples are drawn from $N(0, S^2)$; the reference line has a slope of $S$ (and an intercept of 0).  All panels have the same scale. Throughout the paper we use $\hat{\sigma}^2$ to indicate the sample variance $\hat{\sigma}^2 = (n-1)^{-1} \Sigma_{i=1}^n (x_i - \bar{x})^2$, whereas $\hat{S}^2$ is a more robust estimator based on the interquartile range.
 \end{itemize}
 
 %\alnote{The generation of the null data makes sense to me, but is there a way to use bullet points on the right side of the table? That would help me read it...}
@@ -668,7 +668,7 @@ Using  Amazon MTurk \citep{amazon}, \Sexpr{length(unique(turk$ip_address))} inde
 (iii) evaluated each Q-Q plot design at most twice.
 Half of the lineups that observers were shown allowed for multiple choices of plots from a lineup for the final answer. Very few participants made use of this option. In the analysis we dealt with multiple answers to a lineup by using a weighting variable defined as the reciprocal of the number of answers given by a participant.
 
-Crowdsourcing graphical perception experiments through MTurk is a relatively new practice, and involves recruiting human observers from the web. While potential sources of bias in social science research using MTurk have been discussed \cite[see, for example,][]{chandler:2014}, the results from MTurk studies for graphical perception experiments are promising, as MTurk experiments have replicated studies conducted in the traditional lab setting \citep{Kosara:2010, Heer:2010}. Specifically, \citet{Heer:2010} replicated the results of \citet{cleveland:1984} using the MTurk platform, and \citet{Kosara:2010} found similar results between a lab study and one performed using MTurk. \hh{\citet{Kosara:2010} and \citet{Heer:2010} suggest the use of easy tasks to filter out participants  trying to ``game the system.'' We have found that the impact of these individuals on results is sufficiently small when we adjust results for individuals' abilities in the evaluation. Instead, we try to only allow participants into the experiments, for whom we can reasonably assume that they will complete the task to  the best of their ability.  In particular, we only allow participants into the study who have (a) successfully completed at least 100 (other) tasks on MTurk, (b) have a completion rate of 95\% in these tasks, and (c) have successfully completed a mini training session using (easy) trial lineups provided by us. None of this  trial information is used in the evaluation of results. }
+Crowdsourcing graphical perception experiments through MTurk is a relatively new practice, and involves recruiting human observers from the web. While potential sources of bias in social science research using MTurk have been discussed \cite[see, for example,][]{chandler:2014}, the results from MTurk studies for graphical perception experiments are promising, as MTurk experiments have replicated studies conducted in the traditional lab setting \citep{Kosara:2010, Heer:2010}. Specifically, \citet{Heer:2010} replicated the results of \citet{cleveland:1984} using the MTurk platform, and \citet{Kosara:2010} found similar results between a lab study and one performed using MTurk. \citet{Kosara:2010} and \citet{Heer:2010} suggest the use of easy tasks to filter out participants  trying to ``game the system.'' We have found that the impact of these individuals on results is sufficiently small when we adjust results for individuals' abilities in the evaluation. Instead, we try to only allow participants into the experiments, for whom we can reasonably assume that they will complete the task to  the best of their ability.  In particular, we only allow participants into the study who have (a) successfully completed at least 100 (other) tasks on MTurk, (b) have a completion rate of 95\% in these tasks, and (c) have successfully completed a mini training session using (easy) trial lineups. None of this  trial information is used in the evaluation of results.
 
 
 %
@@ -751,7 +751,7 @@ back2$xmax <- 6.5
 back2$ymin <- -5
 back2$ymax <- 105
 
-text <- data.frame(label = c("Standard", "adj.\\ Detrended", "ord.\\ Detrended", "Control"), 
+text <- data.frame(label = c("Standard", "adj.\ Detrended", "ord.\ Detrended", "Control"), 
                    x=c(1.5, 3.5, 5.5, 7), 
                    y=30,
                    nu="df: 10",
@@ -787,7 +787,7 @@ All versions of Q-Q plots provide highly correlated results, and largely agree i
 Each line connects the evaluations based on the same lineup data (same data, same null plots).
 Lines of the same color and shape correspond to lineups with the same data sample. 
 % while differently colored lines show lineups of different samples.  
-Generally, within each panel, lines of the same color  (lineups share the same data sample, but have different nulls) are closer together than lines of different color (different sample, different nulls).  
+Generally, within each panel, lines of the same color  (lineups that share the same data sample, but have different nulls) are closer together than lines of different color (different sample, different nulls).  
 As expected, the task of identifying non-normality becomes easier with increased sample size and more pronounced deviations from normality due to lower degrees of freedom. 
 %All three versions provide highly correlated results, and largely agree for extreme decisions (all correct/all wrong evaluations). In the middle range de-trended Q-Q plots perform  worse than either standard or control Q-Q plots. 
 
