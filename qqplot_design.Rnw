@@ -829,7 +829,7 @@ Reject $N(0,1)$ & 29 & 30 & 30 & 32 & 26 & 28 & 28 \\ \hline
 %-----------------------------------------------------------------------------------
 
 It is important to recall that none of the data plots in the lineups were actually created using data from a normal distribution. Ideally, this should lead to rejection of the null hypothesis in every instance.
-\al{This is not quite true. Out of the 24 non-normal samples summarized in Table~\ref{tab:reject}, 14 get rejected at the 5\% significance level based on evaluation by observers in the standard lineup with Davison-Hinkley confidence bands, 17 get rejected using lineups of standard Q-Q plots with TS confidence bands, while only eight get rejected by the SW test, the most powerful classical test. This demonstrates the high power  of visual inference.} Using lineups we are able to reject non-normality much more often than with any of the classical tests.
+This is not quite true. Out of the 24 non-normal samples summarized in Table~\ref{tab:reject}, 14 get rejected at the 5\% significance level based on evaluation by observers in the standard lineup with DH confidence bands, 17 get rejected using lineups of standard Q-Q plots with TS confidence bands, while only eight get rejected by the SW test, the most powerful classical test. This demonstrates the high power  of visual inference. Using lineups we are able to reject non-normality much more often than with any of the classical tests.
 
 % This is not quite true, as can be seen in Table~\ref{tab:reject} \al{XXX do we need to say more about the Table here?}, but what becomes evident is the high power  of visual inference. Using lineups we are able to reject non-normality much more often than with any of the classical tests.
 % <<t15, echo=F>>= 
