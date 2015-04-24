@@ -872,7 +872,7 @@ All versions of Q-Q plots under consideration here are significantly better at d
 Contributing to the power is also the robust estimation of the parameters for the normal distribution drawn as a line of fit in  Q-Q plots, while most normality tests are based on the outlier sensitive sample variance. %$S^2 = \sum_i(x_i - \bar{X})^2/(n-1)$ 
 This is consistent with findings in \citet{buja:2013} and  also poses the question of whether the power of classical normality tests might  be improved by using robust estimates for the mean and variance of the sample. 
 
-In the comparison of the four Q-Q plot designs, adjusted detrended Q-Q plots, where the aspect ratio is kept the same as in the standard plot, are are the most powerful. While at first it may seem counterintuitive that this version of detrending is most powerful, after realizing that the plotted distances between points in the ordinary detrended design are not proportional to distances in the data space, this difference between in power is quite logical. Additionally, DH bands are slightly more powerful than TS bands, except for in the ordinary detrended design.
+In the comparison of the four Q-Q plot designs, adjusted detrended Q-Q plots, where the aspect ratio is kept the same as in the standard plot, are are the most powerful. While at first it may seem counterintuitive that this version of detrending is most powerful, after realizing that the plotted distances between points in the ordinary detrended design are not proportional to distances in the data space, this difference in power is quite logical. Additionally, DH bands are slightly more powerful than TS bands, except for in the ordinary detrended design.
 
 
 
@@ -882,7 +882,7 @@ In the comparison of the four Q-Q plot designs, adjusted detrended Q-Q plots, wh
 % This is consistent with findings in \citet{buja:2013} and  also poses the question of whether the power of classical normality tests might  be improved by using robust estimates for the mean and variance of the sample.
 
 Q-Q plots are not restricted to the assessment of normality. In fact, they provide a general framework for testing any distributional assumption. Used in the setting of lineups, they allow for an assessment of limiting distributions. For example, lineups allow us to investigate distributions of
- samples from approximate normal, or asymptotic normal, distributions, for which  there exists  no classical test for finite sample sizes, whereas the lineup protocol provides us with a valid testing system
+ samples from approximate normal, or asymptotic normal, distributions, for which  there exist  no classical tests for finite sample sizes, whereas the lineup protocol provides us with a valid testing system
   as long as there is a method  to generate data under the null hypothesis for creating null plots in the lineup.
  
 
@@ -891,7 +891,7 @@ However, developments such as {\tt nullabor} \citep{nullabor} or {\tt vis.test} 
 option. It also discourages the analyst from multiple testing!
 
 Several possibilities for immediate extensions are obvious: the simulation study here is only concerned with deviations from normality as given by the $t$-distribution. Other types of deviations, such as skewed distributions or mixture distributions, would be interesting to consider as well. We doubt that the overall results would change dramatically, but it might provide more insight into what observers consider in making their assessments. 
-The application of the lineup framework based on the related probability (P-P) plots poses a natural next question: \citet{koehler91} comment on the higher sensitivity of  P-P plots  to discrepancies in the middle of the distribution, such as caused by multiple modes. We can verify this and other statements for large samples and based on distributions. Lineups allow us to quantify the extent to which these statements hold for small sample sizes.
+The application of the lineup framework based on the related probability (P-P) plots poses a natural next question: \citet{koehler91} comment on the higher sensitivity of  P-P plots  to discrepancies in the middle of the distribution, such as those caused by multiple modes. We can verify this and other statements for large samples and based on distributions. Lineups allow us to quantify the extent to which these statements hold for small sample sizes.
 
 
 \bibliographystyle{asa}
@@ -1069,7 +1069,7 @@ In all of these figures, the lineup with DH bands is shown on the left, the TS b
 \includegraphics[width=0.7\textwidth]{figure/trtplot-1} 
 
 \end{knitrout}
-\caption{\label{fig:choices}Overview of reasons participants gave for  their answer. ``Outliers" as a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious, that more observers gave ``left side different" as a reason than ``right side different";   all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
+\caption{\label{fig:choices}Overview of reasons participants gave for  their answer. ``Outliers" as a reason drastically improves the chance of identifying the data plot. All the other reasons either have no effect or decrease the chance of picking the data. It is curious that more observers gave ``left side different" as a reason than ``right side different";   all the samples  come from a  $t$-distribution, so deviations in the extremes should therefore also be symmetric.}
 \end{figure}
 \afterpage{\clearpage}
 
