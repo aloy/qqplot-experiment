@@ -903,6 +903,7 @@ The corresponding $p$-value in the SW test is 0.2318, after LF (0.1689), the tes
 
 The difference in significance between normality tests and the visual test might be due to the way the theoretical distribution against which the sample is compared is chosen. 
 \alnote{How can we reword the above sentence?}
+\alnote{Perhaps: The different results observed between the classical tests and the visual test may be due to the different estimation procedures for $\mu$ and $\sigma$.}
 The normality tests are based on the sample mean and sample variance, both of which are affected by outliers. Compared to a normal distribution, the samples from a $t$ distribution exhibit heavier tails, and, in a small sample, the heavier tails might look like outliers. By taking these outliers into account, the normality tests lose substantial power. The Q-Q plots, on the other hand, are based on a robust estimate of the scale based on the middle half of the empirical distribution. Q-Q plots are, therefore, less affected by outliers and the tails of a $t$ distribution are more easily distinguishable from the tails of a normal distribution, as can be seen in the lineup on the right of Figure~\ref{fig:lpnorm}. Compare this to the lineup in Figure~\ref{fig:lp3}, which is based on the same data, but the nulls are sampled from a normal distribution with a variance estimated as the sample variance. The data plot does not stand out, so we would not reject the null hypothesis based on this lineup. 
 Inferior performance of normality tests based on the sample mean and variance is also observed by \cite{buja:2013} in the discussion of the TS test. 
 
@@ -1035,6 +1036,7 @@ lp3
 
 In this section, we further investigate the differences in evaluations of the same data between different Q-Q plot designs that we observed in Figure~\ref{fig:compare}. 
 \alnote{How can we reword the above sentence?}
+\alnote{Perhaps: In this section, we further investigate the differences between the Q-Q plot designs that were observed in Figure~\ref{fig:compare}.}
 The premise underlying our evaluation of the different Q-Q plot designs is that if participants find it easier to identify the data plot in one lineup than in another lineup (given identical data underlying the lineups), the first lineup uses the better design.
 
 Let $Y_i$ be the outcome of the $i$th evaluation. Then $Y_i$ is a Bernoulli random variable, where $\pi_i$ denotes the probablity of identifying the data plot from the lineup; i.e.~$P(Y_i = 1) = \pi_i = E[Y_i]$.   
