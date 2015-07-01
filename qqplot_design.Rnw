@@ -1007,7 +1007,7 @@ lp3 <- std_lineup(fit3)
 
 \end{subfigure}
 \caption{\label{fig:lpnorm}  On the left, visual inspection does not imply  a significant deviation of the sample from a normal distribution. On the right the deviation is highly significant. The numbers in the bottom right of each panel show the number of times each was picked as the most different. %The tables below the lineups show the number of times each of the panels was picked as the most different. 
-Non-integer numbers result from multiple choice answers. %\hh{XXX} The italicized numbers refer to the panel that contains the actual sample.
+Non-integer numbers result from multiple choice answers.
 }
 \end{figure}
 \afterpage{\clearpage}
@@ -1055,7 +1055,7 @@ where $g$ is the logit link function, and $j(.), k(.), s(.), u(.)$, and $d(.)$ a
 Both user ability, $u$, and sample difficulty, $d$, are modeled as independent, normally distributed  random effects; that is, $u_{u(i)} \sim N(0, \sigma_u^2)$, $d_{d(i)} \sim N(0,\sigma_d^2)$ with cov$(u, d) = 0$. We further assume that $E[\varepsilon] = 0$ and Var$[\varepsilon]=\sigma^2$.
 %
 Table~\ref{tab:coefs} gives an overview of the coefficients from the fitted model.
-
+\hh{On the left, estimates of the coefficients of the logistic regression model stated in eqn~({eq:model}) are shown with 95\% confidence intervals given in the parentheses. For convenience, the corresponding odds, again,  with 95\% confidence intervals are presented on the right. All significant values are bolded. Estimates of linear logistic regressions preserve their linear property, i.e.~ we can easily infer that a $t_5$ sample of size 50 shown in an adjusted detrended Q-Q plot with a DH confidence band, has an estimated log odds of $0.93 = -4.84 + 0.42 + 3.00 + 2.35$, which corresponds to an estimated probability of $0.717 = e^{0.93}/(1 + e^{0.93})$ that the sample is identified as the most different in a lineup evaluation. For odds, linear relationships are substituted by multiplicative ones, but are more directly interpretable in terms of the response, e.g.~we can say that the probability of  a sample to be identified as non-normal in a lineup is 1.5 times higher, if the sample is shown in an adjusted detrended Q-Q plot with a DH confidence band  than if the same sample is shown in a control chart.  }
 As could be previously observed, an increase in signal strength (larger sample size, fewer degrees of freedom) results in lineups in which the sample is picked out more often by observers.
 Additionally, the design of the Q-Q plot is of huge importance for the probability of choosing the data plot: compared to the control chart, add-on confidence bands help with evaluation in the standard design, but the difference is not significant.  
 Surprisingly, ordinary de-trended Q-Q plots do not improve participants' probabilities %is significantly less powerful 
@@ -1096,7 +1096,7 @@ m1 <- glmer(correct~CIdesign +  factor(sample_size) + factor(df) + (1|ip_address
 % 
 % print(xtable(dc))
 \begin{table}[ht]
-\caption{\label{tab:coefs} Linear estimates and corresponding odds based on Model (1).  95\% Wald confidence intervals are given in parentheses.}
+\caption{\label{tab:coefs} Linear estimates and corresponding odds based on Model (1).  95\% Wald confidence intervals are given in parentheses. \hh{Significant values are bolded. For parameters serving as baselines no confidence intervals exist.}}
 \centering
 %\begin{tabular}{rr>{ (}r<{,}>r<{) }rrl}
 \begin{tabular}{rr>{ (}r@{, }r<{) }rr>{ (}r@{, }r<{) }}
