@@ -159,8 +159,7 @@
 \bigskip
 
 \begin{abstract}
-In statistical modeling we strive to specify models that resemble data collected in studies or observed from processes. Consequently, distributional specification and parameter estimation are central to parametric models. Graphical procedures, such as the quantile-quantile (Q-Q) plot, are arguably the most widely used method of distributional assessment, though critics find their interpretation to be overly subjective. Formal goodness-of-fit tests are available and are quite powerful, but only indicate whether there is a lack of fit, not why there is lack of fit. In this paper we explore the use of the lineup protocol to inject rigor into graphical distributional assessment and compare its power to that of formal distributional tests. We find that lineup tests are considerably more powerful than traditional tests of normality. A further investigation into the design of Q-Q plots shows that de-trended Q-Q plots are more powerful than the standard approach as long as the plot preserves distances in $x$ and $y$ to be the same.
- While we focus on diagnosing non-normality, our approach is general and can be directly extended to the assessment of other distributions.
+In statistical modeling we strive to specify models that resemble data collected in studies or observed from processes. Consequently, distributional specification and parameter estimation are central to parametric models. Graphical procedures, such as the quantile-quantile (Q-Q) plot, are arguably the most widely used method of distributional assessment, though critics find their interpretation to be overly subjective. Formal goodness-of-fit tests are available and are quite powerful, but only indicate whether there is a lack of fit, not why there is lack of fit. In this paper we explore the use of the lineup protocol to inject rigor into graphical distributional assessment and compare its power to that of formal distributional tests. We find that lineup tests are considerably more powerful than traditional tests of normality. A further investigation into the design of Q-Q plots shows that de-trended Q-Q plots are more powerful than the standard approach as long as the plot preserves distances in $x$ and $y$ to be the same. While we focus on diagnosing non-normality, our approach is general and can be directly extended to the assessment of other distributions.
 % 
 % 
 % this paper holds two messages: 
@@ -246,50 +245,7 @@ In Section~\ref{sec:power2} we will return to these tests in order to compare th
 Standard quantile-quantile (Q-Q) plots \citep{Wilk:1968} are an essential tool for  visually evaluating a specific distributional assumption.  A Q-Q plot  is constructed from a sample, $x_1, \ldots, x_n$, by plotting the theoretical quantiles, $F^{-1}(F_n(x_i))$, against the sample quantiles, $x_{(i)}$. If the empirical distribution, $F_n$, is consistent with the theoretical distribution, $F$, the points in the Q-Q plot fall on the line of identity. 
 For any sample tested against a distribution within a location-scale family, such as a normal, log normal, or exponential distribution, the sample quantiles still fall on a line when plotted against the theoretical quantiles of any of the family's member distributions. For example, plotting the empiricial quantiles of a normally distributed sample $x \sim N(\mu, \sigma^2)$ against the quantiles of a standard normal will result in a line, where  the slope is an estimate of $\sigma$, and the intercept estimates $\mu$. Visually  the only change in the Q-Q plot is a  change in the scale of the $y$-axis. We can therefore employ Q-Q plots in the more general framework of testing the distribution of a sample for normality similar to standard normality tests, such as the AD, LF, CvM, and SW tests. However, we do have to make a decision with respect to the exact parameters of the normal distribution we test against when we plot a line alongside the points in the Q-Q plot for additional comparison purposes---i.e.~the parameters $\mu$ and $\sigma$ have to be estimated from the sample. In Q-Q plots, variability is based on a robust measure of spread given as the ratio of the inter-quartile ranges (IQRs) of the empirical and theoretical distributions: $\left(F^{-1}_n(0.75) - F^{-1}_n(0.25)\right) / \left(F^{-1}(0.75) - F^{-1}(0.25)\right)$ \citep{becker:s}. 
 
-% In a Q-Q plot we plot quantiles of the empirical distribution against the expected quantiles from the assumed distribution. 
-% The line of identity therefore represents the theoretical distribution and points show the empirical distribution. 
-% \alnote{I am having trouble with the last sentence. The line of identity represents agreement between the two distributions and the points represent the comparison. I know what we're trying to say here, and I think the issue is that the current wording conditions on the data point.}
-% \hhnote{OK, I can see what you mean - but I still believe that we can think of the line as representing the graph of the theoretical distribution. What is important is to note, that the line is determined completely by the theoretical distribution and does not rely on the sample at all.  This is going to be a crucial point later on in the rescaling discussion. I'll think about how to clarify this more. Here, I just wanted to introduce Q-Q plots quickly and then go into a more formal explanation later on.}
-% Deviations from the theoretical distribution then manifest themselves as vertical differences between points and the line of identity. 
 
-% This difference is featured in a series of distributional tests. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample size of $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is then the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Lilliefors \cite[LF-test, ][]{lilliefors}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises test \citep[CVM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
-% 
-% The KS test uses the maximal  difference, which is displayed as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample, i.e. a difference $D$ observed at either tail of the distribution carries the same weight and is interpreted in the same way as a difference $D$ in the center of the distribution. While the KS test allows for adjusting parameters of the normal distribution to sample mean and variance, it is more appropriate to use LF for this purpose. LF and KS share the same test statistic, but the sampling distribution in the LF test statistic is adjusted for the two additional parameters.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling upregulates the tail effect using a weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
-% 
-% 
-% \begin{table}
-% \centering
-% \begin{tabular}{lrl}\hline
-% Test && Statistic\\\hline\hline
-% Kolmogorov-Smirnov & $D =$ & $ \sup_{1 \le i \le n} \left | F_n(x_i) - F(x_i)\right|$ \\
-% Lilliefors & $D =$ & $ \sup_{1 \le i \le n} \left | F_n(x_i) - F(x_i)\right|$ \\
-% Anderson-Darling & $A =$ & $ n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)\right|^2/\left(F(x)(1 - F(x)\right) dF(x)$\\
-% Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)\right|^2 dF(x)$ \\\hline
-% \end{tabular}
-% \caption{\label{tab:tests} Four prominent tests for normality based on the difference between empirical and hypothesized distribution function. An overview of the performance and power of these tests can be found in \citet{stephens:1974}.}
-% \end{table}
-% %
-% 
-% % The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not fit this scheme, but has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}. 
-% The Shapiro-Wilk test \cite[SW-test][]{Shapiro:1965kt} does not utilize deviations from the theoretical distribution function, rather it focuses on the linearity of a normal Q-Q plot. Under normality, a set of observations, $x_1, \ldots, x_n$, can expressed as $x_i = \mu + \sigma z_i$, where $z_i$ is a quantile from the standard normal distribution. The Shapiro-Wilk test compares (up to a constant of proportionality, $c$) two estimates for $\sigma$: the best linear unbiased estimate obtained from a generalized least squares regression of the sample order statistics on their expected values, denoted $\widehat{\sigma}$, and the sample standard deviation, $s$.
-% \[
-%   W = \frac{(c \widehat{\sigma})^2}{s^2} = \frac{b^2}{s^2}
-% \]
-% For a sample drawn from a normal distribution, $b^2$ and $s^2$ are, up to a constant, estimating the same quantity, whereas the two estimators will generally not be estimating the same quantity under nonnormality. The SW test has been shown to be the most powerful in assessing non-normality \citep{stephens:1974, razali:2011}.
-% 
-% 
-% We will be making use of these tests to assess the effectiveness of different variations of standard Q-Q plots.
-% 
-% \alnote{As I was rereading I felt that the below paragraph seemed out of place. I don't know where else it would go yet...}
-
-% A Q-Q plot of sample $x$ is constructed by plotting theoretical quantiles $F^{-1}(F_n(x_i))$ against sample quantiles $x_{(i)}$. In the case that the empirical distribution $F_n$ is consistent with distribution $F$, the points in the Q-Q plot falls on the line of identity. 
-% For any sample tested against a distribution within a location-scale family, such as e.g.~normal, log normal, or exponential, the sample quantiles still fall on a line when plotted against the theoretical quantiles of any of the family's member distributions. Plotting the empiricial quantiles of a normally distributed sample $x \sim N(\mu, \sigma^2)$ against the quantiles of a standard normal will result in a line, where  the slope is an estimate of $\sigma$, and the intercept estimates $\mu$. Visually  the only change in the Q-Q plot is a  change in the scale of the $y$-axis. We can therefore employ Q-Q plot in the more general framework of testing the distribution of a sample $x$ for normality similar to standard normality tests, such as the AD, LF, CVM, and SW test. We do have to make a decision with respect to the exact parameters of the normal distribution we test against, when we plot a line alongside the points in the Q-Q plot for additional comparison purposes, i.e.~parameters $\mu$ and $\sigma$ have to be estimated from the sample. In Q-Q plots, variability is based on a robust measure of spread given as the ratio of the inter-quartile ranges (IQRs) of empirical and theoretical distributions: $\left(F^{-1}_n(0.75) - F^{-1}_n(0.25)\right) / \left(F^{-1}(0.75) - F^{-1}(0.25)\right)$ \citep[see e.g.~][\hh{p.~XXX}]{tukey:eda}. 
- 
-%\hhnote{How are Q-Q plots interpreted?}
-
-%\hhnote{slope is standard deviation of theoretical distribution, $y$ offset its location. For any distribution within a location-scale family (such as normal, log normal, exponential, ...), we can interpret shifts in $y$ direction as a change/deviation in location, and a change in slope as a change in scale.}
-
-%\alnote{I am not sure where the below sentences fit best.}
 Based on visual inspection of a Q-Q plot, a
  sample is considered to be consistent with a normal distribution if the empirical and theoretical quantiles fall close to the line representing the theoretical distribution.  This decision can be further aided by an assessment of
  %Closeness can  be assessed visually based on
@@ -302,22 +258,21 @@ Consequently, the line representing the theoretical distribution becomes the $x$
 % The line of the theoretical distribution therefore falls onto the $x$ axis, 
 and (vertical) differences between empirical and theoretical distributions coincide with the orthogonal distance. 
 De-trending should aid in the visual assessment between the empirical CDF and theoretical CDF. This also follows the general standard graphical recommendation to directly plot the aspect of the data we want to show, rather than asking audiences to derive it \citep{wainer:2000}.
-%\hhnote{ok, let's go with ordinary De-trended plots for the ones that are labelled De-trended (1) - i.e. full amount of space on the y-axis, and {\it adjusted De-trended plots} for the plots, in which we keep distances in x and y the same (De-trended (2)). I will start to make the changes throughout the paper. Those changes will be in orange.}
+
 
 For this purpose we are investigating the power of detrended Q-Q plots. In particular
  we are investigating two different designs of de-trended Q-Q plots; 
 similar to a residual analysis in a linear model, we distinguish between {\it ordinary} and {\it adjusted} de-trended Q-Q plots. In an ordinary de-trended Q-Q plot we show the raw differences between empirical and theoretical CDFs on the $y$-axis, making full use of the available space; general practice is to show Q-Q plots in a square plot, so differences between empirical and theoretical CDFs are considered in  the same amount of space as the range of values on the $x$ axis. 
 In an {\it adjusted} de-trended Q-Q plot, we rotate the trend line into the horizontal axis---i.e.\ differences between the theoretical and empirical CDFs are shown along the $y$-axis---but we fix the $x$ and $y$ axes to show the same range. This ensures that distances in the $x$ and $y$ directions are on the same scale; thus, all locations with the same distance from a point would appear as a circle in the plot centered around this point.  
 
-%Another point in favor of this design is that it makes better use of the available space.
-
-%\hh{Detrended(2) uses the available space.}
-
 
 In Section~\ref{sec:power1} we investigate the effectiveness and power of the modifications made to Q-Q plots.
 Examples of the different Q-Q plot designs under consideration are displayed in Figure~\ref{qqplots}, and include (from left to right): a \emph{control} Q-Q plot, a \emph{standard} Q-Q plot with an added grey band representing a confidence region, an \emph{adjusted} \emph{de-trended} Q-Q plot preserving relative distances in the plot and an \emph{ordinary} \emph{de-trended} Q-Q plot making full use of the space along the $y$ axis.
-Q-Q plots in the upper row of Figure~\ref{qqplots} use a Davison-Hinkley (DH) 95\% pointwise confidence band, while the shading in the lower row represents 95\% Tail-Sensitive (TS) simultaneous confidence bands.
+Q-Q plots in the upper row of Figure~\ref{qqplots} use a Davison-Hinkley (DH) 95\% pointwise confidence band, while the shading in the lower row represents 95\% Tail-Sensitive (TS) simultaneous confidence bands. 
 Note that all of the Q-Q plots in Figure~\ref{qqplots} are constructed from the same data. 
+\hh{We can see that onlookers might come to different conclusions when viewing the same data using different confidence bands. Q-Q plots with tail-sensitive confidence bands are slightly wider in the center of the distribution as well as in the tails. Intuitively, this should lead to fewer rejections of normality. However, for lineup evaluations it might reduce the number of Q-Q plots in lineups that indicate a (false positive) deviation from normality, and therefore lead to an overall increase in power.}
+
+
 
 \begin{figure}
 \centering
@@ -376,11 +331,11 @@ and conclude with a discussion and an outline of areas for future research.
 
 In order to evaluate the power of Q-Q plots and compare their performance to tests of normality, we make use of a simulation study 
 using samples of size $n \in \{20, 30, 50, 75\}$ from a $t_{df}$ distribution with $df \in \{2, 5, 10\}$ degrees of freedom. For each of these parameters we take two samples, resulting in a total of 24 samples.
-%\alnote{I think using $n$ for sample size is most logical, though this does complicate the notation used in model (2).}
 
 For the visual evaluation, we make use of Q-Q plots in a lineup test: each sample is randomly inserted among a set of 19 null plots constructed from samples of the same size drawn from the normal distribution. For each  sample, two sets of null plots are created, resulting in a total of 48 lineup data sets. 
 These lineup data sets are rendered in each of the Q-Q plot variations, resulting in $48 \times 7 = 336$ different lineups.  Additionally, standard plots (with both TS and DH bands) are rendered against $N(0, S^2)$ null data (see discussion below), adding another $2 \times 48 = 96$ lineups.
 
+\hh{We expect the performance on the lineups to reflect the deviation from normality in the distribution; i.e.~lineup performance should decrease as the degrees of freedom increase, and the corresponding $t$ distribution approaches the normal distribution. Similarly, with increasing sample size the difference between a $t$- and a normal distribution is more pronounced, which should be reflected in the lineup evaluation.   }
 
 %To further develop the assessment of normality using lineups, we conducted a study comparing the three different versions of the Q-Q plot.
 %We are testing three different versions of a Q-Q plot, 
@@ -401,9 +356,8 @@ Null samples are drawn from $N(0, S^2)$; the reference line has a slope of $S$ (
 
 %\alnote{The generation of the null data makes sense to me, but is there a way to use bullet points on the right side of the table? That would help me read it...}
 
-Examples for both null hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show identical data, the sample\footnote{The little piece of arithmetic is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.} is in panel \#$(3^2-3)$. On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. %\hhnote{checked the number - it's fine}
-%\alnote{We need to straighten out our notation for the standard deviation. On this page we use both $\widehat{\sigma}$ and $\widehat{S}$.}
-%\hhnote{XXX $\widehat{\sigma}$ and $\widehat{S}$ are supposed to be two different estimators -- I'm thinking of $\hat{\sigma} = 1/(n-1) \sum_i (x_i - \bar{x})^2$ whereas $\hat{S}$ is a more robust estimator based on the ratio of IQRs in y and x. We need to say that somewhere. }
+Examples for both null hypotheses are shown in Figure~\ref{fig:lps}. Both lineups show identical data, the sample\footnote{The little piece of arithmetic is imposing a small cognitive barrier that allows the reader to evaluate the lineup once without already being biased by knowing the location of the data panel.} is in panel \#$(3^2-3)$. On the left the observed data stand out (all 33 observers picked the data plot); thus, we reject the null hypothesis of a standard normal distribution. On the right, the observed data do not stand out (only 3 out of 27 observers picked the data); thus, we do not reject the null hypothesis of a normal distribution with parameters $\mu=0$ and $\widehat{S}=1.578$. 
+
 
 \begin{figure}[hbt]
 
@@ -428,14 +382,7 @@ The observed data plot in both lineups is displayed in panel \#$(3^2 - 3)$. }
 
 Note that the above list of hypotheses is not exhaustive. Any theoretical distribution in a Q-Q plot corresponds to a  hypothesis test against that distribution, and as long as there is a method to generate samples under the null hypothesis, we do not even need to know the exact distribution. This allows us to assess situations where we only have approximate or asymptotic results, which are otherwise hard, if not impossible, to investigate  with the (small) finite samples we typically deal with in practice.
 Additionally, we use the interquartile range (IQR) to estimate scale, as it is a standard practice for Q-Q plots.
-% \hhnote{`as it is a standard practice' is not stating quite the same as what I was trying to say before. I was not trying to give a reason for why we use a robust estimate, but just stating that this estimator is standard practice for Q-Q plots. 
-% How about 
-% 
-% ``Additionally, we use the interquartile range (IQR) to estimate scale, as is standard practice for Q-Q plots."
-% }
-% 
-% \alnote{That sounds good to me.}
-% The interquartile range (IQR) is used---as is standard practice for Q-Q plots---to estimate scale. 
+
 Robust estimation of the variance is preferred for better assessment of the tails and outliers of the empirical distribution. We could use alternative estimators for variance, such as the median absolute deviation (MAD) or the adjusted MAD \citep{rousseeuw}, but this will likely also change the power of the corresponding lineup.
 
 Using  Amazon MTurk \citep{amazon}, 1369 independent observers were recruited and asked to evaluate ten lineups each. Lineups were randomly assigned to participants, such that each participant
