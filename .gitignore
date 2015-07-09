@@ -73,3 +73,7 @@ response2.Rnw
 response2-concordance.tex
 
 response2.tex
+
+response.fdb_latexmk
+
+qqplot_design.fdb_latexmk
